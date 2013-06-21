@@ -3,11 +3,11 @@ function Model()
     this.gameJSONText = '';
     this.gameData = {};
     this.backpacks = [];
-	this.playerId = 0;  
-	this.currentNote = new Object();
-	this.currentNote.noteId = 0;
-	this.audio_context = '';
-  	this.recorder = '';
+    this.playerId = 0;  
+    this.currentNote = new Object();
+    this.currentNote.noteId = 0;
+    this.audio_context = '';
+    this.recorder = '';
 
     //All notes in order they were received 
     this.notes = [];
@@ -18,10 +18,10 @@ function Model()
     //All notes (no order)
     this.mapNotes = [];
     this.mapMarkers = [];
-	
+
     this.addMapNote = function(mapNote)
     {
-    	console.log("adding map note");
+        console.log("adding map note");
         mapNote.geoloc = new google.maps.LatLng(mapNote.lat, mapNote.lon);
         this.mapNotes[this.mapNotes.length] = mapNote;
     }
@@ -151,69 +151,69 @@ function Model()
         return false;
     }
 
-	this.numberOfNotesForTag = function(tag)
+    this.numberOfNotesForTag = function(tag)
     {
-		var notesForTag = 0;
-		for(var i = 0; i < this.notes.length; i++)
+        var notesForTag = 0;
+        for(var i = 0; i < this.notes.length; i++)
         {
-			if(!controller.filter(this.notes[i], document.getElementById("filterbox").value)) continue;
-			for (var j = 0; j < this.notes[i].tags.length; j++) 
-			{		
-				if (this.notes[i].tags[j].tag.toLowerCase() == tag.toLowerCase()) {
-					console.log("matching tag: " + tag.toLowerCase());
-					notesForTag ++;
-					
-				}
-				
-			}
-		}
+            if(!controller.filter(this.notes[i], document.getElementById("filterbox").value)) continue;
+            for (var j = 0; j < this.notes[i].tags.length; j++) 
+            {		
+                if (this.notes[i].tags[j].tag.toLowerCase() == tag.toLowerCase()) {
+                    console.log("matching tag: " + tag.toLowerCase());
+                    notesForTag ++;
+
+                }
+
+            }
+        }
         return notesForTag;
     }
-	
-	this.numberOfTotalNotes = function()
+
+    this.numberOfTotalNotes = function()
     {
-		var notes = 0;
-		for(var i = 0; i < this.notes.length; i++)
+        var notes = 0;
+        for(var i = 0; i < this.notes.length; i++)
         {
-			if(!controller.filter(this.notes[i], document.getElementById("filterbox").value)) continue;
-			
-			notes ++;		
-		}
-		
+            if(!controller.filter(this.notes[i], document.getElementById("filterbox").value)) continue;
+
+            notes ++;		
+        }
+
         return notes;
     }
-	
-	
-	this.numberOfNotesForContributor = function(contributor)
+
+
+    this.numberOfNotesForContributor = function(contributor)
     {
-		var notesForContributor = 0;
-		for(var i = 0; i < this.notes.length; i++)
+        var notesForContributor = 0;
+        for(var i = 0; i < this.notes.length; i++)
         {
-			
-			if (this.notes[i].username.toLowerCase() == contributor.toLowerCase()) {
-				if(controller.filter(this.notes[i], document.getElementById("filterbox").value))	
-					notesForContributor ++;
-			}
-		}
+
+            if (this.notes[i].username.toLowerCase() == contributor.toLowerCase()) {
+                if(controller.filter(this.notes[i], document.getElementById("filterbox").value))	
+                    notesForContributor ++;
+            }
+        }
         return notesForContributor;
     }
-	
-	this.getProfilePicForContributor = function(contributor)
+
+    this.getProfilePicForContributor = function(contributor)
     {
-		var picURL = "";
-		for(var i = 0; i < this.backpacks.length; i++)
+        var picURL = "";
+        for(var i = 0; i < this.backpacks.length; i++)
         {
-        	if(!this.backpacks[i].owner) console.log("PHIL BLAH" + this.backpacks[i]);
-			if (contributor == null || this.backpacks[i].owner.user_name == null) {
-				picURL = "./images/DefaultPCImage.png";
-			}
-			else if (this.backpacks[i].owner.user_name.toLowerCase() == contributor.toLowerCase())
-				picURL = this.backpacks[i].owner.player_pic_url;
-		}
-		
-		if (picURL == null)
-			picURL = "./images/DefaultPCImage.png";
-			
+            if(!this.backpacks[i].owner) console.log("PHIL BLAH" + this.backpacks[i]);
+            if (contributor == null || this.backpacks[i].owner.user_name == null) {
+                picURL = "./images/DefaultPCImage.png";
+            }
+            else if (this.backpacks[i].owner.user_name.toLowerCase() == contributor.toLowerCase())
+                picURL = this.backpacks[i].owner.player_pic_url;
+        }
+
+        if (picURL == null)
+            picURL = "./images/DefaultPCImage.png";
+
         return picURL;
     }
 
@@ -223,9 +223,9 @@ function Model()
         //Layouts
         //this.mapLayout = document.getElementById('map_layout');
         //this.listLayout = document.getElementById('list_layout');
-                
-		console.log("creating views");
-          //Content
+
+        console.log("creating views");
+        //Content
         this.mainView = document.getElementById('main_view');
         this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
         this.mainViewContainer = document.getElementById('main_view_container');
@@ -239,11 +239,11 @@ function Model()
         this.loginViewContainer = document.getElementById('login_view_container');
         this.joinViewContainer = document.getElementById('join_view_container');
         this.constructNoteView = document.getElementById('note_view_construct');
-		this.constructNoteCreateView = document.getElementById('note_create_view_construct');
-		this.constructLoginView = document.getElementById('login_view_construct');
-		this.constructJoinView = document.getElementById('join_view_construct');
+        this.constructNoteCreateView = document.getElementById('note_create_view_construct');
+        this.constructLoginView = document.getElementById('login_view_construct');
+        this.constructJoinView = document.getElementById('join_view_construct');
         this.defaultNoteView = document.getElementById('note_view_default');
-		this.defaultNoteCreateView = document.getElementById('note_create_view_default');
+        this.defaultNoteCreateView = document.getElementById('note_create_view_default');
         this.noteView = new NoteView(this.defaultNoteView, null);
         console.log("done with content views");
 
@@ -252,51 +252,51 @@ function Model()
         var centerLoc = new google.maps.LatLng(0, 0);
         var myOptions = { zoom:5, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
         this.gmap = new google.maps.Map(this.map, myOptions);
-        
+
         // setup info area
         document.getElementById('main_view_info').innerHTML = 'Tags:<br><input id="tag1" value="Innovation" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Innovation</input><br><input id="tag2" value="Civil Disobedience" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Civil Disobedience</input><br><input id="tag3" value="Stories of the Past" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Stories of the Past</input><br><input id="tag4" value="Gratitudes" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Gratitudes</input><br><input id="tag5" value="Culture" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Culture</input><br><input id="tag6" value="Buckys List" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Bucky\'s List</input><br><input id="tag7" value="Envisioning the Future" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Envisioning the Future</input><br><br><span> Search: <input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span><br><br><br><button onClick="JavaScript:controller.noteCreate()" class="button">Upload</button>';
-		
-		// marker clusterer
-		var mcOptions = {styles: [{
-			height: 53,
-			url: "./images/speechBubble_cluster_large.png",
-			width: 41,
-			anchor:[15,17],
-			fontFamily:"Helvetica, Arial"
-			},
-			{
-			height: 53,
-			url: "./images/speechBubble_cluster_large.png",
-			width: 41,
-			anchor:[15,13],
-			fontFamily: "Helvetica, Arial"
-			},
-			{
-			height: 53, 
-			url: "./images/speechBubble_cluster_large.png",
-			width: 41,
-			anchor:[15,13],
-			fontFamily: "Helvetica, Arial"
-			},
-			{
-			height: 53,
-			url: "./images/speechBubble_cluster_large.png",
-			width: 41,
-			anchor:[15,13],
-			fontFamily: "Helvetica, Arial"
-			},
-			{
-			height: 53,
-			url: "./images/speechBubble_cluster_large.png",
-			width: 41,
-			anchor:[15,13],
-			fontFamily: "Helvetica, Arial"
-			}]};
-		this.markerclusterer = new MarkerClusterer(this.gmap,[],mcOptions);
-		this.markerclusterer.setMinimumClusterSize(3)
-		
-		console.log("done with creating views");
-		
+
+        // marker clusterer
+        var mcOptions = {styles: [{
+height: 53,
+            url: "./images/speechBubble_cluster_large.png",
+            width: 41,
+            anchor:[15,17],
+            fontFamily:"Helvetica, Arial"
+        },
+            {
+height: 53,
+        url: "./images/speechBubble_cluster_large.png",
+        width: 41,
+        anchor:[15,13],
+        fontFamily: "Helvetica, Arial"
+            },
+            {
+height: 53, 
+        url: "./images/speechBubble_cluster_large.png",
+        width: 41,
+        anchor:[15,13],
+        fontFamily: "Helvetica, Arial"
+            },
+            {
+height: 53,
+        url: "./images/speechBubble_cluster_large.png",
+        width: 41,
+        anchor:[15,13],
+        fontFamily: "Helvetica, Arial"
+            },
+            {
+height: 53,
+        url: "./images/speechBubble_cluster_large.png",
+        width: 41,
+        anchor:[15,13],
+        fontFamily: "Helvetica, Arial"
+            }]};
+        this.markerclusterer = new MarkerClusterer(this.gmap,[],mcOptions);
+        this.markerclusterer.setMinimumClusterSize(3)
+
+            console.log("done with creating views");
+
     };
 
     document.addEventListener('keydown', function(e) { if(e.keyIdentifier == 'Up' || e.keyIdentifier == 'Down') { controller.displayNextNote(e.keyIdentifier); e.stopPropagation(); e.preventDefault(); } }, false);
