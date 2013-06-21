@@ -462,12 +462,10 @@ Cluster.prototype.addMarker = function (marker) {
   var i;
   var mCount;
   var mz;
-  console.log("Addmarker called");
-  if (this.isMarkerAlreadyAdded_(marker)) {
-    return false;
-  }
+  if(this.isMarkerAlreadyAdded_(marker)) return false;
 
-  if (!this.center_) {
+  if(!this.center_)
+  {
     this.center_ = marker.getPosition();
     this.calculateBounds_();
   } else {

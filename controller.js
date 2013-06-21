@@ -4,13 +4,9 @@ function Controller()
 
     this.noteSelected = function(sender) 
     {
-        console.log("noteSelecetd");
         var note = sender.object;
         var html = model.views.constructNoteView.cloneNode(true);
-        console.log(html);
-        console.log(note);
         model.views.noteView = new NoteView(html, note);
-        console.log(model.views.noteView);
         model.views.noteViewContainer.innerHTML = '';
 
         model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);
@@ -22,8 +18,8 @@ function Controller()
     this.noteCreate = function() 
     {
         // show login view if not logged in already
-        console.log("model.playerId:" + model.playerId);
-        if (model.playerId > 0) {   
+        if(model.playerId > 0)
+        {   
             var html = model.views.constructNoteCreateView.cloneNode(true);
             model.views.noteCreateView = new NoteCreateView(html);
             model.views.createNoteViewContainer.innerHTML = '';
@@ -31,9 +27,9 @@ function Controller()
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
             //setTimeout(function() { document.addEventListener('click', controller.hideCreateNoteView, false); }, 100); //timeout to disallow imediate hiding
-        } else {
-            this.showLoginView();
         }
+        else
+            this.showLoginView();
     };
 
     this.showLoginView = function() 
@@ -115,23 +111,16 @@ function Controller()
 
     this.populateMapNotes = function(center)
     {	
-        console.log("populate map notes called");
         for(var i = 0; i < model.mapMarkers.length; i++)
-        {
-            if (model.mapMarkers[i].marker != null)
-                model.mapMarkers[i].marker.setMap(null);
-        }
+            if(model.mapMarkers[i].marker != null) model.mapMarkers[i].marker.setMap(null);
         model.mapMarkers = [];
         model.views.markerclusterer.clearMarkers();
         var tmpmarker;
         for(var i = 0; i < model.mapNotes.length; i++)
         {
-            console.log("populate map notes called");
-
             if(!this.tagsSelected(model.mapNotes[i].tags)) continue;
             if(!this.filter(model.mapNotes[i], document.getElementById("filterbox").value)) continue;
             // To Do: set up any other filters here
-            console.log(model.mapNotes[i]);
 
             tmpmarker = new MapMarker(this.noteSelected, model.mapNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
@@ -151,9 +140,6 @@ function Controller()
     this.tagsSelected = function(tags)
     {
         // check if each checked tag is in notes tag list
-        console.log(document.getElementById("tag1").value);
-        console.log(tags);
-
         if (document.getElementById("tag1").checked) {
             for(var i = 0; i < tags.length; i++) {
                 if (tags[i].tag.toLowerCase() == document.getElementById("tag1").value.toLowerCase())
@@ -275,46 +261,27 @@ function Controller()
         return false;
     };
 
-    this.filterContributor = function(contributor, filter) {
-
-        if (filter == "") 
-            return true; 
+    this.filterContributor = function(contributor, filter)
+    {
+        if (filter == "") return true; 
 
         // check contributor
-
-        if (contributor.toLowerCase().indexOf(filter.toLowerCase()) != -1){
-            console.log(contributor.toLowerCase());
-            console.log(contributor.toLowerCase().indexOf(filter.toLowerCase()));
-            return true;
-        }
+        if(contributor.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
 
         // check for note title & tags & type
         for(var i = 0; i < model.contributorNotes.length; i++)
         {
-            if (model.contributorNotes[i].username.toLowerCase() == contributor.toLowerCase())  {
-                // check title
-                if (model.contributorNotes[i].title.toLowerCase().indexOf(filter.toLowerCase()) != -1)
-                    return true;
-
-                // check tags
+            if (model.contributorNotes[i].username.toLowerCase() == contributor.toLowerCase())
+            {
+                if (model.contributorNotes[i].title.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
                 for (var j = 0; j < model.contributorNotes[i].tags.length; j++) 
-                {		
-                    if (model.contributorNotes[i].tags[j].tag.toLowerCase().indexOf(filter.toLowerCase()) != -1) 
-                        return true;
-                }
-                //check type
-                for (var k = 0; k < model.contributorNotes[i].contents.length; k++) {
-                    if (model.contributorNotes[i].contents[k].type.toLowerCase().indexOf(filter.toLowerCase()) != -1) 
-                        return true;
-                }
-
+                    if(model.contributorNotes[i].tags[j].tag.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
+                for (var k = 0; k < model.contributorNotes[i].contents.length; k++)
+                    if (model.contributorNotes[i].contents[k].type.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
             }
-
         }
-
         return 0;
     };
-
 
     this.getIconsForNoteContents = function(note)
     {
@@ -326,8 +293,8 @@ function Controller()
         var videoCount = 0;
         var photoCount = 0;
 
-        for (i = 0; i < note.contents.length; i++) {
-
+        for(i = 0; i < note.contents.length; i++)
+        {
             if (note.contents[i].type == "AUDIO")
                 audioCount++;
             else if (note.contents[i].type == "VIDEO")
@@ -339,53 +306,40 @@ function Controller()
         }
 
         var iconHTML = "";
-        if (textCount > 0)
-            iconHTML += '<img src="./images/defaultTextIcon.png" height=14px;>';
-        if (audioCount > 0)
-            iconHTML += '<img src="./images/defaultAudioIcon.png" height=15px;>';
-        if (photoCount > 0)
-            iconHTML += '<img src="./images/defaultImageIcon.png" height=15px;> ';
-        if (videoCount > 0)
-            iconHTML += '<img src="./images/defaultVideoIcon.png" height=14px;>';
+        if(textCount  > 0) iconHTML += '<img src="./images/defaultTextIcon.png" height=14px;>';
+        if(audioCount > 0) iconHTML += '<img src="./images/defaultAudioIcon.png" height=15px;>';
+        if(photoCount > 0) iconHTML += '<img src="./images/defaultImageIcon.png" height=15px;> ';
+        if(videoCount > 0) iconHTML += '<img src="./images/defaultVideoIcon.png" height=14px;>';
 
         return iconHTML;
     };
 
     this.getLikeIcon = function()
     {
-        var iconHTML =  '  <img id="likeIcon" src="./images/LikeIcon.png" height=10px;>';
-
-        return iconHTML;
+        return '  <img id="likeIcon" src="./images/LikeIcon.png" height=10px;>';
     };
 
 
     this.getCommentIcon = function()
     {
-        var iconHTML =  '  <img src="./images/CommentIcon.png" height=8px;>';
-
-        return iconHTML;
+        return '  <img src="./images/CommentIcon.png" height=8px;>';
     };
 
     this.getNoteIcon = function()
     {
-        //iconHTML = '  <img src="./images/defaultTextIcon.png" height=14px;>  ';
-        var iconHTML = "";	
-        return iconHTML;
+        //return '  <img src="./images/defaultTextIcon.png" height=14px;>  ';
+        return "";
     };
 
     this.playerPicForContributorList = function(username) 
     {
-        var picHTML = '  <img src="' + model.getProfilePicForContributor(username) + '" height=14px;>  ';
-        return picHTML;
+        return '  <img src="' + model.getProfilePicForContributor(username) + '" height=14px;>  ';
     };
 
     this.checkBox = function(checked)
     {
-        checkboxHTML = '  <img src="./images/checkboxUnchecked.gif" height=16px;>';
-        if (checked) 	
-            checkboxHTML = '  <img src="./images/checkbox.png" height=16px;>';
-
-        return checkboxHTML;
+        if(checked) return '  <img src="./images/checkbox.png" height=16px;>';
+        else        return '  <img src="./images/checkboxUnchecked.gif" height=16px;>';
     }
 
     this.rightSideOfCell = function(text)
@@ -403,6 +357,7 @@ function Controller()
             if(model.views.popularitySortButton.selected) this.displayNextNoteInList(key, model.views.popularNoteCells);
         }
     }
+
     this.displayNextNoteInList = function(key, list)
     {
         var index = -1;
@@ -445,17 +400,12 @@ function Controller()
 
     this.repopulateAll = function()
     {
-
-        console.log("repopulating");
-
         this.populateMapNotes(true);
         this.populateListNotes();
     }
 
-
     this.createNewNote = function()
     {
-        console.log("creating new note");
         var gameId = model.gameId;
         var playerId = model.playerId;		
         callService("notes.createNewNoteStartIncomplete", this.newNoteCreated, "/"+ gameId + "/" + playerId, false);
@@ -469,7 +419,6 @@ function Controller()
         var obj = JSON.parse(jsonString);
 
         var noteId = obj.data;
-        console.log("New note created. id: " + noteId);
 
         model.currentNote.noteId = noteId;
     }
@@ -483,114 +432,86 @@ function Controller()
 
     this.addContentToNote = function(noteId, filename, type, text, title)
     {
-
         var gameId = model.gameId;
         var playerId = model.playerId;
 
-        if (type == "TEXT") {
+        if(type == "TEXT")
+        {
             var getString = "/"+ noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + text;
             callService("notes.addContentToNote", function(){}, getString, false);	
-        } else {
-
+        }
+        else
+        {
             var getString = "/"+ gameId + "/" + noteId + "/" + playerId + "/" + filename + "/" + type;
-            console.log("getString: " + getString);
             callService("notes.addContentToNoteFromFileName", function(){}, getString, false);	
         }
     }
 
     this.updateNote = function(noteId, title) 
     {
-        var getString = "/"+ noteId + "/" + title + "/true/true";
-
-        callService("notes.updateNote", function(){}, getString, false);
+        callService("notes.updateNote", function(){},"/"+noteId+"/"+title+"/true/true", false);
     }
 
     this.addCommentToNote = function(noteId, comment, callback)
     {
-
-        var gameId = model.gameId;
-        var playerId = model.playerId;
-        var title="comment";
-        var getString = "/"+ gameId + "/" + playerId + "/" + noteId + "/" + title;
-        callService("notes.addCommentToNote", callback, getString, false);
+        callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/comment", false);
     }
 
     this.addTagToNote = function(noteId, tag)
     {
-        console.log("adding tag to note: " + tag);
-        //function addTagToNote($noteId, $gameId, $tag)
-        var gameId = model.gameId;;
-        var getString = "/"+ noteId + "/" + gameId + "/" + tag ;
-        callService("notes.addTagToNote", function(){}, getString, false);
+        callService("notes.addTagToNote", function(){},"/"+noteId+"/"+model.gameId+"/"+tag, false);
     }
 
     this.deleteNote = function(noteId)
     {
-        var getString = "/"+ noteId;
-        callService("notes.deleteNote", function(){}, getString, false);
+        callService("notes.deleteNote", function(){}, "/"+noteI, false);
     }
 
     this.login = function(email, password)
     {
-        console.log("logging in");
-        var getString = "/"+ email + "/" + password;
-        console.log(getString);
-        callService("players.loginPlayer", this.loginReturned, getString, false);
+        callService("players.loginPlayer", this.loginReturned,"/"+email+"/"+password, false);
     }
 
     this.loginReturned = function(returnString)
     {
         // set note Id
-        console.log("Login returned: " + returnString);
         var startJson = returnString.indexOf("{");
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
 
         var playerId = obj.data;
-        console.log("player id: " + playerId);
 
         model.playerId = playerId;
 
-        if (model.playerId > 0) {
+        if(model.playerId > 0)
+        {
             controller.noteCreate();
             controller.hideLoginView();
         }
         else
             alert("Incorrect login. Please try again.");
-
     }
 
     this.createAccount = function(email, password)
     {
-        var getString = "/"+ email + "/" + password + "/"+ email + "/"+ email + "/"+ email;
-        console.log(getString);
-        callService("players.createPlayer", this.createPlayerReturned, getString, false);
+        callService("players.createPlayer", this.createPlayerReturned,"/"+email+"/"+password+"/"+email+"/"+email+"/"+email, false);
     }
 
     this.createPlayerReturned = function(returnString)
     {
         // set note Id
-        console.log("Create player returned: " + returnString);
         var startJson = returnString.indexOf("{");
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
 
-        var playerId = obj.data;
-        console.log("player id: " + playerId);
+        model.playerId = obj.data;
 
-        model.playerId = playerId;
-
-        if (model.playerId > 0)
-            controller.noteCreate();
-        else
-            alert("Invalid email. Please try again.");
-
+        if(model.playerId > 0) controller.noteCreate();
+        else alert("Invalid email. Please try again.");
     }
 
-    this.resetAndEmailPassword = function(email) {
-        var getString = "/"+ email;
-        console.log(getString);
-        callService("players.resetAndEmailPassword", function(){}, getString, false);
+    this.resetAndEmailPassword = function(email)
+    {
+        callService("players.resetAndEmailPassword", function(){}, "/"+ email, false);
     }
-
 }

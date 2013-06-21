@@ -1,10 +1,11 @@
 function Model()
 {
+    this.gameId = 3428;
+    this.playerId = 0;
     this.gameJSONText = '';
     this.gameData = {};
     this.backpacks = [];
-    this.playerId = 0;  
-    this.currentNote = new Object();
+    this.currentNote = {};
     this.currentNote.noteId = 0;
     this.audio_context = '';
     this.recorder = '';
@@ -21,7 +22,6 @@ function Model()
 
     this.addMapNote = function(mapNote)
     {
-        console.log("adding map note");
         mapNote.geoloc = new google.maps.LatLng(mapNote.lat, mapNote.lon);
         this.mapNotes[this.mapNotes.length] = mapNote;
     }
@@ -158,14 +158,7 @@ function Model()
         {
             if(!controller.filter(this.notes[i], document.getElementById("filterbox").value)) continue;
             for (var j = 0; j < this.notes[i].tags.length; j++) 
-            {		
-                if (this.notes[i].tags[j].tag.toLowerCase() == tag.toLowerCase()) {
-                    console.log("matching tag: " + tag.toLowerCase());
-                    notesForTag ++;
-
-                }
-
-            }
+                if(this.notes[i].tags[j].tag.toLowerCase() == tag.toLowerCase()) notesForTag ++;
         }
         return notesForTag;
     }
@@ -203,20 +196,16 @@ function Model()
         var picURL = "";
         for(var i = 0; i < this.backpacks.length; i++)
         {
-            if(!this.backpacks[i].owner) console.log("PHIL BLAH" + this.backpacks[i]);
-            if (contributor == null || this.backpacks[i].owner.user_name == null) {
+            if(contributor == null || this.backpacks[i].owner.user_name == null)
                 picURL = "./images/DefaultPCImage.png";
-            }
-            else if (this.backpacks[i].owner.user_name.toLowerCase() == contributor.toLowerCase())
+            else if(this.backpacks[i].owner.user_name.toLowerCase() == contributor.toLowerCase())
                 picURL = this.backpacks[i].owner.player_pic_url;
         }
 
-        if (picURL == null)
-            picURL = "./images/DefaultPCImage.png";
+        if(picURL == null) picURL = "./images/DefaultPCImage.png";
 
         return picURL;
     }
-
 
     this.views = new function Views()
     { 
@@ -224,28 +213,26 @@ function Model()
         //this.mapLayout = document.getElementById('map_layout');
         //this.listLayout = document.getElementById('list_layout');
 
-        console.log("creating views");
         //Content
         this.mainView = document.getElementById('main_view');
         this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
-        this.mainViewContainer = document.getElementById('main_view_container');
-        this.mainViewLeft = document.getElementById('main_view_left');
-        this.createNoteViewContainer = document.getElementById('create_note_view_container');
-        this.noteViewContainer = document.getElementById('note_view_container');
-        this.noteViewCloseButton = new ActionButton(document.getElementById('note_view_close_button'), controller.hideNoteView);
+        this.mainViewContainer         = document.getElementById('main_view_container');
+        this.mainViewLeft              = document.getElementById('main_view_left');
+        this.createNoteViewContainer   = document.getElementById('create_note_view_container');
+        this.noteViewContainer         = document.getElementById('note_view_container');
+        this.noteViewCloseButton       = new ActionButton(document.getElementById('note_view_close_button'), controller.hideNoteView);
         this.createNoteViewCloseButton = new ActionButton(document.getElementById('create_note_view_close_button'), controller.hideCreateNoteView);
-        this.loginViewCloseButton = new ActionButton(document.getElementById('login_view_close_button'), controller.hideLoginView);
-        this.joinViewCloseButton = new ActionButton(document.getElementById('join_view_close_button'), controller.hideJoinView);
-        this.loginViewContainer = document.getElementById('login_view_container');
-        this.joinViewContainer = document.getElementById('join_view_container');
-        this.constructNoteView = document.getElementById('note_view_construct');
-        this.constructNoteCreateView = document.getElementById('note_create_view_construct');
-        this.constructLoginView = document.getElementById('login_view_construct');
-        this.constructJoinView = document.getElementById('join_view_construct');
-        this.defaultNoteView = document.getElementById('note_view_default');
-        this.defaultNoteCreateView = document.getElementById('note_create_view_default');
-        this.noteView = new NoteView(this.defaultNoteView, null);
-        console.log("done with content views");
+        this.loginViewCloseButton      = new ActionButton(document.getElementById('login_view_close_button'), controller.hideLoginView);
+        this.joinViewCloseButton       = new ActionButton(document.getElementById('join_view_close_button'), controller.hideJoinView);
+        this.loginViewContainer        = document.getElementById('login_view_container');
+        this.joinViewContainer         = document.getElementById('join_view_container');
+        this.constructNoteView         = document.getElementById('note_view_construct');
+        this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
+        this.constructLoginView        = document.getElementById('login_view_construct');
+        this.constructJoinView         = document.getElementById('join_view_construct');
+        this.defaultNoteView           = document.getElementById('note_view_default');
+        this.defaultNoteCreateView     = document.getElementById('note_create_view_default');
+        this.noteView                  = new NoteView(this.defaultNoteView, null);
 
         //Map
         this.map = document.getElementById('main_view_map');
@@ -258,45 +245,45 @@ function Model()
 
         // marker clusterer
         var mcOptions = {styles: [{
-height: 53,
-            url: "./images/speechBubble_cluster_large.png",
-            width: 41,
-            anchor:[15,17],
-            fontFamily:"Helvetica, Arial"
-        },
-            {
-height: 53,
-        url: "./images/speechBubble_cluster_large.png",
-        width: 41,
-        anchor:[15,13],
-        fontFamily: "Helvetica, Arial"
+                height: 53,
+                url: "./images/speechBubble_cluster_large.png",
+                width: 41,
+                anchor:[15,17],
+                fontFamily:"Helvetica, Arial"
             },
             {
-height: 53, 
-        url: "./images/speechBubble_cluster_large.png",
-        width: 41,
-        anchor:[15,13],
-        fontFamily: "Helvetica, Arial"
+                height: 53,
+                url: "./images/speechBubble_cluster_large.png",
+                width: 41,
+                anchor:[15,13],
+                fontFamily: "Helvetica, Arial"
             },
             {
-height: 53,
-        url: "./images/speechBubble_cluster_large.png",
-        width: 41,
-        anchor:[15,13],
-        fontFamily: "Helvetica, Arial"
+                height: 53, 
+                url: "./images/speechBubble_cluster_large.png",
+                width: 41,
+                anchor:[15,13],
+                fontFamily: "Helvetica, Arial"
             },
             {
-height: 53,
-        url: "./images/speechBubble_cluster_large.png",
-        width: 41,
-        anchor:[15,13],
-        fontFamily: "Helvetica, Arial"
-            }]};
+                height: 53,
+                url: "./images/speechBubble_cluster_large.png",
+                width: 41,
+                anchor:[15,13],
+                fontFamily: "Helvetica, Arial"
+            },
+            {
+                height: 53,
+                url: "./images/speechBubble_cluster_large.png",
+                width: 41,
+                anchor:[15,13],
+                fontFamily: "Helvetica, Arial"
+            }
+        ]};
+        
         this.markerclusterer = new MarkerClusterer(this.gmap,[],mcOptions);
+        
         this.markerclusterer.setMinimumClusterSize(3)
-
-            console.log("done with creating views");
-
     };
 
     document.addEventListener('keydown', function(e) { if(e.keyIdentifier == 'Up' || e.keyIdentifier == 'Down') { controller.displayNextNote(e.keyIdentifier); e.stopPropagation(); e.preventDefault(); } }, false);

@@ -15,7 +15,6 @@
 <script type="text/javascript" src="utils/richmarker.js" ></script>
 <script type="text/javascript" src="utils/markerclusterer.js"></script>
 <script src="utils/recorder.js"></script>
-<script src="../js/jquery.infinitescroll.min.js"></script>
 <script type="text/javascript">
 
 window.addEventListener('load', pageLoad, false);
@@ -25,51 +24,28 @@ var model;
 var controller;
 
 var checkboxCheckedImage = new Image();
-checkboxCheckedImage.src = "./images/checkbox.png";
+checkboxCheckedImage.src = "assets/images/checkbox.png";
 var checkboxUncheckedImage = new Image();
-checkboxUncheckedImage.src = "./images/checkboxUnchecked.png";
+checkboxUncheckedImage.src = "assets/images/checkboxUnchecked.png";
 
 function pageLoad()
 {
     //Initialize stuff
-    console.log("loading page");
     controller = new Controller();
-    console.log("controller built");
     model = new Model();
-    console.log("model built");
-    var gameId;
-    var playerId;
-    if(gameId = parseInt(parseURLParams(document.URL).gameId))
-    {
-        playerId = parseInt(parseURLParams(document.URL).playerId);
-        model.gameId = gameId;
-        model.playerId = playerId;
-        startLoadGame(gameId, playerId);
-    }
-    else
-        document.getElementById('message').innerHTML = "<form>Game Id:<input type='text' id='game_id_form'/><input type='button' value='Submit' onClick='submitForm();'/></form>";
+    startLoadGame();
 
     if (navigator.appName == 'Microsoft Internet Explorer') 
         alert('You might need to install quicktime to properly view some media.\n(http://www.apple.com/quicktime/download)');
 }
 
-function submitForm()
-{
-    var gameId;
-    if(gameId = document.getElementById('game_id_form').value)
-        loadGame(gameId);
-    else
-        alert("Please Enter a Valid Game ID");
-}
-
-function startLoadGame(gameId, playerId)
+function startLoadGame()
 {
     document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img> Waiting on Server...";
     var bpRequestObject = new Object();
-    bpRequestObject.gameId = gameId;
+    bpRequestObject.gameId = model.gameId;
     bpRequestObject.items = false;//Don't get items
     bpRequestObject.attributes = false;//Don't get attributes
-    if(playerId) bpRequestObject.playerArray = playerId;
     callService("players.getPlayerBackpacksFromArray", finishLoadGame, '', JSON.stringify(bpRequestObject));
 }
 function finishLoadGame(responseText)
@@ -109,19 +85,8 @@ function finishLoadGame(responseText)
     document.getElementById('content').style.display = 'block';
 
     google.maps.event.trigger(model.views.gmap, 'resize'); // To fix google maps incorrect sizing bug
-
-    refreshIntervalId = setInterval(function () { 
-            clearInterval(refreshIntervalId);
-            var wall = new Masonry( document.getElementById('main_view_left'), {
-                // dynamically set column width to 1/5 the width of the container
-columnWidth: function( containerWidth ) {
-return containerWidth / 5;
 }
-});
-            }, 300);
 
-
-}
 
 </script>
 </head>
@@ -250,15 +215,5 @@ Click a note to display
 </div>
 
 
-
-
 </body>
 </html>
-
-<script>
-
-
-
-
-
-</script>

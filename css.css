@@ -880,11 +880,7 @@ display: box;
 
 }
 
-
-
-
 .button, .button:visited, .button:before {
-background: #222 url(alert-overlay.png) repeat-x; 
 display: inline-block; 
 padding: 3px 7px 4px; 
 color: #fff; 
@@ -899,7 +895,6 @@ position: relative;
 cursor: pointer;
         font-size: 11px;
 }
-
 
 #browseImage {
 position: absolute;
