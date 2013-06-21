@@ -14,29 +14,11 @@
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 <script type="text/javascript" src="utils/richmarker.js" ></script>
 <script type="text/javascript" src="utils/markerclusterer.js"></script>
-<script src="utils/masonry.min.js"></script>
 <script src="utils/recorder.js"></script>
 <script src="../js/jquery.infinitescroll.min.js"></script>
 <script type="text/javascript">
 
-
 window.addEventListener('load', pageLoad, false);
-
-
-$(function() { 
-        /* $('#main_view_left').masonry({
-    // options
-itemSelector : '.note_item',
-columnWidth : 240
-});*/
-
-        });
-
-/*window.onload = function() {
-  var wall = new Masonry( document.getElementById('main_view_left'), {
-columnWidth: 400
-}); 
-};*/
 
 //Defining here to make available to everyone
 var model;
@@ -69,7 +51,6 @@ function pageLoad()
 
     if (navigator.appName == 'Microsoft Internet Explorer') 
         alert('You might need to install quicktime to properly view some media.\n(http://www.apple.com/quicktime/download)');
-
 }
 
 function submitForm()

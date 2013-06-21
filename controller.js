@@ -17,12 +17,10 @@ function Controller()
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
         //setTimeout(function() { document.addEventListener('click', controller.hideNoteView, false); }, 100); //timeout to disallow imediate hiding
-
     };
 
     this.noteCreate = function() 
     {
-
         // show login view if not logged in already
         console.log("model.playerId:" + model.playerId);
         if (model.playerId > 0) {   
@@ -40,7 +38,6 @@ function Controller()
 
     this.showLoginView = function() 
     {
-
         // To Do: setup login view from submitting comments. Currently it only goes to login view if you try to upload a new note.
         //if (parentView = null) {
         var html = model.views.constructLoginView.cloneNode(true);
@@ -58,7 +55,6 @@ function Controller()
         parentView.appendChild(model.views.loginView.html);
         parentView.style.display = 'block';
         }*/
-
     };
 
     this.showJoinView = function() 
@@ -71,7 +67,6 @@ function Controller()
         model.views.joinViewContainer.style.display = 'block';
         //setTimeout(function() { document.addEventListener('click', controller.hideJoinView, false); }, 100); //timeout to disallow imediate hiding
     };
-
 
     this.populateModel = function(gameData)
     {
@@ -114,12 +109,9 @@ function Controller()
             }
         }
 
-
         this.populateMapNotes(true);
         this.populateListNotes();
-
     };
-
 
     this.populateMapNotes = function(center)
     {	
@@ -156,11 +148,9 @@ function Controller()
 
     };
 
-
-    this.tagsSelected = function(tags) {
-
+    this.tagsSelected = function(tags)
+    {
         // check if each checked tag is in notes tag list
-
         console.log(document.getElementById("tag1").value);
         console.log(tags);
 
