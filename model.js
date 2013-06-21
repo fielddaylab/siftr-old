@@ -197,26 +197,21 @@ function Model()
         for(var i = 0; i < this.backpacks.length; i++)
         {
             if(contributor == null || this.backpacks[i].owner.user_name == null)
-                picURL = "./images/DefaultPCImage.png";
+                picURL = "./assets/images/DefaultPCImage.png";
             else if(this.backpacks[i].owner.user_name.toLowerCase() == contributor.toLowerCase())
                 picURL = this.backpacks[i].owner.player_pic_url;
         }
 
-        if(picURL == null) picURL = "./images/DefaultPCImage.png";
+        if(picURL == null) picURL = "./assets/images/DefaultPCImage.png";
 
         return picURL;
     }
 
     this.views = new function Views()
     { 
-        //Layouts
-        //this.mapLayout = document.getElementById('map_layout');
-        //this.listLayout = document.getElementById('list_layout');
-
         //Content
-        this.mainView = document.getElementById('main_view');
+        this.mainView = document.getElementById('main_view_full');
         this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
-        this.mainViewContainer         = document.getElementById('main_view_container');
         this.mainViewLeft              = document.getElementById('main_view_left');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
         this.noteViewContainer         = document.getElementById('note_view_container');
@@ -246,35 +241,35 @@ function Model()
         // marker clusterer
         var mcOptions = {styles: [{
                 height: 53,
-                url: "./images/speechBubble_cluster_large.png",
+                url: "./assets/images/speechBubble_cluster_large.png",
                 width: 41,
                 anchor:[15,17],
                 fontFamily:"Helvetica, Arial"
             },
             {
                 height: 53,
-                url: "./images/speechBubble_cluster_large.png",
+                url: "./assets/images/speechBubble_cluster_large.png",
                 width: 41,
                 anchor:[15,13],
                 fontFamily: "Helvetica, Arial"
             },
             {
                 height: 53, 
-                url: "./images/speechBubble_cluster_large.png",
+                url: "./assets/images/speechBubble_cluster_large.png",
                 width: 41,
                 anchor:[15,13],
                 fontFamily: "Helvetica, Arial"
             },
             {
                 height: 53,
-                url: "./images/speechBubble_cluster_large.png",
+                url: "./assets/images/speechBubble_cluster_large.png",
                 width: 41,
                 anchor:[15,13],
                 fontFamily: "Helvetica, Arial"
             },
             {
                 height: 53,
-                url: "./images/speechBubble_cluster_large.png",
+                url: "./assets/images/speechBubble_cluster_large.png",
                 width: 41,
                 anchor:[15,13],
                 fontFamily: "Helvetica, Arial"

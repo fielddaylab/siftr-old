@@ -48,7 +48,6 @@ function ListNote(callback, object, noteId)
     this.object = object;
     this.callback = callback;
 
-
     this.getImageHtml = function()
     {
         this.noteHtml = "";
@@ -56,15 +55,13 @@ function ListNote(callback, object, noteId)
         this.noteImage = getImageToUse(object);
 
         // construct html with note image
-        if (this.noteImage != "")
+        if(this.noteImage != "")
         {
-            this.noteHtml =  "<div id='item_note" + this.noteImage + "' class='item_note'><img id ='image" + noteId + "' src='" + this.noteImage + "' style='cursor:pointer;'/></div>";
-            var refreshIntervalId;
-            refreshIntervalId = setInterval(function () { 
-                    if(document.getElementById("image"+noteId))
-                        document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self) });
-                    clearInterval(refreshIntervalId);
-                    }, 300);
+            this.noteHtml =  "<div class='note_list_cell'><img id='image"+noteId+"' class='note_list_cell_media' src='"+this.noteImage+"' style='cursor:pointer;'/></div>";
+            setTimeout(function () { 
+                if(document.getElementById("image"+noteId)) 
+                    document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); });
+                }, 300);
         }
 
         return this.noteHtml;
@@ -306,7 +303,7 @@ function constructMarker(note)
     }
 
     var image = new Image();
-    var imageSource = getMediaToUse(note); //"./images/defaultImageIcon.png";
+    var imageSource = getMediaToUse(note); //"./assets/images/defaultImageIcon.png";
     image.onload = function() { /*replaceMarkerImage(imageSource);*/ }
     image.src = imageSource;
     image.style.top = top;
@@ -325,7 +322,7 @@ function constructMarker(note)
       innerDiv.innerHTML = getIconsForNoteContents(note);*/
 
     var speechBubble = new Image();
-    speechBubble.src = './images/speechBubble2.png';
+    speechBubble.src = './assets/images/speechBubble2.png';
     speechBubble.height = 51;
     speechBubble.width = 32;
 
@@ -335,7 +332,7 @@ function constructMarker(note)
 
     html = outerDiv.outerHTML;
 
-    //html  = "<div style=><img src='./images/speechBubble.png' height='51' width='43'/> " + image + " </div><div style='top:1;left:33; position:absolute' >" +   getIconsForNoteContents(note) +"</div>"	;
+    //html  = "<div style=><img src='./assets/images/speechBubble.png' height='51' width='43'/> " + image + " </div><div style='top:1;left:33; position:absolute' >" +   getIconsForNoteContents(note) +"</div>"	;
 
     return html;
 }
@@ -348,11 +345,11 @@ function getMediaToUse(note)
         if(note.contents[i].type == "PHOTO") return note.contents[i].media_url;
 
     if (note.contents[0].type == "TEXT")
-        mediaURL = "./images/defaultTextIcon.png";
+        mediaURL = "./assets/images/defaultTextIcon.png";
     else if (note.contents[0].type == "AUDIO")
-        mediaURL = "./images/defaultAudioIcon.png";
+        mediaURL = "./assets/images/defaultAudioIcon.png";
     else if (note.contents[0].type == "VIDEO")
-        mediaURL = "./images/defaultVideoIcon.png";
+        mediaURL = "./assets/images/defaultVideoIcon.png";
 
     return mediaURL;
 }
@@ -398,13 +395,13 @@ function getIconsForNoteContents(note)
 
     var iconHTML = "";
     if (textCount > 0)
-        iconHTML += '<img src="./images/defaultTextIcon.png" height=8px;><br>';
+        iconHTML += '<img src="./assets/images/defaultTextIcon.png" height=8px;><br>';
     if (audioCount > 0)
-        iconHTML += '<img src="./images/defaultAudioIcon.png" height=8px;><br>';
+        iconHTML += '<img src="./assets/images/defaultAudioIcon.png" height=8px;><br>';
     if (photoCount > 0)
-        iconHTML += '<img src="./images/defaultImageIcon.png" height=8px;><br> ';
+        iconHTML += '<img src="./assets/images/defaultImageIcon.png" height=8px;><br> ';
     if (videoCount > 0)
-        iconHTML += '<img src="./images/defaultVideoIcon.png" height=8px;>';
+        iconHTML += '<img src="./assets/images/defaultVideoIcon.png" height=8px;>';
 
     return iconHTML;
 };
@@ -413,8 +410,8 @@ function changeCheckBox(innerHTML, checked)
 {
     var checkboxCheckedFilename = "checkbox.png";
     var checkboxUncheckedFilename = "checkboxUnchecked.png";
-    var htmlCheckboxChecked = '<img src="./images/' + checkboxCheckedFilename + '" height="14px";>  ';
-    var htmlCheckboxUnchecked = '<img src="./images/' + checkboxUncheckedFilename + '" height="14px";>  ';
+    var htmlCheckboxChecked = '<img src="./assets/images/' + checkboxCheckedFilename + '" height="14px";>  ';
+    var htmlCheckboxUnchecked = '<img src="./assets/images/' + checkboxUncheckedFilename + '" height="14px";>  ';
 
     // clear out previous check box
     var checkBoxLoc = innerHTML.indexOf(checkboxCheckedFilename);

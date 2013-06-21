@@ -35,19 +35,15 @@ function pageLoad()
     model = new Model();
     startLoadGame();
 
-    if (navigator.appName == 'Microsoft Internet Explorer') 
-        alert('You might need to install quicktime to properly view some media.\n(http://www.apple.com/quicktime/download)');
+    if(navigator.appName == 'Microsoft Internet Explorer') alert('You might need to install quicktime to properly view some media.\n(http://www.apple.com/quicktime/download)');
 }
 
 function startLoadGame()
 {
     document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img> Waiting on Server...";
-    var bpRequestObject = new Object();
-    bpRequestObject.gameId = model.gameId;
-    bpRequestObject.items = false;//Don't get items
-    bpRequestObject.attributes = false;//Don't get attributes
-    callService("players.getPlayerBackpacksFromArray", finishLoadGame, '', JSON.stringify(bpRequestObject));
+    callService("players.getPlayerBackpacksFromArray", finishLoadGame, '', JSON.stringify({ "gameId":model.gameId, "items":false, "attributes":false}));
 }
+
 function finishLoadGame(responseText)
 {
     responseData=JSON.parse(responseText);
@@ -58,7 +54,6 @@ function finishLoadGame(responseText)
     }
 
     document.getElementById('message').innerHTML = "";
-
 
     model.gameJSONText = responseText;
     model.gameData = responseData.data;
@@ -74,19 +69,18 @@ function finishLoadGame(responseText)
       model.views.tagListFilterSelector.appendChild(model.views.helperTagListFilterSelectorCell);
       model.views.noteListSelector.appendChild(model.views.defaultNoteListSelectorCell);*/
 
-    //  Simulate clicking of sort button then layout button to set initial state
+    //Simulate clicking of sort button then layout button to set initial state
     //model.views.contributorSortButton.select();
     //model.views.mapLayoutButton.select();
 
     controller.populateModel(model.gameData);
 
     //  Set actual page visible
-    //document.getElementById('message').style.display = 'none';
+    document.getElementById('message').style.display = 'none';
     document.getElementById('content').style.display = 'block';
 
     google.maps.event.trigger(model.views.gmap, 'resize'); // To fix google maps incorrect sizing bug
 }
-
 
 </script>
 </head>
@@ -95,33 +89,24 @@ function finishLoadGame(responseText)
 
 <div id='content'>
 <!-- new main view -->
-<div id='main_view' class='main_view'>
-<div id='main_view_left' class='main_view_left'>
-<div id='note_item' class='note_item'></div>
+<div id='main_view_full' class='main_view'>
+    <div id='main_view_left' class='main_view'></div>
+    <div id='main_view_right' class='main_view'>
+        <div id='main_view_map' class='main_view'>map</div>
+        <div id='main_view_info' class='main_view_info'>info</div>
+    </div>
 </div>
-<div id='main_view_right' class='main_view_right'>
-<div id='main_view_map' class='main_view_map'>map</div>
-<div id='main_view_info' class='main_view_info'>info</div>
-</div>
-</div>
-<div id='main_view_container' class='main_view_container'></div>
 <div id='note_view_container' class='note_view_container'></div>
 <div id='create_note_view_container' class='create_note_view_container'></div>
 <div id='login_view_container' class='login_view_container'></div>
 <div id='join_view_container' class='join_view_container'></div>
 
-
-
-
 <!-- HTML CONSTRUCTIONS OF REUSABLE NODES -->
 <!-- These will never be seen. This is simply an area to construct nodes in raw html rather than dealing with doing so in javascript. From here, nodes can be accessed by their ID's, cloned, and renamed. -->
 <div id='constructs'>
-
-
 <div id='note_view_default' class='note_view'>
 Click a note to display
 </div>
-
 <!-- Create Note View -->
 <div id='note_create_view_construct' class='note_create_view'>
 <div id='note_create_view_left_construct' class='note_create_view_left'>

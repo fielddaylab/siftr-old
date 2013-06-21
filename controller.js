@@ -306,28 +306,28 @@ function Controller()
         }
 
         var iconHTML = "";
-        if(textCount  > 0) iconHTML += '<img src="./images/defaultTextIcon.png" height=14px;>';
-        if(audioCount > 0) iconHTML += '<img src="./images/defaultAudioIcon.png" height=15px;>';
-        if(photoCount > 0) iconHTML += '<img src="./images/defaultImageIcon.png" height=15px;> ';
-        if(videoCount > 0) iconHTML += '<img src="./images/defaultVideoIcon.png" height=14px;>';
+        if(textCount  > 0) iconHTML += '<img src="./assets/images/defaultTextIcon.png" height=14px;>';
+        if(audioCount > 0) iconHTML += '<img src="./assets/images/defaultAudioIcon.png" height=15px;>';
+        if(photoCount > 0) iconHTML += '<img src="./assets/images/defaultImageIcon.png" height=15px;> ';
+        if(videoCount > 0) iconHTML += '<img src="./assets/images/defaultVideoIcon.png" height=14px;>';
 
         return iconHTML;
     };
 
     this.getLikeIcon = function()
     {
-        return '  <img id="likeIcon" src="./images/LikeIcon.png" height=10px;>';
+        return '  <img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px;>';
     };
 
 
     this.getCommentIcon = function()
     {
-        return '  <img src="./images/CommentIcon.png" height=8px;>';
+        return '  <img src="./assets/images/CommentIcon.png" height=8px;>';
     };
 
     this.getNoteIcon = function()
     {
-        //return '  <img src="./images/defaultTextIcon.png" height=14px;>  ';
+        //return '  <img src="./assets/images/defaultTextIcon.png" height=14px;>  ';
         return "";
     };
 
@@ -338,8 +338,8 @@ function Controller()
 
     this.checkBox = function(checked)
     {
-        if(checked) return '  <img src="./images/checkbox.png" height=16px;>';
-        else        return '  <img src="./images/checkboxUnchecked.gif" height=16px;>';
+        if(checked) return '  <img src="./assets/images/checkbox.png" height=16px;>';
+        else        return '  <img src="./assets/images/checkboxUnchecked.gif" height=16px;>';
     }
 
     this.rightSideOfCell = function(text)
