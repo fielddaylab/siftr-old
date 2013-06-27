@@ -28,7 +28,6 @@ function callService(serviceName, callback, GETparams, POSTparams)
     {
         request.open('GET', url, true);
         request.send();
-        console.log("GETurl:" + url);
     }
 }
 

@@ -201,13 +201,13 @@ function submitNote()
     }
 
     // add tags
-    if (document.getElementById("tag1").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("tag1").value);
-    if (document.getElementById("tag2").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("tag2").value);
-    if (document.getElementById("tag3").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("tag3").value);
-    if (document.getElementById("tag4").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("tag4").value);
-    if (document.getElementById("tag5").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("tag5").value);
-    if (document.getElementById("tag6").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("tag6").value);
-    if (document.getElementById("tag7").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("tag7").value);
+    if (document.getElementById("create_tag_1").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_1").value);
+    if (document.getElementById("create_tag_2").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_2").value);
+    if (document.getElementById("create_tag_3").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_3").value);
+    if (document.getElementById("create_tag_4").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_4").value);
+    if (document.getElementById("create_tag_5").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_5").value);
+    if (document.getElementById("create_tag_6").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_6").value);
+    if (document.getElementById("create_tag_7").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_7").value);
 
     // add audio content (optional)
     if (model.currentNote.audioFile != null)
@@ -720,24 +720,24 @@ function NoteCreateView(html)
 
         // Apply each element to the Date function
         /*<div id='note_create_view_construct' class='note_create_view'>
-          <div id='note_create_view_left_construct' class='note_create_view_left'>
-          <div id='note_create_view_image_construct' class='note_create_view_image'>Image:</div>
-          <div id='note_create_view_location_construct' class='note_create_view_location'>Location:</div>
-          </div>
-          <div id='note_create_view_right_construct' class='note_create_view_right'>
-          <div id='note_create_view_caption_construct' class='note_create_view_caption'>Caption:</div>
-          <div id='note_create_view_tagsaudio_construct' class='note_create_view_tagsaudio'>
-          <div id='note_create_view_tags_construct' class='note_create_view_tags'>Tags:</div>
-          <div id='note_create_view_audio_construct' class='note_create_view_audio'>Audio:</div>
-          </div>
-          <div id='note_create_view_submit_construct' class='note_create_view_submit'>Submit:</div>
-          </div>
+            <div id='note_create_view_left_construct' class='note_create_view_left'>
+                <div id='note_create_view_image_construct' class='note_create_view_image'>Image:</div>
+                <div id='note_create_view_location_construct' class='note_create_view_location'>Location:</div>
+            </div>
+            <div id='note_create_view_right_construct' class='note_create_view_right'>
+                <div id='note_create_view_caption_construct' class='note_create_view_caption'>Caption:</div>
+                <div id='note_create_view_tagsaudio_construct' class='note_create_view_tagsaudio'>
+                    <div id='note_create_view_tags_construct' class='note_create_view_tags'>Tags:</div>
+                    <div id='note_create_view_audio_construct' class='note_create_view_audio'>Audio:</div>
+                </div>
+                <div id='note_create_view_submit_construct' class='note_create_view_submit'>Submit:</div>
+                </div>
           </div>*/
 
         this.html.children[0].children[0].innerHTML = '<br>Image:<br><img width=300 height=300 id="imageThumbnail"><input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="visibility:hidden;position:absolute;top:-50;left:-50"/><button id="browseImage" class="button" onclick="clickBrowseImage()">Browse</button><button id="showCamera" onclick="showVideo()" class="button">Camera</button><video id="video" width="200" height="200" autoplay class="hidden"></video><button id="snap" class="button hidden">Snap Photo</button><div hidden><canvas id="canvas" width="200" height="200"></canvas></div>';
         this.html.children[0].children[1].innerHTML = '<br>Location:<br><div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br><input type="text" name="location" id="searchTextField" style="width:300px"><br><div id="latitude"></div><div id="longitude"></div><div id="address"></div><br><br>';
         this.html.children[1].children[0].innerHTML = '<br>Caption:<br><textarea id="caption" rows="8"></textarea><br><br>';
-        this.html.children[1].children[1].children[0].innerHTML = 'Tags:<br><input id="tag1" value="Innovation" type="checkbox">Innovation</input><br><input id="tag2" value="Civil Disobedience" type="checkbox">Civil Disobedience</input><br><input id="tag3" value="Stories of the Past" type="checkbox">Stories of the Past</input><br><input id="tag4" value="Gratitudes" type="checkbox">Gratitudes</input><br><input id="tag5" value="Culture" type="checkbox">Culture</input><br><input id="tag6" value="Buckys List" type="checkbox">Bucky\'s List</input><br><input id="tag7" value="Envisioning the Future" type="checkbox">Envisioning the Future</input><br><br>';
+        this.html.children[1].children[1].children[0].innerHTML = 'Tags:<br><input id="create_tag_1" value="Innovation" type="checkbox">Innovation</input><br><input id="create_tag_2" value="Civil Disobedience" type="checkbox">Civil Disobedience</input><br><input id="create_tag_3" value="Stories of the Past" type="checkbox">Stories of the Past</input><br><input id="create_tag_4" value="Gratitudes" type="checkbox">Gratitudes</input><br><input id="create_tag_5" value="Culture" type="checkbox">Culture</input><br><input id="create_tag_6" value="Buckys List" type="checkbox">Bucky\'s List</input><br><input id="create_tag_7" value="Envisioning the Future" type="checkbox">Envisioning the Future</input><br><br>';
         //this.html.children[1].children[1].children[1].innerHTML = 'Audio:<br><input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" style="visibility:hidden;position:absolute;top:-50;left:-50"/><button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br><button id="recordAudio" onclick="recordAudio()" class="button">Record</button> <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button><button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button><div id="audioPreview"><br>Preview:<br><audio controls id="audioPreview"><source src="assets/audio/test.ogg" type="audio/ogg"><source type="audio/mpeg"></audio></div><br><br>';
         this.html.children[1].children[1].children[1].innerHTML = 'Audio:<br><button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br><input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden"><button id="recordAudio" onclick="recordAudio()" class="button">Record</button> <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button><button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button><br>Preview:<br><audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio><br><br>';
 
