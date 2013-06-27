@@ -101,12 +101,12 @@ function NoteView(html, object)
 
         if (this.object.contents[1] != null)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + this.object.contents[1].media_url + '" />';
-        if (this.object.contents[2] != null)
-            this.html.children[1].children[0].innerHTML = 'Caption: ' + this.object.contents[0].text + '<br><br><br> Tags: ' + this.object.tagString + '<br><br><br>Audio:<br> <audio controls id="audio"><source src=' + this.object.contents[2].media_url + ' type="audio/mpeg"></audio>';
+        this.html.children[1].children[0].innerHTML = 'Caption: ' + this.object.title + '<br><br><br> Tags: ' + this.object.tagString + '<br><br><br>';
         this.html.children[1].children[1].innerHTML = 'Comments: ';
         this.html.children[1].children[2].innerHTML = '<br><br><textarea id="commentInput" rows="4" placeholder="add comment"></textarea><br><button id="commentSubmit" class="button" onclick="submitComment()">Submit</button><br><br><br>'; 
         this.html.children[1].children[2].innerHTML += this.object.likes + controller.getLikeIcon() + '    ' + this.object.comments.length + controller.getCommentIcon();   
         this.loadComments();
+        console.log('caption: '+JSON.stringify(this.object));
     }
 
     this.loadComments = function()
