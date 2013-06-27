@@ -170,18 +170,6 @@ function Controller()
                     return true;
             }
         }
-        if (document.getElementById("tag6").checked) {
-            for(var i = 0; i < tags.length; i++) {
-                if (tags[i].tag.toLowerCase() == document.getElementById("tag6").value.toLowerCase())
-                    return true;
-            }
-        }
-        if (document.getElementById("tag7").checked) {
-            for(var i = 0; i < tags.length; i++) {
-                if (tags[i].tag.toLowerCase() == document.getElementById("tag7").value.toLowerCase())
-                    return true;
-            }
-        }
 
         return false;
     }

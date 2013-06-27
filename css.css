@@ -72,6 +72,7 @@ div
      * -Phil
      */
     display:block; 
+    max-width:30%;
 }
 
 #main_view_right

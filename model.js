@@ -236,7 +236,23 @@ function Model()
         this.gmap = new google.maps.Map(this.map, myOptions);
 
         // setup info area
-        document.getElementById('main_view_info').innerHTML = 'Tags:<br><input id="tag1" value="Innovation" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Innovation</input><br><input id="tag2" value="Civil Disobedience" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Civil Disobedience</input><br><input id="tag3" value="Stories of the Past" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Stories of the Past</input><br><input id="tag4" value="Gratitudes" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Gratitudes</input><br><input id="tag5" value="Culture" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Culture</input><br><input id="tag6" value="Buckys List" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Bucky\'s List</input><br><input id="tag7" value="Envisioning the Future" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Envisioning the Future</input><br><br><span> Search: <input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span><br><br><br><button onClick="JavaScript:controller.noteCreate()" class="button">Upload</button>';
+        document.getElementById('main_view_info').innerHTML = 'Tags:<br />'+
+        '<input id="tag1" value="Innovation" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
+            'Innovation'+
+        '</input><br />'+
+        '<input id="tag2" value="Stories of the Past" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
+            'Stories of the Past'+
+        '</input><br />'+
+        '<input id="tag3" value="Madison Culture" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
+            'Madison Culture'+
+        '</input><br />'+
+        '<input id="tag4" value="Must Do" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
+            'Must Do'+
+        '</input><br />'+
+        '<input id="tag5" value="100 Years from Now" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
+            '100 Years from Now'+
+        '</input><br />'+
+        '<br /><span> Search: <input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span><br /><br /><br /><button onClick="JavaScript:controller.noteCreate()" class="button">Upload</button>';
 
         // marker clusterer
         var mcOptions = {styles: [{
