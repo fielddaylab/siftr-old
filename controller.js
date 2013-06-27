@@ -487,15 +487,16 @@ function Controller()
 
     this.createPlayerReturned = function(returnString)
     {
-        // set note Id
-        var startJson = returnString.indexOf("{");
-        var jsonString = returnString.substr(startJson);
-        var obj = JSON.parse(jsonString);
+        var obj = JSON.parse(returnString);
 
-        model.playerId = obj.data;
-
-        if(model.playerId > 0) controller.noteCreate();
-        else alert("Invalid email. Please try again.");
+        if(obj.returnCode > 0) alert(obj.returnCodeDescription);
+        else
+        {
+            model.playerId = obj.data;
+            controller.noteCreate();
+            self.hideLoginView();
+            self.hideJoinView();
+        }
     }
 
     this.resetAndEmailPassword = function(email)
