@@ -25,23 +25,23 @@ div
 
 .main_view
 {
-    display:-moz-box;
-    display:-webkit-box;
-    display:-o-box;
-    display:-ms-box;
-    display:box;
-
-    -moz-box-orient:   vertical;
-    -webkit-box-orient:vertical;
-    -o-box-orient:     vertical;
-    -ms-box-orient:    vertical;
-    box-orient:        vertical;
-
-    -moz-box-flex:   1;
-    -webkit-box-flex:1;
-    -o-box-flex:     1;
-    -ms-box-flex:    1;
-    box-flex:        1;
+	display: -moz-box;
+	display: -webkit-box;
+	display: -o-box;
+	display: -ms-box;
+	display: box;
+	
+	-moz-box-orient: horizontal;
+	-webkit-box-orient: horizontal;
+	-o-box-orient: horizontal;
+	-ms-box-orient: horizontal;
+	box-orient: horizontal;
+	
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	-o-box-flex: 1;
+	-ms-box-flex: 1;
+	box-flex: 1;
 }
 
 #main_view_full
@@ -77,13 +77,47 @@ div
 
 #main_view_right
 {
+	display: -moz-box;
+	display: -webkit-box;
+	display: -o-box;
+	display: -ms-box;
+	display: box;
+	
+	-moz-box-orient: vertical;
+	-webkit-box-orient: vertical;
+	-o-box-orient: vertical;
+	-ms-box-orient: vertical;
+	box-orient: vertical;
+	
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	-o-box-flex: 1;
+	-ms-box-flex: 1;
+	box-flex: 1;
+	
+	-webkit-transform: translateZ(0);
+	background-color: white;
 }
 
 #main_view_map
 {
-    min-height:300px;
-    margin:10px 10px 0px 10px;
-    border:1px solid black;
+  display: -moz-box;
+	display: -webkit-box;
+	display: -o-box;
+	display: -ms-box;
+	display: box;
+	
+	-moz-box-orient: vertical;
+	-webkit-box-orient: vertical;
+	-o-box-orient: vertical;
+	-ms-box-orient: vertical;
+	box-orient: vertical;
+	
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	-o-box-flex: 1;
+	-ms-box-flex: 1;
+	box-flex: 1;
 }
 
 #main_view_info
@@ -108,22 +142,20 @@ div
 {
     display:none;
     position:absolute;
-    top:3%;
-    right:15%;
-    max-height:110%;
+    left:40%;
+    top:10%;
+    width:350px;
     background-color:white;
-    width:85%;
 }
 
 #join_view_container
 {
     display:none;
     position:absolute;
-    top:3%;
-    right:15%;
-    max-height:110%;
+    left:40%;
+    top:10%;
+    width:350px;
     background-color:white;
-    width:85%;
 }
 
 #create_note_view_container
@@ -132,7 +164,6 @@ div
     position:absolute;
     top:3%;
     right:15%;
-    max-height:110%;
     background-color:white;
     width:85%;
     border:1px solid black;

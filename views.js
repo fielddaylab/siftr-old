@@ -680,8 +680,8 @@ function LoginView(html)
           <div id='login_view_bottom_construct' class='login_view_bottom'></div>
           </div>*/
 
-        this.html.children[0].innerHTML = '<br>To upload content, you must login.<br><br><button id="loginFacebook" class="button" onclick="clickLoginFacebook()">Login with Facebook</button><button id="loginGoogle" onclick="clickLoginGoogle()" class="button">Login with Google+</button><br><hr style="background:#F87431; border:0; height:7px" /><br><br>';
-        this.html.children[1].innerHTML = '<ul><li><label for="usermail_login">Email</label> <input type="email" id="usermail_login" placeholder="yourname@email.com" required></li>  <li><label for="password">Password</label>  <input type="password" id="password" placeholder="password" required></li>  <li>  <button id="login" class="button" onclick="clickLogin()">Login</button></li>  </ul> <br> <span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don\'t have an account?</span><br><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Password?</span>';
+        this.html.children[0].innerHTML = '<br>To upload content, you must login.<br><hr style="background:#F87431; border:0; height:7px" /><br><br>';
+        this.html.children[1].innerHTML = '<ul><li><label for="usermail_login">Username</label> <input type="text" id="usermail_login" placeholder="username" required></li>  <li><label for="password">Password</label>  <input type="password" id="password" placeholder="password" required></li>  <li>  <button id="login" class="button" onclick="clickLogin()">Login</button></li>  </ul> <br> <span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don\'t have an account?</span><br><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Password?</span>';
     }
 
     this.constructHTML();
@@ -698,8 +698,8 @@ function JoinView(html)
           <div id='login_view_bottom_construct' class='login_view_bottom'></div>
           </div>*/
 
-        this.html.children[0].innerHTML = 'Join to contribute<br><br>connect with<br><button id="joinFacebook" class="button" onclick="clickLoginFacebook()">Facebook</button><button id="joinGoogle" onclick="clickJoinGoogle()" class="button">Google+</button><br><hr/><hr style="background:#F87431; border:0; height:7px" /><br>';
-        this.html.children[1].innerHTML = 'OR sign up with your email address<br><ul><li><label for="usermail_join">Email</label> <input type="email" id="usermail_join" placeholder="yourname@email.com" required></li>  <li><label for="password">Password</label>  <input type="password" id="password" placeholder="password" required></li>  <li> <button id="signUp" class="button" onclick="clickSignUp()">Sign Up</button></li>  </ul> <br> Already have an account?<span id="viewLoginPage" onClick="clickViewLoginPage()" class="internalLink">Log in</a>';
+        this.html.children[0].innerHTML = 'Join to contribute<br><hr style="background:#F87431; border:0; height:7px" /><br>';
+        this.html.children[1].innerHTML = '<ul><li><label for="usermail_join">Username</label> <input type="text" id="usermail_join" placeholder="username" required></li>  <li><label for="password">Password</label>  <input type="password" id="password" placeholder="password" required></li>  <li> <button id="signUp" class="button" onclick="clickSignUp()">Sign Up</button></li>  </ul> <br> Already have an account?<span id="viewLoginPage" onClick="clickViewLoginPage()" class="internalLink">Log in</a>';
     }		
 
     this.constructHTML();
