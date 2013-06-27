@@ -99,8 +99,13 @@ function NoteView(html, object)
         // 3rd piece of content is audio (optional)
         // (can make it more robust later)
 
-        if (this.object.contents[1] != null)
-            this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + this.object.contents[1].media_url + '" />';
+        var imgcontent;
+        for(var i = 0; i < this.object.contents.length; i++)
+        {
+            if(this.object.contents[i].type == 'PHOTO') imgcontent = this.object.contents[i];
+        }
+        if(imgcontent != null)
+            this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
         this.html.children[1].children[0].innerHTML += 'Caption: ' + this.object.title + '<br><br><br> Tags: ' + this.object.tagString + '<br><br><br>';
         this.html.children[1].children[1].innerHTML = 'Comments: ';
         this.html.children[1].children[2].innerHTML = '<br><br><textarea id="commentInput" rows="4" placeholder="add comment"></textarea><br><button id="commentSubmit" class="button" onclick="submitComment()">Submit</button><br><br><br>'; 
