@@ -179,7 +179,7 @@ function submitNote()
     // add text to note
     model.currentNote.text = document.getElementById("caption").value;
     if (model.currentNote.text != '')
-        controller.addContentToNote(model.currentNote.noteId, 0, "TEXT", model.currentNote.text, '');
+        controller.updateNote(model.currentNote.noteId, model.currentNote.text);
 
     // add image content
     if (model.currentNote.imageFile != null)
