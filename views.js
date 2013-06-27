@@ -736,19 +736,19 @@ function NoteCreateView(html)
         this.html.children[0].children[1].innerHTML = '<br>Location:<br><div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br><input type="text" name="location" id="searchTextField" style="width:300px"><br><div id="latitude"></div><div id="longitude"></div><div id="address"></div><br><br>';
         this.html.children[1].children[0].innerHTML = '<br>Caption:<br><textarea id="caption" rows="8"></textarea><br><br>';
         this.html.children[1].children[1].children[0].innerHTML = 'Tags:<br>'+
-        '<input id="create_tag_1" value="Innovation" type="checkbox">'+
+        '<input id="create_tag_1" name="note_tag_select" value="Innovation" type="radio">'+
             'Innovation'+
         '</input><br>'+
-        '<input id="create_tag_2" value="Stories of the Past" type="checkbox">'+
+        '<input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">'+
             'Stories of the Past'+
         '</input><br>'+
-        '<input id="create_tag_3" value="Madison Culture" type="checkbox">'+
+        '<input id="create_tag_3" name="note_tag_select" value="Madison Culture" type="radio">'+
             'Madison Culture'+
         '</input><br>'+
-        '<input id="create_tag_4" value="Must Do" type="checkbox">'+
+        '<input id="create_tag_4" name="note_tag_select" value="Must Do" type="radio">'+
             'Must Do'+
         '</input><br>'+
-        '<input id="create_tag_5" value="100 Years from Now" type="checkbox">'+
+        '<input id="create_tag_5" name="note_tag_select" value="100 Years from Now" type="radio">'+
             '100 Years from Now'+
         '</input><br>'+
         '<br>';
