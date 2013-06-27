@@ -1,6 +1,6 @@
 function Model()
 {
-    this.gameId = 3428;
+    this.gameId = YOI_GAME_ID;
     this.playerId = 0;
     this.gameJSONText = '';
     this.gameData = {};
