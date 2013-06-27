@@ -632,7 +632,7 @@ function clickBrowseAudio()
 
 function clickLogin()
 {
-    var email = document.getElementById('username_login').value;
+    var email = document.getElementById('usermail_login').value;
     var password = document.getElementById('password').value;
 
     controller.login(email, password);
