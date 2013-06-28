@@ -10,201 +10,17 @@ function Model()
     this.audio_context = '';
     this.recorder = '';
 
-    //All notes in order they were received 
     this.notes = [];
     this.addNote = function(note)
     {
         this.notes[this.notes.length] = note;
     }
-    //All notes (no order)
     this.mapNotes = [];
     this.mapMarkers = [];
-
     this.addMapNote = function(mapNote)
     {
         mapNote.geoloc = new google.maps.LatLng(mapNote.lat, mapNote.lon);
         this.mapNotes[this.mapNotes.length] = mapNote;
-    }
-    // GWS: some of the next couple of functions aren't currently used, but I left them in there in case we want them later
-    //All notes ordered alphabetically by owner name
-    this.contributorNotes = [];
-    this.addContributorNote = function(contributorNote)
-    {
-        for(var i = 0; i < this.contributorNotes.length; i++)
-        {
-            if(this.contributorNotes[i].username.toLowerCase() >= contributorNote.username.toLowerCase())
-            {
-                this.contributorNotes.splice(i, 0, contributorNote);
-                return;
-            }
-        }
-        this.contributorNotes[this.contributorNotes.length] = contributorNote;
-    }
-
-    //All notes ordered alphabetically by first alphabetical tag
-    this.tagNotes = [];
-    this.addTagNote = function(tagNote)
-    {
-        for(var i = 0; i < this.tagNotes.length; i++)
-        {
-            if(this.tagNotes[i].tagString.toLowerCase() >= tagNote.tagString.toLowerCase())
-            {
-                this.tagNotes.splice(i, 0, tagNote);
-                return;
-            }
-        }
-        this.tagNotes[this.tagNotes.length] = tagNote;
-    }
-
-    //All notes ordered by total amount of likes on self/comments
-    this.popularNotes = [];
-    this.addPopularNote = function(popularNote)
-    {
-        for(var i = 0; i < this.popularNotes.length; i++)
-        {
-            if(this.popularNotes[i].popularity <= popularNote.popularity)
-            {
-                this.popularNotes.splice(i, 0, popularNote);
-                return;
-            }
-        }
-        this.popularNotes[this.popularNotes.length] = popularNote;
-    }
-
-    //List of all contributors to any note in game (whether owner of note or just comment) ordered alphabetically
-    this.contributors = [];
-    this.contributorMapCells = [];
-    this.contributorListCells = [];
-    this.addContributor = function(contributor)
-    {
-        for(var i = 0; i < this.contributors.length; i++)
-        {
-            if(this.contributors[i] == contributor) return;
-            if(this.contributors[i].toLowerCase() > contributor.toLowerCase())
-            {
-                this.contributors.splice(i, 0, contributor);
-                return;
-            }
-        }
-        this.contributors[this.contributors.length] = contributor;
-    }
-    this.mapContributorSelected = function(contributor)
-    {
-        for(var i = 0; i < this.contributorMapCells.length; i++)
-        {
-            if(this.contributorMapCells[i].object == contributor)
-                return this.contributorMapCells[i].selected;
-        }
-        return false;
-    }
-    this.listContributorSelected = function(contributor)
-    {
-        for(var i = 0; i < this.contributorListCells.length; i++)
-        {
-            if(this.contributorListCells[i].object == contributor)
-                return this.contributorListCells[i].selected;
-        }
-        return false;
-    }
-
-    //List of all tags in any note in game ordered alphabetically 
-    this.tags = [];
-    this.tagMapCells = [];
-    this.tagListCells = [];
-    this.addTag = function(tag)
-    {
-        for(var i = 0; i < this.tags.length; i++)
-        {
-            if(this.tags[i] == tag) return;
-            if(this.tags[i].toLowerCase() > tag.toLowerCase())
-            {
-                this.tags.splice(i, 0, tag);
-                return;
-            }
-        }
-        this.tags[this.tags.length] = tag;
-    }
-    this.mapTagsSelected = function(tags)
-    {
-        //n^2! oh noes!
-        for(var i = 0; i < this.tagMapCells.length; i++)
-        {
-            for(var j = 0; j < tags.length; j++)
-            {
-                if(this.tagMapCells[i].object == tags[j].tag && this.tagMapCells[i].selected)
-                    return true;
-            }
-        }
-        return false;
-    }
-    this.listTagsSelected = function(tags)
-    {
-        //n^2! oh noes!
-        for(var i = 0; i < this.tagListCells.length; i++)
-        {
-            for(var j = 0; j < tags.length; j++)
-            {
-                if(this.tagListCells[i].object == tags[j].tag && this.tagListCells[i].selected)
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    this.numberOfNotesForTag = function(tag)
-    {
-        var notesForTag = 0;
-        for(var i = 0; i < this.notes.length; i++)
-        {
-            if(!controller.filter(this.notes[i], document.getElementById("filterbox").value)) continue;
-            for (var j = 0; j < this.notes[i].tags.length; j++) 
-                if(this.notes[i].tags[j].tag.toLowerCase() == tag.toLowerCase()) notesForTag ++;
-        }
-        return notesForTag;
-    }
-
-    this.numberOfTotalNotes = function()
-    {
-        var notes = 0;
-        for(var i = 0; i < this.notes.length; i++)
-        {
-            if(!controller.filter(this.notes[i], document.getElementById("filterbox").value)) continue;
-
-            notes ++;		
-        }
-
-        return notes;
-    }
-
-
-    this.numberOfNotesForContributor = function(contributor)
-    {
-        var notesForContributor = 0;
-        for(var i = 0; i < this.notes.length; i++)
-        {
-
-            if (this.notes[i].username.toLowerCase() == contributor.toLowerCase()) {
-                if(controller.filter(this.notes[i], document.getElementById("filterbox").value))	
-                    notesForContributor ++;
-            }
-        }
-        return notesForContributor;
-    }
-
-    this.getProfilePicForContributor = function(contributor)
-    {
-        var picURL = "";
-        for(var i = 0; i < this.backpacks.length; i++)
-        {
-            if(contributor == null || this.backpacks[i].owner.user_name == null)
-                picURL = "./assets/images/DefaultPCImage.png";
-            else if(this.backpacks[i].owner.user_name.toLowerCase() == contributor.toLowerCase())
-                picURL = this.backpacks[i].owner.player_pic_url;
-        }
-
-        if(picURL == null) picURL = "./assets/images/DefaultPCImage.png";
-
-        return picURL;
     }
 
     this.views = new function Views()
@@ -296,6 +112,4 @@ function Model()
         
         this.markerclusterer.setMinimumClusterSize(3)
     };
-
-    document.addEventListener('keydown', function(e) { if(e.keyIdentifier == 'Up' || e.keyIdentifier == 'Down') { controller.displayNextNote(e.keyIdentifier); e.stopPropagation(); e.preventDefault(); } }, false);
 }

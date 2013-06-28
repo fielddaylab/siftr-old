@@ -23,6 +23,31 @@ div
     display:none;
 }
 
+.map_note_view_close_button
+{
+    float:right;
+    width:3%;
+}
+
+
+.note_list_cell
+{
+    float:left;
+    padding:10px 0px 0px 10px;
+    width:200px;
+    min-height:100px;
+}
+
+.note_list_cell_media
+{
+    display:block;
+    width:200px;
+    border:1px solid black;
+}
+
+.hidden   { visibility:hidden;  display:none;}
+.unhidden { visibility:visible; display:block;}
+
 .main_view
 {
 	display: -moz-box;
@@ -125,18 +150,6 @@ div
     margin:10px 10px 10px 10px;
 }
 
-#note_view_container
-{
-    overflow-y:scroll;
-    overflow-x:hidden;
-    border:1px solid black;
-    display:none;
-    position:absolute;
-    top:3%;
-    right:15%;
-    max-height:110%;
-    background-color:white;
-}
 
 #login_view_container
 {
@@ -169,93 +182,7 @@ div
     border:1px solid black;
 }
 
-.map_note_view_close_button
-{
-    float:right;
-    width:3%;
-}
 
-.note_view
-{
-    padding:1%;
-    width:98%;
-    background-color:#FFFFFF;
-    border:1px solid black;
-}
-
-.note_view_header
-{
-    margin-bottom:.5%;
-    width:95%;
-}
-
-.note_view_title
-{
-    float:left;
-    overflow:visible;
-    font-size:xx-large;
-}
-
-.note_view_counts
-{
-    float:right;
-    font-size:small;
-    color:#444444;
-    margin: 0% 3% 0% 0% ;
-}
-
-.note_view_created
-{
-    float:right;
-    font-size:small;
-    color:#444444;
-    margin: 0% 3% 0% 0% ;
-}
-
-.note_view_owner
-{
-    clear:left;
-    color:#444444;
-}
-
-.note_view_tags
-{
-    margin:1% 0%;
-}
-
-.note_view_content_box
-{
-    margin-bottom:1%;
-    overflow-x:scroll;
-}
-
-.note_content_cell
-{
-    margin-bottom:1%;
-}
-
-.note_view_comment_label
-{
-    font-size:large;
-}
-
-.note_list_cell
-{
-    float:left;
-    padding:10px 0px 0px 10px;
-    width:200px;
-    min-height:100px;
-}
-
-.note_list_cell_media
-{
-    display:block;
-    width:200px;
-    border:1px solid black;
-}
-
-.hidden   { visibility:hidden;  display:none;}
-.unhidden { visibility:visible; display:block;}
 
 .note_create_view
 {
@@ -481,9 +408,28 @@ div
     box-pack:end;
 }
 
+/* Begin note view */
+
+#note_view_container
+{
+    overflow-y:scroll;
+    overflow-x:scroll;
+    border:1px solid black;
+    display:none;
+    position:absolute;
+    top:3%;
+    right:15%;
+    max-height:100%;
+    max-width:85%;
+    background-color:white;
+}
+
+
 
 .note_view
 {
+	padding:1%;
+    border:1px solid black;
     display: -moz-box;
     display: -webkit-box;
     display: -o-box;
@@ -496,13 +442,6 @@ div
     -ms-box-orient: horizontal;
     box-orient: horizontal;
 
-    -moz-box-flex: 1;
-    -webkit-box-flex: 1;
-    -o-box-flex: 1;
-    -ms-box-flex: 1;
-    box-flex: 1;
-
-    border:1px solid black;
 }
 
 .note_view_left
@@ -513,17 +452,11 @@ div
     display: -ms-box;
     display: box;
 
-    -moz-box-orient: horizontal;
-    -webkit-box-orient: horizontal;
-    -o-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-
-    -moz-box-flex: 2;
-    -webkit-box-flex: 2;
-    -o-box-flex: 2;
-    -ms-box-flex: 2;
-    box-flex: 2;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
 }
 
 .note_view_right
@@ -539,6 +472,12 @@ div
     -o-box-orient: vertical;
     -ms-box-orient: vertical;
     box-orient: vertical;
+    
+    -moz-box-pack: justify;
+    -webkit-box-pack: justify;
+    -o-box-pack: justify;
+    -ms-box-pack: justify;
+    box-pack:justify;
 
     -moz-box-flex: 1;
     -webkit-box-flex: 1;
@@ -555,19 +494,34 @@ div
     display: -ms-box;
     display: box;
 
-    -moz-box-orient: vertical;
-    -webkit-box-orient: vertical;
-    -o-box-orient: vertical;
-    -ms-box-orient: vertical;
-    box-orient: vertical;
-
-    -moz-box-flex: 2;
-    -webkit-box-flex: 2;
-    -o-box-flex: 2;
-    -ms-box-flex: 2;
-    box-flex: 2;
+   
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
 }
 
+.note_view_captions
+{
+    display: -moz-box;
+    display: -webkit-box;
+    display: -o-box;
+    display: -ms-box;
+    display: box;
+
+    
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
+}
+
+.note_view_comment_label
+{
+    font-size:large;
+}
 .note_view_comments
 {
     display: -moz-box;
@@ -576,17 +530,12 @@ div
     display: -ms-box;
     display: box;
 
-    -moz-box-orient: vertical;
-    -webkit-box-orient: vertical;
-    -o-box-orient: vertical;
-    -ms-box-orient: vertical;
-    box-orient: vertical;
-
-    -moz-box-flex: 2;
-    -webkit-box-flex: 2;
-    -o-box-flex: 2;
-    -ms-box-flex: 2;
-    box-flex: 2;
+  
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
 }
 
 .note_view_input
@@ -597,18 +546,15 @@ div
     display: -ms-box;
     display: box;
 
-    -moz-box-orient: horizontal;
-    -webkit-box-orient: horizontal;
-    -o-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-
+   
     -moz-box-flex: 1;
     -webkit-box-flex: 1;
     -o-box-flex: 1;
     -ms-box-flex: 1;
     box-flex: 1;
 }
+
+/* End note view */
 
 .login_view
 {

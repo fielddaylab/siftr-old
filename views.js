@@ -408,32 +408,6 @@ function getIconsForNoteContents(note)
     return iconHTML;
 };
 
-function changeCheckBox(innerHTML, checked)
-{
-    var checkboxCheckedFilename = "checkbox.png";
-    var checkboxUncheckedFilename = "checkboxUnchecked.png";
-    var htmlCheckboxChecked = '<img src="./assets/images/' + checkboxCheckedFilename + '" height="14px";>  ';
-    var htmlCheckboxUnchecked = '<img src="./assets/images/' + checkboxUncheckedFilename + '" height="14px";>  ';
-
-    // clear out previous check box
-    var checkBoxLoc = innerHTML.indexOf(checkboxCheckedFilename);
-    if(checkBoxLoc >= 0) innerHTML = innerHTML.substr(htmlCheckboxChecked.length+4, innerHTML.length);
-    checkBoxLoc = innerHTML.indexOf(checkboxUncheckedFilename);
-    if(checkBoxLoc >= 0) innerHTML = innerHTML.substr(htmlCheckboxUnchecked.length+4, innerHTML.length);
-
-    // insert new check box
-    if(checked == true) innerHTML = htmlCheckboxChecked + innerHTML;
-    else                innerHTML = htmlCheckboxUnchecked + innerHTML;
-
-    return innerHTML;
-};
-
-this.playerPicForNote = function(username) 
-{
-    var picHTML = '  <img src="' + model.getProfilePicForContributor(username) + '"vertical-align:middle; height=40px;> ';
-    return picHTML;
-};
-
 function handleImageFileSelect(files)
 {
     for(var i = 0; i < files.length; i++)

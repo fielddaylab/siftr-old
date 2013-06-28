@@ -35,22 +35,12 @@ function Controller()
     this.showLoginView = function() 
     {
         // To Do: setup login view from submitting comments. Currently it only goes to login view if you try to upload a new note.
-        //if (parentView = null) {
         var html = model.views.constructLoginView.cloneNode(true);
         model.views.loginView = new LoginView(html);
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
-        //setTimeout(function() {document.addEventListener('click', controller.hideLoginView, false); }, 100); //timeout to disallow imediate hiding
-        /*} else {
-          var html = model.views.constructLoginView.cloneNode(true);
-          model.views.loginView = new LoginView(html);
-        // GWS: the parent view will need to change once the main view changes (for all modal views)
-        //model.views.mapNoteViewContainer.appendChild(model.views.mapNoteViewCloseButton.html);
-        parentView.appendChild(model.views.loginView.html);
-        parentView.style.display = 'block';
-        }*/
     };
 
     this.showJoinView = function() 
@@ -61,7 +51,6 @@ function Controller()
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-        //setTimeout(function() { document.addEventListener('click', controller.hideJoinView, false); }, 100); //timeout to disallow imediate hiding
     };
 
     this.populateModel = function(gameData)
@@ -94,14 +83,6 @@ function Controller()
                 //Add to various note lists
                 model.addNote(model.backpacks[i].notes[j]);
                 model.addMapNote(model.backpacks[i].notes[j]);
-                model.addContributorNote(model.backpacks[i].notes[j]);
-                model.addTagNote(model.backpacks[i].notes[j]);
-                model.addPopularNote(model.backpacks[i].notes[j]);
-
-                //Add contents to filter lists
-                model.addContributor(model.backpacks[i].notes[j].username);
-                for(var k = 0; k < model.backpacks[i].notes[j].tags.length; k++)
-                    model.addTag(model.backpacks[i].notes[j].tags[k].tag);
             }
         }
 
@@ -120,7 +101,6 @@ function Controller()
         {
             if(!this.tagsSelected(model.mapNotes[i].tags)) continue;
             if(!this.filter(model.mapNotes[i], document.getElementById("filterbox").value)) continue;
-            // To Do: set up any other filters here
 
             tmpmarker = new MapMarker(this.noteSelected, model.mapNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
@@ -195,86 +175,29 @@ function Controller()
 
     };
 
-    this.filter = function(note, filter) {
-
-        if (filter == "") 
-            return true; 
-
+    this.filter = function(note, filter)
+    {
+        if(filter == "") return true; 
         // check title
-        if (note.title.toLowerCase().indexOf(filter.toLowerCase()) != -1)
-            return true;
-
+        if(note.title.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
         // check contributor
-        if (note.username.toLowerCase().indexOf(filter.toLowerCase()) != -1)
-            return true;
-
+        if(note.username.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
         // check caption & type
-        for (i = 0; i < note.contents.length; i++) {
-            if (note.contents[i].text.toLowerCase().indexOf(filter.toLowerCase()) != -1)
-                return true;
-            if (note.contents[i].type.toLowerCase().indexOf(filter.toLowerCase()) != -1) 
-                return true;
+        for (i = 0; i < note.contents.length; i++)
+        {
+            if(note.contents[i].text.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
+            if(note.contents[i].type.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
         }
-
         // check tags
         for (var i = 0; i < note.tags.length; i++) 
-        {		
-            if (note.tags[i].tag.toLowerCase().indexOf(filter.toLowerCase()) != -1) 
-                return true;
-        }
+            if(note.tags[i].tag.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
 
         return false;
-    };
-
-
-    this.filterTag = function(tagToSearch, filter) {
-
-        if (filter == "") 
-            return true; 
-
-        // check tag
-        if (tagToSearch != null)
-        {
-            if (tagToSearch.toLowerCase().indexOf(filter.toLowerCase()) != -1)
-                return true;
-        }
-
-        if (tagToSearch != null && tagToSearch != "")
-        {
-            if (model.numberOfNotesForTag(tagToSearch) > 0) 
-                return true;
-        }
-
-
-        return false;
-    };
-
-    this.filterContributor = function(contributor, filter)
-    {
-        if (filter == "") return true; 
-
-        // check contributor
-        if(contributor.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-
-        // check for note title & tags & type
-        for(var i = 0; i < model.contributorNotes.length; i++)
-        {
-            if (model.contributorNotes[i].username.toLowerCase() == contributor.toLowerCase())
-            {
-                if (model.contributorNotes[i].title.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-                for (var j = 0; j < model.contributorNotes[i].tags.length; j++) 
-                    if(model.contributorNotes[i].tags[j].tag.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-                for (var k = 0; k < model.contributorNotes[i].contents.length; k++)
-                    if (model.contributorNotes[i].contents[k].type.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-            }
-        }
-        return 0;
     };
 
     this.getIconsForNoteContents = function(note)
     {
-        if (note.contents[0] == null)
-            return "";
+        if(note.contents[0] == null) return "";
 
         var textCount = 0;
         var audioCount = 0;
@@ -317,11 +240,6 @@ function Controller()
     {
         //return '  <img src="./assets/images/defaultTextIcon.png" height=14px;>  ';
         return "";
-    };
-
-    this.playerPicForContributorList = function(username) 
-    {
-        return '  <img src="' + model.getProfilePicForContributor(username) + '" height=14px;>  ';
     };
 
     this.checkBox = function(checked)
