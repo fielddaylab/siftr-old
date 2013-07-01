@@ -11,10 +11,7 @@ function Model()
     this.recorder = '';
 
     this.notes = [];
-    this.addNote = function(note)
-    {
-        this.notes[this.notes.length] = note;
-    }
+    this.addNote = function(note) { this.notes[this.notes.length] = note; }
     this.mapNotes = [];
     this.mapMarkers = [];
     this.addMapNote = function(mapNote)

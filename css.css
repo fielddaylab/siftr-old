@@ -23,28 +23,6 @@ div
     display:none;
 }
 
-.map_note_view_close_button
-{
-    float:right;
-    width:3%;
-}
-
-
-.note_list_cell
-{
-    float:left;
-    padding:10px 0px 0px 10px;
-    width:200px;
-    min-height:100px;
-}
-
-.note_list_cell_media
-{
-    display:block;
-    width:200px;
-    border:1px solid black;
-}
-
 .hidden   { visibility:hidden;  display:none;}
 .unhidden { visibility:visible; display:block;}
 
@@ -150,11 +128,28 @@ div
     margin:10px 10px 10px 10px;
 }
 
+.note_list_cell
+{
+    float:left;
+    padding:10px 0px 0px 10px;
+    width:200px;
+    min-height:100px;
+}
 
-#login_view_container
+.note_list_cell_media
+{
+    display:block;
+    width:200px;
+    border:1px solid black;
+}
+
+.container
 {
     display:none;
     position:absolute;
+}
+#login_view_container
+{
     left:40%;
     top:10%;
     width:350px;
@@ -163,8 +158,6 @@ div
 
 #join_view_container
 {
-    display:none;
-    position:absolute;
     left:40%;
     top:10%;
     width:350px;
@@ -173,16 +166,12 @@ div
 
 #create_note_view_container
 {
-    display:none;
-    position:absolute;
     top:3%;
     right:15%;
     background-color:white;
     width:85%;
     border:1px solid black;
 }
-
-
 
 .note_create_view
 {

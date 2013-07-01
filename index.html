@@ -88,6 +88,12 @@ function finishLoadGame(responseText)
 <!-- These will never be seen. This is simply an area to construct nodes in raw html rather than dealing with doing so in javascript. From here, nodes can be accessed by their ID's, cloned, and renamed. -->
 <div id='constructs'>
 
+<!-- Close Buttons (?) --><!-- NOT re-used. Just put here so they don't show up, I guess? -->
+<div id='note_view_close_button'        class='close_button'>X</div>
+<div id='create_note_view_close_button' class='close_button'>X</div>
+<div id='login_view_close_button'       class='close_button'>X</div>
+<div id='join_view_close_button'        class='close_button'>X</div>
+
 <!-- Create Note View -->
 <div id='note_create_view_construct' class='note_create_view'>
     <div id='note_create_view_left_construct' class='note_create_view_left'>
@@ -126,12 +132,6 @@ function finishLoadGame(responseText)
         <div id='note_view_input_construct' class='note_view_input'></div>
     </div>
 </div>
-
-<!-- Close Buttons (?) -->
-<div id='note_view_close_button'        class='cell_button'>X</div>
-<div id='create_note_view_close_button' class='cell_button'>X</div>
-<div id='login_view_close_button'       class='cell_button'>X</div>
-<div id='join_view_close_button'        class='cell_button'>X</div>
 
 <!-- Note Content Cell -->
 <div id='note_content_cell_construct' class='note_content_cell'></div>
