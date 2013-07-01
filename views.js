@@ -79,8 +79,7 @@ function NoteView(note)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
         this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
         this.html.children[1].children[1].innerHTML = 'Comments: ';
-        for(var i = 0; i < this.note.comments.length; i++)
-            this.html.children[1].children[1].appendChild(this.constructCommentHTML(this.note.comments[i]));
+        this.loadComments();
         this.html.children[1].children[2].innerHTML = '<br><br><br>';
         var t = document.createElement('textarea'); 
         t.id="commentInput";
@@ -95,13 +94,12 @@ function NoteView(note)
         this.html.children[1].children[2].appendChild(b);
         //this.html.children[1].children[2].innerHTML += '<br><br><br>'; 
         //this.html.children[1].children[2].innerHTML += this.note.likes + model.views.likeIcon + '    ' + this.note.comments.length + model.views.commentIcon;   
-        this.loadComments();
     }
 
     this.loadComments = function()
     {
         for(var i = 0; i < thism.note.comments.length; i++)
-            thism.html.children[1].children[1].innerHTML += thism.constructCommentHTML(thism.note.comments[i]);
+            thism.html.children[1].children[1].appendChild(thism.constructCommentHTML(thism.note.comments[i]));
     }
 
     this.submitComment = function(note, comment)
@@ -110,40 +108,17 @@ function NoteView(note)
             controller.addCommentToNote(note.note_id, comment, thism.loadComments);
     }
 
-    this.constructContentHTML = function(content)
-    {
-        var contentHTML = document.getElementById('note_content_cell_construct').cloneNode(true);
-        contentHTML.setAttribute('id','');
-        switch(content.type)
-        {
-            case 'TEXT':
-                contentHTML.innerHTML = content.text;
-                break;
-            case 'PHOTO':
-                contentHTML.innerHTML = '<img class="note_media" src="'+content.media_url+'" />';
-                break;
-            case 'AUDIO':
-                //contentHTML.innerHTML = '<audio class="note_media" controls="controls"><source src="'+content.media_url+'" type="audio/mpeg"><a href="'+content.media_url+'">audio</a></audio>';
-                contentHTML.innerHTML = '<a href="'+content.media_url+'">audio</a>';
-                break;
-            case 'VIDEO':
-                contentHTML.innerHTML = '<video class="note_media" controls="controls"><source src="'+content.media_url+'"><a href="'+content.media_url+'">video</a></video>';
-                break;
-        }
-        return contentHTML;
-    };
-
-
     this.constructCommentHTML = function(comment)
     {
         var commentHTML = document.getElementById('note_comment_cell_construct').cloneNode(true);
-        commentHTML.setAttribute('id','');
         var splitDateCreated = comment.created.split(/[- :]/);
         var dateCreated = new Date(splitDateCreated[0], splitDateCreated[1]-1, splitDateCreated[2], splitDateCreated[3], splitDateCreated[4], splitDateCreated[5]);
+
         commentHTML.children[0].innerHTML = '<br>' + comment.username + ' (' + dateCreated.toLocaleString() + '):';
-        commentHTML.appendChild(thism.constructContentHTML({"type":"TEXT","text":comment.title}));
-        for(var i = 0; i < comment.contents.length; i++)
-            commentHTML.appendChild(thism.constructContentHTML(comment.contents[i]));
+        var commenttext = document.getElementById('note_content_cell_construct').cloneNode(true);
+        commenttext.setAttribute('id','');
+        commenttext.innerHTML = comment.title;
+        commentHTML.appendChild(commenttext);
         return commentHTML;
     }
 
