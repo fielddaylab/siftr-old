@@ -32,8 +32,7 @@ function Controller()
 
     this.showLoginView = function() 
     {
-        var html = model.views.constructLoginView.cloneNode(true);
-        model.views.loginView = new LoginView(html);
+        model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
@@ -43,8 +42,7 @@ function Controller()
 
     this.showJoinView = function() 
     {
-        var html = model.views.constructJoinView.cloneNode(true);
-        model.views.joinView = new JoinView(html);
+        model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
@@ -249,7 +247,7 @@ function Controller()
 
     this.addCommentToNote = function(noteId, comment, callback)
     {
-        callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/comment", false);
+        callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/"+comment, false);
     }
 
     this.addTagToNote = function(noteId, tag)

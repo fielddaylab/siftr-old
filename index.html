@@ -123,14 +123,51 @@ function finishLoadGame(responseText)
 
 <!-- Login View -->
 <div id='login_view_construct' class='login_view'>
-    <div id='login_view_top_construct' class='login_view_top'>Log In</div>
-    <div id='login_view_bottom_construct' class='login_view_bottom'></div>
+    <div id='login_view_top_construct' class='login_view_top'>
+        <br>To upload content, you must login.<br>
+        <hr style="background:#F87431; border:0; height:7px" /><br><br>
+    </div>
+    <div id='login_view_bottom_construct' class='login_view_bottom'>
+        <ul>
+            <li>
+                <label for="usermail_login">Username</label>
+                <input type="text" id="usermail_login" placeholder="username" required>
+            </li>
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="password" required></li>
+            <li>
+                <button id="login" class="button" onclick="clickLogin()">Login</button>
+            </li>
+        </ul>
+        <br><span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don\'t have an account?</span>
+        <br><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Password?</span>
+    </div>
 </div>
 
 <!-- Join View -->
 <div id='join_view_construct' class='join_view'>
-    <div id='join_view_top_construct' class='join_view_top'>Join</div>
-    <div id='join_view_bottom_construct' class='join_view_bottom'></div>
+    <div id='join_view_top_construct' class='join_view_top'>
+        Join to contribute<br/>
+        <hr style="background:#F87431; border:0; height:7px" /><br/>
+    </div>
+    <div id='join_view_bottom_construct' class='join_view_bottom'>
+        <ul>
+            <li>
+                <label for="usermail_join">Username</label>
+                <input type="text" id="usermail_join" placeholder="username" required>
+            </li> 
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="password" required>
+            </li>
+            <li>
+                <button id="signUp" class="button" onclick="clickSignUp()">Sign Up</button>
+            </li>
+        </ul>
+        <br/> Already have an account?
+        <span id="viewLoginPage" onClick="clickViewLoginPage()" class="internalLink">Log in</span>
+    </div>
 </div>
 
 <!-- Note View -->

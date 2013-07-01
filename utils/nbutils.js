@@ -20,8 +20,8 @@ function callService(serviceName, callback, GETparams, POSTparams)
         request.open('POST', url, true);
         request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         request.send(POSTparams);
-        console.log("POSTparams:" + POSTparams);
-        console.log("url:" + url);
+        console.log("POSTparams: " + POSTparams);
+        console.log("url: " + url);
     }
     else
     {

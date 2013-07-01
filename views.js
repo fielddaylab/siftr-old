@@ -64,6 +64,7 @@ function ListNote(callback, note, noteId)
 
 function NoteView(note)
 {
+    var thism = this; //garbage
     this.html = model.views.constructNoteView.cloneNode(true);
     this.note = note;
 
@@ -78,21 +79,35 @@ function NoteView(note)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
         this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
         this.html.children[1].children[1].innerHTML = 'Comments: ';
-        this.html.children[1].children[2].innerHTML = '<br><br><textarea id="commentInput" rows="4" placeholder="add comment"></textarea><br><button id="commentSubmit" class="button" onclick="submitComment()">Submit</button><br><br><br>'; 
-        this.html.children[1].children[2].innerHTML += this.note.likes + model.views.likeIcon + '    ' + this.note.comments.length + model.views.commentIcon;   
+        for(var i = 0; i < this.note.comments.length; i++)
+            this.html.children[1].children[1].appendChild(this.constructCommentHTML(this.note.comments[i]));
+        this.html.children[1].children[2].innerHTML = '<br><br><br>';
+        var t = document.createElement('textarea'); 
+        t.id="commentInput";
+        t.rows="4";
+        t.placeholder="add comment";
+        this.html.children[1].children[2].appendChild(t);
+        var b = document.createElement('button');
+        b.id = 'commentSubmit';
+        b.className = 'button';
+        b.onclick = function(){thism.submitComment(thism.note, t.value);};
+        b.innerHTML = 'Submit';
+        this.html.children[1].children[2].appendChild(b);
+        //this.html.children[1].children[2].innerHTML += '<br><br><br>'; 
+        //this.html.children[1].children[2].innerHTML += this.note.likes + model.views.likeIcon + '    ' + this.note.comments.length + model.views.commentIcon;   
         this.loadComments();
     }
 
     this.loadComments = function()
     {
-        for(var i = 0; i < this.note.comments.length; i++)
-            this.html.children[1].children[1].innerHTML += this.constructCommentHTML(this.note.comments[i]);
+        for(var i = 0; i < thism.note.comments.length; i++)
+            thism.html.children[1].children[1].innerHTML += thism.constructCommentHTML(thism.note.comments[i]);
     }
 
-    this.submitComment = function()
+    this.submitComment = function(note, comment)
     {
         if(model.playerId > 0)
-            controller.addCommentToNote(model.currentNote.noteId, document.getElementById("commentInput").value, loadComments);
+            controller.addCommentToNote(note.note_id, comment, thism.loadComments);
     }
 
     this.constructContentHTML = function(content)
@@ -126,15 +141,13 @@ function NoteView(note)
         var splitDateCreated = comment.created.split(/[- :]/);
         var dateCreated = new Date(splitDateCreated[0], splitDateCreated[1]-1, splitDateCreated[2], splitDateCreated[3], splitDateCreated[4], splitDateCreated[5]);
         commentHTML.children[0].innerHTML = '<br>' + comment.username + ' (' + dateCreated.toLocaleString() + '):';
-        commentHTML.appendChild(this.constructContentHTML({"type":"TEXT","text":comment.title}));
+        commentHTML.appendChild(thism.constructContentHTML({"type":"TEXT","text":comment.title}));
         for(var i = 0; i < comment.contents.length; i++)
-            commentHTML.appendChild(this.constructContentHTML(comment.contents[i]));
+            commentHTML.appendChild(thism.constructContentHTML(comment.contents[i]));
         return commentHTML;
     }
 
     this.constructHTML();
-    if (document.getElementById("commentSubmit") != null)
-        document.getElementById("commentSubmit").addEventListener("click", this.submitComment());
 }
 
 
@@ -599,40 +612,14 @@ function clickForgotPassword()
         alert("Enter your e-mail above and click this link again for instructions on changing your password.");
 }
 
-function LoginView(html)
+function LoginView()
 {
-    this.html = html;
-
-    this.constructHTML = function()
-    {
-        /*<div id='login_view_construct' class='login_view'>
-          <div id='login_view_top_construct' class='login_view_top'>Login</div>
-          <div id='login_view_bottom_construct' class='login_view_bottom'></div>
-          </div>*/
-
-        this.html.children[0].innerHTML = '<br>To upload content, you must login.<br><hr style="background:#F87431; border:0; height:7px" /><br><br>';
-        this.html.children[1].innerHTML = '<ul><li><label for="usermail_login">Username</label> <input type="text" id="usermail_login" placeholder="username" required></li>  <li><label for="password">Password</label>  <input type="password" id="password" placeholder="password" required></li>  <li>  <button id="login" class="button" onclick="clickLogin()">Login</button></li>  </ul> <br> <span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don\'t have an account?</span><br><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Password?</span>';
-    }
-
-    this.constructHTML();
+    this.html = model.views.constructLoginView.cloneNode(true);
 }
 
-function JoinView(html)
+function JoinView()
 {
-    this.html = html;
-
-    this.constructHTML = function()
-    {
-        /*<div id='login_view_construct' class='login_view'>
-          <div id='login_view_top_construct' class='login_view_top'>Login</div>
-          <div id='login_view_bottom_construct' class='login_view_bottom'></div>
-          </div>*/
-
-        this.html.children[0].innerHTML = 'Join to contribute<br><hr style="background:#F87431; border:0; height:7px" /><br>';
-        this.html.children[1].innerHTML = '<ul><li><label for="usermail_join">Username</label> <input type="text" id="usermail_join" placeholder="username" required></li>  <li><label for="password">Password</label>  <input type="password" id="password" placeholder="password" required></li>  <li> <button id="signUp" class="button" onclick="clickSignUp()">Sign Up</button></li>  </ul> <br> Already have an account?<span id="viewLoginPage" onClick="clickViewLoginPage()" class="internalLink">Log in</a>';
-    }		
-
-    this.constructHTML();
+    this.html = model.views.constructJoinView.cloneNode(true);
 }
 
 function NoteCreateView(html)
