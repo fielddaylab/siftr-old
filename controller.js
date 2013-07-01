@@ -11,7 +11,7 @@ function Controller()
         model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
+	model.views.darkness.style.display = 'block';
     };
 
     this.createNote = function() 
@@ -24,7 +24,7 @@ function Controller()
             model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
-	    model.views.darkness.style.display = 'block'; //darken the background CDH 
+	    model.views.darkness.style.display = 'block';
         }
         else
             this.showLoginView();
@@ -38,7 +38,7 @@ function Controller()
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
+	model.views.darkness.style.display = 'block';
     };
 
     this.showJoinView = function() 
@@ -49,7 +49,7 @@ function Controller()
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
+	model.views.darkness.style.display = 'block';
     };
 
     this.populateMapNotesFromModel = function(center)
@@ -61,8 +61,8 @@ function Controller()
         var tmpmarker;
         for(var i = 0; i < model.notes.length; i++)
         {
-            if(!this.tagsSelected(model.notes[i].tags)) continue;
-            if(!this.testFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
+            if(!this.hasAtLeastOneSelectedTag(model.notes[i])) continue;
+            if(!this.matchesFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
 
             tmpmarker = new MapMarker(this.noteSelected, model.notes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
@@ -78,15 +78,15 @@ function Controller()
         }
     };
 
-    this.tagsSelected = function(tags)
+    this.hasAtLeastOneSelectedTag = function(note)
     {
         for(var i = 1; i <= 5; i++)
         {
             if(document.getElementById("tag"+i).checked)
             {
-                for(var j = 0; j < tags.length; j++)
+                for(var j = 0; j < note.tags.length; j++)
                 {
-                    if(tags[j].tag.toLowerCase() == document.getElementById("tag"+i).value.toLowerCase())
+                    if(note.tags[j].tag.toLowerCase() == document.getElementById("tag"+i).value.toLowerCase())
                         return true;
                 }
             }
@@ -100,14 +100,14 @@ function Controller()
 
         for(var i = 0; i < model.notes.length; i++)
         {
-            if(!this.tagsSelected(model.notes[i].tags)) continue;
-            if(!this.testFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
+            if(!this.hasAtLeastOneSelectedTag(model.notes[i])) continue;
+            if(!this.matchesFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
             var listNote = new ListNote(this.noteSelected, model.notes[i], i);
             model.views.mainViewLeft.innerHTML = model.views.mainViewLeft.innerHTML + listNote.getImageHtml();
         }
     };
 
-    this.testFilter = function(note, filter)
+    this.matchesFilter = function(note, filter)
     {
         if(filter == "") return true; 
         // check title
@@ -166,25 +166,23 @@ function Controller()
     {
         model.views.noteViewContainer.style.display = 'none';
         model.views.noteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
+	model.views.darkness.style.display = 'none';
         document.removeEventListener('click', controller.hideNoteView, false);
-	
     }
 
     this.hideCreateNoteView = function()
     {
         model.views.createNoteViewContainer.style.display = 'none';
         model.views.createNoteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
+	model.views.darkness.style.display = 'none';
         document.removeEventListener('click', controller.hideCreateNoteView, false);
-	
     }
 
     this.hideLoginView = function()
     {
         model.views.loginViewContainer.style.display = 'none';
         model.views.loginViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
+	model.views.darkness.style.display = 'none';
         document.removeEventListener('click', controller.hideLoginView, false);
     }
 
@@ -192,7 +190,7 @@ function Controller()
     {
         model.views.joinViewContainer.style.display = 'none';
         model.views.joinViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
+	model.views.darkness.style.display = 'none';
         document.removeEventListener('click', controller.hideJoinView, false);
     }
 
@@ -211,7 +209,6 @@ function Controller()
 
     this.newNoteCreated = function(returnString)
     {
-        // set note Id
         var startJson = returnString.indexOf("{");
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
@@ -262,7 +259,7 @@ function Controller()
 
     this.deleteNote = function(noteId)
     {
-        callService("notes.deleteNote", function(){}, "/"+noteI, false);
+        callService("notes.deleteNote", function(){}, "/"+noteId, false);
     }
 
     this.login = function(email, password)
@@ -272,7 +269,6 @@ function Controller()
 
     this.loginReturned = function(returnString)
     {
-        // set note Id
         var startJson = returnString.indexOf("{");
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
@@ -285,7 +281,7 @@ function Controller()
         {
             controller.createNote();
             controller.hideLoginView();
-	    model.views.darkness.style.display = 'block'; //Keep the background dark CDH 
+	    model.views.darkness.style.display = 'block';
         }
         else
             alert("Incorrect login. Please try again.");
@@ -307,7 +303,7 @@ function Controller()
             controller.createNote();
             self.hideLoginView();
             self.hideJoinView();
-            model.views.darkness.style.display = 'block'; //Keep the background dark CDH 
+            model.views.darkness.style.display = 'block';
         }
     }
 

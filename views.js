@@ -37,17 +37,16 @@ function ActionButton(html, callback)
     this.html.addEventListener('mouseup',   this.deselect, false);
 }
 
-function ListNote(callback, object, noteId)
+function ListNote(callback, note, noteId)
 {
     var self = this; // <- I hate javascript.
-    this.object = object;
+    this.note = note;
     this.callback = callback;
 
     this.getImageHtml = function()
     {
         this.noteHtml = "";
-        // get image from note
-        this.noteImage = getImageToUse(object);
+        this.noteImage = getImageToUse(note);
 
         // construct html with note image
         if(this.noteImage != "")
@@ -206,20 +205,20 @@ function submitNote()
     controller.hideCreateNoteView();
 }
 
-function MapMarker(callback, object)
+function MapMarker(callback, note)
 {
     var self = this; // <- I hate javascript.
     this.callback = callback;
-    this.object = object;
+    this.note = note;
 
-    if(this.object.contents[0] == null)
+    if(this.note.contents[0] == null)
         return;
 
     var imageMarker = new RichMarker({
-        position: this.object.geoloc,
+        position: this.note.geoloc,
         map: model.views.gmap,
         draggable: false,
-        content: constructMarker(this.object)
+        content: constructMarker(this.note)
         });
 
     this.marker = imageMarker;
@@ -438,7 +437,6 @@ function recordAudio()
 {
     try
     {
-        // webkit shim
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
         window.URL = window.URL || window.webkitURL;
@@ -458,10 +456,7 @@ function recordAudio()
 
 function cancelNote() 
 {
-    // add location to note
     controller.deleteNote(model.currentNote.noteId);
-
-    // hide create note view
     controller.hideCreateNoteView();
 }
 
