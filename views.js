@@ -106,6 +106,11 @@ function NoteView(note)
     {
         if(model.playerId > 0)
             controller.addCommentToNote(note.note_id, comment, thism.loadComments);
+        else
+        {
+            controller.hideNoteView();
+            controller.showLoginView();
+        }
     }
 
     this.constructCommentHTML = function(comment)
