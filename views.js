@@ -80,7 +80,7 @@ function NoteView(note)
         this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
         this.html.children[1].children[1].innerHTML = 'Comments: ';
         this.html.children[1].children[2].innerHTML = '<br><br><textarea id="commentInput" rows="4" placeholder="add comment"></textarea><br><button id="commentSubmit" class="button" onclick="submitComment()">Submit</button><br><br><br>'; 
-        this.html.children[1].children[2].innerHTML += this.note.likes + controller.getLikeIcon() + '    ' + this.note.comments.length + controller.getCommentIcon();   
+        this.html.children[1].children[2].innerHTML += this.note.likes + model.views.likeIcon + '    ' + this.note.comments.length + model.views.commentIcon;   
         this.loadComments();
     }
 
@@ -211,9 +211,8 @@ function MapMarker(callback, object)
     var self = this; // <- I hate javascript.
     this.callback = callback;
     this.object = object;
-    //this.marker = new google.maps.Marker({ position:this.object.geoloc, map:model.views.gmap, });  // won't need this eventually
 
-    if (this.object.contents[0] == null)
+    if(this.object.contents[0] == null)
         return;
 
     var imageMarker = new RichMarker({
@@ -222,19 +221,6 @@ function MapMarker(callback, object)
         draggable: false,
         content: constructMarker(this.object)
         });
-
-    // setting shadow for square markers
-    //imageMarker.setShadow('0px -3px 4px rgba(88,88,88,0.2)');
-    
-    // old way of doing it without using richmarker library
-    /*var imageIcon = new google.maps.MarkerImage(
-    this.object.contents[0].media_url,
-    null, // size is determined at runtime 
-    null, // origin is 0,0 
-    null, // anchor is bottom center of the scaled image 
-    new google.maps.Size(56, 75)
-    );
-    this.marker.setIcon(imageIcon);*/
 
     this.marker = imageMarker;
     model.views.markerclusterer.addMarker(this.marker);

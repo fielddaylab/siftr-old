@@ -194,29 +194,6 @@ function Controller()
         return iconHTML;
     };
 
-    this.getLikeIcon = function()
-    {
-        return '  <img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px;>';
-    };
-
-
-    this.getCommentIcon = function()
-    {
-        return '  <img src="./assets/images/CommentIcon.png" height=8px;>';
-    };
-
-    this.getNoteIcon = function()
-    {
-        //return '  <img src="./assets/images/defaultTextIcon.png" height=14px;>  ';
-        return "";
-    };
-
-    this.checkBox = function(checked)
-    {
-        if(checked) return '  <img src="./assets/images/checkbox.png" height=16px;>';
-        else        return '  <img src="./assets/images/checkboxUnchecked.gif" height=16px;>';
-    }
-
     this.rightSideOfCell = function(text)
     {
         return "<div id='selector_cell_right_id' class='selector_cell_right' style='float:right; vertical-align:middle; padding-top:5px; padding-right:20px';>" + text + "</div>";

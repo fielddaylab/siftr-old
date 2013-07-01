@@ -39,6 +39,12 @@ function Model()
         this.constructLoginView        = document.getElementById('login_view_construct');
         this.constructJoinView         = document.getElementById('join_view_construct');
 
+        this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px;>';
+        this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px;>';
+        this.noteIcon     = '';
+        this.checkedBox   = '<img src="./assets/images/checkbox.png" height=16px;>';
+        this.uncheckedBox = '<img src="./assets/images/checkboxUnchecked.gif" height=16px;>';
+
         //Map
         this.map = document.getElementById('main_view_map');
         var centerLoc = new google.maps.LatLng(0, 0);
