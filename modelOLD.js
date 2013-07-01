@@ -45,8 +45,6 @@ function Model()
         this.defaultNoteCreateView     = document.getElementById('note_create_view_default');
         this.noteView                  = new NoteView(this.defaultNoteView, null);
 
-	this.darkness		       = document.getElementById("darkBackgroundLayer"); //the dark background behind selected items CDH
-
         //Map
         this.map = document.getElementById('main_view_map');
         var centerLoc = new google.maps.LatLng(0, 0);

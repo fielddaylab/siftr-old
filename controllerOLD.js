@@ -13,8 +13,7 @@ function Controller()
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
         //setTimeout(function() { document.addEventListener('click', controller.hideNoteView, false); }, 100); //timeout to disallow imediate hiding
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
-	};
+    };
 
     this.noteCreate = function() 
     {
@@ -27,7 +26,6 @@ function Controller()
             model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
-	    model.views.darkness.style.display = 'block'; //darken the background CDH 
             //setTimeout(function() { document.addEventListener('click', controller.hideCreateNoteView, false); }, 100); //timeout to disallow imediate hiding
         }
         else
@@ -43,7 +41,6 @@ function Controller()
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
     };
 
     this.showJoinView = function() 
@@ -54,7 +51,6 @@ function Controller()
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
     };
 
     this.populateModel = function(gameData)
@@ -87,9 +83,6 @@ function Controller()
                 //Add to various note lists
                 model.addNote(model.backpacks[i].notes[j]);
                 model.addMapNote(model.backpacks[i].notes[j]);
-		
-		 //remove background darkness CDH
-		model.views.darkness.style.display = 'none'; 
             }
         }
 
@@ -287,25 +280,20 @@ function Controller()
     {
         model.views.noteViewContainer.style.display = 'none';
         model.views.noteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideNoteView, false);
-	
     }
 
     this.hideCreateNoteView = function()
     {
         model.views.createNoteViewContainer.style.display = 'none';
         model.views.createNoteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideCreateNoteView, false);
-	
     }
 
     this.hideLoginView = function()
     {
         model.views.loginViewContainer.style.display = 'none';
         model.views.loginViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideLoginView, false);
     }
 
@@ -313,7 +301,6 @@ function Controller()
     {
         model.views.joinViewContainer.style.display = 'none';
         model.views.joinViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideJoinView, false);
     }
 
@@ -406,7 +393,6 @@ function Controller()
         {
             controller.noteCreate();
             controller.hideLoginView();
-	    model.views.darkness.style.display = 'block'; //Keep the background dark CDH 
         }
         else
             alert("Incorrect login. Please try again.");
@@ -428,7 +414,6 @@ function Controller()
             controller.noteCreate();
             self.hideLoginView();
             self.hideJoinView();
-            model.views.darkness.style.display = 'block'; //Keep the background dark CDH 
         }
     }
 
