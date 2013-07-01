@@ -1,10 +1,5 @@
 function ActionButton(html, callback)
 {
-    /* 
-     * Default Color: #DDDDDD; (light gray)
-     * Hovered: Darken uniformly (-111111)
-     * Selected: Set blue (|0000FF)
-     */
     var self = this; // <- I hate javascript.
     this.hover = function()
     {
@@ -36,10 +31,10 @@ function ActionButton(html, callback)
 
     this.html = html;
     this.callback = callback;
-    this.html.addEventListener('mouseover', this.hover, false);
-    this.html.addEventListener('mouseout', this.unhover, false);
-    this.html.addEventListener('mousedown', this.select, false);
-    this.html.addEventListener('mouseup', this.deselect, false);
+    this.html.addEventListener('mouseover', this.hover,    false);
+    this.html.addEventListener('mouseout',  this.unhover,  false);
+    this.html.addEventListener('mousedown', this.select,   false);
+    this.html.addEventListener('mouseup',   this.deselect, false);
 }
 
 function ListNote(callback, object, noteId)
@@ -691,25 +686,6 @@ function NoteCreateView(html)
 
     this.constructHTML = function()
     {
-        //Ok. This next bit of codes is going to look ridiculous... but since the DOM has no easy way of heirarchical access, its the best I can think of.
-        //I recommend opening 'index.html' and finding the xml defining 'note_view_construct' (the DOM node cloned to be this.html) as reference
-
-        // Apply each element to the Date function
-        /*<div id='note_create_view_construct' class='note_create_view'>
-            <div id='note_create_view_left_construct' class='note_create_view_left'>
-                <div id='note_create_view_image_construct' class='note_create_view_image'>Image:</div>
-                <div id='note_create_view_location_construct' class='note_create_view_location'>Location:</div>
-            </div>
-            <div id='note_create_view_right_construct' class='note_create_view_right'>
-                <div id='note_create_view_caption_construct' class='note_create_view_caption'>Caption:</div>
-                <div id='note_create_view_tagsaudio_construct' class='note_create_view_tagsaudio'>
-                    <div id='note_create_view_tags_construct' class='note_create_view_tags'>Tags:</div>
-                    <div id='note_create_view_audio_construct' class='note_create_view_audio'>Audio:</div>
-                </div>
-                <div id='note_create_view_submit_construct' class='note_create_view_submit'>Submit:</div>
-                </div>
-          </div>*/
-
         this.html.children[0].children[0].innerHTML = '<br>Image:<br><img width=300 height=300 id="imageThumbnail"><input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="visibility:hidden;position:absolute;top:-50;left:-50"/><button id="browseImage" class="button" onclick="clickBrowseImage()">Browse</button><button id="showCamera" onclick="showVideo()" class="button">Camera</button><video id="video" width="200" height="200" autoplay class="hidden"></video><button id="snap" class="button hidden">Snap Photo</button><div hidden><canvas id="canvas" width="200" height="200"></canvas></div>';
         this.html.children[0].children[1].innerHTML = '<br>Location:<br><div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br><input type="text" name="location" id="searchTextField" style="width:300px"><br><div id="latitude"></div><div id="longitude"></div><div id="address"></div><br><br>';
         this.html.children[1].children[0].innerHTML = '<br>Caption:<br><textarea id="caption" rows="8"></textarea><br><br>';
@@ -730,19 +706,11 @@ function NoteCreateView(html)
             '100 Years from Now'+
         '</input><br>'+
         '<br>';
-        //this.html.children[1].children[1].children[1].innerHTML = 'Audio:<br><input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" style="visibility:hidden;position:absolute;top:-50;left:-50"/><button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br><button id="recordAudio" onclick="recordAudio()" class="button">Record</button> <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button><button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button><div id="audioPreview"><br>Preview:<br><audio controls id="audioPreview"><source src="assets/audio/test.ogg" type="audio/ogg"><source type="audio/mpeg"></audio></div><br><br>';
         this.html.children[1].children[1].children[1].innerHTML = 'Audio:<br><button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br><input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden"><button id="recordAudio" onclick="recordAudio()" class="button">Record</button> <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button><button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button><br>Preview:<br><audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio><br><br>';
-
         this.html.children[1].children[2].innerHTML = '<br><button id="submitNote" onclick="submitNote()" class="button">Submit</button><button id="cancelNote" onclick="cancelNote()" class="button">Cancel</button>';
 
-        var refreshIntervalId;
-        refreshIntervalId = setInterval(function () { updateTimer() }, 300);
-
-
-        function updateTimer() 
+        function refreshMap() 
         {
-            clearInterval(refreshIntervalId);
-
             var mapOptions = {
                 zoom: 12,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -771,7 +739,6 @@ function NoteCreateView(html)
             }
             else
             {
-                // Browser doesn't support Geolocation
                 handleNoGeolocation(false);
             }
 
@@ -804,7 +771,8 @@ function NoteCreateView(html)
             });
 
 
-            document.getElementById("snap").addEventListener("click", function() {
+            document.getElementById("snap").addEventListener("click", function()
+            {
                 var canvas = document.getElementById("canvas");
                 var context = canvas.getContext("2d");
 
@@ -817,42 +785,8 @@ function NoteCreateView(html)
                 model.currentNote.imageFile = dataURItoBlob(image); // it looks like there will eventually be a method canvas.toBlob() method for HTML5 but it is not implemented yet in most browsers as of April 2013
             }, false );
         }
+        setTimeout(refreshMap,300);
     };
 
-    this.constructContentHTML = function(content)
-    {
-        var contentHTML = document.getElementById('note_content_cell_construct').cloneNode(true);
-        contentHTML.setAttribute('id','');
-        switch(content.type)
-        {
-            case 'TEXT':
-                contentHTML.innerHTML = content.text;
-                break;
-            case 'PHOTO':
-                contentHTML.innerHTML = '<img class="note_media" src="'+content.media_url+'" />';
-                break;
-            case 'AUDIO':
-                //contentHTML.innerHTML = '<audio class="note_media" controls="controls"><source src="'+content.media_url+'" type="audio/mpeg"><a href="'+content.media_url+'">audio</a></audio>';
-                contentHTML.innerHTML = '<a href="'+content.media_url+'">audio</a>';
-                break;
-            case 'VIDEO':
-                contentHTML.innerHTML = '<video class="note_media" controls="controls"><source src="'+content.media_url+'"><a href="'+content.media_url+'">video</a></video>';
-                break;
-        }
-        return contentHTML;
-    };
-
-    this.constructCommentHTML = function(comment)
-    {
-        var commentHTML = document.getElementById('note_comment_cell_construct').cloneNode(true);
-        commentHTML.setAttribute('id','');
-        var splitDateCreated = comment.created.split(/[- :]/);
-        var dateCreated = new Date(splitDateCreated[0], splitDateCreated[1]-1, splitDateCreated[2], splitDateCreated[3], splitDateCreated[4], splitDateCreated[5]);
-        commentHTML.children[0].innerHTML = '<br>' + comment.username + ' (' + dateCreated.toLocaleString() + '):';
-        commentHTML.appendChild(this.constructContentHTML({"type":"TEXT","text":comment.title}));
-        for(var i = 0; i < comment.contents.length; i++)
-            commentHTML.appendChild(this.constructContentHTML(comment.contents[i]));
-        return commentHTML;
-    }
     this.constructHTML();
 }

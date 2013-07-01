@@ -100,7 +100,7 @@ function Controller()
         for(var i = 0; i < model.mapNotes.length; i++)
         {
             if(!this.tagsSelected(model.mapNotes[i].tags)) continue;
-            if(!this.filter(model.mapNotes[i], document.getElementById("filterbox").value)) continue;
+            if(!this.testFilter(model.mapNotes[i], document.getElementById("filterbox").value)) continue;
 
             tmpmarker = new MapMarker(this.noteSelected, model.mapNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
@@ -114,68 +114,38 @@ function Controller()
                     bounds.extend(model.mapMarkers[i].object.geoloc);
             setTimeout(function(){ model.views.gmap.fitBounds(bounds); }, 100);
         }
-
     };
 
     this.tagsSelected = function(tags)
     {
-        // check if each checked tag is in notes tag list
-        if (document.getElementById("tag1").checked) {
-            for(var i = 0; i < tags.length; i++) {
-                if (tags[i].tag.toLowerCase() == document.getElementById("tag1").value.toLowerCase())
-                    return true;
+        for(var i = 1; i <= 5; i++)
+        {
+            if(document.getElementById("tag"+i).checked)
+            {
+                for(var j = 0; j < tags.length; j++)
+                {
+                    if(tags[j].tag.toLowerCase() == document.getElementById("tag"+i).value.toLowerCase())
+                        return true;
+                }
             }
         }
-        if (document.getElementById("tag2").checked) {
-            for(var i = 0; i < tags.length; i++) {
-                if (tags[i].tag.toLowerCase() == document.getElementById("tag2").value.toLowerCase())
-                    return true;
-            }
-        }
-        if (document.getElementById("tag3").checked) {
-            for(var i = 0; i < tags.length; i++) {
-                if (tags[i].tag.toLowerCase() == document.getElementById("tag3").value.toLowerCase())
-                    return true;
-            }
-        }
-        if (document.getElementById("tag4").checked) {
-            for(var i = 0; i < tags.length; i++) {
-                if (tags[i].tag.toLowerCase() == document.getElementById("tag4").value.toLowerCase())
-                    return true;
-            }
-        }
-        if (document.getElementById("tag5").checked) {
-            for(var i = 0; i < tags.length; i++) {
-                if (tags[i].tag.toLowerCase() == document.getElementById("tag5").value.toLowerCase())
-                    return true;
-            }
-        }
-
         return false;
     }
 
     this.populateListNotes = function()
     {	
-        // clear notes
         model.views.mainViewLeft.innerHTML = '';
 
-        var tmpmarker;
         for(var i = 0; i < model.notes.length; i++)
         {
-
             if(!this.tagsSelected(model.notes[i].tags)) continue;
-            if(!this.filter(model.notes[i], document.getElementById("filterbox").value)) continue;
-            //To do: set up any other filters here
-
-            // add
+            if(!this.testFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
             var listNote = new ListNote(this.noteSelected, model.notes[i], i);
             model.views.mainViewLeft.innerHTML = model.views.mainViewLeft.innerHTML + listNote.getImageHtml();
-
         }
-
     };
 
-    this.filter = function(note, filter)
+    this.testFilter = function(note, filter)
     {
         if(filter == "") return true; 
         // check title

@@ -41,9 +41,6 @@ function Model()
         this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
         this.constructLoginView        = document.getElementById('login_view_construct');
         this.constructJoinView         = document.getElementById('join_view_construct');
-        this.defaultNoteView           = document.getElementById('note_view_default');
-        this.defaultNoteCreateView     = document.getElementById('note_create_view_default');
-        this.noteView                  = new NoteView(this.defaultNoteView, null);
 
         //Map
         this.map = document.getElementById('main_view_map');
