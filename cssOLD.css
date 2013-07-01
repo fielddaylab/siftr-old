@@ -23,24 +23,32 @@ div
     display:none;
 }
 
+/* Is this used anywhere? */
+.map_note_view_close_button
+{
+    float:right;
+    width:3%;
+}
+
+/* Is this used anywhere? */
+.note_list_cell
+{
+    float:left;
+    padding:10px 0px 0px 10px;
+    width:200px;
+    min-height:100px;
+}
+
+/* Is this used anywhere? */
+.note_list_cell_media
+{
+    display:block;
+    width:200px;
+    border:1px solid black;
+}
 
 .hidden   { visibility:hidden;  display:none;}
 .unhidden { visibility:visible; display:block;}
-
-/* This is for dimming the background behind the popup windows. It is set to display = none on page load, and to block when the login and image view are up. */
-.darkBackgroundLayer{
-	background-color: rgb(0, 0, 0);
-	opacity: 0.5; /* Safari, Opera */
-	-moz-opacity:0.50: /* FireFox */
-	filter: alpha(opacity=50); /* IE */
-	z-index: 20;
-	height: 100%;
-	width: 100%;
-	background-repeat:repeat;
-	position:fixed;
-	top: 0px;
-	left: 0px;
-}
 
 .main_view
 {
@@ -144,58 +152,39 @@ div
     margin:10px 10px 10px 10px;
 }
 
-.note_list_cell
-{
-    float:left;
-    padding:10px 0px 0px 10px;
-    width:200px;
-    min-height:100px;
-}
 
-.note_list_cell_media
-{
-    display:block;
-    width:200px;
-    border:1px solid black;
-}
-
-.container
+#login_view_container
 {
     display:none;
     position:absolute;
-}
-#login_view_container
-{
     left:40%;
     top:10%;
     width:350px;
     background-color:white;
-
-    z-index: 30;
 }
 
 #join_view_container
 {
+    display:none;
+    position:absolute;
     left:40%;
     top:10%;
     width:350px;
     background-color:white;
-
-    z-index: 30;
-
-    
 }
 
 #create_note_view_container
 {
+    display:none;
+    position:absolute;
     top:3%;
-    left:5%;
+    right:15%;
     background-color:white;
     width:85%;
     border:1px solid black;
-
-    z-index: 30;
 }
+
+
 
 .note_create_view
 {
@@ -425,16 +414,15 @@ div
 
 #note_view_container
 {
-    z-index: 30;
     overflow-y:scroll;
     overflow-x:scroll;
     border:1px solid black;
     display:none;
     position:absolute;
     top:3%;
-    left:5%;
+    right:15%;
     max-height:100%;
-    width:75%;
+    max-width:85%;
     background-color:white;
 }
 
@@ -442,7 +430,7 @@ div
 
 .note_view
 {
-	
+	padding:1%;
     border:1px solid black;
     display: -moz-box;
     display: -webkit-box;
@@ -460,13 +448,23 @@ div
 
 .note_view_left
 {
- 
-	
+    */ The left picture is scaling all wrong, but it looks better when this is gone
+    display: -moz-box;
+    display: -webkit-box;
+    display: -o-box;
+    display: -ms-box;
+    display: box;
+
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
+    */
 }
 
 .note_view_right
 {
-	
     display: -moz-box;
     display: -webkit-box;
     display: -o-box;
@@ -490,19 +488,39 @@ div
     -o-box-flex: 1;
     -ms-box-flex: 1;
     box-flex: 1;
-
-	padding-left: 1% ;
-	
 }
 
 .note_view_info
 {
+    display: -moz-box;
+    display: -webkit-box;
+    display: -o-box;
+    display: -ms-box;
+    display: box;
 
+   
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
 }
 
 .note_view_captions
 {
+    display: -moz-box;
+    display: -webkit-box;
+    display: -o-box;
+    display: -ms-box;
+    display: box;
 
+    
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
+}
 
 .note_view_comment_label
 {
@@ -510,13 +528,35 @@ div
 }
 .note_view_comments
 {
+    display: -moz-box;
+    display: -webkit-box;
+    display: -o-box;
+    display: -ms-box;
+    display: box;
+
   
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
 }
 
  /* Is this used anywhere? */
 .note_view_input
 {
-  
+    display: -moz-box;
+    display: -webkit-box;
+    display: -o-box;
+    display: -ms-box;
+    display: box;
+
+   
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    -o-box-flex: 1;
+    -ms-box-flex: 1;
+    box-flex: 1;
 }
 
 /* End note view */

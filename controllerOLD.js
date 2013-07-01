@@ -5,17 +5,19 @@ function Controller()
     this.noteSelected = function(sender) 
     {
         var note = sender.object;
-        model.views.noteView = new NoteView(note);
+        var html = model.views.constructNoteView.cloneNode(true);
+        model.views.noteView = new NoteView(html, note);
         model.views.noteViewContainer.innerHTML = '';
 
         model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
+        //setTimeout(function() { document.addEventListener('click', controller.hideNoteView, false); }, 100); //timeout to disallow imediate hiding
     };
 
-    this.createNote = function() 
+    this.noteCreate = function() 
     {
+        // show login view if not logged in already
         if(model.playerId > 0)
         {   
             var html = model.views.constructNoteCreateView.cloneNode(true);
@@ -24,7 +26,7 @@ function Controller()
             model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
-	    model.views.darkness.style.display = 'block'; //darken the background CDH 
+            //setTimeout(function() { document.addEventListener('click', controller.hideCreateNoteView, false); }, 100); //timeout to disallow imediate hiding
         }
         else
             this.showLoginView();
@@ -32,13 +34,13 @@ function Controller()
 
     this.showLoginView = function() 
     {
+        // To Do: setup login view from submitting comments. Currently it only goes to login view if you try to upload a new note.
         var html = model.views.constructLoginView.cloneNode(true);
         model.views.loginView = new LoginView(html);
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
     };
 
     this.showJoinView = function() 
@@ -49,22 +51,58 @@ function Controller()
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block'; //darken the background CDH 
     };
 
-    this.populateMapNotesFromModel = function(center)
+    this.populateModel = function(gameData)
+    {
+        model.gameData = gameData;
+
+        model.backpacks = model.gameData.backpacks;
+        for(var i = 0; i < model.backpacks.length; i++)
+        {
+            if(model.backpacks[i] == "Invalid Player ID") continue;
+            for(var j = 0; j < model.backpacks[i].notes.length; j++)
+            {
+                //Fix up note tags
+                model.backpacks[i].notes[j].tags.sort(
+                        function(a, b) {
+                        if (a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
+                        if (a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
+                        return 0;
+                        });
+                if(model.backpacks[i].notes[j].tags.length == 0) 
+                    model.backpacks[i].notes[j].tags[0] = {"tag":'(untagged)'}; //conform to tag object structure
+                model.backpacks[i].notes[j].tagString = '';
+                for(var k = 0; k < model.backpacks[i].notes[j].tags.length; k++)
+                    model.backpacks[i].notes[j].tagString += model.backpacks[i].notes[j].tags[k].tag+', ';
+                model.backpacks[i].notes[j].tagString = model.backpacks[i].notes[j].tagString.slice(0,-2); 
+
+                //Calculate popularity
+                model.backpacks[i].notes[j].popularity = parseInt(model.backpacks[i].notes[j].likes,10)+parseInt(model.backpacks[i].notes[j].comments.length,10);
+
+                //Add to various note lists
+                model.addNote(model.backpacks[i].notes[j]);
+                model.addMapNote(model.backpacks[i].notes[j]);
+            }
+        }
+
+        this.populateMapNotes(true);
+        this.populateListNotes();
+    };
+
+    this.populateMapNotes = function(center)
     {	
         for(var i = 0; i < model.mapMarkers.length; i++)
             if(model.mapMarkers[i].marker != null) model.mapMarkers[i].marker.setMap(null);
         model.mapMarkers = [];
         model.views.markerclusterer.clearMarkers();
         var tmpmarker;
-        for(var i = 0; i < model.notes.length; i++)
+        for(var i = 0; i < model.mapNotes.length; i++)
         {
-            if(!this.tagsSelected(model.notes[i].tags)) continue;
-            if(!this.testFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
+            if(!this.tagsSelected(model.mapNotes[i].tags)) continue;
+            if(!this.filter(model.mapNotes[i], document.getElementById("filterbox").value)) continue;
 
-            tmpmarker = new MapMarker(this.noteSelected, model.notes[i]);
+            tmpmarker = new MapMarker(this.noteSelected, model.mapNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
         }
 
@@ -76,38 +114,68 @@ function Controller()
                     bounds.extend(model.mapMarkers[i].object.geoloc);
             setTimeout(function(){ model.views.gmap.fitBounds(bounds); }, 100);
         }
+
     };
 
     this.tagsSelected = function(tags)
     {
-        for(var i = 1; i <= 5; i++)
-        {
-            if(document.getElementById("tag"+i).checked)
-            {
-                for(var j = 0; j < tags.length; j++)
-                {
-                    if(tags[j].tag.toLowerCase() == document.getElementById("tag"+i).value.toLowerCase())
-                        return true;
-                }
+        // check if each checked tag is in notes tag list
+        if (document.getElementById("tag1").checked) {
+            for(var i = 0; i < tags.length; i++) {
+                if (tags[i].tag.toLowerCase() == document.getElementById("tag1").value.toLowerCase())
+                    return true;
             }
         }
+        if (document.getElementById("tag2").checked) {
+            for(var i = 0; i < tags.length; i++) {
+                if (tags[i].tag.toLowerCase() == document.getElementById("tag2").value.toLowerCase())
+                    return true;
+            }
+        }
+        if (document.getElementById("tag3").checked) {
+            for(var i = 0; i < tags.length; i++) {
+                if (tags[i].tag.toLowerCase() == document.getElementById("tag3").value.toLowerCase())
+                    return true;
+            }
+        }
+        if (document.getElementById("tag4").checked) {
+            for(var i = 0; i < tags.length; i++) {
+                if (tags[i].tag.toLowerCase() == document.getElementById("tag4").value.toLowerCase())
+                    return true;
+            }
+        }
+        if (document.getElementById("tag5").checked) {
+            for(var i = 0; i < tags.length; i++) {
+                if (tags[i].tag.toLowerCase() == document.getElementById("tag5").value.toLowerCase())
+                    return true;
+            }
+        }
+
         return false;
     }
 
-    this.populateListNotesFromModel = function()
+    this.populateListNotes = function()
     {	
+        // clear notes
         model.views.mainViewLeft.innerHTML = '';
 
+        var tmpmarker;
         for(var i = 0; i < model.notes.length; i++)
         {
+
             if(!this.tagsSelected(model.notes[i].tags)) continue;
-            if(!this.testFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
+            if(!this.filter(model.notes[i], document.getElementById("filterbox").value)) continue;
+            //To do: set up any other filters here
+
+            // add
             var listNote = new ListNote(this.noteSelected, model.notes[i], i);
             model.views.mainViewLeft.innerHTML = model.views.mainViewLeft.innerHTML + listNote.getImageHtml();
+
         }
+
     };
 
-    this.testFilter = function(note, filter)
+    this.filter = function(note, filter)
     {
         if(filter == "") return true; 
         // check title
@@ -149,7 +217,7 @@ function Controller()
         }
 
         var iconHTML = "";
-        if(textCount  > 0) iconHTML += '<img src="./assets/images/defaultTextIcon.png"  height=14px;>';
+        if(textCount  > 0) iconHTML += '<img src="./assets/images/defaultTextIcon.png" height=14px;>';
         if(audioCount > 0) iconHTML += '<img src="./assets/images/defaultAudioIcon.png" height=15px;>';
         if(photoCount > 0) iconHTML += '<img src="./assets/images/defaultImageIcon.png" height=15px;> ';
         if(videoCount > 0) iconHTML += '<img src="./assets/images/defaultVideoIcon.png" height=14px;>';
@@ -157,34 +225,75 @@ function Controller()
         return iconHTML;
     };
 
+    this.getLikeIcon = function()
+    {
+        return '  <img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px;>';
+    };
+
+
+    this.getCommentIcon = function()
+    {
+        return '  <img src="./assets/images/CommentIcon.png" height=8px;>';
+    };
+
+    this.getNoteIcon = function()
+    {
+        //return '  <img src="./assets/images/defaultTextIcon.png" height=14px;>  ';
+        return "";
+    };
+
+    this.checkBox = function(checked)
+    {
+        if(checked) return '  <img src="./assets/images/checkbox.png" height=16px;>';
+        else        return '  <img src="./assets/images/checkboxUnchecked.gif" height=16px;>';
+    }
+
     this.rightSideOfCell = function(text)
     {
         return "<div id='selector_cell_right_id' class='selector_cell_right' style='float:right; vertical-align:middle; padding-top:5px; padding-right:20px';>" + text + "</div>";
+    }
+
+    this.displayNextNote = function(key)
+    {
+        if(model.views.mapLayoutButton.selected) ;
+        if(model.views.listLayoutButton.selected)
+        {
+            if(model.views.contributorSortButton.selected) this.displayNextNoteInList(key, model.views.contributorNoteCells);
+            if(model.views.tagSortButton.selected)  this.displayNextNoteInList(key, model.views.tagNoteCells);
+            if(model.views.popularitySortButton.selected) this.displayNextNoteInList(key, model.views.popularNoteCells);
+        }
+    }
+
+    this.displayNextNoteInList = function(key, list)
+    {
+        var index = -1;
+        for(var i = 0; i < list.length; i++) 
+            if(list[i].selected) { index = i; break; }
+        if(key == 'Up') index--;
+        else if(key == 'Down') index++;
+        if(index >= list.length) index = 0;
+        if(index < 0) index = list.length-1;
+        list[index].select();
     }
 
     this.hideNoteView = function()
     {
         model.views.noteViewContainer.style.display = 'none';
         model.views.noteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideNoteView, false);
-	
     }
 
     this.hideCreateNoteView = function()
     {
         model.views.createNoteViewContainer.style.display = 'none';
         model.views.createNoteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideCreateNoteView, false);
-	
     }
 
     this.hideLoginView = function()
     {
         model.views.loginViewContainer.style.display = 'none';
         model.views.loginViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideLoginView, false);
     }
 
@@ -192,14 +301,13 @@ function Controller()
     {
         model.views.joinViewContainer.style.display = 'none';
         model.views.joinViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none'; //remove background darkness CDH 
         document.removeEventListener('click', controller.hideJoinView, false);
     }
 
-    this.populateAllFromModel = function()
+    this.repopulateAll = function()
     {
-        this.populateMapNotesFromModel(true);
-        this.populateListNotesFromModel();
+        this.populateMapNotes(true);
+        this.populateListNotes();
     }
 
     this.createNewNote = function()
@@ -283,9 +391,8 @@ function Controller()
 
         if(model.playerId > 0)
         {
-            controller.createNote();
+            controller.noteCreate();
             controller.hideLoginView();
-	    model.views.darkness.style.display = 'block'; //Keep the background dark CDH 
         }
         else
             alert("Incorrect login. Please try again.");
@@ -304,10 +411,9 @@ function Controller()
         else
         {
             model.playerId = obj.data;
-            controller.createNote();
+            controller.noteCreate();
             self.hideLoginView();
             self.hideJoinView();
-            model.views.darkness.style.display = 'block'; //Keep the background dark CDH 
         }
     }
 

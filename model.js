@@ -68,6 +68,9 @@ function Model()
         this.checkedBox   = '<img src="./assets/images/checkbox.png" height=16px; />';
         this.uncheckedBox = '<img src="./assets/images/checkboxUnchecked.gif" height=16px; />';
 
+	this.darkness		       = document.getElementById("darkBackgroundLayer"); //the dark background behind selected items CDH
+	this.darkness.style.display = 'none'; 
+
         //Map
         this.map = document.getElementById('main_view_map');
         var centerLoc = new google.maps.LatLng(0, 0);

@@ -164,7 +164,7 @@ function submitNote()
         oMyForm.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
 
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");   // gws to do: make this link relative
+        oReq.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");
         oReq.onreadystatechange = function ClientSideUpdate() {
             if (oReq.readyState == 4) 
             {
@@ -190,7 +190,7 @@ function submitNote()
         oMyForm.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
 
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");  // gws to do: make this link relative
+        oReq.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");
         oReq.onreadystatechange = function ClientSideUpdate() {
             if (oReq.readyState == 4) 
             {
