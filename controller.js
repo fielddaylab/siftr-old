@@ -5,8 +5,7 @@ function Controller()
     this.noteSelected = function(sender) 
     {
         var note = sender.object;
-        var html = model.views.constructNoteView.cloneNode(true);
-        model.views.noteView = new NoteView(html, note);
+        model.views.noteView = new NoteView(note);
         model.views.noteViewContainer.innerHTML = '';
 
         model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);

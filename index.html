@@ -69,18 +69,20 @@ function finishLoadGame(responseText)
 <div id='message'></div>
 
 <div id='content'>
-<!-- new main view -->
+
+<!-- Main View -->
 <div id='main_view_full' class='main_view'>
-    <div id='main_view_left' class='main_view'></div>
+    <div id='main_view_left'  class='main_view'></div>
     <div id='main_view_right' class='main_view'>
-        <div id='main_view_map' class='main_view'>map</div>
-        <div id='main_view_info' class='main_view_info'>info</div>
+        <div id='main_view_map' class='main_view'></div>
+        <div id='main_view_info'></div>
     </div>
 </div>
-<div id='note_view_container' class='note_view_container'></div>
-<div id='create_note_view_container' class='create_note_view_container'></div>
-<div id='login_view_container' class='login_view_container'></div>
-<div id='join_view_container' class='join_view_container'></div>
+
+<div id='note_view_container'        class='container'></div>
+<div id='create_note_view_container' class='container'></div>
+<div id='login_view_container'       class='container'></div>
+<div id='join_view_container'        class='container'></div>
 
 <!-- HTML CONSTRUCTIONS OF REUSABLE NODES -->
 <!-- These will never be seen. This is simply an area to construct nodes in raw html rather than dealing with doing so in javascript. From here, nodes can be accessed by their ID's, cloned, and renamed. -->
@@ -88,47 +90,48 @@ function finishLoadGame(responseText)
 
 <!-- Create Note View -->
 <div id='note_create_view_construct' class='note_create_view'>
-<div id='note_create_view_left_construct' class='note_create_view_left'>
-<div id='note_create_view_image_construct' class='note_create_view_image'>Image:</div>
-<div id='note_create_view_location_construct' class='note_create_view_location'>Location:</div>
-</div>
-<div id='note_create_view_right_construct' class='note_create_view_right'>
-<div id='note_create_view_caption_construct' class='note_create_view_caption'>Caption:</div>
-<div id='note_create_view_tagsaudio_construct' class='note_create_view_tagsaudio'>
-<div id='note_create_view_tags_construct' class='note_create_view_tags'>Tags:</div>
-<div id='note_create_view_audio_construct' class='note_create_view_audio'>Audio:</div>
-</div>
-<div id='note_create_view_submit_construct' class='note_create_view_submit'>Submit:</div>
-</div>
+    <div id='note_create_view_left_construct' class='note_create_view_left'>
+        <div id='note_create_view_image_construct' class='note_create_view_image'>Image:</div>
+        <div id='note_create_view_location_construct' class='note_create_view_location'>Location:</div>
+    </div>
+    <div id='note_create_view_right_construct' class='note_create_view_right'>
+        <div id='note_create_view_caption_construct' class='note_create_view_caption'>Caption:</div>
+        <div id='note_create_view_tagsaudio_construct' class='note_create_view_tagsaudio'>
+            <div id='note_create_view_tags_construct' class='note_create_view_tags'>Tags:</div>
+            <div id='note_create_view_audio_construct' class='note_create_view_audio'>Audio:</div>
+        </div>
+        <div id='note_create_view_submit_construct' class='note_create_view_submit'>Submit:</div>
+    </div>
 </div>
 
 <!-- Login View -->
 <div id='login_view_construct' class='login_view'>
-<div id='login_view_top_construct' class='login_view_top'>Login</div>
-<div id='login_view_bottom_construct' class='login_view_bottom'></div>
+    <div id='login_view_top_construct' class='login_view_top'>Log In</div>
+    <div id='login_view_bottom_construct' class='login_view_bottom'></div>
 </div>
 
 <!-- Join View -->
 <div id='join_view_construct' class='join_view'>
-<div id='join_view_top_construct' class='join_view_top'>Login</div>
-<div id='join_view_bottom_construct' class='join_view_bottom'></div>
+    <div id='join_view_top_construct' class='join_view_top'>Join</div>
+    <div id='join_view_bottom_construct' class='join_view_bottom'></div>
 </div>
 
 <!-- Note View -->
 <div id='note_view_construct' class='note_view'>
-<div id='note_view_left_construct' class='note_view_left'></div>
-<div id='note_view_right_construct' class='note_view_right'>
-<div id='note_view_info_construct' class='note_view_info'></div>
-<div id='note_view_caption_construct' class='note_view_captions'></div>
-<div id='note_view_comments_construct' class='note_view_comments'></div>
-<div id='note_view_input_construct' class='note_view_input'></div>
-</div>
+    <div id='note_view_left_construct' class='note_view_left'></div>
+    <div id='note_view_right_construct' class='note_view_right'>
+        <div id='note_view_info_construct' class='note_view_info'></div>
+        <div id='note_view_caption_construct' class='note_view_captions'></div>
+        <div id='note_view_comments_construct' class='note_view_comments'></div>
+        <div id='note_view_input_construct' class='note_view_input'></div>
+    </div>
 </div>
 
-<div id='note_view_close_button' class='note_view_close_button cell_button'>X</div>
-<div id='create_note_view_close_button' class='create_note_view_close_button cell_button'>X</div>
-<div id='login_view_close_button' class='login_view_close_button cell_button'>X</div>
-<div id='join_view_close_button' class='join_view_close_button cell_button'>X</div>
+<!-- Close Buttons (?) -->
+<div id='note_view_close_button'        class='cell_button'>X</div>
+<div id='create_note_view_close_button' class='cell_button'>X</div>
+<div id='login_view_close_button'       class='cell_button'>X</div>
+<div id='join_view_close_button'        class='cell_button'>X</div>
 
 <!-- Note Content Cell -->
 <div id='note_content_cell_construct' class='note_content_cell'></div>

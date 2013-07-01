@@ -63,55 +63,31 @@ function ListNote(callback, object, noteId)
     }
 }
 
-function NoteView(html, object)
+function NoteView(note)
 {
-    this.html = html;
-    this.object = object;
+    this.html = model.views.constructNoteView.cloneNode(true);
+    this.note = note;
 
     this.constructHTML = function()
     {
-        if(!this.object) return; 
-
-        //Ok. This next bit of codes is going to look ridiculous... but since the DOM has no easy way of heirarchical access, its the best I can think of.
-        //I recommend opening 'index.html' and finding the xml defining 'note_view_construct' (the DOM node cloned to be this.html) as reference
-        var splitDateCreated = this.object.created.split(/[- :]/);
-        var dateCreated = new Date(splitDateCreated[0], splitDateCreated[1]-1, splitDateCreated[2], splitDateCreated[3], splitDateCreated[4], splitDateCreated[5]);
-
-        // Apply each element to the Date function
-
-        /*<div id='note_view_construct' class='note_view'>
-          <div id='note_view_left_construct' class='note_view_left'></div>
-          <div id='note_view_right_construct' class='note_view_right'>
-          <div id='note_view_info_construct' class='note_view_info'></div>
-          <div id='note_view_comments_construct' class='note_view_comments'></div>
-          <div id='note_view_input_construct' class='note_view_input'></div>
-          </div>
-          </div>*/
-
-        // assume (since we control the uploading) - make sure jacob follows this as well:
-        // 1st piece of content is caption
-        // 2nd piece of content is image
-        // 3rd piece of content is audio (optional)
-        // (can make it more robust later)
+        if(!this.note) return; 
 
         var imgcontent;
-        for(var i = 0; i < this.object.contents.length; i++)
-        {
-            if(this.object.contents[i].type == 'PHOTO') imgcontent = this.object.contents[i];
-        }
+        for(var i = 0; i < this.note.contents.length; i++)
+            if(this.note.contents[i].type == 'PHOTO') imgcontent = this.note.contents[i];
         if(imgcontent != null)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
-        this.html.children[1].children[0].innerHTML += 'Caption: ' + this.object.title + '<br><br><br> Tags: ' + this.object.tagString + '<br><br><br>';
+        this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
         this.html.children[1].children[1].innerHTML = 'Comments: ';
         this.html.children[1].children[2].innerHTML = '<br><br><textarea id="commentInput" rows="4" placeholder="add comment"></textarea><br><button id="commentSubmit" class="button" onclick="submitComment()">Submit</button><br><br><br>'; 
-        this.html.children[1].children[2].innerHTML += this.object.likes + controller.getLikeIcon() + '    ' + this.object.comments.length + controller.getCommentIcon();   
+        this.html.children[1].children[2].innerHTML += this.note.likes + controller.getLikeIcon() + '    ' + this.note.comments.length + controller.getCommentIcon();   
         this.loadComments();
     }
 
     this.loadComments = function()
     {
-        for(var i = 0; i < this.object.comments.length; i++)
-            this.html.children[1].children[1].innerHTML += this.constructCommentHTML(this.object.comments[i]);
+        for(var i = 0; i < this.note.comments.length; i++)
+            this.html.children[1].children[1].innerHTML += this.constructCommentHTML(this.note.comments[i]);
     }
 
     this.submitComment = function()
