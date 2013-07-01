@@ -48,23 +48,7 @@ function Controller()
         model.views.joinViewContainer.style.display = 'block';
     };
 
-    this.populateModel = function(gameData)
-    {
-        model.gameData = gameData;
-
-        model.backpacks = model.gameData.backpacks;
-        for(var i = 0; i < model.backpacks.length; i++)
-        {
-            if(model.backpacks[i] == "Invalid Player ID") continue;
-            for(var j = 0; j < model.backpacks[i].notes.length; j++)
-                model.addNoteFromBackpackData(model.backpacks[i].notes[j])
-        }
-
-        this.populateMapNotes(true);
-        this.populateListNotes();
-    };
-
-    this.populateMapNotes = function(center)
+    this.populateMapNotesFromModel = function(center)
     {	
         for(var i = 0; i < model.mapMarkers.length; i++)
             if(model.mapMarkers[i].marker != null) model.mapMarkers[i].marker.setMap(null);
@@ -106,7 +90,7 @@ function Controller()
         return false;
     }
 
-    this.populateListNotes = function()
+    this.populateListNotesFromModel = function()
     {	
         model.views.mainViewLeft.innerHTML = '';
 
@@ -202,10 +186,10 @@ function Controller()
         document.removeEventListener('click', controller.hideJoinView, false);
     }
 
-    this.repopulateAll = function()
+    this.populateAllFromModel = function()
     {
-        this.populateMapNotes(true);
-        this.populateListNotes();
+        this.populateMapNotesFromModel(true);
+        this.populateListNotesFromModel();
     }
 
     this.createNewNote = function()

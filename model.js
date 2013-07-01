@@ -12,7 +12,7 @@ function Model()
 
     this.notes = [];
     this.mapMarkers = [];
-    this.addNoteFromBackpackData = function(note)
+    this.addNoteFromData = function(note)
     { 
         //Fix up note tags
         note.tags.sort(
@@ -29,6 +29,19 @@ function Model()
         note.geoloc = new google.maps.LatLng(note.lat, note.lon);
         this.notes[this.notes.length] = note;
     }
+
+    this.populateFromData = function(gameData)
+    {
+        this.gameData = gameData;
+
+        this.backpacks = this.gameData.backpacks;
+        for(var i = 0; i < this.backpacks.length; i++)
+        {
+            if(this.backpacks[i] == "Invalid Player ID") continue;
+            for(var j = 0; j < this.backpacks[i].notes.length; j++)
+                this.addNoteFromData(this.backpacks[i].notes[j])
+        }
+    };
 
     this.views = new function Views()
     { 
