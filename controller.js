@@ -4,7 +4,7 @@ function Controller()
 
     this.noteSelected = function(sender) 
     {
-        var note = sender.object;
+        var note = sender.note;
         model.views.noteView = new NoteView(note);
         model.views.noteViewContainer.innerHTML = '';
 
@@ -72,8 +72,8 @@ function Controller()
         {
             var bounds = new google.maps.LatLngBounds();
             for(var i = 0; i < model.mapMarkers.length; i++)
-                if(model.mapMarkers[i].object.geoloc.Xa != 0 && model.mapMarkers[i].object.geoloc.Ya != 0)
-                    bounds.extend(model.mapMarkers[i].object.geoloc);
+                if(model.mapMarkers[i].note.geoloc.Xa != 0 && model.mapMarkers[i].note.geoloc.Ya != 0)
+                    bounds.extend(model.mapMarkers[i].note.geoloc);
             setTimeout(function(){ model.views.gmap.fitBounds(bounds); }, 100);
         }
     };
