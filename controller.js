@@ -11,12 +11,10 @@ function Controller()
         model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
-        //setTimeout(function() { document.addEventListener('click', controller.hideNoteView, false); }, 100); //timeout to disallow imediate hiding
     };
 
-    this.noteCreate = function() 
+    this.createNote = function() 
     {
-        // show login view if not logged in already
         if(model.playerId > 0)
         {   
             var html = model.views.constructNoteCreateView.cloneNode(true);
@@ -25,7 +23,6 @@ function Controller()
             model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
-            //setTimeout(function() { document.addEventListener('click', controller.hideCreateNoteView, false); }, 100); //timeout to disallow imediate hiding
         }
         else
             this.showLoginView();
@@ -33,7 +30,6 @@ function Controller()
 
     this.showLoginView = function() 
     {
-        // To Do: setup login view from submitting comments. Currently it only goes to login view if you try to upload a new note.
         var html = model.views.constructLoginView.cloneNode(true);
         model.views.loginView = new LoginView(html);
         model.views.loginViewContainer.innerHTML = '';
@@ -61,28 +57,7 @@ function Controller()
         {
             if(model.backpacks[i] == "Invalid Player ID") continue;
             for(var j = 0; j < model.backpacks[i].notes.length; j++)
-            {
-                //Fix up note tags
-                model.backpacks[i].notes[j].tags.sort(
-                        function(a, b) {
-                        if (a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
-                        if (a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
-                        return 0;
-                        });
-                if(model.backpacks[i].notes[j].tags.length == 0) 
-                    model.backpacks[i].notes[j].tags[0] = {"tag":'(untagged)'}; //conform to tag object structure
-                model.backpacks[i].notes[j].tagString = '';
-                for(var k = 0; k < model.backpacks[i].notes[j].tags.length; k++)
-                    model.backpacks[i].notes[j].tagString += model.backpacks[i].notes[j].tags[k].tag+', ';
-                model.backpacks[i].notes[j].tagString = model.backpacks[i].notes[j].tagString.slice(0,-2); 
-
-                //Calculate popularity
-                model.backpacks[i].notes[j].popularity = parseInt(model.backpacks[i].notes[j].likes,10)+parseInt(model.backpacks[i].notes[j].comments.length,10);
-
-                //Add to various note lists
-                model.addNote(model.backpacks[i].notes[j]);
-                model.addMapNote(model.backpacks[i].notes[j]);
-            }
+                model.addNoteFromBackpackData(model.backpacks[i].notes[j])
         }
 
         this.populateMapNotes(true);
@@ -96,12 +71,12 @@ function Controller()
         model.mapMarkers = [];
         model.views.markerclusterer.clearMarkers();
         var tmpmarker;
-        for(var i = 0; i < model.mapNotes.length; i++)
+        for(var i = 0; i < model.notes.length; i++)
         {
-            if(!this.tagsSelected(model.mapNotes[i].tags)) continue;
-            if(!this.testFilter(model.mapNotes[i], document.getElementById("filterbox").value)) continue;
+            if(!this.tagsSelected(model.notes[i].tags)) continue;
+            if(!this.testFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
 
-            tmpmarker = new MapMarker(this.noteSelected, model.mapNotes[i]);
+            tmpmarker = new MapMarker(this.noteSelected, model.notes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
         }
 
@@ -186,7 +161,7 @@ function Controller()
         }
 
         var iconHTML = "";
-        if(textCount  > 0) iconHTML += '<img src="./assets/images/defaultTextIcon.png" height=14px;>';
+        if(textCount  > 0) iconHTML += '<img src="./assets/images/defaultTextIcon.png"  height=14px;>';
         if(audioCount > 0) iconHTML += '<img src="./assets/images/defaultAudioIcon.png" height=15px;>';
         if(photoCount > 0) iconHTML += '<img src="./assets/images/defaultImageIcon.png" height=15px;> ';
         if(videoCount > 0) iconHTML += '<img src="./assets/images/defaultVideoIcon.png" height=14px;>';
@@ -197,29 +172,6 @@ function Controller()
     this.rightSideOfCell = function(text)
     {
         return "<div id='selector_cell_right_id' class='selector_cell_right' style='float:right; vertical-align:middle; padding-top:5px; padding-right:20px';>" + text + "</div>";
-    }
-
-    this.displayNextNote = function(key)
-    {
-        if(model.views.mapLayoutButton.selected) ;
-        if(model.views.listLayoutButton.selected)
-        {
-            if(model.views.contributorSortButton.selected) this.displayNextNoteInList(key, model.views.contributorNoteCells);
-            if(model.views.tagSortButton.selected)  this.displayNextNoteInList(key, model.views.tagNoteCells);
-            if(model.views.popularitySortButton.selected) this.displayNextNoteInList(key, model.views.popularNoteCells);
-        }
-    }
-
-    this.displayNextNoteInList = function(key, list)
-    {
-        var index = -1;
-        for(var i = 0; i < list.length; i++) 
-            if(list[i].selected) { index = i; break; }
-        if(key == 'Up') index--;
-        else if(key == 'Down') index++;
-        if(index >= list.length) index = 0;
-        if(index < 0) index = list.length-1;
-        list[index].select();
     }
 
     this.hideNoteView = function()
@@ -337,7 +289,7 @@ function Controller()
 
         if(model.playerId > 0)
         {
-            controller.noteCreate();
+            controller.createNote();
             controller.hideLoginView();
         }
         else
@@ -357,7 +309,7 @@ function Controller()
         else
         {
             model.playerId = obj.data;
-            controller.noteCreate();
+            controller.createNote();
             self.hideLoginView();
             self.hideJoinView();
         }

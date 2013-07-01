@@ -11,13 +11,23 @@ function Model()
     this.recorder = '';
 
     this.notes = [];
-    this.addNote = function(note) { this.notes[this.notes.length] = note; }
-    this.mapNotes = [];
     this.mapMarkers = [];
-    this.addMapNote = function(mapNote)
-    {
-        mapNote.geoloc = new google.maps.LatLng(mapNote.lat, mapNote.lon);
-        this.mapNotes[this.mapNotes.length] = mapNote;
+    this.addNoteFromBackpackData = function(note)
+    { 
+        //Fix up note tags
+        note.tags.sort(
+            function(a, b) {
+                if (a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
+                if (a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
+                return 0;
+            });
+        if(note.tags.length == 0) note.tags[0] = {"tag":'(untagged)'}; //conform to tag object structure
+        note.tagString = '';
+        for(var k = 0; k < note.tags.length; k++)
+            note.tagString += note.tags[k].tag+', ';
+        note.tagString = note.tagString.slice(0,-2); 
+        note.geoloc = new google.maps.LatLng(note.lat, note.lon);
+        this.notes[this.notes.length] = note;
     }
 
     this.views = new function Views()
@@ -39,11 +49,11 @@ function Model()
         this.constructLoginView        = document.getElementById('login_view_construct');
         this.constructJoinView         = document.getElementById('join_view_construct');
 
-        this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px;>';
-        this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px;>';
+        this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
+        this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px; />';
         this.noteIcon     = '';
-        this.checkedBox   = '<img src="./assets/images/checkbox.png" height=16px;>';
-        this.uncheckedBox = '<img src="./assets/images/checkboxUnchecked.gif" height=16px;>';
+        this.checkedBox   = '<img src="./assets/images/checkbox.png" height=16px; />';
+        this.uncheckedBox = '<img src="./assets/images/checkboxUnchecked.gif" height=16px; />';
 
         //Map
         this.map = document.getElementById('main_view_map');
@@ -51,61 +61,13 @@ function Model()
         var myOptions = { zoom:5, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
         this.gmap = new google.maps.Map(this.map, myOptions);
 
-        // setup info area
-        document.getElementById('main_view_info').innerHTML = 'Tags:<br />'+
-        '<input id="tag1" value="Innovation" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
-            'Innovation'+
-        '</input><br />'+
-        '<input id="tag2" value="Stories of the Past" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
-            'Stories of the Past'+
-        '</input><br />'+
-        '<input id="tag3" value="Madison Culture" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
-            'Madison Culture'+
-        '</input><br />'+
-        '<input id="tag4" value="Must Do" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
-            'Must Do'+
-        '</input><br />'+
-        '<input id="tag5" value="100 Years from Now" type="checkbox" checked="checked" onchange="controller.repopulateAll()">'+
-            '100 Years from Now'+
-        '</input><br />'+
-        '<br /><span> Search: <input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span><br /><br /><br /><button onClick="JavaScript:controller.noteCreate()" class="button">Upload</button>';
-
         // marker clusterer
-        var mcOptions = {styles: [{
-                height: 53,
-                url: "./assets/images/speechBubble_cluster_large.png",
-                width: 41,
-                anchor:[15,17],
-                fontFamily:"Helvetica, Arial"
-            },
-            {
-                height: 53,
-                url: "./assets/images/speechBubble_cluster_large.png",
-                width: 41,
-                anchor:[15,13],
-                fontFamily: "Helvetica, Arial"
-            },
-            {
-                height: 53, 
-                url: "./assets/images/speechBubble_cluster_large.png",
-                width: 41,
-                anchor:[15,13],
-                fontFamily: "Helvetica, Arial"
-            },
-            {
-                height: 53,
-                url: "./assets/images/speechBubble_cluster_large.png",
-                width: 41,
-                anchor:[15,13],
-                fontFamily: "Helvetica, Arial"
-            },
-            {
-                height: 53,
-                url: "./assets/images/speechBubble_cluster_large.png",
-                width: 41,
-                anchor:[15,13],
-                fontFamily: "Helvetica, Arial"
-            }
+        var mcOptions = { styles: [
+            { height:53, url:"./assets/images/speechBubble_cluster_large.png", width:41, anchor:[15,17], fontFamily:"Helvetica, Arial" },
+            { height:53, url:"./assets/images/speechBubble_cluster_large.png", width:41, anchor:[15,13], fontFamily:"Helvetica, Arial" },
+            { height:53, url:"./assets/images/speechBubble_cluster_large.png", width:41, anchor:[15,13], fontFamily:"Helvetica, Arial" },
+            { height:53, url:"./assets/images/speechBubble_cluster_large.png", width:41, anchor:[15,13], fontFamily:"Helvetica, Arial" },
+            { height:53, url:"./assets/images/speechBubble_cluster_large.png", width:41, anchor:[15,13], fontFamily:"Helvetica, Arial" }
         ]};
         
         this.markerclusterer = new MarkerClusterer(this.gmap,[],mcOptions);

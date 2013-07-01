@@ -75,7 +75,18 @@ function finishLoadGame(responseText)
     <div id='main_view_left'  class='main_view'></div>
     <div id='main_view_right' class='main_view'>
         <div id='main_view_map' class='main_view'></div>
-        <div id='main_view_info'></div>
+        <div id='main_view_info'>
+            Tags:<br />
+            <input id="tag1" value="Innovation"          type="checkbox" checked="checked" onchange="controller.repopulateAll()">Innovation         </input><br />
+            <input id="tag2" value="Stories of the Past" type="checkbox" checked="checked" onchange="controller.repopulateAll()">Stories of the Past</input><br />
+            <input id="tag3" value="Madison Culture"     type="checkbox" checked="checked" onchange="controller.repopulateAll()">Madison Culture    </input><br />
+            <input id="tag4" value="Must Do"             type="checkbox" checked="checked" onchange="controller.repopulateAll()">Must Do            </input><br />
+            <input id="tag5" value="100 Years from Now"  type="checkbox" checked="checked" onchange="controller.repopulateAll()">100 Years from Now </input><br />
+            <br />
+            <span>Search:<input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span>
+            <br /><br /><br />
+            <button onClick="JavaScript:controller.createNote()" class="button">Upload</button>
+        </div>
     </div>
 </div>
 
