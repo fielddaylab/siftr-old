@@ -47,7 +47,7 @@ function Model()
     { 
         //Content
         this.mainView = document.getElementById('main_view_full');
-        this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
+        //this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
         this.mainViewLeft              = document.getElementById('main_view_left');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
         this.noteViewContainer         = document.getElementById('note_view_container');
@@ -65,10 +65,8 @@ function Model()
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
         this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px; />';
         this.noteIcon     = '';
-        this.checkedBox   = '<img src="./assets/images/checkbox.png" height=16px; />';
-        this.uncheckedBox = '<img src="./assets/images/checkboxUnchecked.gif" height=16px; />';
 
-	this.darkness		       = document.getElementById("darkBackgroundLayer"); //the dark background behind selected items CDH
+	this.darkness		    = document.getElementById("darkBackgroundLayer");
 	this.darkness.style.display = 'none'; 
 
         //Map

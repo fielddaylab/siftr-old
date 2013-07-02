@@ -465,7 +465,7 @@ function markerMoved(marker, map)
     var geocoder = new google.maps.Geocoder();
 
     geocoder.geocode({latLng: point}, function(results, status) {
-        if(status == google.maps.GeocoderStatus.OK && results[0]) document.getElementById("address").innerHTML = "Approximate Address:<br> " + results[0].formatted_address;
+        if(status == google.maps.GeocoderStatus.OK && results[0]) document.getElementById("address").innerHTML = "Approximate Address:<br> " + results[0].formatted_address.replace(/,/g,",<br />");
     });
     model.currentNote.lat = point.lat();
     model.currentNote.lon = point.lng();
@@ -602,37 +602,14 @@ function JoinView()
     this.html = model.views.constructJoinView.cloneNode(true);
 }
 
-function NoteCreateView(html)
+function NoteCreateView()
 {
-    this.html = html;
+    this.html = model.views.constructNoteCreateView.cloneNode(true);
 
     controller.createNewNote();
 
     this.constructHTML = function()
     {
-        this.html.children[0].children[0].innerHTML = '<br>Image:<br><img width=300 height=300 id="imageThumbnail"><input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="visibility:hidden;position:absolute;top:-50;left:-50"/><button id="browseImage" class="button" onclick="clickBrowseImage()">Browse</button><button id="showCamera" onclick="showVideo()" class="button">Camera</button><video id="video" width="200" height="200" autoplay class="hidden"></video><button id="snap" class="button hidden">Snap Photo</button><div hidden><canvas id="canvas" width="200" height="200"></canvas></div>';
-        this.html.children[0].children[1].innerHTML = '<br>Location:<br><div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br><input type="text" name="location" id="searchTextField" style="width:300px"><br><div id="latitude"></div><div id="longitude"></div><div id="address"></div><br><br>';
-        this.html.children[1].children[0].innerHTML = '<br>Caption:<br><textarea id="caption" rows="8"></textarea><br><br>';
-        this.html.children[1].children[1].children[0].innerHTML = 'Tags:<br>'+
-        '<input id="create_tag_1" name="note_tag_select" value="Innovation" type="radio">'+
-            'Innovation'+
-        '</input><br>'+
-        '<input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">'+
-            'Stories of the Past'+
-        '</input><br>'+
-        '<input id="create_tag_3" name="note_tag_select" value="Madison Culture" type="radio">'+
-            'Madison Culture'+
-        '</input><br>'+
-        '<input id="create_tag_4" name="note_tag_select" value="Must Do" type="radio">'+
-            'Must Do'+
-        '</input><br>'+
-        '<input id="create_tag_5" name="note_tag_select" value="100 Years from Now" type="radio">'+
-            '100 Years from Now'+
-        '</input><br>'+
-        '<br>';
-        this.html.children[1].children[1].children[1].innerHTML = 'Audio:<br><button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br><input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden"><button id="recordAudio" onclick="recordAudio()" class="button">Record</button> <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button><button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button><br>Preview:<br><audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio><br><br>';
-        this.html.children[1].children[2].innerHTML = '<br><button id="submitNote" onclick="submitNote()" class="button">Submit</button><button id="cancelNote" onclick="cancelNote()" class="button">Cancel</button>';
-
         function refreshMap() 
         {
             var mapOptions = {

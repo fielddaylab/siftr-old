@@ -18,8 +18,7 @@ function Controller()
     {
         if(model.playerId > 0)
         {   
-            var html = model.views.constructNoteCreateView.cloneNode(true);
-            model.views.noteCreateView = new NoteCreateView(html);
+            model.views.noteCreateView = new NoteCreateView();
             model.views.createNoteViewContainer.innerHTML = '';
             model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);

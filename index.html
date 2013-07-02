@@ -89,11 +89,13 @@ function finishLoadGame(responseText)
     </div>
 </div>
 
-<div id='darkBackgroundLayer'        class='darkBackgroundLayer'></div> <!--for dimming the background when popups have the focus CDH -->
-<div id='note_view_container'        class='container'></div>
-<div id='create_note_view_container' class='container'></div>
-<div id='login_view_container'       class='container'></div>
-<div id='join_view_container'        class='container'></div>
+<!-- a thing with position absolute in the top left corner that takes up the full size of the screen. now popups can position themselves within this without guessing percentages -->
+<div id='darkBackgroundLayer'        class='darkBackgroundLayer container_container'> <!--for dimming the background when popups have the focus CDH -->
+    <div id='note_view_container'        class='container'></div>
+    <div id='create_note_view_container' class='container'></div>
+    <div id='login_view_container'       class='container'></div>
+    <div id='join_view_container'        class='container'></div>
+</div>
 
 <!-- HTML CONSTRUCTIONS OF REUSABLE NODES -->
 <!-- These will never be seen. This is simply an area to construct nodes in raw html rather than dealing with doing so in javascript. From here, nodes can be accessed by their ID's, cloned, and renamed. -->
@@ -108,24 +110,65 @@ function finishLoadGame(responseText)
 <!-- Create Note View -->
 <div id='note_create_view_construct' class='note_create_view'>
     <div id='note_create_view_left_construct' class='note_create_view_left'>
-        <div id='note_create_view_image_construct' class='note_create_view_image'>Image:</div>
-        <div id='note_create_view_location_construct' class='note_create_view_location'>Location:</div>
+        <div id='note_create_view_image_construct' class='note_create_view_image'>
+            <br />Image:<br />
+            <img width=300 height=300 id="imageThumbnail" />
+            <input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="display:none;"/>
+            <button id="browseImage" class="button" onclick="clickBrowseImage()">Browse</button>
+            <button id="showCamera" onclick="showVideo()" class="button">Camera</button>
+            <video id="video" width="200" height="200" autoplay class="hidden"></video>
+            <button id="snap" class="button hidden">Snap Photo</button>
+            <canvas id="canvas" width="200" height="200" style="display:none;"></canvas>
+        </div>
+        <div id='note_create_view_location_construct' class='note_create_view_location'>
+            <br />Location:<br />
+            <div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br />
+            <input type="text" name="location" id="searchTextField" style="width:300px" /><br />
+            <div id="latitude"></div>
+            <div id="longitude"></div>
+            <div id="address"></div>
+            <br /><br />
+        </div>
     </div>
     <div id='note_create_view_right_construct' class='note_create_view_right'>
-        <div id='note_create_view_caption_construct' class='note_create_view_caption'>Caption:</div>
-        <div id='note_create_view_tagsaudio_construct' class='note_create_view_tagsaudio'>
-            <div id='note_create_view_tags_construct' class='note_create_view_tags'>Tags:</div>
-            <div id='note_create_view_audio_construct' class='note_create_view_audio'>Audio:</div>
+        <div id='note_create_view_caption_construct' class='note_create_view_caption'>
+            <br />Caption:<br /><textarea id="caption" rows="8"></textarea>
         </div>
-        <div id='note_create_view_submit_construct' class='note_create_view_submit'>Submit:</div>
+        <div id='note_create_view_tags_construct' class='note_create_view_tags'>
+            <div id='note_create_view_tags_construct' class='note_create_view_tags'>
+                Tags:<br />
+                <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio">Innovation</input><br />
+                <input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">Stories of the Past</input><br />
+                <input id="create_tag_3" name="note_tag_select" value="Madison Culture"     type="radio">Madison Culture</input><br />
+                <input id="create_tag_4" name="note_tag_select" value="Must Do"             type="radio">Must Do</input><br />
+                <input id="create_tag_5" name="note_tag_select" value="100 Years from Now"  type="radio">100 Years from Now</input><br />
+                <br />
+            </div>
+            <div id='note_create_view_audio_construct' class='note_create_view_audio'>
+                Audio:<br />
+                <button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br />
+                <input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden" />
+                <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
+                <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>
+                <button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button>
+                <br />Preview:<br />
+                <audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio>
+                <br /><br />
+            </div>
+        </div>
+        <div id='note_create_view_submit_construct' class='note_create_view_submit'>
+            <br />
+            <button id="submitNote" onclick="submitNote()" class="button">Submit</button>
+            <button id="cancelNote" onclick="cancelNote()" class="button">Cancel</button>
+        </div>
     </div>
 </div>
 
 <!-- Login View -->
 <div id='login_view_construct' class='login_view'>
     <div id='login_view_top_construct' class='login_view_top'>
-        <br>To upload content, you must login.<br>
-        <hr style="background:#F87431; border:0; height:7px" /><br><br>
+        <br />To upload content, you must login.<br />
+        <hr style="background:#F87431; border:0; height:7px" /><br /><br />
     </div>
     <div id='login_view_bottom_construct' class='login_view_bottom'>
         <ul>
@@ -140,8 +183,8 @@ function finishLoadGame(responseText)
                 <button id="login" class="button" onclick="clickLogin()">Login</button>
             </li>
         </ul>
-        <br><span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don\'t have an account?</span>
-        <br><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Password?</span>
+        <br /><span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don\'t have an account?</span>
+        <br /><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Password?</span>
     </div>
 </div>
 

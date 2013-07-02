@@ -28,16 +28,13 @@ div
 .unhidden { visibility:visible; display:block;}
 
 /* This is for dimming the background behind the popup windows. It is set to display = none on page load, and to block when the login and image view are up. */
-.darkBackgroundLayer{
-	background-color: rgb(0, 0, 0);
-	opacity: 0.5; /* Safari, Opera */
-	-moz-opacity:0.50: /* FireFox */
-	filter: alpha(opacity=50); /* IE */
+.darkBackgroundLayer
+{
+	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 20;
 	height: 100%;
 	width: 100%;
-	background-repeat:repeat;
-	position:fixed;
+	position:absolute;
 	top: 0px;
 	left: 0px;
 }
@@ -159,15 +156,25 @@ div
     border:1px solid black;
 }
 
+.container_container
+{
+    top:0px;
+    left:0px;
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+
 .container
 {
     display:none;
-    position:absolute;
+    position:relative;
 }
+
 #login_view_container
 {
-    left:40%;
     top:10%;
+    margin:0px auto;
     width:350px;
     background-color:white;
 
@@ -176,23 +183,21 @@ div
 
 #join_view_container
 {
-    left:40%;
     top:10%;
+    margin:0px auto;
     width:350px;
     background-color:white;
 
     z-index: 30;
-
-    
 }
 
 #create_note_view_container
 {
-    top:3%;
-    left:5%;
+    top:20px;
+    margin:0px auto;
     background-color:white;
-    width:85%;
     border:1px solid black;
+    max-width:750px;
 
     z-index: 30;
 }
@@ -224,6 +229,7 @@ div
     box-align:stretch;
 
     border:1px solid black;
+    max-width:750px;
 }
 
 .note_create_view_left
@@ -251,6 +257,9 @@ div
     -o-box-align: stretch;
     -ms-box-align: stretch;
     box-align:stretch;
+    
+    max-width:320px;
+    padding:0px 20px 0px 20px;
 }
 
 .note_create_view_right
@@ -278,6 +287,9 @@ div
     -o-box-align: stretch;
     -ms-box-align: stretch;
     box-align:stretch;
+
+    min-width:320px;
+    padding:0px 20px 0px 20px;
 }
 
 .note_create_view_caption
@@ -422,27 +434,22 @@ div
 }
 
 /* Begin note view */
-
 #note_view_container
 {
+    top:3%;
+    margin:0px auto;
     z-index: 30;
     overflow-y:scroll;
     overflow-x:scroll;
     border:1px solid black;
     display:none;
-    position:absolute;
-    top:3%;
-    left:5%;
     max-height:100%;
     width:75%;
     background-color:white;
 }
 
-
-
 .note_view
 {
-	
     border:1px solid black;
     display: -moz-box;
     display: -webkit-box;
@@ -455,7 +462,6 @@ div
     -o-box-orient: horizontal;
     -ms-box-orient: horizontal;
     box-orient: horizontal;
-
 }
 
 .note_view_left
