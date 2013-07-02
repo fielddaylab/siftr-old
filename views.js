@@ -40,26 +40,23 @@ function ActionButton(html, callback)
 function ListNote(callback, note, noteId)
 {
     var self = this; // <- I hate javascript.
+    this.html = "";
     this.note = note;
     this.callback = callback;
 
-    this.getImageHtml = function()
+    this.constructHTML = function()
     {
-        this.noteHtml = "";
-        this.noteImage = getImageToUse(note);
+        this.html = "<div class='note_list_cell'>";
+        var noteImage = getImageToUse(note);
+        if(noteImage != "") this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
+        var noteAud = getAudioToUse(note);
+        if(noteAud != "")   this.html += "";//how to render audio? //"<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
+        this.html += "</div>";
 
-        // construct html with note image
-        if(this.noteImage != "")
-        {
-            this.noteHtml =  "<div class='note_list_cell'><img id='image"+noteId+"' class='note_list_cell_media' src='"+this.noteImage+"' style='cursor:pointer;'/></div>";
-            setTimeout(function () { 
-                if(document.getElementById("image"+noteId)) 
-                    document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); });
-                }, 300);
-        }
-
-        return this.noteHtml;
+        if(noteImage+noteAud == ""){ this.html = "";}//clear out the entire node if no media
+        setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
     }
+    this.constructHTML();
 }
 
 function NoteView(note)
@@ -75,6 +72,9 @@ function NoteView(note)
         var imgcontent;
         for(var i = 0; i < this.note.contents.length; i++)
             if(this.note.contents[i].type == 'PHOTO') imgcontent = this.note.contents[i];
+        var audcontent;
+        for(var i = 0; i < this.note.contents.length; i++)
+            if(this.note.contents[i].type == 'AUDIO') audcontent = this.note.contents[i];
         if(imgcontent != null)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
         this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
@@ -149,52 +149,51 @@ function submitNote()
         controller.updateNote(model.currentNote.noteId, model.currentNote.text);
 
     // add image content
-    if (model.currentNote.imageFile != null)
+    if(model.currentNote.imageFile != null)
     {
-        var oMyForm = new FormData();
-        oMyForm.append("file", model.currentNote.imageFile);
-        oMyForm.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
+        var form = new FormData();
+        form.append("file", model.currentNote.imageFile);
+        form.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
 
-        var oReq = new XMLHttpRequest();
-        oReq.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");
-        oReq.onreadystatechange = function ClientSideUpdate() {
-            if (oReq.readyState == 4) 
+        var imgxhr = new XMLHttpRequest();
+        imgxhr.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");
+        imgxhr.onreadystatechange = function ClientSideUpdate() {
+            if (imgxhr.readyState == 4) 
             {
-                model.currentNote.arisImageFileName = oReq.responseText;
+                model.currentNote.arisImageFileName = imgxhr.responseText;
                 controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisImageFileName, "PHOTO", '', '');
             }
         };
-        oReq.send(oMyForm);
+        imgxhr.send(form);
     }
 
     // add tags
-    if (document.getElementById("create_tag_1").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_1").value);
-    if (document.getElementById("create_tag_2").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_2").value);
-    if (document.getElementById("create_tag_3").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_3").value);
-    if (document.getElementById("create_tag_4").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_4").value);
-    if (document.getElementById("create_tag_5").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_5").value);
+    if(document.getElementById("create_tag_1").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_1").value);
+    if(document.getElementById("create_tag_2").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_2").value);
+    if(document.getElementById("create_tag_3").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_3").value);
+    if(document.getElementById("create_tag_4").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_4").value);
+    if(document.getElementById("create_tag_5").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_5").value);
 
     // add audio content (optional)
-    if (model.currentNote.audioFile != null)
+    if(model.currentNote.audioFile != null)
     {
-        var oMyForm = new FormData();
-        oMyForm.append("file", model.currentNote.audioFile);
-        oMyForm.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
+        var form = new FormData();
+        form.append("file", model.currentNote.audioFile);
+        form.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
 
-        var oReq = new XMLHttpRequest();
-        oReq.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");
-        oReq.onreadystatechange = function ClientSideUpdate() {
-            if (oReq.readyState == 4) 
+        var audxhr = new XMLHttpRequest();
+        audxhr.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");
+        audxhr.onreadystatechange = function ClientSideUpdate() {
+            if (audxhr.readyState == 4) 
             {
-                model.currentNote.arisAudioFileName = oReq.responseText;
+                model.currentNote.arisAudioFileName = audxhr.responseText;
                 controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisAudioFileName, "AUDIO", '', '');
             }
         };
-        oReq.send(oMyForm);
-
+        audxhr.send(form);
     }
 
-    // hide create note view
+    //hide create note view
     controller.hideCreateNoteView();
 }
 
@@ -307,12 +306,17 @@ function getMediaToUse(note)
 
 function getImageToUse(note)
 {
-    var mediaURL = "";
-    for (i = 0; i < note.contents.length; i++)
-        if (note.contents[i].type == "PHOTO") mediaURL = note.contents[i].media_url;
-
-    return mediaURL;
+    for(i = 0; i < note.contents.length; i++)
+        if(note.contents[i].type == "PHOTO") return note.contents[i].media_url;
+    return "";
 }
+
+function getAudioToUse(note)
+{
+    for(i = 0; i < note.contents.length; i++)
+        if(note.contents[i].type == "AUDIO") return note.contents[i].media_url;
+    return "";
+};
 
 function mediaToUseType(note)
 {

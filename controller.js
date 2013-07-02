@@ -100,7 +100,7 @@ function Controller()
             if(!this.hasAtLeastOneSelectedTag(model.notes[i])) continue;
             if(!this.matchesFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
             var listNote = new ListNote(this.noteSelected, model.notes[i], i);
-            model.views.mainViewLeft.innerHTML = model.views.mainViewLeft.innerHTML + listNote.getImageHtml();
+            model.views.mainViewLeft.innerHTML += listNote.html;
         }
     };
 

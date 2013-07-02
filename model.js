@@ -17,8 +17,8 @@ function Model()
         //Fix up note tags
         note.tags.sort(
             function(a, b) {
-                if (a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
-                if (a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
+                if(a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
+                if(a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
                 return 0;
             });
         if(note.tags.length == 0) note.tags[0] = {"tag":'(untagged)'}; //conform to tag object structure
