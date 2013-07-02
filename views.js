@@ -78,7 +78,6 @@ function NoteView(note)
         if(imgcontent != null)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
         this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
-        this.html.children[1].children[1].innerHTML = 'Comments: ';
         this.loadComments();
         this.html.children[1].children[2].innerHTML = '<br><br><br>';
         var t = document.createElement('textarea'); 
@@ -98,6 +97,7 @@ function NoteView(note)
 
     this.loadComments = function()
     {
+        this.html.children[1].children[1].innerHTML = 'Comments: ';
         for(var i = 0; i < thism.note.comments.length; i++)
             thism.html.children[1].children[1].appendChild(thism.constructCommentHTML(thism.note.comments[i]));
     }
@@ -129,7 +129,6 @@ function NoteView(note)
 
     this.constructHTML();
 }
-
 
 function getLocation()
 {
