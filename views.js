@@ -644,26 +644,7 @@ function NoteCreateView()
             var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 
             var marker = null;
-            // Try HTML5 geolocation
-            if(navigator.geolocation)
-            {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    marker = new google.maps.Marker({ 
-                        map: map,
-                        position: pos,
-                        draggable: true
-                    });
 
-                    google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
-                    map.setCenter(pos);
-                    markerMoved(marker, map);
-                }, function() {
-                    handleNoGeolocation(true);
-                });
-            }
-            else
-            {
 
 		//CDH if no geo location enabled for browser, just set up the map anyway, with the marker in the lake so we can easily check that they moved it
 
@@ -678,9 +659,30 @@ function NoteCreateView()
                     map.setCenter(pos);
                     markerMoved(marker, map);
 
+	if(navigator.geolocation)
+	{
+		function positionFound(position)
+		{
+			if(!position) return;
+			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			marker = new google.maps.Marker({ 
+				map: map,
+				position: pos,
+				draggable: true
+			}); 
 
-                handleNoGeolocation(false);
-            }
+			google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
+			map.setCenter(pos);
+			markerMoved(marker, map)
+		}   
+
+		function positionNotFound()
+		{
+			handleNoGeolocation(true);
+		}   
+
+		navigator.geolocation.getCurrentPosition(positionFound, positionNotFound);
+	}
 
             var input = document.getElementById('searchTextField');
             var autocomplete = new google.maps.places.Autocomplete(input);
