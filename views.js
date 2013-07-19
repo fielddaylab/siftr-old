@@ -599,8 +599,8 @@ function clickSignUp()
 {
     var email = document.getElementById('usermail_join').value;
     var password = document.getElementById('password').value;
-
-    controller.createAccount(email, password);
+    var username = document.getElementById('username_join').value;	
+    controller.createAccount(email, password, username); //CDH added in username
 }
 
 function clickForgotPassword()
@@ -664,6 +664,21 @@ function NoteCreateView()
             }
             else
             {
+
+		//CDH if no geo location enabled for browser, just set up the map anyway, with the marker in the lake so we can easily check that they moved it
+
+                    var pos = new google.maps.LatLng(43.081829,-89.402313);
+                    marker = new google.maps.Marker({ 
+                        map: map,
+                        position: pos,
+                        draggable: true
+                    });
+
+                    google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
+                    map.setCenter(pos);
+                    markerMoved(marker, map);
+
+
                 handleNoGeolocation(false);
             }
 

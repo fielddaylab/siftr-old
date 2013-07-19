@@ -31,7 +31,8 @@ function Controller()
 
     this.showLoginView = function() 
     {
-        model.views.loginView = new LoginView();
+        self.hideJoinView(); //CDH only show one at a time
+	model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
@@ -41,7 +42,8 @@ function Controller()
 
     this.showJoinView = function() 
     {
-        model.views.joinView = new JoinView();
+        self.hideLoginView(); //CDH only show one at a time
+	model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
@@ -280,18 +282,17 @@ function Controller()
 
         if(model.playerId > 0)
         {
-            controller.hideLoginView();
+            self.hideLoginView();
 	    model.views.loginButton.style.display = 'none'; //CDH hide login
 	    model.views.uploadButton.style.display = 'inline'; //CDH show upload
-	     
         }
         else
             alert("Incorrect login. Please try again.");
     }
 
-    this.createAccount = function(email, password)
+    this.createAccount = function(email, password,username)
     {
-        callService("players.createPlayer", this.createPlayerReturned,"/"+email+"/"+password+"/"+email+"/"+email+"/"+email, false);
+        callService("players.createPlayer", this.createPlayerReturned,"/"+username+"/"+password+"/"+username+"/"+username+"/"+email, false); //CDH added username
     }
 
     this.createPlayerReturned = function(returnString)
@@ -302,10 +303,11 @@ function Controller()
         else
         {
             model.playerId = obj.data;
-            controller.createNote();
             self.hideLoginView();
             self.hideJoinView();
-            model.views.darkness.style.display = 'block';
+	    model.views.loginButton.style.display = 'none'; //CDH hide login
+	    model.views.uploadButton.style.display = 'inline'; //CDH show upload
+	    
         }
     }
 

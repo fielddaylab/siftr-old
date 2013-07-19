@@ -134,12 +134,12 @@ function finishLoadGame(responseText)
     </div>
     <div id='note_create_view_right_construct' class='note_create_view_right'>
         <div id='note_create_view_caption_construct' class='note_create_view_caption'>
-            <br />Caption:<br /><textarea id="caption" rows="8"></textarea>
+            <br />Caption:<br /><textarea id="caption" rows="8" maxlength="240"></textarea> <!--CDH limit the caption length until the database can accept longer titles -->
         </div>
         <div id='note_create_view_tags_construct' class='note_create_view_tags'>
             <div id='note_create_view_tags_construct' class='note_create_view_tags'>
                 Tags:<br />
-                <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio">Innovation</input><br />
+                <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio" checked>Innovation</input><br /><!--CDH this is default -->
                 <input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">Stories of the Past</input><br />
                 <input id="create_tag_3" name="note_tag_select" value="Madison Culture"     type="radio">Madison Culture</input><br />
                 <input id="create_tag_4" name="note_tag_select" value="Must Do"             type="radio">Must Do</input><br />
@@ -199,8 +199,14 @@ function finishLoadGame(responseText)
     <div id='join_view_bottom_construct' class='join_view_bottom'>
         <ul>
             <li>
-                <label for="usermail_join">Username</label>
-                <input type="text" id="usermail_join" placeholder="username" required>
+                <label for="usermail_join">Email</label>
+                <input type="text" id="usermail_join" placeholder="Email" required>
+            </li> 
+            
+		<!-- CDH Added in username -->
+            <li> 
+                <label for="username_join">Username</label>
+                <input type="text" id="username_join" placeholder="username" required>
             </li> 
             <li>
                 <label for="password">Password</label>
