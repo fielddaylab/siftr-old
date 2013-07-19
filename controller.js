@@ -280,9 +280,10 @@ function Controller()
 
         if(model.playerId > 0)
         {
-         //CDH this needs to be somewhere else:   controller.createNote();
             controller.hideLoginView();
-	 //CDH also with the create note   model.views.darkness.style.display = 'block';
+	    model.views.loginButton.style.display = 'none'; //CDH hide login
+	    model.views.uploadButton.style.display = 'inline'; //CDH show upload
+	     
         }
         else
             alert("Incorrect login. Please try again.");

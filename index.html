@@ -84,8 +84,10 @@ function finishLoadGame(responseText)
             <br />
             <span>Search:<input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span>
             <br /><br /><br />
-            <button onClick="JavaScript:controller.createNote()" class="button">Upload</button>
-        </div>
+            
+        <button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
+	<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays after login -->
+	</div>
     </div>
 </div>
 

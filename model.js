@@ -62,6 +62,9 @@ function Model()
         this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
         this.constructLoginView        = document.getElementById('login_view_construct');
         this.constructJoinView         = document.getElementById('join_view_construct');
+	this.uploadButton 		= document.getElementById('uploadButton'); //CDH
+	this.uploadButton.style.display = 'none'; //CDH hide until login
+	this.loginButton		= document.getElementById('loginButton'); //CDH
 
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
         this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px; />';
