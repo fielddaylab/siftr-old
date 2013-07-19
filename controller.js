@@ -261,7 +261,7 @@ function Controller()
 
     this.login = function(email, password)
     {
-        callService("players.loginPlayer", this.loginReturned,"/"+email+"/"+password, false);
+        callService("players.getLoginPlayerObject", this.loginReturned,"/"+email+"/"+password, false);
     }
 
     this.loginReturned = function(returnString)
@@ -270,15 +270,19 @@ function Controller()
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
 
-        var playerId = obj.data;
-
+	//CDH updated the display name and player ID to match getLoginPlayerObject data
+        var playerId = obj.data.player_id;
+	var displayName = obj.data.display_name; //in new user account creation this will be same as username
+	if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
+ 
         model.playerId = playerId;
+	model.displayName = displayName;
 
         if(model.playerId > 0)
         {
-            controller.createNote();
+         //CDH this needs to be somewhere else:   controller.createNote();
             controller.hideLoginView();
-	    model.views.darkness.style.display = 'block';
+	 //CDH also with the create note   model.views.darkness.style.display = 'block';
         }
         else
             alert("Incorrect login. Please try again.");

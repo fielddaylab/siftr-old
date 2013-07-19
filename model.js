@@ -2,6 +2,7 @@ function Model()
 {
     this.gameId = YOI_GAME_ID;
     this.playerId = 0;
+    this.displayName = ""; //CDH for displaying newly added content
     this.gameJSONText = '';
     this.gameData = {};
     this.backpacks = [];

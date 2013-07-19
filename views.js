@@ -80,17 +80,30 @@ function NoteView(note)
         this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
         this.loadComments();
         this.html.children[1].children[2].innerHTML = '<br><br><br>';
-        var t = document.createElement('textarea'); 
-        t.id="commentInput";
-        t.rows="4";
-        t.placeholder="add comment";
-        this.html.children[1].children[2].appendChild(t);
-        var b = document.createElement('button');
-        b.id = 'commentSubmit';
-        b.className = 'button';
-        b.onclick = function(){thism.submitComment(thism.note, t.value);};
-        b.innerHTML = 'Submit';
-        this.html.children[1].children[2].appendChild(b);
+        
+	//CDH if user is logged in, let them submit comments. Else, prompt them to login 
+	if(model.playerId > 0){
+	        var t = document.createElement('textarea'); 
+        	t.id="commentInput";
+	        t.rows="4";
+        	t.placeholder="add comment";
+	        this.html.children[1].children[2].appendChild(t);
+	
+		var b = document.createElement('button');
+        	b.id = 'commentSubmit';
+        	b.className = 'button';
+        	b.onclick = function(){thism.submitComment(thism.note, t.value);};
+        	b.innerHTML = 'Submit';
+	}
+	else{
+		var b = document.createElement('button');
+		b.id = 'loginToComment';
+		b.classname = 'button';
+		b.onclick = controller.showLoginView();
+		b.innerHTML = 'Login to Comment';
+	}
+        
+	this.html.children[1].children[2].appendChild(b);
         //this.html.children[1].children[2].innerHTML += '<br><br><br>'; 
         //this.html.children[1].children[2].innerHTML += this.note.likes + model.views.likeIcon + '    ' + this.note.comments.length + model.views.commentIcon;   
     }
@@ -104,13 +117,21 @@ function NoteView(note)
 
     this.submitComment = function(note, comment)
     {
-        if(model.playerId > 0)
-            controller.addCommentToNote(note.note_id, comment, thism.loadComments);
-        else
+	controller.hideNoteView();
+        if(model.playerId > 0){ 
+	   //CDH add the note to the cached HTML so we don't have to re-load the whole page
+	   var day = new Date();
+	   var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
+	   
+	   note.comments.push({ "username":model.displayName, "title":comment, "created":today}); 
+	
+	   //CDH now add it to the server copy and re-display the updated note
+	   controller.addCommentToNote(note.note_id, comment, function(status){ controller.noteSelected(thism);});
+	}else
         {
-            controller.hideNoteView();
             controller.showLoginView();
         }
+	// thism.NoteView(note); //CDH somehow we have to re-show the note after login
     }
 
     this.constructCommentHTML = function(comment)
