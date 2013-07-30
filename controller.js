@@ -32,23 +32,23 @@ function Controller()
     this.showLoginView = function() 
     {
         self.hideJoinView(); //CDH only show one at a time
-	model.views.loginView = new LoginView();
+		model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block';
+		model.views.darkness.style.display = 'block';
     };
 
     this.showJoinView = function() 
     {
         self.hideLoginView(); //CDH only show one at a time
-	model.views.joinView = new JoinView();
+		model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block';
+		model.views.darkness.style.display = 'block';
     };
 
     this.populateMapNotesFromModel = function(center)
@@ -79,18 +79,21 @@ function Controller()
 
     this.hasAtLeastOneSelectedTag = function(note)
     {
-        for(var i = 1; i <= 5; i++)
-        {
-            if(document.getElementById("tag"+i).checked)
-            {
-                for(var j = 0; j < note.tags.length; j++)
-                {
-                    if(note.tags[j].tag.toLowerCase() == document.getElementById("tag"+i).value.toLowerCase())
+		try{
+        	for(var i = 1; i <= 5; i++)
+        	{
+            	if(document.getElementById("tag"+i).checked)
+           		{
+                	for(var j = 0; j < note.tags.length; j++)
+                	{
+                    	if(note.tags[j].tag.toLowerCase() == document.getElementById("tag"+i).value.toLowerCase())
                         return true;
-                }
-            }
-        }
-        return false;
+                	}
+            	}
+       		 }  
+			 return false;
+			}	catch(err){console.log(err); }; //CDH was getting errors here for a while
+
     }
 
     this.populateListNotesFromModel = function()
@@ -232,14 +235,28 @@ function Controller()
         if(type == "TEXT")
         {
             var getString = "/"+ noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + text;
-            callService("notes.addContentToNote", function(){}, getString, false);	
+            callService("notes.addContentToNote", controller.callPushNewNote, getString, false);	
         }
         else
         {
             var getString = "/"+ gameId + "/" + noteId + "/" + playerId + "/" + filename + "/" + type;
-            callService("notes.addContentToNoteFromFileName", function(){}, getString, false);	
+            callService("notes.addContentToNoteFromFileName", controller.callPushNewNote, getString, false);	
         }
     }
+
+	this.callPushNewNote = function callPushNewNote(responseText){
+		//CDH this function exists to save me from having to type it multiple times in callbacks
+		callService("notes.getDetailedFullNoteObject", controller.pushNewNote, "/" + model.currentNote.noteId + "/" + model.playerId, false);
+	}
+
+	this.pushNewNote = function pushNewNote(note){
+    	//CDH this function helps add the newly uploaded note into the currenty cached HTML
+
+	    var fullNote = JSON.parse(note); //the note will have come in like text
+	    if(fullNote.contents.length == 0) console.log("Empty uploaded note");  //if the contents haven't loaded, it won't display
+	    model.addNoteFromData(fullNote);  //add it in to the cached model
+	    controller.populateAllFromModel();  //re-display the map and left hand images
+	}
 
     this.updateNote = function(noteId, title) 
     {
@@ -248,6 +265,7 @@ function Controller()
 
     this.addCommentToNote = function(noteId, comment, callback)
     {
+//		callService("notes.getFullNoteObject", callback, "/"+model.currentNote.noteId+"/"+model.playerId, false);
         callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/"+comment, false);
     }
 
@@ -272,23 +290,31 @@ function Controller()
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
 
-	//CDH updated the display name and player ID to match getLoginPlayerObject data
+	//CDH first check to see if you have a valid login
+	if (obj.data) {
+
+		//CDH updated the display name and player ID to match getLoginPlayerObject data
         var playerId = obj.data.player_id;
-	var displayName = obj.data.display_name; //in new user account creation this will be same as username
-	if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
+		var displayName = obj.data.display_name; //in new user account creation this will be same as username
+		if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
  
         model.playerId = playerId;
-	model.displayName = displayName;
+		model.displayName = displayName;
 
         if(model.playerId > 0)
-        {
+    	{
             self.hideLoginView();
-	    model.views.loginButton.style.display = 'none'; //CDH hide login
-	    model.views.uploadButton.style.display = 'inline'; //CDH show upload
+	    	model.views.loginButton.style.display = 'none'; //CDH hide login
+	    	model.views.uploadButton.style.display = 'inline'; //CDH show upload
         }
         else
             alert("Incorrect login. Please try again.");
-    }
+
+	}
+	else
+		alert(obj.returnCodeDescription + ". Please try again");
+	
+	}
 
     this.createAccount = function(email, password,username)
     {
@@ -305,8 +331,8 @@ function Controller()
             model.playerId = obj.data;
             self.hideLoginView();
             self.hideJoinView();
-	    model.views.loginButton.style.display = 'none'; //CDH hide login
-	    model.views.uploadButton.style.display = 'inline'; //CDH show upload
+		    model.views.loginButton.style.display = 'none'; //CDH hide login
+		    model.views.uploadButton.style.display = 'inline'; //CDH show upload
 	    
         }
     }

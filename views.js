@@ -119,7 +119,8 @@ function NoteView(note)
     {
 	controller.hideNoteView();
         if(model.playerId > 0){ 
-	   //CDH add the note to the cached HTML so we don't have to re-load the whole page
+	
+		//CDH in this section add the note to the cached HTML so we don't have to re-load the whole page   
 	   var day = new Date();
 	   var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
 	   
@@ -165,8 +166,10 @@ function submitNote()
 
     // add text to note
     model.currentNote.text = document.getElementById("caption").value;
-    if (model.currentNote.text != '')
+    if (model.currentNote.text != ''){
         controller.updateNote(model.currentNote.noteId, model.currentNote.text);
+	}
+
 
     // add image content
     if(model.currentNote.imageFile != null)
@@ -182,17 +185,18 @@ function submitNote()
             {
                 model.currentNote.arisImageFileName = imgxhr.responseText;
                 controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisImageFileName, "PHOTO", '', '');
-            }
+		}
         };
         imgxhr.send(form);
     }
 
     // add tags
-    if(document.getElementById("create_tag_1").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_1").value);
-    if(document.getElementById("create_tag_2").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_2").value);
-    if(document.getElementById("create_tag_3").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_3").value);
-    if(document.getElementById("create_tag_4").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_4").value);
-    if(document.getElementById("create_tag_5").checked) controller.addTagToNote(model.currentNote.noteId, document.getElementById("create_tag_5").value);
+	var tags = "Innovation"; //this is the default tag and its radio button is checked, but in case that fails we'll set it here 
+    if(document.getElementById("create_tag_1").checked){tags = document.getElementById("create_tag_1").value; controller.addTagToNote(model.currentNote.noteId, tags); }
+    if(document.getElementById("create_tag_2").checked){tags = document.getElementById("create_tag_2").value; controller.addTagToNote(model.currentNote.noteId, tags); }
+    if(document.getElementById("create_tag_3").checked){tags = document.getElementById("create_tag_3").value; controller.addTagToNote(model.currentNote.noteId, tags); }
+    if(document.getElementById("create_tag_4").checked){tags = document.getElementById("create_tag_4").value; controller.addTagToNote(model.currentNote.noteId, tags); }
+    if(document.getElementById("create_tag_5").checked){tags = document.getElementById("create_tag_5").value; controller.addTagToNote(model.currentNote.noteId, tags); }
 
     // add audio content (optional)
     if(model.currentNote.audioFile != null)
@@ -205,17 +209,20 @@ function submitNote()
         audxhr.open("POST", SERVER_URL+"/services/v1/uploadHandler.php");
         audxhr.onreadystatechange = function ClientSideUpdate() {
             if (audxhr.readyState == 4) 
-            {
+     	    {
                 model.currentNote.arisAudioFileName = audxhr.responseText;
                 controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisAudioFileName, "AUDIO", '', '');
-            }
+		
+			}
         };
         audxhr.send(form);
     }
+	
 
     //hide create note view
     controller.hideCreateNoteView();
 }
+
 
 function MapMarker(callback, note)
 {
