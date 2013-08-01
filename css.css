@@ -6,6 +6,11 @@ div
     */
 }
 
+body
+{
+	font-family:Helvetica, Arial;
+
+}
 #message
 {
     display:block;
@@ -15,7 +20,7 @@ div
 {
     display:none;
     margin:0 auto;
-    font-family:"Helvetica, Arial";
+    font-family:Helvetica, Arial;
 }
 
 #constructs
@@ -31,11 +36,11 @@ div
 .darkBackgroundLayer
 {
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 20;
+	z-index: 9999999;
 	height: 100%;
 	width: 100%;
-	position:absolute;
-	top: 0px;
+	position:fixed;
+	bottom: 0px;
 	left: 0px;
 }
 
@@ -69,6 +74,12 @@ div
     box-orient:        horizontal;
 
     height:100%;
+}
+
+.error
+{
+	/* CDH this is to flag missing elements before submit. Use Javascript to change the item's class */
+	border: 10px dashed red;
 }
 
 #main_view_left
@@ -292,6 +303,14 @@ div
     padding:0px 20px 0px 20px;
 }
 
+/*
+.note_create_view_image
+{   CDH this is reset when they try to submit without an image   
+	border: 0px;
+	border-style: none;
+	border-color: transparent;
+	
+}*/
 .note_create_view_caption
 {
     display: -moz-box;

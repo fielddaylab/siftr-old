@@ -62,23 +62,26 @@ function Model()
         this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
         this.constructLoginView        = document.getElementById('login_view_construct');
         this.constructJoinView         = document.getElementById('join_view_construct');
-	this.uploadButton 		= document.getElementById('uploadButton'); //CDH
-	this.uploadButton.style.display = 'none'; //CDH hide until login
-	this.loginButton		= document.getElementById('loginButton'); //CDH
-
+		this.uploadButton 		= document.getElementById('uploadButton'); //CDH
+		this.uploadButton.style.display = 'none'; //CDH hide until login
+		this.loginButton		= document.getElementById('loginButton'); //CDH
+	
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
         this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px; />';
         this.noteIcon     = '';
 
-	this.darkness		    = document.getElementById("darkBackgroundLayer");
-	this.darkness.style.display = 'none'; 
+		this.darkness		    = document.getElementById("darkBackgroundLayer");
+		this.darkness.style.display = 'none'; 
 
         //Map
         this.map = document.getElementById('main_view_map');
         var centerLoc = new google.maps.LatLng(0, 0);
         var myOptions = { zoom:5, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
         this.gmap = new google.maps.Map(this.map, myOptions);
-
+		//default map pin location is in lake, where no notes are expected. User must move this pin to submit a note.
+		this.defaultLat = 43.081829;
+		this.defaultLon = -89.402313;
+ 
         // marker clusterer
         var mcOptions = { styles: [
             { height:53, url:"./assets/images/speechBubble_cluster_large.png", width:41, anchor:[15,17], fontFamily:"Helvetica, Arial" },

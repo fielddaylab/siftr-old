@@ -1,3 +1,4 @@
+
 function Controller()
 {
     var self = this; //<- I hate javascript.

@@ -92,7 +92,7 @@ function finishLoadGame(responseText)
 </div>
 
 <!-- a thing with position absolute in the top left corner that takes up the full size of the screen. now popups can position themselves within this without guessing percentages -->
-<div id='darkBackgroundLayer'        class='darkBackgroundLayer container_container'> <!--for dimming the background when popups have the focus CDH -->
+	<div id='darkBackgroundLayer'        class='darkBackgroundLayer'> <!--for dimming the background when popups have the focus CDH -->
     <div id='note_view_container'        class='container'></div>
     <div id='create_note_view_container' class='container'></div>
     <div id='login_view_container'       class='container'></div>
@@ -112,7 +112,7 @@ function finishLoadGame(responseText)
 <!-- Create Note View -->
 <div id='note_create_view_construct' class='note_create_view'>
     <div id='note_create_view_left_construct' class='note_create_view_left'>
-        <div id='note_create_view_image_construct' class='note_create_view_image'>
+        <div id='note_create_view_image_construct' class='note_create_view_image' style="border:0px single transparent" >
             <br />Image:<br />
             <img width=300 height=300 id="imageThumbnail" />
             <input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="display:none;"/>

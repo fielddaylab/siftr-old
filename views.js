@@ -160,20 +160,54 @@ function getLocation()
 
 function submitNote() 
 {
-    // check for required stuff
-    // add location to note
+
+	model.currentNote.text = document.getElementById("caption").value;
+
+    // check for required stuff CDH
+    var requirementsMet = true; 
+	var alertText = "Missing Items:";
+
+	//error borders may have been set earlier, remove them if so and check again
+	 document.getElementById("note_create_view_image_construct").className = document.getElementById("note_create_view_image_construct").className.replace(/(^|\s)error(?!\S)/g,'');
+	 document.getElementById("caption").className = document.getElementById("caption").className.replace(/(^|\s)error(?!\S)/g,'');
+	 document.getElementById("note_create_view_location_construct").className = document.getElementById("note_create_view_location_construct").className.replace(/(^|\s)error(?!\S)/g,'');
+
+
+	if(model.currentNote.imageFile == null){
+		alertText += " Image,"; 
+		document.getElementById("note_create_view_image_construct").className =	document.getElementById("note_create_view_image_construct").className + ' error'; //cdh may need to remove this later if multiple missing things
+		requirementsMet = false;
+	}
+
+	if(model.currentNote.text == ""){
+		alertText += " Caption Text,";
+		document.getElementById("caption").className =	document.getElementById("caption").className + ' error'; 
+		requirementsMet = false;
+
+	}
+
+	//map pin starts at default location in lake where no notes are expected. 
+	//Google maps map move the pin slightly during map creation, so can't do an exact == comparison
+	if(Math.abs(model.currentNote.lat-model.views.defaultLat)<.0001 &&  Math.abs(model.currentNote.lon-model.views.defaultLon)<.0001){
+		alertText += " Location";
+		document.getElementById("note_create_view_location_construct").className =	document.getElementById("note_create_view_location_construct").className + ' error'; 
+		requirementsMet = false;
+
+	}
+	if(!requirementsMet){
+		alert(alertText);
+	}
+	else{
+
+	// add location to note
     controller.updateNoteLocation(model.currentNote.noteId, model.currentNote.lat, model.currentNote.lon);
 
     // add text to note
-    model.currentNote.text = document.getElementById("caption").value;
-    if (model.currentNote.text != ''){
-        controller.updateNote(model.currentNote.noteId, model.currentNote.text);
-	}
+    controller.updateNote(model.currentNote.noteId, model.currentNote.text);
 
 
     // add image content
-    if(model.currentNote.imageFile != null)
-    {
+    
         var form = new FormData();
         form.append("file", model.currentNote.imageFile);
         form.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
@@ -188,7 +222,7 @@ function submitNote()
 		}
         };
         imgxhr.send(form);
-    }
+    
 
     // add tags
 	var tags = "Innovation"; //this is the default tag and its radio button is checked, but in case that fails we'll set it here 
@@ -221,6 +255,8 @@ function submitNote()
 
     //hide create note view
     controller.hideCreateNoteView();
+	
+	}//end else (required content is all present)
 }
 
 
@@ -655,7 +691,7 @@ function NoteCreateView()
 
 		//CDH if no geo location enabled for browser, just set up the map anyway, with the marker in the lake so we can easily check that they moved it
 
-                    var pos = new google.maps.LatLng(43.081829,-89.402313);
+                    var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon);
                     marker = new google.maps.Marker({ 
                         map: map,
                         position: pos,
