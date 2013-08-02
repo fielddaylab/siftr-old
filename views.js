@@ -685,39 +685,28 @@ function NoteCreateView()
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 
+			//CDH set up map. Geolocation will move marker when/if it gets the new position
             var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
-
-            var marker = null;
-
-
-			//CDH if no geo location enabled for browser, just set up the map anyway, with the marker in the lake so we can easily check that they moved it
-
-            var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon);
-            marker = new google.maps.Marker({ 
-    	        map: map,
-        		position: pos,
-                draggable: true
-            });
-
-            google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
-            map.setCenter(pos);
-            markerMoved(marker, map);
-
-			if(navigator.geolocation)
+			var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon); //start at default, the let geolocation update it if it can
+           	marker = new google.maps.Marker({ 
+   	        	map: map,
+       			position: pos,
+               	draggable: true
+           	});
+			
+			google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
+			map.setCenter(pos);
+			markerMoved(marker, map);
+			
+			if(navigator.geolocation) //this may take time to complete, so it'll just move the default when it's ready
 			{
 				function positionFound(position)
 				{
 					if(!position) return;
-					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					marker = new google.maps.Marker({ 
-						map: map,
-						position: pos,
-						draggable: true
-					}); 
-
-				google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
-				map.setCenter(pos);
-				markerMoved(marker, map)
+					pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					map.setCenter(pos);
+					marker.setPosition(pos); 
+					markerMoved(marker, map);
 				}   
 
 				function positionNotFound()
@@ -727,7 +716,9 @@ function NoteCreateView()
 
 				navigator.geolocation.getCurrentPosition(positionFound, positionNotFound);
 		
-			} //end if navigator.geolocation
+			} 
+			 
+
 
         	var input = document.getElementById('searchTextField');
          	var autocomplete = new google.maps.places.Autocomplete(input);
