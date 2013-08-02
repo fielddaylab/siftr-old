@@ -24,8 +24,11 @@ function Controller()
             model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
-	    model.views.darkness.style.display = 'block';
-        }
+		    model.views.darkness.style.display = 'block';
+		
+		    document.getElementById("create_tag_1").checked = true; //this is the default tag, it should be checked (but can't do it in HTML for reasons)
+
+	    }
         else
             this.showLoginView();
     };
@@ -205,6 +208,11 @@ function Controller()
 
     this.createNewNote = function()
     {
+		//CDH first, reset currentNote to clear out any old data, and give it just lat & lon to start
+		model.currentNote = {};
+		model.currentNote.lat = model.defaultLat;
+		model.currentNote.lon = model.defaultLon;
+
         var gameId = model.gameId;
         var playerId = model.playerId;		
         callService("notes.createNewNoteStartIncomplete", this.newNoteCreated, "/"+ gameId + "/" + playerId, false);

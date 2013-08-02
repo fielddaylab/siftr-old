@@ -672,12 +672,13 @@ function JoinView()
 function NoteCreateView()
 {
     this.html = model.views.constructNoteCreateView.cloneNode(true);
-
+	
     controller.createNewNote();
 
     this.constructHTML = function()
     {
-        function refreshMap() 
+	
+	    function refreshMap() 
         {
             var mapOptions = {
                 zoom: 12,
@@ -689,73 +690,75 @@ function NoteCreateView()
             var marker = null;
 
 
-		//CDH if no geo location enabled for browser, just set up the map anyway, with the marker in the lake so we can easily check that they moved it
+			//CDH if no geo location enabled for browser, just set up the map anyway, with the marker in the lake so we can easily check that they moved it
 
-                    var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon);
-                    marker = new google.maps.Marker({ 
-                        map: map,
-                        position: pos,
-                        draggable: true
-                    });
-
-                    google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
-                    map.setCenter(pos);
-                    markerMoved(marker, map);
-
-	if(navigator.geolocation)
-	{
-		function positionFound(position)
-		{
-			if(!position) return;
-			var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			marker = new google.maps.Marker({ 
-				map: map,
-				position: pos,
-				draggable: true
-			}); 
-
-			google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
-			map.setCenter(pos);
-			markerMoved(marker, map)
-		}   
-
-		function positionNotFound()
-		{
-			handleNoGeolocation(true);
-		}   
-
-		navigator.geolocation.getCurrentPosition(positionFound, positionNotFound);
-	}
-
-            var input = document.getElementById('searchTextField');
-            var autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.bindTo('bounds', map);
-
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
-                var place = autocomplete.getPlace();
-                if(place.geometry.viewport) 
-                    map.fitBounds(place.geometry.viewport);
-                else
-                {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(17);  // Why 17? Because it looks good.
-                }
-
-                marker.setPosition(place.geometry.location);
-                markerMoved(marker, map);
-    
-                var address = '';
-                if(place.address_components)
-                {
-                    address = [
-                        (place.address_components[0] && place.address_components[0].short_name || ''),
-                        (place.address_components[1] && place.address_components[1].short_name || ''),
-                        (place.address_components[2] && place.address_components[2].short_name || '')
-                    ].join(' ');
-                }
+            var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon);
+            marker = new google.maps.Marker({ 
+    	        map: map,
+        		position: pos,
+                draggable: true
             });
 
+            google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
+            map.setCenter(pos);
+            markerMoved(marker, map);
 
+			if(navigator.geolocation)
+			{
+				function positionFound(position)
+				{
+					if(!position) return;
+					var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+					marker = new google.maps.Marker({ 
+						map: map,
+						position: pos,
+						draggable: true
+					}); 
+
+				google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
+				map.setCenter(pos);
+				markerMoved(marker, map)
+				}   
+
+				function positionNotFound()
+				{
+					handleNoGeolocation(true);
+				}   
+
+				navigator.geolocation.getCurrentPosition(positionFound, positionNotFound);
+		
+			} //end if navigator.geolocation
+
+        	var input = document.getElementById('searchTextField');
+         	var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+
+            google.maps.event.addListener(autocomplete, 'place_changed', function()
+				 {
+                	var place = autocomplete.getPlace();
+                	if(place.geometry.viewport) 
+                    	map.fitBounds(place.geometry.viewport);
+                	else
+                	{
+                    	map.setCenter(place.geometry.location);
+                    	map.setZoom(17);  // Why 17? Because it looks good.
+                	}
+
+                	marker.setPosition(place.geometry.location);
+                	markerMoved(marker, map);
+    
+                	var address = '';
+                	if(place.address_components)
+                	{
+                    	address = [
+                        	(place.address_components[0] && place.address_components[0].short_name || ''),
+                        	(place.address_components[1] && place.address_components[1].short_name || ''),
+                        	(place.address_components[2] && place.address_components[2].short_name || '')
+                    	].join(' ');
+                	}
+            	});
+
+			//if user clicks 'Camera' then 'Snap Photo'
             document.getElementById("snap").addEventListener("click", function()
             {
                 var canvas = document.getElementById("canvas");
@@ -769,9 +772,12 @@ function NoteCreateView()
                 img.src = image;
                 model.currentNote.imageFile = dataURItoBlob(image); // it looks like there will eventually be a method canvas.toBlob() method for HTML5 but it is not implemented yet in most browsers as of April 2013
             }, false );
-        }
+    
+	    }//end RefreshMap
+	
         setTimeout(refreshMap,300);
-    };
+
+    }; //end constructHTML
 
     this.constructHTML();
 }
