@@ -116,8 +116,13 @@ function Controller()
     this.matchesFilter = function(note, filter)
     {
         if(filter == "") return true; 
-        // check title
-        if(note.title.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
+        // check text content
+        for (var i = 0; i < note.contents.length; i++){
+			if(note.contents[i].type == 'TEXT'){
+				if(this.note.contents[i].text.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
+			}
+		}
+		if(note.title.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
         // check contributor
         if(note.username.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
         // check caption & type
@@ -236,7 +241,7 @@ function Controller()
         callService("notes.updateLocation", function(){}, getString, false);
     }
 
-    this.addContentToNote = function(noteId, filename, type, text, title)
+    this.addContentToNote = function(noteId, filename, type, text)
     {
         var gameId = model.gameId;
         var playerId = model.playerId;
@@ -244,7 +249,7 @@ function Controller()
         if(type == "TEXT")
         {
             var getString = "/"+ noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + text;
-            callService("notes.addContentToNote", controller.callPushNewNote, getString, false);	
+            callService("notes.addContentToNote", function(){}, getString, false);	
         }
         else
         {
@@ -267,14 +272,9 @@ function Controller()
 	    controller.populateAllFromModel();  //re-display the map and left hand images
 	}
 
-    this.updateNote = function(noteId, title) 
-    {
-        callService("notes.updateNote", function(){},"/"+noteId+"/"+title+"/true/true", false);
-    }
 
     this.addCommentToNote = function(noteId, comment, callback)
     {
-//		callService("notes.getFullNoteObject", callback, "/"+model.currentNote.noteId+"/"+model.playerId, false);
         callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/"+comment, false);
     }
 

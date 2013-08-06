@@ -70,17 +70,24 @@ function NoteView(note)
         if(!this.note) return; 
 
         var imgcontent;
-        for(var i = 0; i < this.note.contents.length; i++)
-            if(this.note.contents[i].type == 'PHOTO') imgcontent = this.note.contents[i];
         var audcontent;
-        for(var i = 0; i < this.note.contents.length; i++)
-            if(this.note.contents[i].type == 'AUDIO') audcontent = this.note.contents[i];
-        if(imgcontent != null)
+		var textcontent;
+
+        for(var i = 0; i < this.note.contents.length; i++){
+			switch(this.note.contents[i].type){
+				case 'PHOTO': imgcontent = this.note.contents[i]; break;
+				case 'AUDIO': audcontent = this.note.contents[i]; break; 
+				case 'TEXT': textcontent = this.note.contents[i].text; break;
+        		default: console.log("Error in parsing note content type in NoteView");
+			}
+		}
+		if(imgcontent != null)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
-        this.html.children[1].children[0].innerHTML += 'Caption: ' + this.note.title + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
+        this.html.children[1].children[0].innerHTML += 'Caption: ' + textcontent + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
         this.loadComments();
         this.html.children[1].children[2].innerHTML = '<br><br><br>';
-        
+
+
 	//CDH if user is logged in, let them submit comments. Else, prompt them to login 
 	if(model.playerId > 0){
 	        var t = document.createElement('textarea'); 
@@ -132,7 +139,6 @@ function NoteView(note)
         {
             controller.showLoginView();
         }
-	// thism.NoteView(note); //CDH somehow we have to re-show the note after login
     }
 
     this.constructCommentHTML = function(comment)
@@ -203,8 +209,7 @@ function submitNote()
     controller.updateNoteLocation(model.currentNote.noteId, model.currentNote.lat, model.currentNote.lon);
 
     // add text to note
-    controller.updateNote(model.currentNote.noteId, model.currentNote.text);
-
+	controller.addContentToNote(model.currentNote.noteId, '', "TEXT", model.currentNote.text);
 
     // add image content
     
@@ -218,7 +223,7 @@ function submitNote()
             if (imgxhr.readyState == 4) 
             {
                 model.currentNote.arisImageFileName = imgxhr.responseText;
-                controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisImageFileName, "PHOTO", '', '');
+                controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisImageFileName, "PHOTO", '');
 		}
         };
         imgxhr.send(form);
@@ -245,7 +250,7 @@ function submitNote()
             if (audxhr.readyState == 4) 
      	    {
                 model.currentNote.arisAudioFileName = audxhr.responseText;
-                controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisAudioFileName, "AUDIO", '', '');
+                controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisAudioFileName, "AUDIO", '');
 		
 			}
         };
