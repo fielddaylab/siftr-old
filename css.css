@@ -204,7 +204,7 @@ body
 
 #create_note_view_container
 {
-    top:20px;
+    top:5%;
     margin:0px auto;
     background-color:white;
     border:1px solid black;
@@ -241,6 +241,10 @@ body
 
     border:1px solid black;
     max-width:750px;
+	max-height:90%;
+
+	overflow-y:scroll;
+	overflow-x:scroll;
 }
 
 .note_create_view_left
