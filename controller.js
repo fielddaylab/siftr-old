@@ -254,13 +254,19 @@ function Controller()
         else
         {
             var getString = "/"+ gameId + "/" + noteId + "/" + playerId + "/" + filename + "/" + type;
-            callService("notes.addContentToNoteFromFileName", controller.callPushNewNote, getString, false);	
+	           callService("notes.addContentToNoteFromFileName", controller.callPushNewNote, getString, false);	
         }
     }
 
 	this.callPushNewNote = function callPushNewNote(responseText){
 		//CDH this function exists to save me from having to type it multiple times in callbacks
-		callService("notes.getDetailedFullNoteObject", controller.pushNewNote, "/" + model.currentNote.noteId + "/" + model.playerId, false);
+
+		model.contentsWaitingToUpload -= 1; //one item has uploaded, so we aren't waiting for it anymore
+		
+		//Check to see if everything has uploaded, if it has, then push new note.
+		if(model.contentsWaitingToUpload == 0){
+			callService("notes.getDetailedFullNoteObject", controller.pushNewNote, "/" + model.currentNote.noteId + "/" + model.playerId, false);
+		}
 	}
 
 	this.pushNewNote = function pushNewNote(note){

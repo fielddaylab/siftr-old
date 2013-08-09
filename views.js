@@ -50,7 +50,7 @@ function ListNote(callback, note, noteId)
         var noteImage = getImageToUse(note);
         if(noteImage != "") this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
         var noteAud = getAudioToUse(note);
-        if(noteAud != "")   this.html += "";//how to render audio? //"<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
+        if(noteAud != "")   this.html += "";//we don't show audio seperate //"<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
         this.html += "</div>";
 
         if(noteImage+noteAud == ""){ this.html = "";}//clear out the entire node if no media
@@ -65,10 +65,18 @@ function NoteView(note)
     this.html = model.views.constructNoteView.cloneNode(true);
     this.note = note;
 
+	//this.html.children[0] is for the image
+	//this.html.children [1][0] Caption 
+	//this.html.children [1][1] Audio
+	//this.html.children [1][2] Tags
+	//this.html.children [1][3] Comments
+	//this.html.children [1][4] Inputs (of more comments)
+
     this.constructHTML = function()
     {
         if(!this.note) return; 
 
+		//load content
         var imgcontent;
         var audcontent;
 		var textcontent;
@@ -81,61 +89,84 @@ function NoteView(note)
         		default: console.log("Error in parsing note content type in NoteView");
 			}
 		}
+
+		//display image
 		if(imgcontent != null)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
-        this.html.children[1].children[0].innerHTML += 'Caption: ' + textcontent + '<br><br><br> Tags: ' + this.note.tagString + '<br><br><br>';
+
+		//dispaly text
+        this.html.children[1].children[0].innerHTML += 'Caption: ' + textcontent;
+
+		//dispaly audio
+		if(audcontent != null)
+		{
+			var audioHTML =  'Audio:'  + '<br> <audio controls id="audioPreview" > <source src="' + audcontent.media_url +  ' " ';
+			audioHTML += 'type="audio/mpeg">';
+			audioHTML += 'Your browser does not support the audio element. </audio>';
+			this.html.children[1].children[1].innerHTML  += audioHTML;
+		}
+
+		//display tags
+        this.html.children[1].children[2].innerHTML +=' Tags: ' + this.note.tagString + '<br><br><br>';
+
+		//display comments
         this.loadComments();
-        this.html.children[1].children[2].innerHTML = '<br><br><br>';
+
+//        this.html.children[1].children[2].innerHTML = '<br><br><br>';
 
 
-	//CDH if user is logged in, let them submit comments. Else, prompt them to login 
-	if(model.playerId > 0){
+		//CDH if user is logged in, let them submit comments. Else, prompt them to login 
+		if(model.playerId > 0){
 	        var t = document.createElement('textarea'); 
         	t.id="commentInput";
 	        t.rows="4";
         	t.placeholder="add comment";
-	        this.html.children[1].children[2].appendChild(t);
+	        this.html.children[1].children[4].appendChild(t);
 	
-		var b = document.createElement('button');
+			var b = document.createElement('button');
         	b.id = 'commentSubmit';
         	b.className = 'button';
         	b.onclick = function(){thism.submitComment(thism.note, t.value);};
         	b.innerHTML = 'Submit';
-	}
-	else{
-		var b = document.createElement('button');
-		b.id = 'loginToComment';
-		b.classname = 'button';
-		b.onclick = controller.showLoginView();
-		b.innerHTML = 'Login to Comment';
-	}
-        
-	this.html.children[1].children[2].appendChild(b);
+		}
+		else{
+			var b = document.createElement('button');
+			b.id = 'loginToComment';
+			b.classname = 'button';
+			b.onclick = controller.showLoginView();
+			b.innerHTML = 'Login to Comment';
+		}
+    
+		this.html.children[1].children[4].appendChild(b);
+
+		//Social Media : should not go in children[2] btw    
         //this.html.children[1].children[2].innerHTML += '<br><br><br>'; 
         //this.html.children[1].children[2].innerHTML += this.note.likes + model.views.likeIcon + '    ' + this.note.comments.length + model.views.commentIcon;   
     }
 
     this.loadComments = function()
     {
-        this.html.children[1].children[1].innerHTML = 'Comments: ';
+        this.html.children[1].children[3].innerHTML = 'Comments: ';
         for(var i = 0; i < thism.note.comments.length; i++)
-            thism.html.children[1].children[1].appendChild(thism.constructCommentHTML(thism.note.comments[i]));
+            thism.html.children[1].children[3].appendChild(thism.constructCommentHTML(thism.note.comments[i]));
     }
 
     this.submitComment = function(note, comment)
     {
-	controller.hideNoteView();
+		controller.hideNoteView();
         if(model.playerId > 0){ 
 	
-		//CDH in this section add the note to the cached HTML so we don't have to re-load the whole page   
-	   var day = new Date();
-	   var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
+			//CDH in this section add the note to the cached HTML so we don't have to re-load the whole page   
+			var day = new Date();
+			var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
 	   
-	   note.comments.push({ "username":model.displayName, "title":comment, "created":today}); 
+			note.comments.push({ "username":model.displayName, "title":comment, "created":today}); 
 	
-	   //CDH now add it to the server copy and re-display the updated note
-	   controller.addCommentToNote(note.note_id, comment, function(status){ controller.noteSelected(thism);});
-	}else
+			//CDH now add it to the server copy and re-display the updated note
+			controller.addCommentToNote(note.note_id, comment, function(status){ controller.noteSelected(thism);});
+		}
+
+		else
         {
             controller.showLoginView();
         }
@@ -204,6 +235,11 @@ function submitNote()
 		alert(alertText);
 	}
 	else{
+
+	//count how many things we'll be uploading before pushing it to HTML
+	model.contentsWaitingToUpload = 1; //we have to have an image
+	if(model.currentNote.audioFile != null) model.contentsWaitingToUpload += 1; //add one for the audio
+
 
 	// add location to note
     controller.updateNoteLocation(model.currentNote.noteId, model.currentNote.lat, model.currentNote.lon);
@@ -459,9 +495,12 @@ function handleAudioFileSelect(files)
     for(var i = 0; i < files.length; i++)
     {
         var file = files[i];
-        var audioType = /audio.*/;
 
-        if(!file.type.match(audioType)) continue;
+        if(!(file.type.match('audio/caf') || file.type.match('audio/mp3') || file.type.match('audio/aac') || file.type.match('audio/m4a') ))
+		{ 
+			window.alert("Please select an audio file (.mp3, .caf, .aac, .m4a)");
+			return;
+		}
 
         // preview audio control
         var audioPreview = document.getElementById("audioPreview");
@@ -689,7 +728,7 @@ function NoteCreateView()
                 zoom: 12,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-
+		
 			//CDH set up map. Geolocation will move marker when/if it gets the new position
             var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 			var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon); //start at default, the let geolocation update it if it can
@@ -702,7 +741,7 @@ function NoteCreateView()
 			google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
 			map.setCenter(pos);
 			markerMoved(marker, map);
-			
+		
 			if(navigator.geolocation) //this may take time to complete, so it'll just move the default when it's ready
 			{
 				function positionFound(position)

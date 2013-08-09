@@ -532,17 +532,23 @@ body
 .note_view_captions
 {
 
+}
 
 .note_view_comment_label
 {
     font-size:large;
 }
+
 .note_view_comments
 {
   
 }
 
- /* Is this used anywhere? */
+.note_view_audio
+{
+
+}
+
 .note_view_input
 {
   

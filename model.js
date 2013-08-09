@@ -10,6 +10,8 @@ function Model()
     this.currentNote.noteId = 0;
     this.audio_context = '';
     this.recorder = '';
+	this.contentWaitingToUpload = 0; //CDH when user uploads multiple contents, you'll have to wait till all are uploaded before you can push it to HTML
+
 
     this.notes = [];
     this.mapMarkers = [];

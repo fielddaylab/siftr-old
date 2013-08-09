@@ -150,10 +150,12 @@ function finishLoadGame(responseText)
                 Audio:<br />
                 <button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br />
                 <input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden" />
-                <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
+             <!--
+				 <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
                 <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>
                 <button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button>
-                <br />Preview:<br />
+            --> 
+			   <br />Preview:<br />
                 <audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio>
                 <br /><br />
             </div>
@@ -225,8 +227,9 @@ function finishLoadGame(responseText)
 <div id='note_view_construct' class='note_view'>
     <div id='note_view_left_construct' class='note_view_left'></div>
     <div id='note_view_right_construct' class='note_view_right'>
-        <div id='note_view_info_construct' class='note_view_info'></div>
         <div id='note_view_caption_construct' class='note_view_captions'></div>
+        <div id='note_view_audio_construct' class='note_view_audio'></div>
+        <div id='note_view_tags_construct' class='note_view_tags'></div>
         <div id='note_view_comments_construct' class='note_view_comments'></div>
         <div id='note_view_input_construct' class='note_view_input'></div>
     </div>
