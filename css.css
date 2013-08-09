@@ -36,7 +36,7 @@ body
 .darkBackgroundLayer
 {
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 9999999;
+	z-index: 20;
 	height: 100%;
 	width: 100%;
 	position:fixed;
