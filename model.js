@@ -1,7 +1,7 @@
 function Model()
 {
+	self = this;
     this.gameId = YOI_GAME_ID;
-    this.playerId = 0;
     this.displayName = ""; //CDH for displaying newly added content
     this.gameJSONText = '';
     this.gameData = {};
@@ -11,10 +11,17 @@ function Model()
     this.audio_context = '';
     this.recorder = '';
 	this.contentWaitingToUpload = 0; //CDH when user uploads multiple contents, you'll have to wait till all are uploaded before you can push it to HTML
-
-
     this.notes = [];
     this.mapMarkers = [];
+
+	self.playerId = 0;
+	
+	//check to see if they have a session cookie with their playerId and can skip login, if not set it to zero
+	if($.cookie("sifter") > 0)
+	{
+		self.playerId = $.cookie("sifter");
+	}
+
     this.addNoteFromData = function(note)
     { 
         //Fix up note tags
@@ -49,7 +56,7 @@ function Model()
     this.views = new function Views()
     { 
         //Content
-        this.mainView = document.getElementById('main_view_full');
+        this.mainView 					= document.getElementById('main_view_full');
         //this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
         this.mainViewLeft              = document.getElementById('main_view_left');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
@@ -62,12 +69,19 @@ function Model()
         this.joinViewContainer         = document.getElementById('join_view_container');
         this.constructNoteView         = document.getElementById('note_view_construct');
         this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
-        this.constructLoginView        = document.getElementById('login_view_construct');
-        this.constructJoinView         = document.getElementById('join_view_construct');
-		this.uploadButton 		= document.getElementById('uploadButton'); //CDH
-		this.uploadButton.style.display = 'none'; //CDH hide until login
-		this.loginButton		= document.getElementById('loginButton'); //CDH
-	
+        this.constructLoginView     	= document.getElementById('login_view_construct');
+        this.constructJoinView      	= document.getElementById('join_view_construct');
+		this.uploadButton 				= document.getElementById('uploadButton'); //CDH
+		this.loginButton				= document.getElementById('loginButton'); //CDH
+
+		if(self.playerId > 0){ //if the cookie indicated they are logged in
+			this.loginButton.style.display = 'none'; //CDH hide login
+    		this.uploadButton.style.display = 'inline'; //CDH show upload		
+		}
+		else{
+			this.uploadButton.style.display = 'none'; //CDH hide until login
+		}
+
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
         this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px; />';
         this.noteIcon     = '';
@@ -80,6 +94,7 @@ function Model()
         var centerLoc = new google.maps.LatLng(0, 0);
         var myOptions = { zoom:5, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
         this.gmap = new google.maps.Map(this.map, myOptions);
+		
 		//default map pin location is in lake, where no notes are expected. User must move this pin to submit a note.
 		this.defaultLat = 43.081829;
 		this.defaultLon = -89.402313;

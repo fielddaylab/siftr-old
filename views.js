@@ -472,7 +472,21 @@ function handleImageFileSelect(files)
         var file = files[i];
         var imageType = /image.*/;
 
-        if(!file.type.match(imageType)) continue;
+	//only jpg, png and gif allowed
+	if(!(file.type.match('image/jpeg') || file.type.match('image/png') || file.type.match('image/gif') ))  
+		{ 
+			window.alert("Please select an image file (.png, .jpg, .gif)");
+			return;
+		}
+
+	//if jpEg, it'll have to be renamed to jpg or it'll render as a broken image
+//	if(file.type.match('image/jpeg')){ 
+//		if(file.name.substring(file.name.lastIndexOf('.')+1).toLowerCase() == "jpeg")
+//		{
+//			var fname = (file.name.replace(/\.jpeg$/i, '.jpg'));
+//			file.name = fname;
+//		}
+//	}
 
         var img = document.getElementById("imageThumbnail");
         img.classList.add("obj");

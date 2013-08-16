@@ -321,7 +321,8 @@ function Controller()
             self.hideLoginView();
 	    	model.views.loginButton.style.display = 'none'; //CDH hide login
 	    	model.views.uploadButton.style.display = 'inline'; //CDH show upload
-        }
+			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
+		}
         else
             alert("Incorrect login. Please try again.");
 
