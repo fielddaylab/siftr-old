@@ -128,9 +128,9 @@ function finishLoadGame(responseText)
 <div id='note_create_view_construct' class='note_create_view'>
     <div id='note_create_view_left_construct' class='note_create_view_left'>
         <div id='note_create_view_image_construct' class='note_create_view_image' style="border:0px single transparent" >
-            <br />Image:<br />
+            <br />Image: (jpg, gif or png) <br />
             <img width=300 height=300 id="imageThumbnail" />
-            <input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="display:none;"/>
+            <input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
             <button id="browseImage" class="button" onclick="clickBrowseImage()">Browse</button>
             <button id="showCamera" onclick="showVideo()" class="button">Camera</button>
             <video id="video" width="200" height="200" autoplay class="hidden"></video>
@@ -162,9 +162,9 @@ function finishLoadGame(responseText)
                 <br />
             </div>
             <div id='note_create_view_audio_construct' class='note_create_view_audio'>
-                Audio:<br />
+                Audio: (mp3, aac, m4a or caf)<br />
                 <button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br />
-                <input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden" />
+                <input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
              <!--
 				 <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
                 <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>

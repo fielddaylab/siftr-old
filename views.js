@@ -474,19 +474,20 @@ function handleImageFileSelect(files)
 
 	//only jpg, png and gif allowed
 	if(!(file.type.match('image/jpeg') || file.type.match('image/png') || file.type.match('image/gif') ))  
-		{ 
-			window.alert("Please select an image file (.png, .jpg, .gif)");
+	{ 
+			window.alert("Please select an image file of type .png, .jpg, .gif");
+			return;
+	}
+	
+	//if they submitted a jpEg, let them know we only accept jpg
+	if(file.type.match('image/jpeg')){ 
+		if(file.name.substring(file.name.lastIndexOf('.')+1).toLowerCase() == "jpeg")
+		{
+			window.alert(".jpeg not accepted, please choose an image file of type .jpg, .gif or .png");
 			return;
 		}
+	}
 
-	//if jpEg, it'll have to be renamed to jpg or it'll render as a broken image
-//	if(file.type.match('image/jpeg')){ 
-//		if(file.name.substring(file.name.lastIndexOf('.')+1).toLowerCase() == "jpeg")
-//		{
-//			var fname = (file.name.replace(/\.jpeg$/i, '.jpg'));
-//			file.name = fname;
-//		}
-//	}
 
         var img = document.getElementById("imageThumbnail");
         img.classList.add("obj");
@@ -512,7 +513,7 @@ function handleAudioFileSelect(files)
 
         if(!(file.type.match('audio/caf') || file.type.match('audio/mp3') || file.type.match('audio/aac') || file.type.match('audio/m4a') ))
 		{ 
-			window.alert("Please select an audio file (.mp3, .caf, .aac, .m4a)");
+			window.alert("Please select an audio file of type .mp3, .caf, .aac, .m4a");
 			return;
 		}
 

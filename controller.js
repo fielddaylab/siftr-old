@@ -6,7 +6,7 @@ function Controller()
 	this.showMapAsTab = function(){
 		console.log("showMapAsTab");
 		model.views.mainViewLeft.className = 'behindView';		
-		model.views.map.className = 'SelectedView';
+		model.views.map.className = 'selectedView';
  		
 		document.getElementById("MapTab").className = "tabs selectedTab";
 		document.getElementById("ImagesTab").className = "tabs";
