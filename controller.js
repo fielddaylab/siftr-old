@@ -340,6 +340,7 @@ function Controller()
             self.hideLoginView();
 	    	model.views.loginButton.style.display = 'none'; //CDH hide login
 	    	model.views.uploadButton.style.display = 'inline'; //CDH show upload
+			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
 		}
         else
@@ -350,6 +351,15 @@ function Controller()
 		alert(obj.returnCodeDescription + ". Please try again");
 	
 	}
+
+	this.logout = function(){
+		$.removeCookie('sifter'); //without the cookie, the user will have to log in again
+		model.views.loginButton.style.display = 'inline';
+		model.views.uploadButton.style.display = 'none';
+		model.views.logoutButton.style.display = 'none';
+		
+	}
+
 
     this.createAccount = function(email, password,username)
     {

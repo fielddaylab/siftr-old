@@ -74,13 +74,16 @@ function Model()
         this.constructJoinView      	= document.getElementById('join_view_construct');
 		this.uploadButton 				= document.getElementById('uploadButton'); //CDH
 		this.loginButton				= document.getElementById('loginButton'); //CDH
+		this.logoutButton				= document.getElementById('logoutButton');
 
 		if(self.playerId > 0){ //if the cookie indicated they are logged in
-			this.loginButton.style.display = 'none'; //CDH hide login
-    		this.uploadButton.style.display = 'inline'; //CDH show upload		
+			this.loginButton.style.display = 'none'; // hide login
+			this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
+    		this.uploadButton.style.display = 'inline'; // show upload		
 		}
 		else{
-			this.uploadButton.style.display = 'none'; //CDH hide until login
+			this.uploadButton.style.display = 'none'; // hide until login
+			this.logoutButton.style.display = 'none';
 		}
 
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
