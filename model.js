@@ -59,6 +59,7 @@ function Model()
         this.mainView 					= document.getElementById('main_view_full');
         //this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
         this.mainViewLeft              = document.getElementById('main_view_left');
+		this.mainViewRight			   = document.getElementById('main_view_right');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
         this.noteViewContainer         = document.getElementById('note_view_container');
         this.noteViewCloseButton       = new ActionButton(document.getElementById('note_view_close_button'), controller.hideNoteView);

@@ -62,6 +62,7 @@ function finishLoadGame(responseText)
     document.getElementById('content').style.display = 'block';
 
     google.maps.event.trigger(model.views.gmap, 'resize'); // To fix google maps incorrect sizing bug
+
 }
 
 </script>
@@ -69,13 +70,25 @@ function finishLoadGame(responseText)
 <body id='body'>
 <div id='message'></div>
 
-<div id='content'>
+<div id='header'>
+	<h1>Sifter</h1>
+	<ul>
+		<li class='tabs' id='ImagesTab' onclick="Javascript:controller.showImagesAsTab()" >Images </li>
+		<li class='tabs selectedTab' id='MapTab'onclick="Javascript:controller.showMapAsTab()">Map </li>
+	</ul>
+</div>
+
+
+<div id= 'content'>
 
 <!-- Main View -->
-<div id='main_view_full' class='main_view'>
-    <div id='main_view_left'  class='main_view'></div>
-    <div id='main_view_right' class='main_view'>
-        <div id='main_view_map' class='main_view'></div>
+<div id='main_view_full' >
+    	<div id='main_view_left' class='behindView'  ></div>
+    <div id='main_view_right' >
+
+        <div id='main_view_map' class='selectedView' >
+
+	</div>
         <div id='main_view_info'>
             Tags:<br />
             <input id="tag1" value="Innovation"          type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Innovation         </input><br />
@@ -87,11 +100,11 @@ function finishLoadGame(responseText)
             <span>Search:<input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span>
             <br /><br /><br />
             
-        <button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
-	<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays after login -->
-	</div>
+        	<button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
+			<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays after login -->
+		</div>
     </div>
-</div>
+</div> <!-- end main view full -->
 
 <!-- a thing with position absolute in the top left corner that takes up the full size of the screen. now popups can position themselves within this without guessing percentages -->
 	<div id='darkBackgroundLayer'        class='darkBackgroundLayer'> <!--for dimming the background when popups have the focus CDH -->
@@ -241,11 +254,12 @@ function finishLoadGame(responseText)
 <div id='note_content_cell_construct' class='note_content_cell'></div>
 
 <!-- Note Comment Cell -->
-<div id='note_comment_cell_construct' class='note_comment_cell'>
-<div id='note_comment_cell_header_construct' class='note_comment_cell_header note_view_owner'></div>
-</div>
+	<div id='note_comment_cell_construct' class='note_comment_cell'>
+		<div id='note_comment_cell_header_construct' class='note_comment_cell_header note_view_owner'></div>
+	</div>
 
 </div>
+
 
 </body>
 </html>
