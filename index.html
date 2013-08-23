@@ -97,7 +97,7 @@ function finishLoadGame(responseText)
             <input id="tag4" value="Must Do"             type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Must Do            </input><br />
             <input id="tag5" value="100 Years from Now"  type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">100 Years from Now </input><br />
             <br />
-            <span>Search:<input id="filterbox" type="text" onchange="controller.repopulateAll()"/></span>
+            <span>Search:<input id="filterbox" type="text" onchange="controller.populateListNotesFromModel()"/></span>
             <br /><br /><br />
             
         	<button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->

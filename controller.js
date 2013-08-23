@@ -1,4 +1,4 @@
-
+	 	
 function Controller()
 {
     var self = this; //<- I hate javascript.
@@ -134,26 +134,32 @@ function Controller()
 
     this.matchesFilter = function(note, filter)
     {
-        if(filter == "") return true; 
-        // check text content
-        for (var i = 0; i < note.contents.length; i++){
+
+		filterLC = filter.toLowerCase().trim(); //we'll be comparing everything in lower case, trim off leading & trailing spaces
+
+        if(filterLC == "") return true; 
+
+		// check contributor
+        if(note.username.toLowerCase().indexOf(filterLC) != -1) return true;
+
+       //determine if we need to check the media type 
+		var mediaTypeSearch = (filterLC == 'audio' || filterLC == 'video'); //text and photos are manadatory
+		
+		for (var i = 0; i < note.contents.length; i++){
 			if(note.contents[i].type == 'TEXT'){
-				if(this.note.contents[i].text.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
+		
+		        // check the title/caption 
+				if(note.contents[i].text.toLowerCase().indexOf(filterLC) != -1) return true;
+
+			}
+			if (mediaTypeSearch){ //we computed those which don't need to be checked earlier to make this run faster
+
+				//check type
+	            if(note.contents[i].type.toLowerCase().indexOf(filterLC) != -1) return true;
 			}
 		}
-		if(note.title.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-        // check contributor
-        if(note.username.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-        // check caption & type
-        for (i = 0; i < note.contents.length; i++)
-        {
-            if(note.contents[i].text.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-            if(note.contents[i].type.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-        }
-        // check tags
-        for (var i = 0; i < note.tags.length; i++) 
-            if(note.tags[i].tag.toLowerCase().indexOf(filter.toLowerCase()) != -1) return true;
-
+		
+        
         return false;
     };
 
@@ -357,7 +363,7 @@ function Controller()
 		model.views.loginButton.style.display = 'inline';
 		model.views.uploadButton.style.display = 'none';
 		model.views.logoutButton.style.display = 'none';
-		
+		model.playerId = 0;	
 	}
 
 
