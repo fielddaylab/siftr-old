@@ -1,17 +1,19 @@
 function Model()
 {
 	self = this;
+    //this.gameId = YOI_GAME_ID;
     this.gameId = YOI_GAME_ID;
-    this.displayName = ""; //CDH for displaying newly added content
+	this.displayName = ""; //CDH for displaying newly added content
     this.gameJSONText = '';
-    this.gameData = {};
-    this.backpacks = [];
+    //this.gameData = {};
+    //this.backpacks = [];
+    //this.notes = [];
+	this.gameNotes = []; //this is using new API
     this.currentNote = {};
     this.currentNote.noteId = 0;
     this.audio_context = '';
     this.recorder = '';
 	this.contentWaitingToUpload = 0; //CDH when user uploads multiple contents, you'll have to wait till all are uploaded before you can push it to HTML
-    this.notes = [];
     this.mapMarkers = [];
 
 	self.playerId = 0;
@@ -25,31 +27,27 @@ function Model()
     this.addNoteFromData = function(note)
     { 
         //Fix up note tags
-        note.tags.sort(
-            function(a, b) {
-                if(a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
-                if(a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
-                return 0;
-            });
-        if(note.tags.length == 0) note.tags[0] = {"tag":'(untagged)'}; //conform to tag object structure
-        note.tagString = '';
-        for(var k = 0; k < note.tags.length; k++)
-            note.tagString += note.tags[k].tag+', ';
-        note.tagString = note.tagString.slice(0,-2); 
+        //note.tags.sort(
+          //  function(a, b) {
+          //      if(a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
+          //      if(a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
+          //      return 0;
+          //  });
+        // if(note.tags.length == 0) note.tags[0] = {"tag":'(untagged)'}; //conform to tag object structure
+        note.tagString = note.tags[0].tag;  //all notes are required to have one, and only one, tag
+        //for(var k = 0; k < note.tags.length; k++)
+        //    note.tagString += note.tags[k].tag+', ';
+        //note.tagString = note.tagString.slice(0,-2); 
         note.geoloc = new google.maps.LatLng(note.lat, note.lon);
-        this.notes[this.notes.length] = note;
+        this.gameNotes[this.gameNotes.length] = note;
     }
 
-    this.populateFromData = function(gameData)
-    {
-        this.gameData = gameData;
-
-        this.backpacks = this.gameData.backpacks;
-        for(var i = 0; i < this.backpacks.length; i++)
+    this.populateFromData = function(rawNotes)
+    {	//the notes coming in need some processing
+		this.rawNotes = rawNotes;
+        for(var i = 0; i < this.rawNotes.length; i++)
         {
-            if(this.backpacks[i] == "Invalid Player ID") continue;
-            for(var j = 0; j < this.backpacks[i].notes.length; j++)
-                this.addNoteFromData(this.backpacks[i].notes[j])
+                this.addNoteFromData(this.rawNotes[i]);
         }
     };
 

@@ -39,7 +39,7 @@ function pageLoad()
 function startLoadGame()
 {
     document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img> Waiting on Server...";
-    callService("players.getPlayerBackpacksFromArray", finishLoadGame, '', JSON.stringify({ "gameId":model.gameId, "items":false, "attributes":false}));
+	callService("notes.getNotesWithAttributes", finishLoadGame, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0}));
 }
 
 function finishLoadGame(responseText)

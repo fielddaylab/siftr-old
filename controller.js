@@ -81,12 +81,12 @@ function Controller()
         model.mapMarkers = [];
         model.views.markerclusterer.clearMarkers();
         var tmpmarker;
-        for(var i = 0; i < model.notes.length; i++)
+        for(var i = 0; i < model.gameNotes.length; i++)
         {
-            if(!this.hasAtLeastOneSelectedTag(model.notes[i])) continue;
-            if(!this.matchesFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
+            if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
+            if(!this.matchesFilter(model.gameNotes[i], document.getElementById("filterbox").value)) continue;
 
-            tmpmarker = new MapMarker(this.noteSelected, model.notes[i]);
+            tmpmarker = new MapMarker(this.noteSelected, model.gameNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
         }
 
@@ -123,11 +123,11 @@ function Controller()
     {	
         model.views.mainViewLeft.innerHTML = '';
 
-        for(var i = 0; i < model.notes.length; i++)
+        for(var i = 0; i < model.gameNotes.length; i++)
         {
-            if(!this.hasAtLeastOneSelectedTag(model.notes[i])) continue;
-            if(!this.matchesFilter(model.notes[i], document.getElementById("filterbox").value)) continue;
-            var listNote = new ListNote(this.noteSelected, model.notes[i], i);
+            if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
+            if(!this.matchesFilter(model.gameNotes[i], document.getElementById("filterbox").value)) continue;
+            var listNote = new ListNote(this.noteSelected, model.gameNotes[i], i);
             model.views.mainViewLeft.innerHTML += listNote.html;
         }
     };
@@ -290,6 +290,13 @@ function Controller()
 		
 		//Check to see if everything has uploaded, if it has, then push new note.
 		if(model.contentsWaitingToUpload == 0){
+	
+			updateNoteString =  "/" + model.currentNote.noteId + "/" +model.currentNote.text.substring(0,10) + "/1/1" ; //updateNote(noteId, title(displays in Editor Only) ,publicToMap, publicToNotebook
+			callService("notes.updateNote", function(response){console.log("updateNote" + response); },updateNoteString , false); 
+			callService("notes.setNoteComplete", function(response){console.log("setNoteComplete" + response);  }, "/" + model.currentNote.noteId, false); //setNoteComplete (noteId)
+			
+				//will have to set it so that the callback from the above is the below
+//			callService("notes.getNotesWithAttributes", controller.pushNewNote, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0}));
 			callService("notes.getDetailedFullNoteObject", controller.pushNewNote, "/" + model.currentNote.noteId + "/" + model.playerId, false);
 		}
 	}

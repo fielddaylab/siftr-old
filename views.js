@@ -83,8 +83,8 @@ function NoteView(note)
 
         for(var i = 0; i < this.note.contents.length; i++){
 			switch(this.note.contents[i].type){
-				case 'PHOTO': imgcontent = this.note.contents[i]; break;
-				case 'AUDIO': audcontent = this.note.contents[i]; break; 
+				case 'PHOTO': imgcontent = this.note.contents[i].media.data; break;
+				case 'AUDIO': audcontent = this.note.contents[i].media.data; break; 
 				case 'TEXT': textcontent = this.note.contents[i].text; break;
         		default: console.log("Error in parsing note content type in NoteView");
 			}
@@ -92,7 +92,7 @@ function NoteView(note)
 
 		//display image
 		if(imgcontent != null)
-            this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.media_url + '" />';
+            this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.url + '" />';
 
 		//dispaly text
         this.html.children[1].children[0].innerHTML += 'Caption: ' + textcontent;
@@ -100,7 +100,7 @@ function NoteView(note)
 		//dispaly audio
 		if(audcontent != null)
 		{
-			var audioHTML =  'Audio:'  + '<br> <audio controls id="audioPreview" > <source src="' + audcontent.media_url +  ' " ';
+			var audioHTML =  'Audio:'  + '<br> <audio controls id="audioPreview" > <source src="' + audcontent.url +  ' " ';
 			audioHTML += 'type="audio/mpeg">';
 			audioHTML += 'Your browser does not support the audio element. </audio>';
 			this.html.children[1].children[1].innerHTML  += audioHTML;
@@ -396,7 +396,7 @@ function getMediaToUse(note)
     var mediaURL = "";
 
     for(i = 0; i < note.contents.length; i++)
-        if(note.contents[i].type == "PHOTO") return note.contents[i].media_url;
+        if(note.contents[i].type == "PHOTO") return note.contents[i].media.data.url;
 
     if (note.contents[0].type == "TEXT")
         mediaURL = "./assets/images/defaultTextIcon.png";
@@ -411,14 +411,14 @@ function getMediaToUse(note)
 function getImageToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)
-        if(note.contents[i].type == "PHOTO") return note.contents[i].media_url;
+        if(note.contents[i].type == "PHOTO") return note.contents[i].media.data.url;
     return "";
 }
 
 function getAudioToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)
-        if(note.contents[i].type == "AUDIO") return note.contents[i].media_url;
+        if(note.contents[i].type == "AUDIO") return note.contents[i].meida.data.url;
     return "";
 };
 
