@@ -54,7 +54,7 @@ function Controller()
 
     this.showLoginView = function() 
     {
-        self.hideJoinView(); //CDH only show one at a time
+        self.hideJoinView(); // only show one at a time
 		model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
@@ -65,7 +65,7 @@ function Controller()
 
     this.showJoinView = function() 
     {
-        self.hideLoginView(); //CDH only show one at a time
+        self.hideLoginView(); // only show one at a time
 		model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
         model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
@@ -115,7 +115,7 @@ function Controller()
             	}
        		 }  
 			 return false;
-			}	catch(err){console.log(err); }; //CDH was getting errors here for a while
+			}	catch(err){console.log(err); }; // was getting errors here for a while
 
     }
 
@@ -238,7 +238,7 @@ function Controller()
 
     this.createNewNote = function()
     {
-		//CDH first, reset currentNote to clear out any old data, and give it just lat & lon to start
+		// first, reset currentNote to clear out any old data, and give it just lat & lon to start
 		model.currentNote = {};
 		model.currentNote.lat = model.defaultLat;
 		model.currentNote.lon = model.defaultLon;
@@ -302,7 +302,7 @@ function Controller()
 	}
 
 	this.pushNewNote = function pushNewNote(note){
-    	//CDH this function helps add the newly uploaded note into the currenty cached HTML
+    	// this function helps add the newly uploaded note into the currenty cached HTML
 
 	    var fullNote = JSON.parse(note); //the note will have come in like text
 	    if(fullNote.contents.length == 0) console.log("Empty uploaded note");  //if the contents haven't loaded, it won't display
@@ -337,10 +337,10 @@ function Controller()
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
 
-	//CDH first check to see if you have a valid login
+	// first check to see if you have a valid login
 	if (obj.data) {
 
-		//CDH updated the display name and player ID to match getLoginPlayerObject data
+	// updated the display name and player ID to match getLoginPlayerObject data
         var playerId = obj.data.player_id;
 		var displayName = obj.data.display_name; //in new user account creation this will be same as username
 		if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
@@ -351,8 +351,8 @@ function Controller()
         if(model.playerId > 0)
     	{
             self.hideLoginView();
-	    	model.views.loginButton.style.display = 'none'; //CDH hide login
-	    	model.views.uploadButton.style.display = 'inline'; //CDH show upload
+	    	model.views.loginButton.style.display = 'none'; // hide login
+	    	model.views.uploadButton.style.display = 'inline'; // show upload
 			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
 		}
@@ -376,7 +376,7 @@ function Controller()
 
     this.createAccount = function(email, password,username)
     {
-        callService("players.createPlayer", this.createPlayerReturned,"/"+username+"/"+password+"/"+username+"/"+username+"/"+email, false); //CDH added username
+        callService("players.createPlayer", this.createPlayerReturned,"/"+username+"/"+password+"/"+username+"/"+username+"/"+email, false); //added username
     }
 
     this.createPlayerReturned = function(returnString)
@@ -389,8 +389,8 @@ function Controller()
             model.playerId = obj.data;
             self.hideLoginView();
             self.hideJoinView();
-		    model.views.loginButton.style.display = 'none'; //CDH hide login
-		    model.views.uploadButton.style.display = 'inline'; //CDH show upload
+		    model.views.loginButton.style.display = 'none'; // hide login
+		    model.views.uploadButton.style.display = 'inline'; // show upload
 	    
         }
     }

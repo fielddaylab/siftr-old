@@ -46,15 +46,17 @@ function ListNote(callback, note, noteId)
 
     this.constructHTML = function()
     {
-        this.html = "<div class='note_list_cell'>";
-        var noteImage = getImageToUse(note);
-        if(noteImage != "") this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
-        var noteAud = getAudioToUse(note);
-        if(noteAud != "")   this.html += "";//we don't show audio seperate //"<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
-        this.html += "</div>";
-
-        if(noteImage+noteAud == ""){ this.html = "";}//clear out the entire node if no media
-        setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
+		var noteImage = getImageToUse(note);
+        if(noteImage != ""){
+        	this.html = "<div class='note_list_cell'>";
+        	this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
+			this.html += "</div>";
+		}
+        else {
+			this.html = "";//clear out the entire node if no media
+        	console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
+		}
+		setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
     }
     this.constructHTML();
 }
@@ -112,8 +114,6 @@ function NoteView(note)
 		//display comments
         this.loadComments();
 
-//        this.html.children[1].children[2].innerHTML = '<br><br><br>';
-
 
 		//CDH if user is logged in, let them submit comments. Else, prompt them to login 
 		if(model.playerId > 0){
@@ -156,13 +156,13 @@ function NoteView(note)
 		controller.hideNoteView();
         if(model.playerId > 0){ 
 	
-			//CDH in this section add the note to the cached HTML so we don't have to re-load the whole page   
+			// in this section add the note to the cached HTML so we don't have to re-load the whole page   
 			var day = new Date();
 			var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
 	   
 			note.comments.push({ "username":model.displayName, "title":comment, "created":today}); 
 	
-			//CDH now add it to the server copy and re-display the updated note
+			// now add it to the server copy and re-display the updated note
 			controller.addCommentToNote(note.note_id, comment, function(status){ controller.noteSelected(thism);});
 		}
 
@@ -200,7 +200,7 @@ function submitNote()
 
 	model.currentNote.text = document.getElementById("caption").value;
 
-    // check for required stuff CDH
+    // check for required stuff 
     var requirementsMet = true; 
 	var alertText = "Missing Items:";
 
@@ -212,7 +212,7 @@ function submitNote()
 
 	if(model.currentNote.imageFile == null){
 		alertText += " Image,"; 
-		document.getElementById("note_create_view_image_construct").className =	document.getElementById("note_create_view_image_construct").className + ' error'; //cdh may need to remove this later if multiple missing things
+		document.getElementById("note_create_view_image_construct").className =	document.getElementById("note_create_view_image_construct").className + ' error'; // may need to remove this later if multiple missing things
 		requirementsMet = false;
 	}
 
@@ -744,7 +744,7 @@ function NoteCreateView()
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 		
-			//CDH set up map. Geolocation will move marker when/if it gets the new position
+			// set up map. Geolocation will move marker when/if it gets the new position
             var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 			var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon); //start at default, the let geolocation update it if it can
            	marker = new google.maps.Marker({ 

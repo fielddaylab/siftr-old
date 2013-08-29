@@ -1,13 +1,9 @@
 function Model()
 {
 	self = this;
-    //this.gameId = YOI_GAME_ID;
     this.gameId = YOI_GAME_ID;
 	this.displayName = ""; //CDH for displaying newly added content
     this.gameJSONText = '';
-    //this.gameData = {};
-    //this.backpacks = [];
-    //this.notes = [];
 	this.gameNotes = []; //this is using new API
     this.currentNote = {};
     this.currentNote.noteId = 0;
@@ -27,17 +23,7 @@ function Model()
     this.addNoteFromData = function(note)
     { 
         //Fix up note tags
-        //note.tags.sort(
-          //  function(a, b) {
-          //      if(a.tag.toLowerCase() < b.tag.toLowerCase()) return -1;
-          //      if(a.tag.toLowerCase() > b.tag.toLowerCase()) return 1;
-          //      return 0;
-          //  });
-        // if(note.tags.length == 0) note.tags[0] = {"tag":'(untagged)'}; //conform to tag object structure
         note.tagString = note.tags[0].tag;  //all notes are required to have one, and only one, tag
-        //for(var k = 0; k < note.tags.length; k++)
-        //    note.tagString += note.tags[k].tag+', ';
-        //note.tagString = note.tagString.slice(0,-2); 
         note.geoloc = new google.maps.LatLng(note.lat, note.lon);
         this.gameNotes[this.gameNotes.length] = note;
     }
