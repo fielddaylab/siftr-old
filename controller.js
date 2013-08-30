@@ -279,32 +279,49 @@ function Controller()
         else
         {
             var getString = "/"+ gameId + "/" + noteId + "/" + playerId + "/" + filename + "/" + type;
-	           callService("notes.addContentToNoteFromFileName", controller.callPushNewNote, getString, false);	
+			callService("notes.addContentToNoteFromFileName", controller.finalizeNoteUpload, getString, false);	
         }
     }
 
-	this.callPushNewNote = function callPushNewNote(responseText){
-		//CDH this function exists to save me from having to type it multiple times in callbacks
+	this.finalizeNoteUpload = function finalizeNoteUpload(response)
+	{
 
-		model.contentsWaitingToUpload -= 1; //one item has uploaded, so we aren't waiting for it anymore
+		//There are several server calls which must be done in sequence to push a note to server then to HTML. You could do this in one set of nested callbacks, but it'd be fugly.
+		//first, get all the media and content uploaded. 
+		//second, set the publicToMap and publicToNotebook flags to true
+		//third, set the note as 'compelete'
+		//fourth, retrieve the note object back from the server
+		//fifth, finally push the new note to HTML
+
+		model.contentsWaitingToUpload -= 1; //one item has uploaded, so we aren't waiting for it anymore. 
 		
-		//Check to see if everything has uploaded, if it has, then push new note.
+		//first, get all the media and content uploaded. 
 		if(model.contentsWaitingToUpload == 0){
-	
-			updateNoteString =  "/" + model.currentNote.noteId + "/" +model.currentNote.text.substring(0,10) + "/1/1" ; //updateNote(noteId, title(displays in Editor Only) ,publicToMap, publicToNotebook
-			callService("notes.updateNote", function(response){console.log("updateNote" + response); },updateNoteString , false); 
-			callService("notes.setNoteComplete", function(response){console.log("setNoteComplete" + response);  }, "/" + model.currentNote.noteId, false); //setNoteComplete (noteId)
 			
-				//will have to set it so that the callback from the above is the below
-//			callService("notes.getNotesWithAttributes", controller.pushNewNote, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0}));
-			callService("notes.getDetailedFullNoteObject", controller.pushNewNote, "/" + model.currentNote.noteId + "/" + model.playerId, false);
+			//second, is set the publicToMap and publicToNotebook flags to true
+			updateNoteString =  "/" + model.currentNote.noteId + "/" +model.currentNote.text.substring(0,10) + "/1/1" ; //updateNote(noteId, title(displays in Editor Only) ,publicToMap, publicToNotebook
+			callService("notes.updateNote", controller.setNoteComplete ,updateNoteString , false); 
+			
 		}
 	}
 
-	this.pushNewNote = function pushNewNote(note){
-    	// this function helps add the newly uploaded note into the currenty cached HTML
+	this.setNoteComplete = function setNoteComplete(response)
+	{
+			//third, set the note as 'compelete'
+			callService("notes.setNoteComplete", controller.getNewNoteFromServer, "/" + model.currentNote.noteId, false); //setNoteComplete (noteId)
+	}
 
-	    var fullNote = JSON.parse(note); //the note will have come in like text
+	this.getNewNoteFromServer = function getNewNoteFromServer(response)
+	{
+			//fourth, retrieve the note object back from the server so you can push it to HTML
+			callService("notes.getNoteById", controller.pushNewNote, "/" + model.currentNote.noteId + "/" + model.playerId, false);
+
+	}
+	this.pushNewNote = function pushNewNote(note)
+	{
+		//fifth, finally push the new note to HTML
+
+	    var fullNote = JSON.parse(note).data; //the note will have come in like text
 	    if(fullNote.contents.length == 0) console.log("Empty uploaded note");  //if the contents haven't loaded, it won't display
 	    model.addNoteFromData(fullNote);  //add it in to the cached model
 	    controller.populateAllFromModel();  //re-display the map and left hand images
