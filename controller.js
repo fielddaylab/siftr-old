@@ -143,7 +143,7 @@ function Controller()
         if(note.username.toLowerCase().indexOf(filterLC) != -1) return true;
 
        //determine if we need to check the media type 
-		var mediaTypeSearch = (filterLC == 'audio' || filterLC == 'video'); //text and photos are manadatory
+		var mediaTypeSearch = (filterLC == 'audio' || filterLC == 'video'); //text and photos are manadatory 
 		
 		for (var i = 0; i < note.contents.length; i++){
 			if(note.contents[i].type == 'TEXT'){
@@ -163,35 +163,20 @@ function Controller()
         return false;
     };
 
-    this.getIconsForNoteContents = function(note)
-    {
-        if(note.contents[0] == null) return "";
+	this.getTagIconURL = function (tag){
+		var tagIconMediaId = '';
+		switch(tag){
+			case( model.tags[0].tag): return  model.tags[0].iconURL;   break;
+			case( model.tags[1].tag): return  model.tags[1].iconURL;   break;
+			case( model.tags[2].tag): return  model.tags[2].iconURL;   break;
+			case( model.tags[3].tag): return  model.tags[3].iconURL;   break;
+			case( model.tags[4].tag): return  model.tags[4].iconURL;   break;
 
-        var textCount = 0;
-        var audioCount = 0;
-        var videoCount = 0;
-        var photoCount = 0;
-
-        for(i = 0; i < note.contents.length; i++)
-        {
-            if (note.contents[i].type == "AUDIO")
-                audioCount++;
-            else if (note.contents[i].type == "VIDEO")
-                videoCount++;
-            else if (note.contents[i].type == "PHOTO")
-                photoCount++;
-            else  if (note.contents[i].type == "TEXT")
-                textCount++;
-        }
-
-        var iconHTML = "";
-        if(textCount  > 0) iconHTML += '<img src="./assets/images/defaultTextIcon.png"  height=14px;>';
-        if(audioCount > 0) iconHTML += '<img src="./assets/images/defaultAudioIcon.png" height=15px;>';
-        if(photoCount > 0) iconHTML += '<img src="./assets/images/defaultImageIcon.png" height=15px;> ';
-        if(videoCount > 0) iconHTML += '<img src="./assets/images/defaultVideoIcon.png" height=14px;>';
-
-        return iconHTML;
-    };
+		default:
+			console.log("unexpected tag name");
+		}
+    
+	}
 
     this.rightSideOfCell = function(text)
     {

@@ -326,8 +326,12 @@ function MapMarker(callback, note)
 function constructMarker(note)
 {
     var html;
-    var mediaURL = getMediaToUse(note);
-    mediaType = mediaToUseType(note);
+	
+	//if we haven't determined this note's tag icon url yet (i.e. first time we're rendering it) then figure it out!	
+	if(!(note.tags[0].tag_url))
+	{
+	 	note.tags[0].tag_url = controller.getTagIconURL(note.tags[0].tag);
+	}
     var clip;
     var size;
     var height;
@@ -335,8 +339,7 @@ function constructMarker(note)
     var left;
     var top;
 
-    if(mediaType == "PHOTO")
-    {
+	//everything is a photo
         clip = "rect(2px 30px 32px 2px)";
         size = "height='40' width='40'";
         position = "top:0;left:0;";
@@ -344,22 +347,11 @@ function constructMarker(note)
         width = 30;
         top = 0;
         left = 0;
-    }
-    else
-    {
-        clip = "";
-        size = "height = '25' width = '30'";
-        position = "top:4;left:6;";
-        height = 25;
-        width = 20;
-        top = 4;
-        left = 6;
-    }
 
     var image = new Image();
-    var imageSource = getMediaToUse(note); //"./assets/images/defaultImageIcon.png";
-    image.onload = function() { /*replaceMarkerImage(imageSource);*/ }
-    image.src = imageSource;
+    var imageSource = getImageToUse(note);
+	image.onload = function() { /*replaceMarkerImage(imageSource);*/ }
+    image.src = note.tags[0].tag_url;// imageSource;
     image.style.top = top;
     image.style.left = left;
     image.style.position = "absolute";
@@ -369,11 +361,6 @@ function constructMarker(note)
 
     var outerDiv = document.createElement('div'); 
     outerDiv.style.cursor = "pointer";
-    /*var innerDiv = document.createElement('div'); 
-      innerDiv.style.top = 1;
-      innerDiv.style.left = 33;
-      innerDiv.style.position = "absolute";
-      innerDiv.innerHTML = getIconsForNoteContents(note);*/
 
     var speechBubble = new Image();
     speechBubble.src = './assets/images/speechBubble2.png';
@@ -386,26 +373,7 @@ function constructMarker(note)
 
     html = outerDiv.outerHTML;
 
-    //html  = "<div style=><img src='./assets/images/speechBubble.png' height='51' width='43'/> " + image + " </div><div style='top:1;left:33; position:absolute' >" +   getIconsForNoteContents(note) +"</div>"	;
-
     return html;
-}
-
-function getMediaToUse(note)
-{
-    var mediaURL = "";
-
-    for(i = 0; i < note.contents.length; i++)
-        if(note.contents[i].type == "PHOTO") return note.contents[i].media.data.url;
-
-    if (note.contents[0].type == "TEXT")
-        mediaURL = "./assets/images/defaultTextIcon.png";
-    else if (note.contents[0].type == "AUDIO")
-        mediaURL = "./assets/images/defaultAudioIcon.png";
-    else if (note.contents[0].type == "VIDEO")
-        mediaURL = "./assets/images/defaultVideoIcon.png";
-
-    return mediaURL;
 }
 
 function getImageToUse(note)
@@ -422,48 +390,7 @@ function getAudioToUse(note)
     return "";
 };
 
-function mediaToUseType(note)
-{
-    for(i = 0; i < note.contents.length; i++)
-        if (note.contents[i].type == "PHOTO") return "PHOTO";
 
-    return note.contents[0].type;
-}
-
-function getIconsForNoteContents(note)
-{
-    if(note.contents[0] == null)
-        return "";
-
-    var textCount = 0;
-    var audioCount = 0;
-    var videoCount = 0;
-    var photoCount = 0;
-
-    for(i = 0; i < note.contents.length; i++)
-    {
-        if (note.contents[i].type == "AUDIO")
-            audioCount++;
-        else if (note.contents[i].type == "VIDEO")
-            videoCount++;
-        else if (note.contents[i].type == "PHOTO")
-            photoCount++;
-        else  if (note.contents[i].type == "TEXT")
-            textCount++;
-    }
-
-    var iconHTML = "";
-    if (textCount > 0)
-        iconHTML += '<img src="./assets/images/defaultTextIcon.png" height=8px;><br>';
-    if (audioCount > 0)
-        iconHTML += '<img src="./assets/images/defaultAudioIcon.png" height=8px;><br>';
-    if (photoCount > 0)
-        iconHTML += '<img src="./assets/images/defaultImageIcon.png" height=8px;><br> ';
-    if (videoCount > 0)
-        iconHTML += '<img src="./assets/images/defaultVideoIcon.png" height=8px;>';
-
-    return iconHTML;
-};
 
 function handleImageFileSelect(files)
 {

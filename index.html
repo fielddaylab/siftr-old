@@ -31,7 +31,7 @@ function pageLoad()
     //Initialize stuff
     controller = new Controller();
     model = new Model();
-    startLoadGame();
+	model.finishLoad(startLoadGame);
 
     if(navigator.appName == 'Microsoft Internet Explorer') alert('You might need to install quicktime to properly view some media.\n(http://www.apple.com/quicktime/download)');
 }
@@ -41,6 +41,7 @@ function startLoadGame()
     document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img> Waiting on Server...";
 	callService("notes.getNotesWithAttributes", finishLoadGame, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0}));
 }
+
 
 function finishLoadGame(responseText)
 {

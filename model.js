@@ -2,22 +2,58 @@ function Model()
 {
 	self = this;
     this.gameId = YOI_GAME_ID;
-	this.displayName = ""; //CDH for displaying newly added content
+	this.displayName = ""; // for displaying newly added content
     this.gameJSONText = '';
 	this.gameNotes = []; //this is using new API
     this.currentNote = {};
     this.currentNote.noteId = 0;
     this.audio_context = '';
     this.recorder = '';
-	this.contentWaitingToUpload = 0; //CDH when user uploads multiple contents, you'll have to wait till all are uploaded before you can push it to HTML
+	this.contentWaitingToUpload = 0; // when user uploads multiple contents, you'll have to wait till all are uploaded before you can push it to HTML
     this.mapMarkers = [];
+	this.tags = '';
+	this.serverCallsToLoad = 5; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
+	this.loadFinishCallback = '' ;
 
 	self.playerId = 0;
+
+	this.finishLoad = function(callback){
+		//dynamically load the tags and their icon urls from the server
+		
+		if(callback) //this is set when it's called from index
+		{	
+			this.loadFinishCallback = callback;
+			callService("notes.getAllTagsInGame", model.loadTagsFromServer,"/"+ this.gameId, false);
+		}
+		else  //it's being called from the laodTagsFromServer's returning
+		{
+			this.serverCallsToLoad--; //one more is loaded
+			//not untill all the server calls return can we proceed
+			if(this.serverCallsToLoad <= 0){ 
+				this.loadFinishCallback();
+			}
+		}	
+	}
+
 	
 	//check to see if they have a session cookie with their playerId and can skip login, if not set it to zero
 	if($.cookie("sifter") > 0)
 	{
 		self.playerId = $.cookie("sifter");
+	}
+
+	this.loadTagsFromServer = function(response){
+		//format tag array
+		model.tags = JSON.parse("[" + response + "]")[0].data;
+
+	
+		//retrieve and store icon URLs
+
+			callService("media.getMediaObject", function(response){console.log("Get 0 Tag Icon URL: "+response); model.tags[0].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[0].media_id, false);
+			callService("media.getMediaObject", function(response){console.log("Get 1 Tag Icon URL: "+response); model.tags[1].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[1].media_id, false);
+			callService("media.getMediaObject", function(response){console.log("Get 2 Tag Icon URL: "+response); model.tags[2].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[2].media_id, false);
+			callService("media.getMediaObject", function(response){console.log("Get 3 Tag Icon URL: "+response); model.tags[3].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[3].media_id, false);
+			callService("media.getMediaObject", function(response){console.log("Get 4 Tag Icon URL: "+response); model.tags[4].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[4].media_id, false);
 	}
 
     this.addNoteFromData = function(note)
@@ -30,11 +66,13 @@ function Model()
 
     this.populateFromData = function(rawNotes)
     {	//the notes coming in need some processing
+
 		this.rawNotes = rawNotes;
         for(var i = 0; i < this.rawNotes.length; i++)
         {
                 this.addNoteFromData(this.rawNotes[i]);
         }
+		
     };
 
     this.views = new function Views()
