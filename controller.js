@@ -63,6 +63,17 @@ function Controller()
 		model.views.darkness.style.display = 'block';
     };
 
+    this.showForgotView = function() 
+    {
+        self.hideLoginView(); // only show one at a time
+		model.views.forgotView = new ForgotView();
+        model.views.forgotViewContainer.innerHTML = '';
+        model.views.forgotViewContainer.appendChild(model.views.forgotViewCloseButton.html);
+        model.views.forgotViewContainer.appendChild(model.views.forgotView.html);
+        model.views.forgotViewContainer.style.display = 'block';
+		model.views.darkness.style.display = 'block';
+    };
+
     this.showJoinView = function() 
     {
         self.hideLoginView(); // only show one at a time
@@ -187,7 +198,7 @@ function Controller()
     {
         model.views.noteViewContainer.style.display = 'none';
         model.views.noteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none';
+		model.views.darkness.style.display = 'none';
         document.removeEventListener('click', controller.hideNoteView, false);
     }
 
@@ -195,7 +206,7 @@ function Controller()
     {
         model.views.createNoteViewContainer.style.display = 'none';
         model.views.createNoteViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none';
+		model.views.darkness.style.display = 'none';
         document.removeEventListener('click', controller.hideCreateNoteView, false);
     }
 
@@ -203,8 +214,15 @@ function Controller()
     {
         model.views.loginViewContainer.style.display = 'none';
         model.views.loginViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none';
+		model.views.darkness.style.display = 'none';
         document.removeEventListener('click', controller.hideLoginView, false);
+    }
+    this.hideForgotView = function()
+    {
+        model.views.forgotViewContainer.style.display = 'none';
+        model.views.forgotViewContainer.innerHTML = '';
+		model.views.darkness.style.display = 'none';
+        document.removeEventListener('click', controller.hideForgotView, false);
     }
 
     this.hideJoinView = function()
@@ -399,6 +417,21 @@ function Controller()
 
     this.resetAndEmailPassword = function(email)
     {
-        callService("players.resetAndEmailPassword", function(){}, "/"+ email, false);
+        callService("players.resetAndEmailNewPassword", controller.resetPasswordMessage, "/"+ email, false);
     }
+
+	this.resetPasswordMessage = function(returnString){
+
+		console.log(returnString);
+
+		responseMessage = JSON.parse(returnString);
+	
+		switch(responseMessage.returnCode)
+		{
+			case 0: alert("Password reset has been successfuly emailed."); controller.hideForgotView();  break; 
+			case 4: alert("No player associated with that email"); break; //should'nt we limit the number of attempts?
+			case 5: alert("Error: mail could not be sent."); break; //why does this happen?
+			default: console.log("Unexpected resupt from resetPasswordMessage: " +returnString);
+		}
+	}
 }

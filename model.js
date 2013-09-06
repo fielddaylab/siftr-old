@@ -79,23 +79,31 @@ function Model()
     { 
         //Content
         this.mainView 					= document.getElementById('main_view_full');
-        //this.mainView.addEventListener('click', function(e) { e.stopPropagation(); });
+        //this.mainView.addEventListener('click', function(e) { e.stopPropagation(); }); 
+		//don't know why this is commented out, but if we don't need it we don't need the removeEventListeners either
         this.mainViewLeft              = document.getElementById('main_view_left');
 		this.mainViewRight			   = document.getElementById('main_view_right');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
         this.noteViewContainer         = document.getElementById('note_view_container');
-        this.noteViewCloseButton       = new ActionButton(document.getElementById('note_view_close_button'), controller.hideNoteView);
+        
+		this.noteViewCloseButton       = new ActionButton(document.getElementById('note_view_close_button'), controller.hideNoteView);
         this.createNoteViewCloseButton = new ActionButton(document.getElementById('create_note_view_close_button'), controller.hideCreateNoteView);
         this.loginViewCloseButton      = new ActionButton(document.getElementById('login_view_close_button'), controller.hideLoginView);
         this.joinViewCloseButton       = new ActionButton(document.getElementById('join_view_close_button'), controller.hideJoinView);
-        this.loginViewContainer        = document.getElementById('login_view_container');
+        this.forgotViewCloseButton     = new ActionButton(document.getElementById('forgot_view_close_button'), controller.hideForgotView);
+        
+		this.loginViewContainer        = document.getElementById('login_view_container');
         this.joinViewContainer         = document.getElementById('join_view_container');
+        this.forgotViewContainer       = document.getElementById('forgot_view_container');
         this.constructNoteView         = document.getElementById('note_view_construct');
         this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
-        this.constructLoginView     	= document.getElementById('login_view_construct');
+        
+		this.constructLoginView     	= document.getElementById('login_view_construct');
         this.constructJoinView      	= document.getElementById('join_view_construct');
-		this.uploadButton 				= document.getElementById('uploadButton'); //CDH
-		this.loginButton				= document.getElementById('loginButton'); //CDH
+        this.constructForgotView      	= document.getElementById('forgot_view_construct');
+
+		this.uploadButton 				= document.getElementById('uploadButton'); 
+		this.loginButton				= document.getElementById('loginButton'); 
 		this.logoutButton				= document.getElementById('logoutButton');
 
 		if(self.playerId > 0){ //if the cookie indicated they are logged in

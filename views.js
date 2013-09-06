@@ -210,13 +210,13 @@ function submitNote()
 	 document.getElementById("note_create_view_location_construct").className = document.getElementById("note_create_view_location_construct").className.replace(/(^|\s)error(?!\S)/g,'');
 
 
-	if(model.currentNote.imageFile == null){
+	if(!!model.currentNote.imageFile){
 		alertText += " Image,"; 
 		document.getElementById("note_create_view_image_construct").className =	document.getElementById("note_create_view_image_construct").className + ' error'; // may need to remove this later if multiple missing things
 		requirementsMet = false;
 	}
 
-	if(model.currentNote.text == ""){
+	if(!!model.currentNote.text){ //if string is not empty, null or blank
 		alertText += " Caption Text,";
 		document.getElementById("caption").className =	document.getElementById("caption").className + ' error'; 
 		requirementsMet = false;
@@ -634,15 +634,22 @@ function clickSignUp()
 
 function clickForgotPassword()
 {
-    var email = document.getElementById('usermail').value;
+	controller.showForgotView();
+}
 
-    if(email != "")
-    {
-        controller.resetAndEmailPassword(email);
-        alert("An email has been sent to you with instructions on how to reset your password.");
-    }
-    else
-        alert("Enter your e-mail above and click this link again for instructions on changing your password.");
+function clickEmailPassword(){
+	
+		var usermail = document.getElementById('usermail_forgot').value;
+
+
+		if(!!usermail){ //email not empty, blank or null
+
+    	    controller.resetAndEmailPassword(usermail);
+		}
+    	else
+        	alert("Enter your e-mail above.");
+
+
 }
 
 function LoginView()
@@ -653,6 +660,11 @@ function LoginView()
 function JoinView()
 {
     this.html = model.views.constructJoinView.cloneNode(true);
+}
+
+function ForgotView()
+{
+    this.html = model.views.constructForgotView.cloneNode(true);
 }
 
 function NoteCreateView()

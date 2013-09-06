@@ -114,6 +114,8 @@ function finishLoadGame(responseText)
     <div id='create_note_view_container' class='container'></div>
     <div id='login_view_container'       class='container'></div>
     <div id='join_view_container'        class='container'></div>
+    <div id='forgot_view_container'      class='container'></div>
+
 </div>
 
 <!-- HTML CONSTRUCTIONS OF REUSABLE NODES -->
@@ -124,7 +126,9 @@ function finishLoadGame(responseText)
 <div id='note_view_close_button'        class='close_button'>X</div>
 <div id='create_note_view_close_button' class='close_button'>X</div>
 <div id='login_view_close_button'       class='close_button'>X</div>
+<div id='forgot_view_close_button'      class='close_button'>X</div>
 <div id='join_view_close_button'        class='close_button'>X</div>
+
 
 <!-- Create Note View -->
 <div id='note_create_view_construct' class='note_create_view'>
@@ -195,7 +199,7 @@ function finishLoadGame(responseText)
         <ul>
             <li>
                 <label for="usermail_login">Username</label>
-                <input type="text" id="usermail_login" placeholder="username" required>
+                <input type="text" id="username_login" placeholder="username" required>
             </li>
             <li>
                 <label for="password">Password</label>
@@ -204,10 +208,11 @@ function finishLoadGame(responseText)
                 <button id="login" class="button" onclick="clickLogin()">Login</button>
             </li>
         </ul>
-        <br /><span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don\'t have an account?</span>
-        <br /><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Password?</span>
+        <br /><span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don't have an account?</span>
+        <br /><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Username or Password?</span>
     </div>
 </div>
+ 
 
 <!-- Join View -->
 <div id='join_view_construct' class='join_view'>
@@ -219,10 +224,9 @@ function finishLoadGame(responseText)
         <ul>
             <li>
                 <label for="usermail_join">Email</label>
-                <input type="text" id="usermail_join" placeholder="Email" required>
+                <input type="email" id="usermail_join" placeholder="Email" required>
             </li> 
             
-		<!-- CDH Added in username -->
             <li> 
                 <label for="username_join">Username</label>
                 <input type="text" id="username_join" placeholder="username" required>
@@ -237,6 +241,29 @@ function finishLoadGame(responseText)
         </ul>
         <br/> Already have an account?
         <span id="viewLoginPage" onClick="clickViewLoginPage()" class="internalLink">Log in</span>
+    </div>
+</div>
+
+<!--Forgot View -->
+<div id='forgot_view_construct' class='join_view'>
+    <div id='forgot_view_top_construct' class='join_view_top'>
+        Forgot Password or Username?<br/>
+        <hr style="background:#F87431; border:0; height:7px" /><br/>
+    </div>
+    <div id='join_view_bottom_construct' class='join_view_bottom'>
+        <ul>
+			<li> Enter your Email to retrieve your login information
+			</li>
+            <li>
+                <label for="usermail_forgot">Email</label>
+                <input type="email" id="usermail_forgot" placeholder="Email" required>
+            </li> 
+            
+            <li>
+                <button id="forgot" class="button" onclick="clickEmailPassword()">Email Password</button>
+
+            </li>
+        </ul>
     </div>
 </div>
 
