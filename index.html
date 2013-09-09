@@ -66,6 +66,31 @@ function finishLoadGame(responseText)
 
 }
 
+function startSift(siftType){
+	model.views.mainViewLeft.innerHTML = ''; //clear out old notes
+    document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img>Sifting....";
+    document.getElementById('message').style.display = 'block'; //this is set to hidden after page loads first time
+
+	switch(siftType){
+		case "top":
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0});
+			break;
+		case "recent":
+			var day = new Date();
+			var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:2, playerId:0, tagIds:[], lastLocation:0, date:today});
+			break;
+		case "popular":
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:1, playerId:0, tagIds:[], lastLocation:0, date:0});
+			break;
+		case "mine":
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:3, playerId:model.playerId, tagIds:[], lastLocation:0, date:0});
+			break;
+		default: siftString = "kSearchTop"; console.log("Error in sift type: " + siftType) ;
+	}
+    callService("notes.getNotesWithAttributes", finishLoadGame, '', siftString);
+}
+
 </script>
 </head>
 <body id='body'>
@@ -73,6 +98,15 @@ function finishLoadGame(responseText)
 
 <div id='header'>
 	<h1>Sifter</h1>
+        	<button onClick="JavaScript:startSift('top')" class = "button" id="siftButton" >Top</button> 
+        	<button onClick="JavaScript:startSift('recent')" class = "button" id="siftButton" >Recent</button> 
+        	<button onClick="JavaScript:startSift('popular')" class = "button" id="siftButton" >Popular</button> 
+        	<button onClick="JavaScript:startSift('mine')" class = "button" id="siftButton" >Mine</button> 
+
+        	<button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
+			<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays after login -->
+			<button onClick="JavaScript:controller.logout()" class="button" id="logoutButton" >Log Out</button> 
+	
 	<ul>
 		<li class='tabs' id='ImagesTab' onclick="Javascript:controller.showImagesAsTab()" >Images </li>
 		<li class='tabs selectedTab' id='MapTab'onclick="Javascript:controller.showMapAsTab()">Map </li>
@@ -101,9 +135,6 @@ function finishLoadGame(responseText)
             <span>Search:<input id="filterbox" type="text" onchange="controller.populateListNotesFromModel()"/></span>
             <br /><br /><br />
             
-        	<button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
-			<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays after login -->
-			<button onClick="JavaScript:controller.logout()" class="button" id="logoutButton" >Log Out</button> 
 		</div>
     </div>
 </div> <!-- end main view full -->
@@ -198,7 +229,7 @@ function finishLoadGame(responseText)
     <div id='login_view_bottom_construct' class='login_view_bottom'>
         <ul>
             <li>
-                <label for="usermail_login">Username</label>
+                <label for="username_login">Username</label>
                 <input type="text" id="username_login" placeholder="username" required>
             </li>
             <li>

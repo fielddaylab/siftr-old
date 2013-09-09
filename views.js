@@ -210,13 +210,13 @@ function submitNote()
 	 document.getElementById("note_create_view_location_construct").className = document.getElementById("note_create_view_location_construct").className.replace(/(^|\s)error(?!\S)/g,'');
 
 
-	if(!!model.currentNote.imageFile){
+	if(!model.currentNote.imageFile){
 		alertText += " Image,"; 
 		document.getElementById("note_create_view_image_construct").className =	document.getElementById("note_create_view_image_construct").className + ' error'; // may need to remove this later if multiple missing things
 		requirementsMet = false;
 	}
 
-	if(!!model.currentNote.text){ //if string is not empty, null or blank
+	if(!model.currentNote.text){ //if string is not empty, null or blank
 		alertText += " Caption Text,";
 		document.getElementById("caption").className =	document.getElementById("caption").className + ' error'; 
 		requirementsMet = false;
@@ -608,10 +608,10 @@ function clickBrowseAudio()
 
 function clickLogin()
 {
-    var email = document.getElementById('usermail_login').value;
+    var username = document.getElementById('username_login').value;
     var password = document.getElementById('password').value;
 
-    controller.login(email, password);
+    controller.login(username, password);
 }
 
 function clickNoAccount()

@@ -49,11 +49,11 @@ function Model()
 	
 		//retrieve and store icon URLs
 
-			callService("media.getMediaObject", function(response){console.log("Get 0 Tag Icon URL: "+response); model.tags[0].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[0].media_id, false);
-			callService("media.getMediaObject", function(response){console.log("Get 1 Tag Icon URL: "+response); model.tags[1].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[1].media_id, false);
-			callService("media.getMediaObject", function(response){console.log("Get 2 Tag Icon URL: "+response); model.tags[2].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[2].media_id, false);
-			callService("media.getMediaObject", function(response){console.log("Get 3 Tag Icon URL: "+response); model.tags[3].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[3].media_id, false);
-			callService("media.getMediaObject", function(response){console.log("Get 4 Tag Icon URL: "+response); model.tags[4].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[4].media_id, false);
+			callService("media.getMediaObject", function(response){model.tags[0].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[0].media_id, false);
+			callService("media.getMediaObject", function(response){model.tags[1].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[1].media_id, false);
+			callService("media.getMediaObject", function(response){model.tags[2].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[2].media_id, false);
+			callService("media.getMediaObject", function(response){model.tags[3].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[3].media_id, false);
+			callService("media.getMediaObject", function(response){model.tags[4].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[4].media_id, false);
 	}
 
     this.addNoteFromData = function(note)
@@ -66,7 +66,7 @@ function Model()
 
     this.populateFromData = function(rawNotes)
     {	//the notes coming in need some processing
-
+		this.gameNotes = []; //empty out old notes
 		this.rawNotes = rawNotes;
         for(var i = 0; i < this.rawNotes.length; i++)
         {

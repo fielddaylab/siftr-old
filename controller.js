@@ -4,7 +4,6 @@ function Controller()
     var self = this; //<- I hate javascript.
 
 	this.showMapAsTab = function(){
-		console.log("showMapAsTab");
 		model.views.mainViewLeft.className = 'behindView';		
 		model.views.map.className = 'selectedView';
  		
@@ -13,7 +12,6 @@ function Controller()
 	};
 
 	this.showImagesAsTab = function(){
-		console.log("showImagesAsTab");
 		model.views.mainViewLeft.className = 'selectedView';		
 		model.views.map.className = 'behindView';
 
@@ -31,7 +29,7 @@ function Controller()
         model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
-	model.views.darkness.style.display = 'block';
+		model.views.darkness.style.display = 'block';
     };
 
     this.createNote = function() 
@@ -188,6 +186,7 @@ function Controller()
 		}
     
 	}
+
 
     this.rightSideOfCell = function(text)
     {
@@ -346,9 +345,9 @@ function Controller()
         callService("notes.deleteNote", function(){}, "/"+noteId, false);
     }
 
-    this.login = function(email, password)
+    this.login = function(username, password)
     {
-        callService("players.getLoginPlayerObject", this.loginReturned,"/"+email+"/"+password, false);
+        callService("players.getLoginPlayerObject", this.loginReturned,"/"+username+"/"+password, false);
     }
 
     this.loginReturned = function(returnString)
