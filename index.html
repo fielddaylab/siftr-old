@@ -76,9 +76,8 @@ function startSift(siftType){
 		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0});
 			break;
 		case "recent":
-			var day = new Date();
-			var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:2, playerId:0, tagIds:[], lastLocation:0, date:today});
+			//don't use the date paramenter, bc then it'll only find the notes created since that date. We want it to just sort the notes by date & give 50 mores recent
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:2, playerId:0, tagIds:[], lastLocation:0, date:""});
 			break;
 		case "popular":
 		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:1, playerId:0, tagIds:[], lastLocation:0, date:0});
@@ -101,7 +100,8 @@ function startSift(siftType){
         	<button onClick="JavaScript:startSift('top')" class = "button" id="siftButton" >Top</button> 
         	<button onClick="JavaScript:startSift('recent')" class = "button" id="siftButton" >Recent</button> 
         	<button onClick="JavaScript:startSift('popular')" class = "button" id="siftButton" >Popular</button> 
-        	<button onClick="JavaScript:startSift('mine')" class = "button" id="siftButton" >Mine</button> 
+        
+			<button onClick="JavaScript:startSift('mine')" class = "button" id="siftMineButton" >Mine</button><!--CDH Only displays after login -->
 
         	<button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
 			<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays after login -->

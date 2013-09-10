@@ -373,6 +373,7 @@ function Controller()
 	    	model.views.loginButton.style.display = 'none'; // hide login
 	    	model.views.uploadButton.style.display = 'inline'; // show upload
 			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
+			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
 		}
         else
@@ -389,6 +390,7 @@ function Controller()
 		model.views.loginButton.style.display = 'inline';
 		model.views.uploadButton.style.display = 'none';
 		model.views.logoutButton.style.display = 'none';
+		model.views.siftMineButton.style.display = 'none';
 		model.playerId = 0;	
 	}
 

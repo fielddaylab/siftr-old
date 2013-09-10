@@ -10,9 +10,14 @@ function callService(serviceName, callback, GETparams, POSTparams)
         if(request.readyState == 4)
         {
             if(request.status == 200)
+			{
                 callback(request.responseText);
-            else
+            }
+			else
+			{
+				console.log("Request.staus = " + request.status);
                 callback(false);
+			}
         }
     };
     if(POSTparams)
