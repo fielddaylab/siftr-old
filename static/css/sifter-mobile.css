@@ -13,10 +13,11 @@ html,body
 .sifter-header-toolbar,
 .sifter-footer-toolbar
 {
-  height: 50px;
+  height: 30px;
   width: 100%;
   z-index: 100;
   position: fixed;
+  padding: 10px;
 }
 
 .sifter-header-toolbar
@@ -44,6 +45,23 @@ html,body
   background: pink;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+
+.sifter-nav-button
+{
+  border: 1px solid blue;
+  background: blue;
+  border-radius: 3px;
+  color: white;
+  height: 100%;
+}
+
+/* FIXME remove this and do evenly spaced or width buttons */
+.button-right
+{
+  float: right;
+  margin-right: 20px;
 }
 
 /* debug */
