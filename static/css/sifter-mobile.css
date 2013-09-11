@@ -1,0 +1,57 @@
+html,body
+{
+  height: 100%;
+  margin: 0;
+}
+
+.sifter-content
+{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.sifter-header-toolbar,
+.sifter-footer-toolbar
+{
+  height: 50px;
+  width: 100%;
+  z-index: 100;
+  position: fixed;
+}
+
+.sifter-header-toolbar
+{
+  background: #f00;
+  top: 0px;
+}
+
+.sifter-footer-toolbar
+{
+  background: #f0f;
+  bottom: 0px;
+}
+
+.sifter-content
+{
+-webkit-box-sizing: border-box;
+  height: 100%;
+  background: #f5f5f5;
+}
+
+.sifter-imagelist
+{
+  height: 100%;
+  background: pink;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* debug */
+.img
+{
+  height: 200px;
+  width: 200px;
+  background: blue;
+  margin: 10px;
+  float: left;
+}
