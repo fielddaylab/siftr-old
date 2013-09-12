@@ -3,9 +3,11 @@
   <head>
     <title>Sifter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/sifter-mobile.css"    rel="stylesheet" media="screen">
-    <link href="icomoon.css"       rel="stylesheet" media="screen">
-
+    <link href="css/normalize.css"     rel="stylesheet" media="screen">
+    <link href="css/prefix-free.css"   rel="stylesheet" media="screen">
+    <link href="css/sifter-mobile.css" rel="stylesheet" media="screen">
+    <link href="icomoon.css"           rel="stylesheet" media="screen">
+    <link href="css/glyphicons.css"    rel="stylesheet" media="screen">
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
@@ -21,17 +23,26 @@
       }
 
       google.maps.event.addDomListener(window, 'load', initialize);
-
     </script>
   </head>
 
   <body>
+
+    <!-- Header Bar -->
     <div class="sifter-header-toolbar">
-      <button class="sifter-nav-button button-left">toggle</button>
+      <button class="sifter-nav-button button-left">
+        <span class="icon-map"></span>
+      </button>
+
       <input class="sifter-search-field" type="text" placeholder="search" />
-      <button class="sifter-nav-button button-right">options</button>
+
+      <button class="sifter-nav-button button-right">
+        <span class="icon-cog"></span>
+      </button>
     </div>
 
+
+    <!-- Main Content -->
     <div class="sifter-content">
       <div class="sifter-imagelist">
         <div class="img">start</div>
@@ -62,31 +73,26 @@
       </div>
     </div>
 
+
+    <!-- Footer Bar -->
     <div class="sifter-footer-toolbar">
-      <button class="sifter-nav-button button-left">filters</button>
-      <button class="sifter-nav-button button-center">new</button>
-      <button class="sifter-nav-button button-right">locate</button>
+      <button class="sifter-nav-button button-left">
+        <span class="icon-tags"></span>
+      </button>
+
+      <button class="sifter-nav-button button-center">
+        <span class="icon-camera"></span>
+      </button>
+
+      <button class="sifter-nav-button button-right">
+        <span class="icon-target"></span>
+      </button>
     </div>
 
+
+    <!-- Delayed JS loading -->
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
 
-    <script type="text/javascript">
-      function hideAddressBar()
-      {
-        if(!window.location.hash)
-        {
-            if(document.height < window.outerHeight)
-            {
-                document.body.style.height = (window.outerHeight + 50) + 'px';
-            }
-
-            setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
-        }
-      }
-
-      window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
-      window.addEventListener("orientationchange", hideAddressBar );
-    </script>
   </body>
 </html>

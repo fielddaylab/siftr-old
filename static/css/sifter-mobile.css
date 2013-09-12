@@ -13,22 +13,22 @@ html,body
 .sifter-header-toolbar,
 .sifter-footer-toolbar
 {
-  height: 30px;
+  height: 40px;
   width: 100%;
   z-index: 100;
   position: fixed;
-  padding: 10px;
+  padding: 5px;
 }
 
 .sifter-header-toolbar
 {
-  background: #f00;
+  background: #fee;
   top: 0px;
 }
 
 .sifter-footer-toolbar
 {
-  background: #f0f;
+  background: #fee;
   bottom: 0px;
 }
 
@@ -57,12 +57,11 @@ html,body
 
 .sifter-nav-button
 {
-  border: 1px solid blue;
-  background: blue;
-  border-radius: 3px;
-  color: white;
+  background: transparent;
+  border: 0;
   height: 100%;
   width: 50px;
+  color: #333;
 }
 
 
@@ -75,7 +74,6 @@ html,body
 .button-left
 {
   float: left;
-  color: yellow;
 }
 
 .button-right
@@ -94,8 +92,17 @@ html,body
   margin-left: -60px;
   border-radius: 50%;
   font-size: 200%;
+  color: #cf2037;
+  background: #fee;
 }
 
+.sifter-search-field
+{
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding-left: 10px;
+  margin-top: 5px;
+}
 
 /* debug */
 .img
