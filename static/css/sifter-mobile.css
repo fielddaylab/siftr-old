@@ -41,10 +41,17 @@ html,body
 
 .sifter-imagelist
 {
+  display: none;
   height: 100%;
   background: pink;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.sifter-map
+{
+  height: 100%;
+  background: green;
 }
 
 
