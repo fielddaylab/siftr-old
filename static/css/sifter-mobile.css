@@ -62,14 +62,40 @@ html,body
   border-radius: 3px;
   color: white;
   height: 100%;
+  width: 50px;
 }
 
-/* FIXME remove this and do evenly spaced or width buttons */
+
+.sifter-footer-toolbar,
+.sifter-header-toolbar
+{
+  text-align: center;
+}
+
+.button-left
+{
+  float: left;
+  color: yellow;
+}
+
 .button-right
 {
   float: right;
   margin-right: 20px;
 }
+
+.button-center
+{
+  position: absolute;
+  left: 50%;
+  top: -40px;
+  height: 100px;
+  width: 100px;
+  margin-left: -60px;
+  border-radius: 50%;
+  font-size: 200%;
+}
+
 
 /* debug */
 .img
