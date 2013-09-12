@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/sifter-mobile.css"    rel="stylesheet" media="screen">
     <link href="icomoon.css"       rel="stylesheet" media="screen">
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+      var map;
+      function initialize() {
+        var mapOptions = {
+          zoom: 8,
+          center: new google.maps.LatLng(-34.397, 150.644),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
   </head>
 
   <body>
@@ -40,7 +58,7 @@
         <div class="img"></div>
         <div class="img">end</div>
       </div>
-      <div class="sifter-map">
+      <div class="sifter-map" id="map-canvas">
       </div>
     </div>
 
