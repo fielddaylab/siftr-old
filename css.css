@@ -885,6 +885,12 @@ ul
     list-style-type: none;
 }
 
+/*The social media shares should display horizontal */
+ul.shares li{
+	display: inline;
+	list-style-type:none;
+}
+
 .internalLink 
 {
     cursor: pointer;

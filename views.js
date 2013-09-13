@@ -73,6 +73,7 @@ function NoteView(note)
 	//this.html.children [1][2] Tags
 	//this.html.children [1][3] Comments
 	//this.html.children [1][4] Inputs (of more comments)
+	//this.html.children [1][5] Social Media
 
     this.constructHTML = function()
     {
@@ -96,6 +97,7 @@ function NoteView(note)
 		if(imgcontent != null)
             this.html.children[0].innerHTML = '<img class="note_media" style="width:500px;height:500px;" src="' + imgcontent.url + '" />';
 
+
 		//dispaly text
         this.html.children[1].children[0].innerHTML += 'Caption: ' + textcontent;
 
@@ -114,8 +116,11 @@ function NoteView(note)
 		//display comments
         this.loadComments();
 
+		//start social media build
+		var shareHTML =  "<ul class='shares'>"; //this has to be assembled in a string and added to .innerHTML all at once or it adds returnlines
+	
 
-		//CDH if user is logged in, let them submit comments. Else, prompt them to login 
+		//if user is logged in, let them submit comments. Else, prompt them to login 
 		if(model.playerId > 0){
 	        var t = document.createElement('textarea'); 
         	t.id="commentInput";
@@ -128,6 +133,14 @@ function NoteView(note)
         	b.className = 'button';
         	b.onclick = function(){thism.submitComment(thism.note, t.value);};
         	b.innerHTML = 'Submit';
+
+			//check to see if user has liked the note yet, and display the appropriate button
+	       	
+			this.likeToggle(this.note.player_liked);
+
+			shareHTML +=  "<li>" + this.note.facebook_shares + " Facebook </li>   ";
+		
+
 		}
 		else{
 			var b = document.createElement('button');
@@ -135,14 +148,28 @@ function NoteView(note)
 			b.classname = 'button';
 			b.onclick = controller.showLoginView();
 			b.innerHTML = 'Login to Comment';
+
+			//they can't submit to social media if they are not logged in, show static numbers
+
+	    	var likeButtonHTML =  this.note.likes + " " +  model.views.likeIcon ;
+			var facebookButtonHTML =  this.note.facebook_shares ;
+
+	    	shareHTML +=  "<li>" + likeButtonHTML + "</li>   " ;
+			shareHTML +=  "<li>" + facebookButtonHTML + " Facebook </li>   ";
+	
 		}
     
 		this.html.children[1].children[4].appendChild(b);
 
-		//Social Media : should not go in children[2] btw    
-        //this.html.children[1].children[2].innerHTML += '<br><br><br>'; 
-        //this.html.children[1].children[2].innerHTML += this.note.likes + model.views.likeIcon + '    ' + this.note.comments.length + model.views.commentIcon;   
-    }
+		//Social Media   
+
+		shareHTML += "<li>" + this.note.twitter_shares + " Twitter </li>   ";
+		shareHTML += "<li>" + this.note.pinterest_shares + " Pinterest </li>   ";
+		shareHTML += "<li>" + this.note.email_shares+ " Email </li>   ";
+		shareHTML += "</ul>";
+
+		this.html.children[1].children[5].innerHTML = shareHTML; //this ends up in [1][5]
+	}
 
     this.loadComments = function()
     {
@@ -186,8 +213,64 @@ function NoteView(note)
         return commentHTML;
     }
 
+	this.likeToggle = function(response)
+	{
+	//user may or maynot have already like the note, this changes the display and effect of clicking	
+	
+		console.log(response);		
+
+		//start button
+		var likeButton = document.createElement('button');
+   	   	likeButton.id = 'likeButton';
+
+		if(response == 0) 
+		{ //the user has not yet liked it
+
+			//then allow them to like it	
+       		likeButton.className = 'button';
+	       	likeButton.onclick = function(){thism.likeNote();};
+		}
+		else if(response == 1)
+		{			//user has already liked the note
+			likeButton.className = 'clickedButton';
+			likeButton.onclick = function(){thism.unlikeNote();};
+		}	
+
+		//finish common elements of button and add it to HTML		
+		likeButton.innerHTML = thism.note.likes +  " " +  model.views.likeIcon;
+		thism.html.children[1].appendChild(likeButton);	
+		
+	}	
+
+	this.likeNote = function()
+	{
+		this.note.likes = parseInt(this.note.likes) + 1;
+		var likeB = document.getElementById('likeButton');
+		likeB.innerHTML = this.note.likes + " "  + model.views.likeIcon;
+       	likeB.onclick = function(){thism.unlikeNote();};
+		likeB.className = 'clickedButton';
+		controller.like(model.playerId, this.note.note_id);
+	}
+
+	this.unlikeNote = function()
+	{
+		this.note.likes = parseInt(this.note.likes) - 1;
+		var likeB = document.getElementById('likeButton');
+		likeB.innerHTML = this.note.likes + " "  + model.views.likeIcon;
+       	likeB.onclick = function(){thism.likeNote();};
+		likeB.className = 'Button';
+		controller.unlike(model.playerId, this.note.note_id);
+	}
+
+
+
+
+
     this.constructHTML();
 }
+
+
+
 
 function getLocation()
 {

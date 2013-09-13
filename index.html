@@ -39,7 +39,7 @@ function pageLoad()
 function startLoadGame()
 {
     document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img> Waiting on Server...";
-	callService("notes.getNotesWithAttributes", finishLoadGame, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0}));
+	callService("notes.getNotesWithAttributes", finishLoadGame, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:model.playerId, tagIds:[], lastLocation:0, date:0}));
 }
 
 
@@ -307,6 +307,8 @@ function startSift(siftType){
         <div id='note_view_tags_construct' class='note_view_tags'></div>
         <div id='note_view_comments_construct' class='note_view_comments'></div>
         <div id='note_view_input_construct' class='note_view_input'></div>
+		<div id='note_view_shares_construct' class='note_view_shares'></div>
+
     </div>
 </div>
 

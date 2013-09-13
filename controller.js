@@ -435,4 +435,17 @@ function Controller()
 			default: console.log("Unexpected resupt from resetPasswordMessage: " +returnString);
 		}
 	}
+
+	this.like = function(playerId, noteId)
+	{
+        callService("notes.likeNote", function(){},"/"+playerId+"/"+noteId, false); //add internal like
+			
+	}
+
+	this.unlike = function(playerId, noteId)
+	{
+        callService("notes.unlikeNote", function(){},"/"+playerId+"/"+noteId, false); //remove internal like
+			
+	}
+
 }
