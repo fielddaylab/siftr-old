@@ -448,4 +448,17 @@ function Controller()
 			
 	}
 
+	this.sendEmail = function(playerId, noteId)
+	{
+		//alert("email" + playerId + noteId);
+        callService("notes.sharedNoteToEmail", function(){},"/"+playerId+"/"+noteId, false); //add one to email count
+		//add one to html for temp
+
+		var bodyText = "Check out Siftr! www.siftr.org";
+		var subjectText = "See this Siftr";
+		emailText = "mailto:?subject="+ escape(subjectText) +"&body=" + escape(bodyText);
+		window.open(emailText);		
+		
+
+	}
 }

@@ -139,7 +139,8 @@ function NoteView(note)
 			this.likeToggle(this.note.player_liked);
 
 			shareHTML +=  "<li>" + this.note.facebook_shares + " Facebook </li>   ";
-		
+		//	document.getElementById('shareFacebook').innerHTML = this.note.facebook_shares + " Facebook!";
+		//above only works second time you run it
 
 		}
 		else{
@@ -151,24 +152,34 @@ function NoteView(note)
 
 			//they can't submit to social media if they are not logged in, show static numbers
 
+//			document.getElementById('shareFacebook').innerHTML = this.note.facebook_shares + " Facebook";
+//			document.getElementById('shareLikes').innerHTML = this.note.likes + " " + model.views.likeIcon;		
+
 	    	var likeButtonHTML =  this.note.likes + " " +  model.views.likeIcon ;
-			var facebookButtonHTML =  this.note.facebook_shares ;
 
 	    	shareHTML +=  "<li>" + likeButtonHTML + "</li>   " ;
+			var facebookButtonHTML =  this.note.facebook_shares ;
 			shareHTML +=  "<li>" + facebookButtonHTML + " Facebook </li>   ";
 	
 		}
     
 		this.html.children[1].children[4].appendChild(b);
+		document.getElementById('shareLikes').innerHTML = ""; //supposed to be button, doesn't work yet
 
 		//Social Media   
-
 		shareHTML += "<li>" + this.note.twitter_shares + " Twitter </li>   ";
 		shareHTML += "<li>" + this.note.pinterest_shares + " Pinterest </li>   ";
-		shareHTML += "<li>" + this.note.email_shares+ " Email </li>   ";
-		shareHTML += "</ul>";
 
-		this.html.children[1].children[5].innerHTML = shareHTML; //this ends up in [1][5]
+		//	emailButtonHTML = "<button id='emailButton' class='button' onClick=controller.sendEmail(model.playerId, thism.note.note_id)> "
+		emailButtonHTML = "<button id='emailButton' class='button' onClick=controller.sendEmail(" + model.playerId +","+thism.note.note_id + ")>";
+
+		shareHTML += "<li>" + emailButtonHTML + this.note.email_shares + " Email</button> </li>   ";
+
+		shareHTML += "</ul>";
+	
+		this.html.children[1].children[5].innerHTML += shareHTML; //this ends up in [1][5]
+	//	this.html.children[1].children[5].appendChild(emailButton);
+
 	}
 
     this.loadComments = function()
@@ -213,25 +224,23 @@ function NoteView(note)
         return commentHTML;
     }
 
-	this.likeToggle = function(response)
+	this.likeToggle = function(hasLiked)
 	{
 	//user may or maynot have already like the note, this changes the display and effect of clicking	
 	
-		console.log(response);		
-
 		//start button
 		var likeButton = document.createElement('button');
    	   	likeButton.id = 'likeButton';
 
-		if(response == 0) 
+		if(hasLiked == 0) 
 		{ //the user has not yet liked it
 
 			//then allow them to like it	
        		likeButton.className = 'button';
 	       	likeButton.onclick = function(){thism.likeNote();};
 		}
-		else if(response == 1)
-		{			//user has already liked the note
+		else if(hasLiked == 1)
+		{	//user has already liked the note
 			likeButton.className = 'clickedButton';
 			likeButton.onclick = function(){thism.unlikeNote();};
 		}	
@@ -239,7 +248,6 @@ function NoteView(note)
 		//finish common elements of button and add it to HTML		
 		likeButton.innerHTML = thism.note.likes +  " " +  model.views.likeIcon;
 		thism.html.children[1].appendChild(likeButton);	
-		
 	}	
 
 	this.likeNote = function()
@@ -250,6 +258,7 @@ function NoteView(note)
        	likeB.onclick = function(){thism.unlikeNote();};
 		likeB.className = 'clickedButton';
 		controller.like(model.playerId, this.note.note_id);
+		this.note.player_liked = 1;
 	}
 
 	this.unlikeNote = function()
@@ -260,6 +269,7 @@ function NoteView(note)
        	likeB.onclick = function(){thism.likeNote();};
 		likeB.className = 'Button';
 		controller.unlike(model.playerId, this.note.note_id);
+		this.note.player_liked = 0;
 	}
 
 
@@ -350,6 +360,7 @@ function submitNote()
 
     // add tags
 	var tags = "Innovation"; //this is the default tag and its radio button is checked, but in case that fails we'll set it here 
+
     if(document.getElementById("create_tag_1").checked){tags = document.getElementById("create_tag_1").value; controller.addTagToNote(model.currentNote.noteId, tags); }
     if(document.getElementById("create_tag_2").checked){tags = document.getElementById("create_tag_2").value; controller.addTagToNote(model.currentNote.noteId, tags); }
     if(document.getElementById("create_tag_3").checked){tags = document.getElementById("create_tag_3").value; controller.addTagToNote(model.currentNote.noteId, tags); }
