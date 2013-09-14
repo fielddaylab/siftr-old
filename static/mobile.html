@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Sifter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/normalize.css"     rel="stylesheet" media="screen">
-    <link href="css/prefix-free.css"   rel="stylesheet" media="screen">
-    <link href="css/sifter-mobile.css" rel="stylesheet" media="screen">
-    <link href="icomoon.css"           rel="stylesheet" media="screen">
-    <link href="css/glyphicons.css"    rel="stylesheet" media="screen">
+    <meta charset="utf-8">
+
+    <link href="css/normalize.css"      rel="stylesheet" media="screen">
+    <link href="css/sifter-mobile.css"  rel="stylesheet" media="screen">
+    <link href="css/glyphicons.css"     rel="stylesheet" media="screen">
+    <link href="icomoon.css"            rel="stylesheet" media="screen">
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
@@ -30,8 +31,9 @@
 
     <!-- Header Bar -->
     <div class="sifter-header-toolbar">
-      <button class="sifter-nav-button button-left">
-        <span class="icon-map"></span>
+      <button class="sifter-nav-button button-left switch-views">
+        <span class="switch-view-icon switch-map icon-map"></span>
+        <span class="switch-view-icon switch-images glyphicon glyphicon-th"></span>
       </button>
 
       <input class="sifter-search-field" type="text" placeholder="search" />
@@ -93,6 +95,8 @@
     <!-- Delayed JS loading -->
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/prefixfree.min.js"></script>
+    <script src="js/sifter-mobile.js"></script>
 
   </body>
 </html>
