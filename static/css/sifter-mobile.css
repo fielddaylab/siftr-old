@@ -42,7 +42,7 @@ html,body
 .sifter-imagelist
 {
   height: 100%;
-  background: pink;
+  background: #ddd;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -50,7 +50,6 @@ html,body
 .sifter-map
 {
   height: 100%;
-  background: green;
 }
 
 
@@ -171,9 +170,12 @@ html,body
 /* debug */
 .img
 {
-  height: 200px;
-  width: 200px;
-  background: blue;
-  margin: 10px;
+  width: 48%;
+  margin: 1%;
   float: left;
+}
+
+.img img
+{
+  width: 100%;
 }
