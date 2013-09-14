@@ -13,11 +13,11 @@ html,body
 .sifter-header-toolbar,
 .sifter-footer-toolbar
 {
-  height: 40px;
+  height: 45px;
   width: 100%;
   z-index: 100;
   position: fixed;
-  padding: 5px;
+  padding-top: 5px;
 }
 
 .sifter-header-toolbar
@@ -41,7 +41,6 @@ html,body
 
 .sifter-imagelist
 {
-  display: none;
   height: 100%;
   background: pink;
   overflow: scroll;
@@ -62,6 +61,7 @@ html,body
   height: 100%;
   width: 50px;
   color: #333;
+  font-size: 150%;
 }
 
 
@@ -91,7 +91,7 @@ html,body
   width: 100px;
   margin-left: -60px;
   border-radius: 50%;
-  font-size: 200%;
+  font-size: 250%;
   color: #cf2037;
   background: #fee;
 }
@@ -101,7 +101,7 @@ html,body
   border: 1px solid #ddd;
   border-radius: 15px;
   padding-left: 10px;
-  margin-top: 5px;
+  margin-top: 8px;
 }
 
 /* debug */
