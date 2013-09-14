@@ -104,6 +104,70 @@ html,body
   margin-top: 8px;
 }
 
+
+
+/* Slide out buttons */
+.sifter-filters-slideout
+{
+  position: fixed;
+  height: 160px;
+  margin-bottom: 50px;
+  bottom: -190px;
+  padding-bottom: 30px;
+  background: white;
+  width: 100%;
+  transition-duration: 0.5s;
+  z-index: 50;
+}
+
+.sifter-filters-expanded
+{
+  bottom: 0px;
+}
+
+
+
+.sifter-slideout-animation
+{
+  animation: slideout-bottom 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.sifter-slideout-reverse
+{
+  animation: slideout-bottom 1s;
+  animation-fill-mode: forwards;
+  animation-direction: reverse;
+}
+
+@keyframes slideout-bottom
+{
+    0% { bottom: -180px; }
+  100% { bottom:    0px; }
+}
+
+
+
+.sifter-filters li
+{
+  list-style: none;
+  display: inline-block;
+  margin: 0;
+}
+
+.sifter-categories li
+{
+  list-style: none;
+  margin-left: -20px;
+}
+.sifter-categories li span
+{
+  vertical-align: -2px;
+  color: #cf2037;
+}
+
+
+
 /* debug */
 .img
 {

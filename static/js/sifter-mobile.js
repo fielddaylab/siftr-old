@@ -1,5 +1,6 @@
 $(document).ready(function ()
 {
+  /* Map Toggle */
   $('.sifter-imagelist').hide();
   $('.switch-map').hide();
 
@@ -9,6 +10,13 @@ $(document).ready(function ()
 
     $('.sifter-map').toggle();
     $('.sifter-imagelist').toggle();
+  });
+
+
+  /* Filter slide up toggle */
+  $('.sifter-filters-button').on('click', function()
+  {
+    $('.sifter-filters-slideout').toggleClass('sifter-filters-expanded');
   });
 
 });
