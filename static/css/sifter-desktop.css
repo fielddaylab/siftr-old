@@ -10,6 +10,7 @@ html,body
   height: 15%;
 }
 
+
   /* With pop down shown */
   .sifter-filters-popdown
   {
@@ -22,9 +23,9 @@ html,body
   }
 
   /* With pop down hidden */
-  .sifter-filters-popdown.hidden
+  .sifter-filters-popdown.slide-up
   {
-    display: none;
+    height: 0%;
   }
 
   .sifter-content
@@ -104,26 +105,31 @@ html,body
   vertical-align: middle;
 }
 
-.launchpad-button
+.launchpad-button, .filter-button 
 {
   color: #dedede;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
   background-color: #f7f7f7;
   background-repeat: repeat-x;
-  border: 0;
+  border: 1px solid #dedede;
   border-radius: 4px;
-  box-shadow: 0 0 5px rgba(100,100,100, 0.5);
+  box-shadow: 0 0 5px rgba(150,150,150, 0.1);
+
+  background-image: linear-gradient(to bottom, #ffffff, #f7f7f7);
 }
 
-.launchpad-button.button-active
+.launchpad-button.button-active,
+.filter-button.button-active
 {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
   background-color: #cf2037;
   background-repeat: repeat-x;
-  border: 0;
+  border: 1px solid #cf2037;
   border-radius: 4px;
-  box-shadow: 0 0 5px rgba(100,100,100, 0.5);
+  box-shadow: 0 0 5px rgba(150,150,150, 0.5);
+
+  background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
 }
 
 
@@ -146,39 +152,66 @@ html,body
   /* Filter Buttons */
   .sifter-filters
   {
-    width: 30%;
+    width: 400px;
+    font-size: 110%;
   }
   .sifter-filters button
   {
-    width: 40%;
-    margin: 4%;
+    width: 150px;
+    margin: 10px 20px;
     color: #cf2037;
+    padding: 5px;
   }
 
 
   /* Category Links */
   .sifter-categories
   {
-    width: 30%;
+    width: 600px;
     margin: 20px;
-  }
-  .sifter-categories li
-  {
-    list-style: none;
     margin-left: -20px;
+  }
+  .sifter-categories div
+  {
+    width: 200px;
+    display: inline-block;
+    list-style: none;
     color: #cf2037;
+  }
+
+  .desktop-search
+  {
+    display: inline;
+    width: 100px;
+    border: 1px solid #f7f7f7;
+    border-radius: 50px;
+    padding-left: 10px;
+    box-shadow: inset 0 0 10px rgba(136, 136, 136, 0.2); 
   }
 
   /* Footer */
   .sifter-popdown-footer
   {
     background: #f7f7f7;
+    border-top: 1px solid #cacaca;
     color: #aaaaaa;
     position: absolute;
     bottom: 0;
     width: 100%;
     padding: 5px;
   }
+
+
+/* Navigation/Content shrink/expand animation */
+.sifter-filters-popdown,
+.sifter-content
+{
+  transition-duration: 0.25s;
+}
+.sifter-filters-popdown
+{
+  overflow: hidden;
+}
 
 
 /* Content Area */
@@ -201,7 +234,7 @@ html,body
 {
   width: 100%;
   border-radius: 4px;
-  box-shadow: 0 0 10px #888;
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
 }
 
 /* Util section */

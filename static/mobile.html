@@ -9,8 +9,8 @@
     <link href="css/normalize.css"      rel="stylesheet" media="screen">
 
     <!-- Siftr Theme -->
-    <link href="css/sifter-mobile.css"  rel="stylesheet" media="screen and (max-width: 1024px)">
-    <link href="css/sifter-desktop.css" rel="stylesheet" media="screen and (min-width: 1024px)">
+    <link href="css/sifter-mobile.css"  rel="stylesheet" media="screen and (max-width: 768px)">
+    <link href="css/sifter-desktop.css" rel="stylesheet" media="screen and (min-width: 768px)">
 
     <!-- Symbol Fonts -->
     <link href="css/glyphicons.css"     rel="stylesheet" media="screen">
@@ -78,38 +78,42 @@
         <div class="clear"></div>
       </div>
 
-      <ul class="sifter-categories">
-        <li>
+      <div class="sifter-categories">
+        <div class="hidden-mobile">
+          <span class="icon-search"></span>
+          <input type="text" class="desktop-search" placeholder="search" />
+        </div>
+        <div>
           <label>
             <span class="icon-innovation"></span> Innovation
             <input type="checkbox" />
           </label>
-        </li>
-        <li>
+        </div>
+        <div>
           <label>
             <span class="icon-stories"   ></span> Stories of the Past
             <input type="checkbox" />
           </label>
-        </li>
-        <li>
+        </div>
+        <div>
           <label>
             <span class="icon-mustdo"    ></span> Must Do
             <input type="checkbox" />
           </label>
-        </li>
-        <li>
+        </div>
+        <div>
           <label>
             <span class="icon-culture"   ></span> Madison Culture
             <input type="checkbox" />
           </label>
-        </li>
-        <li>
+        </div>
+        <div>
           <label>
             <span class="icon-100years"  ></span> 100 Years From Now
             <input type="checkbox" />
           </label>
-        </li>
-      </ul>
+        </div>
+      </div>
 
       <div class="clear"></div>
 
