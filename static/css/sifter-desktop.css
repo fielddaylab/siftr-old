@@ -1,0 +1,172 @@
+html,body
+{
+  height: 100%;
+  margin: 0;
+}
+
+/* Layout dimensions */
+.sifter-desktop-header
+{
+  height: 15%;
+}
+
+  /* With pop down shown */
+  .sifter-filters-popdown
+  {
+    height: 25%;
+  }
+
+  .sifter-content.shrunk
+  {
+    height: 60%;
+  }
+
+  /* With pop down hidden */
+  .sifter-filters-popdown.hidden
+  {
+    display: none;
+  }
+
+  .sifter-content
+  {
+    height: 85%;
+  }
+
+.sifter-imagelist
+{
+  overflow: scroll;
+  width: 60%;
+}
+
+.sifter-map
+{
+  width: 40%;
+}
+
+.sifter-imagelist,
+.sifter-map
+{
+  float: left;
+  height: 100%;
+}
+
+
+
+/* Desktop Header */
+.sifter-desktop-header
+{
+  position: relative;
+  z-index: 200;
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+}
+
+.sifter-logo-box
+{
+  float: left;
+  margin: 20px;
+  color: #cf2037;
+  position: relative;
+  font-size: 20px;
+  top: 50%;
+  height: 100px;
+  vartical-align: middle;
+  margin-top: -50px;
+  text-shadow: 0 0 5px rgba(155, 155, 155, 0.1);
+}
+
+.sifter-logo-box .siftr-logo
+{
+  font-size: 150%;
+  vertical-align: middle;
+}
+
+.sifter-rightside-launchpad
+{
+  float: right;
+  position: relative;
+  top: 50%;
+  margin-top: -25px;
+  right: 50px;
+}
+
+
+.sifter-rightside-launchpad button
+{
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  padding: 0;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.sifter-rightside-launchpad button span
+{
+  vertical-align: middle;
+}
+
+.launchpad-button
+{
+  color: #dedede;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: #f7f7f7;
+  background-repeat: repeat-x;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(100,100,100, 0.5);
+}
+
+.launchpad-button.button-active
+{
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: #cf2037;
+  background-repeat: repeat-x;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(100,100,100, 0.5);
+}
+
+
+
+/* Desktop Nav */
+.sifter-filters-popdown
+{
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  background: #fff;
+  z-index: 200;
+  position: relative;
+}
+
+
+
+/* Content Area */
+.sifter-content
+{
+}
+
+
+
+/* Image List */
+.img
+{
+  width: 23%;
+  margin: 1%;
+  float: left;
+}
+
+.img img
+{
+  width: 100%;
+}
+
+/* Util section */
+.clear
+{
+  clear: both;
+}
+
+.hidden-desktop
+{
+  display: none;
+}

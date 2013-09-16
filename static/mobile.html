@@ -15,6 +15,7 @@
     <!-- Symbol Fonts -->
     <link href="css/glyphicons.css"     rel="stylesheet" media="screen">
     <link href="css/icomoon.css"        rel="stylesheet" media="screen">
+    <link href="css/logofont.css"       rel="stylesheet" media="screen">
 
 
     <!-- Google Maps -->
@@ -37,8 +38,8 @@
 
   <body>
 
-    <!-- Header Bar -->
-    <div class="sifter-header-toolbar">
+    <!-- Mobile Header Bar -->
+    <div class="sifter-header-toolbar hidden-desktop">
       <button class="sifter-nav-button button-left switch-views">
         <span class="switch-view-icon switch-map icon-map"></span>
         <span class="switch-view-icon switch-images glyphicon glyphicon-th"></span>
@@ -49,6 +50,66 @@
       <button class="sifter-nav-button button-right">
         <span class="icon-cog"></span>
       </button>
+    </div>
+
+
+    <!-- Desktop Header -->
+    <div class="sifter-desktop-header hidden-mobile">
+      <div class="sifter-logo-box">
+        <h1><span class="siftr-logo"></span> Siftr</h1>
+      </div>
+
+      <div class="sifter-rightside-launchpad">
+        <button class="sifter-add launchpad-button"><span class="icon-plus"></span></button>
+        <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+
+    <!-- Category/Filter Mobile Slideout, Desktop Popdown -->
+    <div class="sifter-filters-slideout sifter-filters-popdown">
+      <div class="sifter-filters">
+        <button class="filter-button first">Top</button>
+        <button class="filter-button"      >Recent</button>
+        <button class="filter-button"      >Popular</button>
+        <button class="filter-button last" >Mine</button>
+        <div class="clear"></div>
+      </div>
+
+      <ul class="sifter-categories">
+        <li>
+          <label>
+            <span class="icon-innovation"></span> Innovation
+            <input type="checkbox" />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-stories"   ></span> Stories of the Past
+            <input type="checkbox" />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-mustdo"    ></span> Must Do
+            <input type="checkbox" />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-culture"   ></span> Madison Culture
+            <input type="checkbox" />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-100years"  ></span> 100 Years From Now
+            <input type="checkbox" />
+          </label>
+        </li>
+      </ul>
     </div>
 
 
@@ -96,11 +157,13 @@
       </div>
       <div class="sifter-map" id="map-canvas">
       </div>
+
+      <div class="clear"></div>
     </div>
 
 
     <!-- Footer Bar -->
-    <div class="sifter-footer-toolbar">
+    <div class="sifter-footer-toolbar hidden-desktop">
       <button class="sifter-nav-button sifter-filters-button button-left">
         <span class="icon-tags"></span>
       </button>
@@ -115,49 +178,6 @@
     </div>
 
 
-    <!-- Category/Filter slideout -->
-    <div class="sifter-filters-slideout">
-      <div class="sifter-filters">
-        <button class="filter-button first">Top</button>
-        <button class="filter-button"      >Recent</button>
-        <button class="filter-button"      >Popular</button>
-        <button class="filter-button last" >Mine</button>
-        <div class="clear"></div>
-      </div>
-
-      <ul class="sifter-categories">
-        <li>
-          <label>
-            <span class="icon-innovation"></span> Innovation
-            <input type="checkbox" />
-          </label>
-        </li>
-        <li>
-          <label>
-            <span class="icon-stories"   ></span> Stories of the Past
-            <input type="checkbox" />
-          </label>
-        </li>
-        <li>
-          <label>
-            <span class="icon-mustdo"    ></span> Must Do
-            <input type="checkbox" />
-          </label>
-        </li>
-        <li>
-          <label>
-            <span class="icon-culture"   ></span> Madison Culture
-            <input type="checkbox" />
-          </label>
-        </li>
-        <li>
-          <label>
-            <span class="icon-100years"  ></span> 100 Years From Now
-            <input type="checkbox" />
-          </label>
-        </li>
-      </ul>
-    </div>
 
 
     <!-- Show lightbox -->
