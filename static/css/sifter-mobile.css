@@ -20,15 +20,19 @@ html,body
   padding-top: 5px;
 }
 
+.sifter-footer-toolbar,
 .sifter-header-toolbar
 {
-  background: #fee;
+  background: #fefefe;
+}
+
+.sifter-header-toolbar
+{
   top: 0px;
 }
 
 .sifter-footer-toolbar
 {
-  background: #fee;
   bottom: 0px;
 }
 
@@ -92,7 +96,7 @@ html,body
   border-radius: 50%;
   font-size: 250%;
   color: #cf2037;
-  background: #fee;
+  background: #fefefe;
 }
 
 .sifter-search-field
@@ -113,7 +117,7 @@ html,body
   margin-bottom: 50px;
   bottom: -190px;
   padding-bottom: 30px;
-  background: white;
+  background: rgba(255, 255, 255, 0.85);
   width: 100%;
   transition-duration: 0.5s;
   z-index: 50;
@@ -125,46 +129,57 @@ html,body
 }
 
 
-
-.sifter-slideout-animation
+.sifter-filters
 {
-  animation: slideout-bottom 0.5s;
-  animation-fill-mode: forwards;
+  font-size: 100%;
+  margin: 20px;
 }
 
-.sifter-slideout-reverse
+.sifter-categories
 {
-  animation: slideout-bottom 1s;
-  animation-fill-mode: forwards;
-  animation-direction: reverse;
-}
-
-@keyframes slideout-bottom
-{
-    0% { bottom: -180px; }
-  100% { bottom:    0px; }
+  font-size: 100%;
 }
 
 
-
-.sifter-filters li
+.sifter-filters button.filter-button
 {
-  list-style: none;
-  display: inline-block;
-  margin: 0;
+  color: #fff;
+  background: #cf2037;
+  border: 1px solid #222;
+
+  margin-left: -1px;
+  float: left;
 }
+
+button.filter-button.first
+{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+button.filter-button.last
+{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 
 .sifter-categories li
 {
   list-style: none;
   margin-left: -20px;
 }
+
 .sifter-categories li span
 {
   vertical-align: -2px;
   color: #cf2037;
 }
 
+.sifter-categories input
+{
+  float: right;
+  margin-right: 20px;
+}
 
 
 /* debug */
@@ -179,3 +194,21 @@ html,body
 {
   width: 100%;
 }
+
+/* util section */
+.clear
+{
+  clear: both;
+}
+
+
+/* TODO style checkbox for mobile
+  input[type=checkbox]
+  {
+    visibility: hidden;
+  }
+
+  input[type=checkbox]:checked + label:after
+  {
+  }
+*/
