@@ -109,19 +109,45 @@
 
     <!-- Category/Filter slideout -->
     <div class="sifter-filters-slideout">
-      <ul class="sifter-filters">
-        <li>Top</li>
-        <li>Recent</li>
-        <li>Popular</li>
-        <li>Mine</li>
-      </ul>
+      <div class="sifter-filters">
+        <button class="filter-button first">Top</button>
+        <button class="filter-button">Recent</button>
+        <button class="filter-button">Popular</button>
+        <button class="filter-button last">Mine</button>
+        <div class="clear"></div>
+      </div>
 
       <ul class="sifter-categories">
-        <li><span class="icon-innovation"></span> Innovation</li>
-        <li><span class="icon-stories"   ></span> Stories of the Past</li>
-        <li><span class="icon-mustdo"    ></span> Must Do</li>
-        <li><span class="icon-culture"   ></span> Madison Culture</li>
-        <li><span class="icon-100years"  ></span> 100 Years From Now</li>
+        <li>
+            <input type="checkbox" id="boxbox" />
+            <label for="boxbox">
+              <span class="icon-innovation"></span> Innovation
+            </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-stories"   ></span> Stories of the Past
+            <input type="checkbox" />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-mustdo"    ></span> Must Do
+            <input type="checkbox" />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-culture"   ></span> Madison Culture
+            <input type="checkbox" />
+          </label>
+        </li>
+        <li>
+          <label>
+            <span class="icon-100years"  ></span> 100 Years From Now
+            <input type="checkbox" />
+          </label>
+        </li>
       </ul>
     </div>
 
