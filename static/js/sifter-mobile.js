@@ -1,8 +1,10 @@
 $(document).ready(function ()
 {
-  /* Map/List and Toggle Button */
-  $('.sifter-imagelist').toggleClass ("mobile-hidden");
-  $('.switch-map'      ).toggleClass ("mobile-hidden");
+  /* MOBILE */
+
+  /* Initial state of Map/Image List and Toggle Button */
+  $('.sifter-imagelist').addClass ("mobile-hidden");
+  $('.switch-map'      ).addClass ("mobile-hidden");
 
   $('.switch-views').on('click', function()
   {
@@ -16,6 +18,20 @@ $(document).ready(function ()
   $('.sifter-filters-button').on('click', function()
   {
     $('.sifter-filters-slideout').toggleClass('sifter-filters-expanded');
+  });
+
+
+
+  /* DESKTOP */
+
+  /* Initial state of Menu and Content */
+  $('.sifter-filters-popdown').addClass('hidden-desktop');
+
+  $('.sifter-menu-reveal').on('click', function()
+  {
+    $('.sifter-menu-reveal').toggleClass('button-active');
+    $('.sifter-filters-popdown').toggleClass ('hidden-desktop');
+    $('.sifter-content').toggleClass ('shrunk');
   });
 
 });

@@ -203,7 +203,7 @@ button.filter-button.last
   clear: both;
 }
 
-.mobile-hidden
+.hidden-mobile
 {
   display: none;
 }
