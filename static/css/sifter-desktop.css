@@ -89,7 +89,6 @@ html,body
   right: 50px;
 }
 
-
 .sifter-rightside-launchpad button
 {
   height: 50px;
@@ -138,11 +137,54 @@ html,body
   position: relative;
 }
 
+.sifter-filters,
+.sifter-categories
+{
+  float: left;
+}
+
+  /* Filter Buttons */
+  .sifter-filters
+  {
+    width: 30%;
+  }
+  .sifter-filters button
+  {
+    width: 40%;
+    margin: 4%;
+    color: #cf2037;
+  }
+
+
+  /* Category Links */
+  .sifter-categories
+  {
+    width: 30%;
+    margin: 20px;
+  }
+  .sifter-categories li
+  {
+    list-style: none;
+    margin-left: -20px;
+    color: #cf2037;
+  }
+
+  /* Footer */
+  .sifter-popdown-footer
+  {
+    background: #f7f7f7;
+    color: #aaaaaa;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+  }
 
 
 /* Content Area */
 .sifter-content
 {
+  background: #cacaca;
 }
 
 
@@ -158,6 +200,8 @@ html,body
 .img img
 {
   width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #888;
 }
 
 /* Util section */
