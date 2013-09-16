@@ -25,12 +25,12 @@ $(document).ready(function ()
   /* DESKTOP */
 
   /* Initial state of Menu and Content */
-  $('.sifter-filters-popdown').addClass('hidden-desktop');
+  $('.sifter-filters-popdown').addClass('slide-up');
 
   $('.sifter-menu-reveal').on('click', function()
   {
     $('.sifter-menu-reveal').toggleClass('button-active');
-    $('.sifter-filters-popdown').toggleClass ('hidden-desktop');
+    $('.sifter-filters-popdown').toggleClass ('slide-up');
     $('.sifter-content').toggleClass ('shrunk');
   });
 
