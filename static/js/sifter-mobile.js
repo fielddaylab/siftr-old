@@ -3,14 +3,14 @@ $(document).ready(function ()
   /* MOBILE */
 
   /* Initial state of Map/Image List and Toggle Button */
-  $('.sifter-imagelist').addClass ("mobile-hidden");
-  $('.switch-map'      ).addClass ("mobile-hidden");
+  $('.sifter-imagelist').addClass ("hidden-mobile");
+  $('.switch-map'      ).addClass ("hidden-mobile");
 
   $('.switch-views').on('click', function()
   {
-    $('.switch-view-icon').toggleClass ("mobile-hidden");
-    $('.sifter-map'      ).toggleClass ("mobile-hidden");
-    $('.sifter-imagelist').toggleClass ("mobile-hidden");
+    $('.switch-view-icon').toggleClass ("hidden-mobile");
+    $('.sifter-map'      ).toggleClass ("hidden-mobile");
+    $('.sifter-imagelist').toggleClass ("hidden-mobile");
   });
 
 
