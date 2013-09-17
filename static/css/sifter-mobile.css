@@ -102,10 +102,10 @@ html,body
 .sifter-search-field
 {
   border: 1px solid #ddd;
-  border-radius: 15px;
+  border-radius: 5000px;
   padding-left: 10px;
-  margin-top: 8px;
   width: 40%;
+  height: 35px;
 }
 
 
