@@ -132,15 +132,9 @@ html,body
 
 .sifter-filters
 {
-  font-size: 110%;
-  margin: 20px;
+  font-size: 1.2em;
+  margin: 1em;
 }
-
-.sifter-categories
-{
-  font-size: 110%;
-}
-
 
 .sifter-filters button.filter-button
 {
@@ -165,13 +159,13 @@ button.filter-button.last
 }
 
 
-.sifter-categories li
+.sifter-categories div
 {
-  list-style: none;
-  margin-left: -20px;
+  font-size: 1.2em;
+  margin-left: 1em;
 }
 
-.sifter-categories li span
+.sifter-categories span
 {
   vertical-align: -2px;
   color: #cf2037;
