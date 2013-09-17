@@ -57,6 +57,7 @@ html,body
 .sifter-desktop-header
 {
   position: relative;
+  overflow: hidden; /* Prevent padding from wrapping the nav */
   z-index: 200;
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
 }
@@ -200,7 +201,6 @@ html,body
     width: 100%;
     padding: 5px;
   }
-
 
 /* Navigation/Content shrink/expand animation */
 .sifter-filters-popdown,
