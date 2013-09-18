@@ -36,6 +36,7 @@ html,body
 .sifter-imagelist
 {
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   width: 60%;
 }
 
@@ -133,6 +134,23 @@ html,body
   background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
 }
 
+/* catch the nexus 7 shrunken screen */
+/* FIXME really should switch to a fixed-height top bar like the mobile version
+   so it can gracefully shrink easier than vertically centered divs -Kevin */
+@media only screen and (max-height: 500px)
+{
+  .sifter-logo-box
+  {
+    margin-top: -65px;
+  }
+
+  .sifter-rightside-launchpad
+  {
+    margin-top: -35px;
+  }
+
+}
+
 
 
 /* Desktop Nav */
@@ -153,7 +171,7 @@ html,body
   /* Filter Buttons */
   .sifter-filters
   {
-    width: 375px;
+    width: 365px;
     font-size: 110%;
   }
   .sifter-filters button
@@ -169,7 +187,7 @@ html,body
   /* Category Links */
   .sifter-categories
   {
-    width: 600px;
+    width: 525px;
     font-size: 0.8em;
     margin: 1em;
     margin-left: 0;
@@ -179,7 +197,7 @@ html,body
     display: inline-block;
     padding: 0.25em 0;
     margin-bottom: 1em;
-    width: 190px;
+    width: 170px;
     overflow: hidden;
     list-style: none;
     color: #cf2037;
@@ -211,6 +229,7 @@ html,body
   .desktop-search
   {
     display: inline;
+    height: 2em;
     width: 100px;
     border: 1px solid #f7f7f7;
     border-radius: 50px;
@@ -229,6 +248,15 @@ html,body
     width: 100%;
     padding: 5px;
   }
+
+/* catch the nexus 7 shrunken screen */
+@media only screen and (max-height: 640px)
+{
+  .sifter-popdown-footer
+  {
+    display: none;
+  }
+}
 
 /* Navigation/Content shrink/expand animation */
 .sifter-filters-popdown,
