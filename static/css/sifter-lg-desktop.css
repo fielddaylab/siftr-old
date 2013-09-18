@@ -1,0 +1,22 @@
+/* Desktop Size Bump */
+
+.sifter-filters-popdown
+{
+  font-size: 120%;
+}
+
+.sifter-filters
+{
+  width: 380px;
+}
+
+.sifter-categories
+{
+  width: 600px;
+}
+
+.sifter-categories .sifter-category
+{
+  width: 190px;
+}
+
