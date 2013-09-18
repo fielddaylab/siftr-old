@@ -451,13 +451,72 @@ function Controller()
 	this.sendEmail = function(playerId, noteId)
 	{
 		//alert("email" + playerId + noteId);
-        callService("notes.sharedNoteToEmail", function(){},"/"+playerId+"/"+noteId, false); //add one to email count
-		//add one to html for temp
 
-		var bodyText = "Check out Siftr! www.siftr.org";
-		var subjectText = "See this Siftr";
+		note = model.currentNote;
+		if (!note.note_id == noteId) //we are making an assumption that the current note is the same as the one desired to email
+		{							 //just in case this is in error, record it	
+			console.log("Error in email: "+ model.currentNote.note_id + " " + noteId);
+		}	
+
+		//initialize the text
+		var bodyText = "Check out this note about ";
+		var subjectText = "Interesting note on ";
+		
+		//customize based on the tag
+		var tagText = "";
+		var formattedTag = note.tagString.toLowerCase().trim();
+		switch(formattedTag){
+			case("innovation"): tagText = "Innovation " ; break;
+			case("must do"): tagText= "a Must Do "; break;
+			case("stories of the past"):tagText = "Stories of the Past ";  break;
+			case("100 years from now"):tagText = "100 Years From Now ";  break;
+			case("madison culture"): tagText = "Madison Culture ";  break;
+
+			default:
+				console.log("unexpected tag string on email send " + formattedTag + " " + note.tagString);
+				tagText = note.tagString;
+		}
+
+		bodyText += tagText;
+		subjectText += tagText ;
+		
+		//customize on if they made it or found it		
+		if(playerId == note.owner_id) bodyText += "I made ";
+		else bodyText += "I found ";
+
+		bodyText += "on the UW-Madison Campus: " +"\n";		
+		subjectText += "from UW-Madison Campus";
+
+		//pull out the note text and photo url
+		for (var i = 0; i < note.contents.length; i++)
+		{
+			if(note.contents[i].type == 'TEXT')
+			{
+				bodyText += "\"" + note.contents[i].text + "\" \n";
+			}
+			if(note.contents[i].type == 'PHOTO')
+			{
+				var bodyImage =  note.contents[i].media.data.url ;
+			}
+
+		}
+
+		bodyText += "See the whole note at: www.sifter.org or download the Siftr app \n";
+		bodyText += bodyImage;
+		
+	
+		//add one to email sent count
+        callService("notes.sharedNoteToEmail", function(){},"/"+playerId+"/"+noteId, false); //add one to email count
+
+		//add all the accumulated strings together	
 		emailText = "mailto:?subject="+ escape(subjectText) +"&body=" + escape(bodyText);
+
+		//send the email
 		window.open(emailText);		
+
+		//increment the user side HTML
+		note.email_shares = parseInt(note.email_shares) + 1;
+		document.getElementById("emailButton").innerHTML = note.email_shares + " Emails" ;
 		
 
 	}

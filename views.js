@@ -66,6 +66,7 @@ function NoteView(note)
     var thism = this; //garbage
     this.html = model.views.constructNoteView.cloneNode(true);
     this.note = note;
+	model.currentNote = note; // this is done so that the send email function over in controller can get at all the information
 
 	//this.html.children[0] is for the image
 	//this.html.children [1][0] Caption 
@@ -173,7 +174,7 @@ function NoteView(note)
 		//	emailButtonHTML = "<button id='emailButton' class='button' onClick=controller.sendEmail(model.playerId, thism.note.note_id)> "
 		emailButtonHTML = "<button id='emailButton' class='button' onClick=controller.sendEmail(" + model.playerId +","+thism.note.note_id + ")>";
 
-		shareHTML += "<li>" + emailButtonHTML + this.note.email_shares + " Email</button> </li>   ";
+		shareHTML += "<li>" + emailButtonHTML + this.note.email_shares + " Emails</button> </li>   ";
 
 		shareHTML += "</ul>";
 	
