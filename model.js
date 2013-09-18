@@ -90,8 +90,8 @@ function Model()
         this.createNoteViewCloseButton = new ActionButton(document.getElementById('create_note_view_close_button'), controller.hideCreateNoteView);
         this.loginViewCloseButton      = new ActionButton(document.getElementById('login_view_close_button'), controller.hideLoginView);
         this.joinViewCloseButton       = new ActionButton(document.getElementById('join_view_close_button'), controller.hideJoinView);
-        this.forgotViewCloseButton     = new ActionButton(document.getElementById('forgot_view_close_button'), controller.hideForgotView);
-        
+        this.forgotViewCloseButton     = new ActionButton(document.getElementById('forgot_view_close_button'), controller.hideForgotView);        
+
 		this.loginViewContainer        = document.getElementById('login_view_container');
         this.joinViewContainer         = document.getElementById('join_view_container');
         this.forgotViewContainer       = document.getElementById('forgot_view_container');
@@ -105,15 +105,18 @@ function Model()
 		this.uploadButton 				= document.getElementById('uploadButton'); 
 		this.loginButton				= document.getElementById('loginButton'); 
 		this.logoutButton				= document.getElementById('logoutButton');
+		this.siftMineButton				= document.getElementById('siftMineButton');
 
 		if(self.playerId > 0){ //if the cookie indicated they are logged in
 			this.loginButton.style.display = 'none'; // hide login
 			this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
     		this.uploadButton.style.display = 'inline'; // show upload		
+			this.siftMineButton.style.display = 'inline'; //show sift by mine
 		}
 		else{
 			this.uploadButton.style.display = 'none'; // hide until login
 			this.logoutButton.style.display = 'none';
+			this.siftMineButton.style.display = 'none'; //this is meaningless until you are logged in
 		}
 
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';

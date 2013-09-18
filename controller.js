@@ -373,6 +373,7 @@ function Controller()
 	    	model.views.loginButton.style.display = 'none'; // hide login
 	    	model.views.uploadButton.style.display = 'inline'; // show upload
 			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
+			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
 		}
         else
@@ -389,6 +390,7 @@ function Controller()
 		model.views.loginButton.style.display = 'inline';
 		model.views.uploadButton.style.display = 'none';
 		model.views.logoutButton.style.display = 'none';
+		model.views.siftMineButton.style.display = 'none';
 		model.playerId = 0;	
 	}
 
@@ -432,5 +434,31 @@ function Controller()
 			case 5: alert("Error: mail could not be sent."); break; //why does this happen?
 			default: console.log("Unexpected resupt from resetPasswordMessage: " +returnString);
 		}
+	}
+
+	this.like = function(playerId, noteId)
+	{
+        callService("notes.likeNote", function(){},"/"+playerId+"/"+noteId, false); //add internal like
+			
+	}
+
+	this.unlike = function(playerId, noteId)
+	{
+        callService("notes.unlikeNote", function(){},"/"+playerId+"/"+noteId, false); //remove internal like
+			
+	}
+
+	this.sendEmail = function(playerId, noteId)
+	{
+		//alert("email" + playerId + noteId);
+        callService("notes.sharedNoteToEmail", function(){},"/"+playerId+"/"+noteId, false); //add one to email count
+		//add one to html for temp
+
+		var bodyText = "Check out Siftr! www.siftr.org";
+		var subjectText = "See this Siftr";
+		emailText = "mailto:?subject="+ escape(subjectText) +"&body=" + escape(bodyText);
+		window.open(emailText);		
+		
+
 	}
 }
