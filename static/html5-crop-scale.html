@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Siftr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="utf-8">
+    <style type="text/css">
+      video,
+      img,
+      canvas
+      {
+        border: 2px solid red;
+        margin: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Playground -->
+    <section class="input">
+      <label>
+        image/*
+        <input id="in-image"  type="file" accept="image/*" />
+      </label>
+
+      <label>
+        image/*;capture=camera
+        <input id="in-camera" type="file" accept="image/*" capture="camera" />
+      </label>
+
+      <label>
+        video
+        <button class="go-video">start</button>
+      </label>
+      <label>
+        snap
+        <button class="go-snap">frame</button>
+      </label>
+    </section>
+
+
+    <!-- Ouput -->
+    <section class="output">
+      <video  id="le-video"></video>
+      <img    id="le-image" src="" />
+      <canvas id="le-canvas"></canvas>
+    </section>
+
+    <!-- Delayed JS loading -->
+    <script src="js/jquery.js"></script>
+    <script src="js/crop-scale.js"></script>
+  </body>
+</html>
