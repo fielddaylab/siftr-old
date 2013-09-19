@@ -204,7 +204,7 @@ html,body
   }
   .sifter-category .icon
   {
-    font-size: 2.75em;
+    font-size: 2.55em; /* opera crunch */
     vertical-align: middle;
   }
 

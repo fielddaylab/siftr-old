@@ -12,11 +12,15 @@
 
 .sifter-categories
 {
-  width: 600px;
+  width: 630px;
 }
 
 .sifter-categories .sifter-category
 {
-  width: 190px;
+  width: 205px;
 }
 
+.sifter-category .icon
+{
+  font-size: 2.75em;
+}

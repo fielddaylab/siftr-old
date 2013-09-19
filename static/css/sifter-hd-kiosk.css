@@ -17,6 +17,10 @@
 
 .sifter-categories .sifter-category
 {
-  width: 250px;
+  width: 260px;
 }
 
+.sifter-category .icon
+{
+  font-size: 2.75em;
+}
