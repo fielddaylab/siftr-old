@@ -15,6 +15,11 @@
         border: 2px solid red;
         width: 100%;
       }
+
+      #le-frame-grab-canvas
+      {
+        display: none;
+      }
     </style>
   </head>
 
@@ -26,13 +31,22 @@
         <input id="in-camera" type="file" accept="image/*" capture="camera" />
       </label>
 
+      <br />
+
       <label>
-        crop!
+        crop
         <button class="go-crop">square</button>
       </label>
 
+      <label>
+        canvas
+        <button class="go-scale">scale</button>
+      </label>
+
+      <br />
+
       <img    id="le-image" src="" />
-      <canvas id="le-canvas"></canvas>
+      <canvas id="le-canvas" height="640" width="640"></canvas>
     </section>
 
 
@@ -46,7 +60,11 @@
         snap
         <button class="go-snap">frame</button>
       </label>
+
+      <br />
+
       <video  id="le-video"></video>
+      <canvas id="le-frame-grab-canvas"></canvas>
     </section>
 
     <!-- Delayed JS loading -->

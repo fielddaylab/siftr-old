@@ -14,28 +14,47 @@ $(document).ready (function ()
   });
 
 
+  /* Flexible width crop */
   $('.go-crop').on('click', function ()
   {
     var element = $('#le-image').get(0);
     var height  = element.naturalHeight;
     var width   = element.naturalWidth;
 
-    var offset = Math.min(height, width) / 2.0;
+    var offset   = Math.min(height, width) / 2.0;
     var center_x = width  / 2;
     var center_y = height / 2;
+
+    var update_coords = function(coords)
+    {
+      window.jcrop_coords = coords;
+    };
 
     $('#le-image').Jcrop (
     {
       aspectRatio: 1,
       trueSize: [width, height],
       setSelect: [center_x - offset, center_y - offset, center_x + offset, center_y + offset],
-      onChange: function (coords) { console.info("change", coords); },
-      onSelect: function (coords) { console.info("select", coords); }
+      onChange: update_coords,
+      onSelect: update_coords
     });
   });
 
+
   
-  /* Video frame grab */
+  /* Draw to canvas with crop from jScale an resize */
+  $('.go-scale').on('click', function ()
+  {
+    var image   = $('#le-image').get(0);
+    var canvas  = $('#le-canvas').get(0);
+    var context = canvas.getContext('2d');
+
+    var coords = window.jcrop_coords;
+    context.drawImage (image, coords.x, coords.y, coords.w, coords.h, 0, 0, 640, 640);    
+  });
+
+  
+  /* Video stream start */
   $('.go-video').on('click', function ()
   {
     window.URL = window.URL || window.webkitURL;
@@ -65,5 +84,22 @@ $(document).ready (function ()
       alert('fallback');
       video.src = 'somevideo.webm'; // fallback.
     }
+  });
+
+
+  /* Video frame grap to crop box */
+  $('.go-snap').on('click', function ()
+  {
+    var video  = $('#le-video').get(0);
+    var canvas = $('#le-frame-grab-canvas').get(0);
+
+    canvas.width  = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    var context = canvas.getContext('2d');
+    context.drawImage(video, 0,0);
+
+    $('#le-image').get(0).src = canvas.toDataURL ('image/jpg');
+
   });
 });
