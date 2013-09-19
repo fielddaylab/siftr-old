@@ -4,6 +4,9 @@
     <title>Siftr</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta charset="utf-8">
+
+    
+    <link rel="stylesheet" href="css/jquery.Jcrop.css" type="text/css" />
     <style type="text/css">
       video,
       img,
@@ -11,23 +14,31 @@
       {
         border: 2px solid red;
         margin: 10px;
+        width: 75%;
       }
     </style>
   </head>
 
   <body>
-    <!-- Playground -->
-    <section class="input">
-      <label>
-        image/*
-        <input id="in-image"  type="file" accept="image/*" />
-      </label>
-
+    <!-- Camera Trigger -->
+    <section class="camera_trigger">
       <label>
         image/*;capture=camera
         <input id="in-camera" type="file" accept="image/*" capture="camera" />
       </label>
 
+      <label>
+        crop!
+        <button class="go-crop">square</button>
+      </label>
+
+      <img    id="le-image" src="" />
+      <canvas id="le-canvas"></canvas>
+    </section>
+
+
+    <!-- Streaming Video -->
+    <section class="video_snap">
       <label>
         video
         <button class="go-video">start</button>
@@ -36,18 +47,12 @@
         snap
         <button class="go-snap">frame</button>
       </label>
-    </section>
-
-
-    <!-- Ouput -->
-    <section class="output">
       <video  id="le-video"></video>
-      <img    id="le-image" src="" />
-      <canvas id="le-canvas"></canvas>
     </section>
 
     <!-- Delayed JS loading -->
     <script src="js/jquery.js"></script>
     <script src="js/crop-scale.js"></script>
+    <script src="js/jquery.Jcrop.js"></script>
   </body>
 </html>
