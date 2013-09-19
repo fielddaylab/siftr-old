@@ -7,8 +7,31 @@ $(document).ready (function ()
     reader.readAsDataURL (event.target.files[0]);
 
     reader.onload = function (event) {
-      $('#le-image').get(0).src = event.target.result;
+      var element = $('#le-image').get(0);
+      element.src = event.target.result;
     }
+
+  });
+
+
+  $('.go-crop').on('click', function ()
+  {
+    var element = $('#le-image').get(0);
+    var height  = element.naturalHeight;
+    var width   = element.naturalWidth;
+
+    var offset = Math.min(height, width) / 2.0;
+    var center_x = width  / 2;
+    var center_y = height / 2;
+
+    $('#le-image').Jcrop (
+    {
+      aspectRatio: 1,
+      trueSize: [width, height],
+      setSelect: [center_x - offset, center_y - offset, center_x + offset, center_y + offset],
+      onChange: function (coords) { console.info("change", coords); },
+      onSelect: function (coords) { console.info("select", coords); }
+    });
   });
 
   
