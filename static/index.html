@@ -19,7 +19,6 @@
     <link href="css/icomoon.css"        rel="stylesheet" media="screen">
     <link href="css/logofont.css"       rel="stylesheet" media="screen">
 
-
     <!-- Google Maps -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
@@ -191,14 +190,66 @@
     </div>
 
 
-
+    <!-- New lightbox -->
+    <div class="new-dialog" id="new-dialog" style="display: none;">
+      hey new stuff!
+    </div>
 
     <!-- Show lightbox -->
+    <div class="show-dialog" id="show-dialog">
+      <!-- left-side: image and description -->
+      <div class="sifter-show-content">
+        <div class="sifter-image">
+          <!-- TODO add icon to top right -->
+          <img src="http://placekitten.com/640/640" />
+        </div>
+
+        <div class="sifter-show-linkbar">
+        </div>
+
+        <div class="sifter-show-details">
+          <p>
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+          </p>
+        </div>
+      </div>
+
+      <!-- right-side: comments list -->
+      <div class="sifter-show-sidebar">
+        <div class="sifter-comments">
+          <div class="sifter-comment">
+            <h3 class="sifter-comment-author">Person 1</h3>
+            <p class="sifter-comment-text">I like this thing</p>
+          </div>
+
+          <div class="sifter-comment">
+            <h3 class="sifter-comment-author">Person 2</h3>
+            <p class="sifter-comment-text">Thats super cool look at that.</p>
+          </div>
+
+          <div class="sifter-comment">
+            <h3 class="sifter-comment-author">Personona Longnama</h3>
+            <p class="sifter-comment-text">This is a really long comment about the thing because I have a lot to say about it..</p>
+          </div>
+        </div>
+
+        <div class="sifter-new-comment">
+          <textarea placeholder="Add a comment..."></textarea>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
 
 
     <!-- Delayed JS loading -->
     <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.js"></script>
     <script src="js/prefixfree.min.js"></script>
     <script src="js/sifter-mobile.js"></script>
 
