@@ -36,7 +36,7 @@ $(document).ready(function ()
 
 
   /* Debug */
-  $('#show-dialog').hide();
+  $('#show-dialog, .sifter-modal-overlay').hide();
 
   /* Add new content dialog box */
   $('.sifter-add').on('click', function()
@@ -48,8 +48,19 @@ $(document).ready(function ()
   /* Show existing content dialog box */
   $('.sifter-imagelist .img').on('click', function()
   {
-    $('#show-dialog').toggle();
+    $('#show-dialog, .sifter-modal-overlay').show();
   });
 
+  $('.show-dialog-close-button').on('click', function()
+  {
+    $('#show-dialog, .sifter-modal-overlay').hide();
+  });
+
+
+  /* Overlay close */
+  $('.sifter-modal-overlay').on('click', function()
+  {
+    $('.sifter-modal-overlay, #show-dialog, #new-dialog').hide();
+  });
 
 });
