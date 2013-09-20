@@ -3,23 +3,6 @@ function Controller()
 {
     var self = this; //<- I hate javascript.
 
-	this.showMapAsTab = function(){
-		model.views.mainViewLeft.className = 'behindView';		
-		model.views.map.className = 'selectedView';
- 		
-		document.getElementById("MapTab").className = "tabs selectedTab";
-		document.getElementById("ImagesTab").className = "tabs";
-	};
-
-	this.showImagesAsTab = function(){
-		model.views.mainViewLeft.className = 'selectedView';		
-		model.views.map.className = 'behindView';
-
-		document.getElementById("MapTab").className = "tabs";
-		document.getElementById("ImagesTab").className = "tabs selectedTab";
-
-	};
-
     this.noteSelected = function(sender) 
     {
         var note = sender.note;
