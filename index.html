@@ -2,7 +2,6 @@
 <head>
 <title>Notebook</title>
 <link rel='stylesheet' type='text/css' href='css.css' />
-<link rel="stylesheet" type="text/css" href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
 <script type="text/javascript" src="utils/json2.js"></script>
 <script type="text/javascript" src="utils/server-conf.js"></script>
@@ -56,12 +55,11 @@
 
 <!-- Main View -->
 <div id='main_view_full' >
-    	<div id='main_view_left' class='behindView'  ></div>
-    <div id='main_view_right' >
+    	<div id='main_view_left'></div>
 
-        <div id='main_view_map' class='selectedView' >
-
-	</div>
+      <div id='main_view_right' >
+        <div id='main_view_map'></div>
+      
         <div id='main_view_info'>
             Tags:<br />
             <input id="tag1" class="sifter-filter-checkbox-input" value="Innovation"          type="checkbox" checked="checked">Innovation         </input><br />
@@ -72,8 +70,7 @@
             <br />
             <span>Search:<input id="filterbox" class="sifter-filter-search-input" type="text"/></span>
             <br /><br /><br />
-            
-		</div>
+        </div>
     </div>
 </div> <!-- end main view full -->
 
