@@ -19,6 +19,7 @@
 <script type="text/javascript" src="utils/markerclusterer.js"></script>
 <script src="utils/recorder.js"></script>
 <script src="application.js"></script>
+<script src="events.js"></script>
 </head>
 <body id='body'>
 
@@ -35,17 +36,17 @@
 
 <div id='header'>
 	<h1>Sifter</h1>
-        	<button onClick="JavaScript:startSift('top')" class = "button" id="siftButton" >Top</button> 
-        	<button onClick="JavaScript:startSift('recent')" class = "button" id="siftButton" >Recent</button> 
-        	<button onClick="JavaScript:startSift('popular')" class = "button" id="siftButton" >Popular</button> 
-        
-			<button onClick="JavaScript:startSift('mine')" class = "button" id="siftMineButton" >Mine</button><!--CDH Only displays after login -->
+        	<button class="button sifter-fetch-top-button">Top</button> 
+        	<button class="button sifter-fetch-recent-button">Recent</button> 
+        	<button class="button sifter-fetch-popular-button">Popular</button> 
+       
+          <button class="button sifter-fetch-mine-button" id="siftMineButton" >Mine</button><!--CDH Only displays after login -->
 
-        	<button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
+        	<button class="button sifter-show-login-button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
 
-			<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays a
-fter login -->
-			<button onClick="JavaScript:controller.logout()" class="button" id="logoutButton" >Log Out</button> 
+          <button class="button sifter-show-upload-button" id="uploadButton" >Upload</button> <!--CDH Only displays a
+    fter login -->
+          <button class="button sifter-show-logout-button" id="logoutButton" >Log Out</button> 
 <!--			<fb:login-button autologoutlink="true" size=small width="200" max-rows="1"></fb:login-button>  -->
 	
 </div>
@@ -63,13 +64,13 @@ fter login -->
 	</div>
         <div id='main_view_info'>
             Tags:<br />
-            <input id="tag1" value="Innovation"          type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Innovation         </input><br />
-            <input id="tag2" value="Stories of the Past" type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Stories of the Past</input><br />
-            <input id="tag3" value="Madison Culture"     type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Madison Culture    </input><br />
-            <input id="tag4" value="Must Do"             type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Must Do            </input><br />
-            <input id="tag5" value="100 Years from Now"  type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">100 Years from Now </input><br />
+            <input id="tag1" class="sifter-filter-checkbox-input" value="Innovation"          type="checkbox" checked="checked">Innovation         </input><br />
+            <input id="tag2" class="sifter-filter-checkbox-input" value="Stories of the Past" type="checkbox" checked="checked">Stories of the Past</input><br />
+            <input id="tag3" class="sifter-filter-checkbox-input" value="Madison Culture"     type="checkbox" checked="checked">Madison Culture    </input><br />
+            <input id="tag4" class="sifter-filter-checkbox-input" value="Must Do"             type="checkbox" checked="checked">Must Do            </input><br />
+            <input id="tag5" class="sifter-filter-checkbox-input" value="100 Years from Now"  type="checkbox" checked="checked">100 Years from Now </input><br />
             <br />
-            <span>Search:<input id="filterbox" type="text" onchange="controller.populateListNotesFromModel()"/></span>
+            <span>Search:<input id="filterbox" class="sifter-filter-search-input" type="text"/></span>
             <br /><br /><br />
             
 		</div>
@@ -104,9 +105,9 @@ fter login -->
         <div id='note_create_view_image_construct' class='note_create_view_image' style="border:0px single transparent" >
             <br />Image: (jpg, gif or png) <br />
             <img width=300 height=300 id="imageThumbnail" />
-            <input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
-            <button id="browseImage" class="button" onclick="clickBrowseImage()">Browse</button>
-            <button id="showCamera" onclick="showVideo()" class="button">Camera</button>
+            <input type="file" id="imageFileInput" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
+            <button id="browseImage" class="button">Browse</button>
+            <button id="showCamera" class="button">Camera</button>
             <video id="video" width="200" height="200" autoplay class="hidden"></video>
             <button id="snap" class="button hidden">Snap Photo</button>
             <canvas id="canvas" width="200" height="200" style="display:none;"></canvas>
@@ -137,8 +138,8 @@ fter login -->
             </div>
             <div id='note_create_view_audio_construct' class='note_create_view_audio'>
                 Audio: (mp3, aac, m4a or caf)<br />
-                <button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br />
-                <input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
+                <button id="browseAudio" class="button">Browse</button><br />
+                <input type="file" id="audioFileInput" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
              <!--
 				 <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
                 <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>
@@ -151,8 +152,8 @@ fter login -->
         </div>
         <div id='note_create_view_submit_construct' class='note_create_view_submit'>
             <br />
-            <button id="submitNote" onclick="submitNote()" class="button">Submit</button>
-            <button id="cancelNote" onclick="cancelNote()" class="button">Cancel</button>
+            <button id="submitNote" class="button">Submit</button>
+            <button id="cancelNote" class="button">Cancel</button>
         </div>
     </div>
 </div>
@@ -173,13 +174,13 @@ fter login -->
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="password" required></li>
             <li>
-                <button id="login" class="button" onclick="clickLogin()">Login</button>
+                <button id="login" class="button">Login</button>
             </li>
 
 
         </ul>
-        <br /><span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don't have an account?</span>
-        <br /><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Username or Password?</span>
+        <br /><span id="noAccount" class="internalLink">Don't have an account?</span>
+        <br /><span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
     </div>
 </div>
  
@@ -206,11 +207,11 @@ fter login -->
                 <input type="password" id="password" placeholder="password" required>
             </li>
             <li>
-                <button id="signUp" class="button" onclick="clickSignUp()">Sign Up</button>
+                <button id="signUp" class="button">Sign Up</button>
             </li>
         </ul>
         <br/> Already have an account?
-        <span id="viewLoginPage" onClick="clickViewLoginPage()" class="internalLink">Log in</span>
+        <span id="viewLoginPage" class="internalLink">Log in</span>
     </div>
 </div>
 
@@ -230,7 +231,7 @@ fter login -->
             </li> 
             
             <li>
-                <button id="forgot" class="button" onclick="clickEmailPassword()">Email Password</button>
+                <button id="forgot" class="button">Email Password</button>
 
             </li>
         </ul>
@@ -329,6 +330,5 @@ fter login -->
   }
 
 </script>
-<script id="facebook-jssdk" src="//connect.facebook.net/en_US/all.js"></script>
 </body>
 </html>
