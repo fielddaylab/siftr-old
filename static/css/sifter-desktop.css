@@ -273,18 +273,84 @@ html,body
 
 
 /* Image List */
-.img
+.sifter-imagelist .img
 {
   width: 23%;
   margin: 1%;
   float: left;
 }
 
-.img img
+.sifter-imagelist .img img
 {
   width: 100%;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+}
+
+
+/* Show dialog */
+.show-dialog
+{
+  position: fixed;
+
+  width: 900px;
+  max-height: 100%;
+  overflow-y: auto;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: #fff;
+  color: rgb(77,77,77);
+  z-index: 300;
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  border-radius: 4px;
+}
+
+.show-dialog .sifter-show-content
+{
+  float: left;
+  width: 70%;
+}
+
+.sifter-show-content .sifter-image img
+{
+  width: 100%;
+  border-radius: 4px;
+}
+
+.show-dialog .sifter-show-sidebar
+{
+  float: left;
+  width: 30%;
+}
+
+
+.sifter-comments .sifter-comment,
+.sifter-new-comment,
+.sifter-show-details
+{
+  padding: 0 0.75em;
+}
+
+.sifter-comment-author
+{
+  color: #cf2037;
+}
+
+.sifter-new-comment textarea
+{
+  width: 95%;
+  border: 0;
+  background: #f7f7f7;
+  padding: 0.25em;
+}
+
+.sifter-comments .sifter-comment-author
+{
+  
+
 }
 
 /* Util section */

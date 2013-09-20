@@ -34,4 +34,22 @@ $(document).ready(function ()
     $('.sifter-content').toggleClass ('shrunk');
   });
 
+
+  /* Debug */
+  $('#show-dialog').hide();
+
+  /* Add new content dialog box */
+  $('.sifter-add').on('click', function()
+  {
+    alert('doin it');
+  });
+
+
+  /* Show existing content dialog box */
+  $('.sifter-imagelist .img').on('click', function()
+  {
+    $('#show-dialog').toggle();
+  });
+
+
 });
