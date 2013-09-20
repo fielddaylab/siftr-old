@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Siftr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- Reset -->
+    <link href="css/normalize.css"      rel="stylesheet" media="screen">
+
+    <!-- Siftr Theme -->
+    <link href="css/sifter-mobile.css"     rel="stylesheet" media="screen and (max-width: 906px)">
+    <link href="css/sifter-desktop.css"    rel="stylesheet" media="screen and (min-width: 907px)">
+    <link href="css/sifter-lg-desktop.css" rel="stylesheet" media="screen and (min-width: 1025px)">
+    <link href="css/sifter-hd-kiosk.css"   rel="stylesheet" media="screen and (min-width: 1400px)">
+
+    <!-- Symbol Fonts -->
+    <link href="css/glyphicons.css"     rel="stylesheet" media="screen">
+    <link href="css/icomoon.css"        rel="stylesheet" media="screen">
+    <link href="css/logofont.css"       rel="stylesheet" media="screen">
+
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+      var map;
+      function initialize() {
+        var mapOptions = {
+          zoom: 8,
+          center: new google.maps.LatLng(-34.397, 150.644),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Mobile Header Bar -->
+    <div class="sifter-header-toolbar hidden-desktop">
+      <button class="sifter-nav-button button-left switch-views">
+        <span class="switch-view-icon switch-map icon-map"></span>
+        <span class="switch-view-icon switch-images glyphicon glyphicon-th"></span>
+      </button>
+
+      <input class="sifter-search-field" type="text" placeholder="search" />
+
+      <button class="sifter-nav-button button-right">
+        <span class="icon-cog"></span>
+      </button>
+    </div>
+
+
+    <!-- Desktop Header -->
+    <div class="sifter-desktop-header hidden-mobile">
+      <div class="sifter-logo-box">
+        <h1><span class="siftr-logo"></span> Siftr</h1>
+      </div>
+
+      <div class="sifter-rightside-launchpad">
+        <button class="sifter-add launchpad-button"><span class="icon-plus"></span></button>
+        <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+
+    <!-- Category/Filter Mobile Slideout, Desktop Popdown -->
+    <div class="sifter-filters-slideout sifter-filters-popdown">
+      <div class="sifter-filters">
+        <button class="filter-button first button-active">Top</button>
+        <button class="filter-button"      >Recent</button>
+        <button class="filter-button"      >Popular</button>
+        <button class="filter-button last" >Mine</button>
+        <div class="clear"></div>
+      </div>
+
+      <div class="sifter-categories">
+        <div class="hidden-mobile sifter-category">
+          <span class="icon icon-search"></span>
+          <input type="text" class="desktop-search" placeholder="search" />
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" />
+            <span><span class="icon icon-innovation"></span> Innovation</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" />
+            <span><span class="icon icon-stories"   ></span> Stories of the Past</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" />
+            <span><span class="icon icon-mustdo"    ></span> Must Do</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" />
+            <span><span class="icon icon-culture"   ></span> Madison Culture</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" />
+            <span><span class="icon icon-100years"  ></span> 100 Years From Now</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="sifter-popdown-footer hidden-mobile">
+        About ∑ Contact ∑ Privacy & Terms ∑ Copyright & Trademark
+      </div>
+      
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="sifter-content">
+      <div class="sifter-imagelist">
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+      </div>
+      <div class="sifter-map" id="map-canvas">
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+
+    <!-- Footer Bar -->
+    <div class="sifter-footer-toolbar hidden-desktop">
+      <button class="sifter-nav-button sifter-filters-button button-left">
+        <span class="icon-tags"></span>
+      </button>
+
+      <button class="sifter-add sifter-nav-button button-center">
+        <span class="icon-camera"></span>
+      </button>
+
+      <button class="sifter-nav-button button-right">
+        <span class="icon-target"></span>
+      </button>
+    </div>
+
+
+    <!-- New lightbox -->
+    <div class="new-dialog" id="new-dialog" style="display: none;">
+      hey new stuff!
+    </div>
+
+    <!-- Show lightbox -->
+    <div class="show-dialog" id="show-dialog">
+      <div class="show-dialog-close-button">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+      </div>
+
+      <!-- left-side: image and description -->
+      <div class="sifter-show-content">
+        <div class="sifter-image">
+          <!-- TODO add icon to top right -->
+          <img src="http://placekitten.com/640/640" />
+        </div>
+
+        <div class="sifter-show-linkbar">
+        </div>
+
+        <div class="sifter-show-details">
+          <p>
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+            Hey this thing is really cool wow this thing is awesome
+          </p>
+        </div>
+      </div>
+
+      <!-- right-side: comments list -->
+      <div class="sifter-show-sidebar">
+        <div class="sifter-comments">
+          <div class="sifter-comment">
+            <h3 class="sifter-comment-author">Person 1</h3>
+            <p class="sifter-comment-text">I like this thing</p>
+          </div>
+
+          <div class="sifter-comment">
+            <h3 class="sifter-comment-author">Person 2</h3>
+            <p class="sifter-comment-text">Thats super cool look at that.</p>
+          </div>
+
+          <div class="sifter-comment">
+            <h3 class="sifter-comment-author">Personona Longnama</h3>
+            <p class="sifter-comment-text">This is a really long comment about the thing because I have a lot to say about it..</p>
+          </div>
+        </div>
+
+        <div class="sifter-new-comment">
+          <textarea placeholder="Add a comment..."></textarea>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+
+    <!-- Overlay -->
+    <div class="sifter-modal-overlay"></div>
+
+
+    <!-- Delayed JS loading -->
+    <script src="js/jquery.js"></script>
+    <script src="js/prefixfree.min.js"></script>
+    <script src="js/sifter-mobile.js"></script>
+
+  </body>
+</html>
