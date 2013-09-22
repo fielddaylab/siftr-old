@@ -48,6 +48,7 @@ function ListNote(callback, note, noteId)
     {
 		var noteImage = getImageToUse(note);
         if(noteImage != ""){
+          /* FIXME Use a construct/template just like the rest of the site */
         	this.html = "<div class='note_list_cell img'>";
         	this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
 			this.html += "</div>";
@@ -56,6 +57,7 @@ function ListNote(callback, note, noteId)
 			this.html = "";//clear out the entire node if no media
         	console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
 		}
+    /* FIXME replace with delegate */
 		setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
     }
     this.constructHTML();
@@ -148,7 +150,7 @@ function NoteView(note)
 			var b = document.createElement('button');
 			b.id = 'loginToComment';
 			b.classname = 'button';
-			b.onclick = controller.showLoginView();
+			b.onclick = controller.showLoginView;
 			b.innerHTML = 'Login to Comment';
 
 			//they can't submit to social media if they are not logged in, show static numbers
