@@ -178,6 +178,12 @@
                 <p class="sifter-comment-text">{{text}}</p>
               </div>
             {{/comments}}
+            {{^comments}}
+              <div class="sifter-comment">
+                <h3 class="sifter-comment-author">Comments</h3>
+                <p class="sifter-comment-text">No Comments yet. Add one!</p>
+              </div>
+            {{/comments}}
           </div>
 
           <div class="sifter-new-comment">
