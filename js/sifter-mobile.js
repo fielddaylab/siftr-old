@@ -51,7 +51,7 @@ $(document).ready(function ()
     $('#show-dialog, .sifter-modal-overlay').show();
   });
 
-  $('.show-dialog-close-button').on('click', function()
+  $(document).on('click', '.show-dialog-close-button', function()
   {
     $('#show-dialog, .sifter-modal-overlay').hide();
   });

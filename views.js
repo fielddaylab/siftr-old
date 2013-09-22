@@ -77,8 +77,29 @@ function NoteView(note)
 	//this.html.children [1][3] Comments
 	//this.html.children [1][4] Inputs (of more comments)
 	//this.html.children [1][5] Social Media
-
     this.constructHTML = function()
+    {
+      /* Get Data */
+      var data = {};
+
+      data.image_url = getImageToUse (this.note);
+      data.audio_url = getAudioToUse (this.note); 
+      data.details   = getTextToUse  (this.note);
+      data.comments  = this.getCommentsJson (this.note.comments);
+
+
+      /* TODO social stuff, new comment logic */
+  
+
+      /* Render View */
+      var template = $('#showTemplate').html();
+      var view = Mustache.render (template, data);
+
+      this.html = $(view).get(0);
+    }
+
+
+    this.old_constructHTML = function()
     {
         if(!this.note) return; 
 
@@ -184,6 +205,14 @@ function NoteView(note)
 	//	this.html.children[1].children[5].appendChild(emailButton);
 
 	}
+
+    this.getCommentsJson = function(comments)
+    {
+      return $(comments).map (function ()
+      {
+         return {author: this.username, text: this.title};
+      });
+    }
 
     this.loadComments = function()
     {
@@ -484,6 +513,13 @@ function getAudioToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)
         if(note.contents[i].type == "AUDIO") return note.contents[i].meida.data.url;
+    return "";
+};
+
+function getTextToUse(note)
+{
+    for(i = 0; i < note.contents.length; i++)
+        if(note.contents[i].type == "TEXT") return note.contents[i].text;
     return "";
 };
 
