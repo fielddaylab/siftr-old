@@ -9,7 +9,6 @@ function Controller()
         model.views.noteView = new NoteView(note);
         model.views.noteViewContainer.innerHTML = '';
 
-        model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
 		model.views.darkness.style.display = 'block';
