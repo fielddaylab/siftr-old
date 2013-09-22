@@ -78,19 +78,12 @@ function Model()
     this.views = new function Views()
     { 
         //Content
-        this.mainView 					= document.getElementById('main_view_full');
         //this.mainView.addEventListener('click', function(e) { e.stopPropagation(); }); 
 		//don't know why this is commented out, but if we don't need it we don't need the removeEventListeners either
         this.mainViewLeft              = document.getElementById('main_view_left');
-		this.mainViewRight			   = document.getElementById('main_view_right');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
         this.noteViewContainer         = document.getElementById('note_view_container');
         
-		this.noteViewCloseButton       = new ActionButton(document.getElementById('note_view_close_button'), controller.hideNoteView);
-        this.createNoteViewCloseButton = new ActionButton(document.getElementById('create_note_view_close_button'), controller.hideCreateNoteView);
-        this.loginViewCloseButton      = new ActionButton(document.getElementById('login_view_close_button'), controller.hideLoginView);
-        this.joinViewCloseButton       = new ActionButton(document.getElementById('join_view_close_button'), controller.hideJoinView);
-        this.forgotViewCloseButton     = new ActionButton(document.getElementById('forgot_view_close_button'), controller.hideForgotView);        
 
 		this.loginViewContainer        = document.getElementById('login_view_container');
         this.joinViewContainer         = document.getElementById('join_view_container');
@@ -107,6 +100,7 @@ function Model()
 		this.logoutButton				= document.getElementById('logoutButton');
 		this.siftMineButton				= document.getElementById('siftMineButton');
 
+    /* TODO toggle classes/use jquery */
 		if(self.playerId > 0){ //if the cookie indicated they are logged in
 			this.loginButton.style.display = 'none'; // hide login
 			this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
@@ -124,7 +118,7 @@ function Model()
         this.noteIcon     = '';
 
 		this.darkness		    = document.getElementById("darkBackgroundLayer");
-		this.darkness.style.display = 'none'; 
+		this.darkness.style.display = 'none';
 
         //Map
         this.map = document.getElementById('main_view_map');

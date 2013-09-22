@@ -38,7 +38,6 @@ function finishLoadGame(responseText)
 
     //  Set actual page visible
     document.getElementById('message').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
 
     google.maps.event.trigger(model.views.gmap, 'resize'); // To fix google maps incorrect sizing bug
 

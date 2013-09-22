@@ -19,25 +19,11 @@
     <link href="css/icomoon.css"        rel="stylesheet" media="screen">
     <link href="css/logofont.css"       rel="stylesheet" media="screen">
 
-    <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <script>
-      var map;
-      function initialize() {
-        var mapOptions = {
-          zoom: 8,
-          center: new google.maps.LatLng(-34.397, 150.644),
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-      }
-
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
   </head>
 
   <body>
+    <!-- Message Alert -->
+    <div id="message"></div>
 
     <!-- Mobile Header Bar -->
     <div class="sifter-header-toolbar hidden-desktop">
@@ -61,7 +47,9 @@
       </div>
 
       <div class="sifter-rightside-launchpad">
-        <button class="sifter-add launchpad-button"><span class="icon-plus"></span></button>
+        <button class="launchpad-button sifter-show-login-button" id="loginButton">L</button>
+        <button class="launchpad-button sifter-show-logout-button" id="logoutButton">O</button>
+        <button class="sifter-add launchpad-button sifter-show-upload-button" id="uploadButton"><span class="icon-plus"></span></button>
         <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
       </div>
 
@@ -72,45 +60,45 @@
     <!-- Category/Filter Mobile Slideout, Desktop Popdown -->
     <div class="sifter-filters-slideout sifter-filters-popdown">
       <div class="sifter-filters">
-        <button class="filter-button first button-active">Top</button>
-        <button class="filter-button"      >Recent</button>
-        <button class="filter-button"      >Popular</button>
-        <button class="filter-button last" >Mine</button>
+        <button class="filter-button first button-active sifter-fetch-top-button">Top</button>
+        <button class="filter-button sifter-fetch-recent-button"      >Recent</button>
+        <button class="filter-button sifter-fetch-popular-button"      >Popular</button>
+        <button class="filter-button last sifter-fetch-mine-button" id="siftMineButton">Mine</button>
         <div class="clear"></div>
       </div>
 
       <div class="sifter-categories">
         <div class="hidden-mobile sifter-category">
           <span class="icon icon-search"></span>
-          <input type="text" class="desktop-search" placeholder="search" />
+          <input type="text" class="desktop-search sifter-filter-search-input" id="filterbox" placeholder="search" />
         </div>
         <div class="sifter-category">
           <label>
-            <input type="checkbox" />
+            <input type="checkbox" id="tag1" class="sifter-filter-checkbox-input" value="Innovation" checked="checked"/>
             <span><span class="icon icon-innovation"></span> Innovation</span>
           </label>
         </div>
         <div class="sifter-category">
           <label>
-            <input type="checkbox" />
+            <input type="checkbox" id="tag2" class="sifter-filter-checkbox-input" value="Stories of the Past" checked="checked"/>
             <span><span class="icon icon-stories"   ></span> Stories of the Past</span>
           </label>
         </div>
         <div class="sifter-category">
           <label>
-            <input type="checkbox" />
+            <input type="checkbox" id="tag4" class="sifter-filter-checkbox-input" value="Must Do" checked="checked"/>
             <span><span class="icon icon-mustdo"    ></span> Must Do</span>
           </label>
         </div>
         <div class="sifter-category">
           <label>
-            <input type="checkbox" />
+            <input type="checkbox" id="tag3" class="sifter-filter-checkbox-input" value="Madison Culture" checked="checked"/>
             <span><span class="icon icon-culture"   ></span> Madison Culture</span>
           </label>
         </div>
         <div class="sifter-category">
           <label>
-            <input type="checkbox" />
+            <input type="checkbox" id="tag5" class="sifter-filter-checkbox-input" value="100 Years from Now" checked="checked"/>
             <span><span class="icon icon-100years"  ></span> 100 Years From Now</span>
           </label>
         </div>
@@ -127,47 +115,10 @@
 
     <!-- Main Content -->
     <div class="sifter-content">
-      <div class="sifter-imagelist">
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
+      <div class="sifter-imagelist" id="main_view_left">
         <div class="img"><img src="http://placekitten.com/400/400" /></div>
       </div>
-      <div class="sifter-map" id="map-canvas">
+      <div class="sifter-map" id="main_view_map">
       </div>
 
       <div class="clear"></div>
@@ -256,10 +207,224 @@
     <div class="sifter-modal-overlay"></div>
 
 
+
+<!-- Temporary place for v1 constructs -->
+<div id='constructs' style="display: none;">
+
+<!-- Close Buttons (?) --><!-- NOT re-used. Just put here so they don't show up, I guess? -->
+<div id='note_view_close_button'        class='close_button'>X</div>
+<div id='create_note_view_close_button' class='close_button'>X</div>
+<div id='login_view_close_button'       class='close_button'>X</div>
+<div id='forgot_view_close_button'      class='close_button'>X</div>
+<div id='join_view_close_button'        class='close_button'>X</div>
+
+
+<!-- Create Note View -->
+<div id='note_create_view_construct' class='note_create_view'>
+    <div id='note_create_view_left_construct' class='note_create_view_left'>
+        <div id='note_create_view_image_construct' class='note_create_view_image' style="border:0px single transparent" >
+            <br />Image: (jpg, gif or png) <br />
+            <img width=300 height=300 id="imageThumbnail" />
+            <input type="file" id="imageFileInput" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
+            <button id="browseImage" class="button">Browse</button>
+            <button id="showCamera" class="button">Camera</button>
+            <video id="video" width="200" height="200" autoplay class="hidden"></video>
+            <button id="snap" class="button hidden">Snap Photo</button>
+            <canvas id="canvas" width="200" height="200" style="display:none;"></canvas>
+        </div>
+        <div id='note_create_view_location_construct' class='note_create_view_location'>
+            <br />Location:<br />
+            <div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br />
+            <input type="text" name="location" id="searchTextField" style="width:300px" /><br />
+            <div id="latitude"></div>
+            <div id="longitude"></div>
+            <div id="address"></div>
+            <br /><br />
+        </div>
+    </div>
+    <div id='note_create_view_right_construct' class='note_create_view_right'>
+        <div id='note_create_view_caption_construct' class='note_create_view_caption'>
+            <br />Caption:<br /><textarea id="caption" rows="8" ></textarea> 
+        </div>
+        <div id='note_create_view_tags_construct' class='note_create_view_tags'>
+            <div id='note_create_view_tags_construct' class='note_create_view_tags'>
+                Tags:<br />
+                <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio">Innovation</input><br />
+                <input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">Stories of the Past</input><br />
+                <input id="create_tag_3" name="note_tag_select" value="Madison Culture"     type="radio">Madison Culture</input><br />
+                <input id="create_tag_4" name="note_tag_select" value="Must Do"             type="radio">Must Do</input><br />
+                <input id="create_tag_5" name="note_tag_select" value="100 Years from Now"  type="radio">100 Years from Now</input><br />
+                <br />
+            </div>
+            <div id='note_create_view_audio_construct' class='note_create_view_audio'>
+                Audio: (mp3, aac, m4a or caf)<br />
+                <button id="browseAudio" class="button">Browse</button><br />
+                <input type="file" id="audioFileInput" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
+             <!--
+				 <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
+                <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>
+                <button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button>
+            --> 
+			   <br />Preview:<br />
+                <audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio>
+                <br /><br />
+            </div>
+        </div>
+        <div id='note_create_view_submit_construct' class='note_create_view_submit'>
+            <br />
+            <button id="submitNote" class="button">Submit</button>
+            <button id="cancelNote" class="button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Login View -->
+<div id='login_view_construct' class='login_view'>
+    <div id='login_view_top_construct' class='login_view_top'>
+        <br />To upload content, you must login.<br />
+        <hr style="background:#F87431; border:0; height:7px" /><br /><br />
+    </div>
+    <div id='login_view_bottom_construct' class='login_view_bottom'>
+        <ul>
+            <li>
+                <label for="username_login">Username</label>
+                <input type="text" id="username_login" placeholder="username" required>
+            </li>
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="password" required></li>
+            <li>
+                <button id="login" class="button">Login</button>
+            </li>
+
+
+        </ul>
+        <br /><span id="noAccount" class="internalLink">Don't have an account?</span>
+        <br /><span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
+    </div>
+</div>
+ 
+
+<!-- Join View -->
+<div id='join_view_construct' class='join_view'>
+    <div id='join_view_top_construct' class='join_view_top'>
+        Join to contribute<br/>
+        <hr style="background:#F87431; border:0; height:7px" /><br/>
+    </div>
+    <div id='join_view_bottom_construct' class='join_view_bottom'>
+        <ul>
+            <li>
+                <label for="usermail_join">Email</label>
+                <input type="email" id="usermail_join" placeholder="Email" required>
+            </li> 
+            
+            <li> 
+                <label for="username_join">Username</label>
+                <input type="text" id="username_join" placeholder="username" required>
+            </li> 
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="password" required>
+            </li>
+            <li>
+                <button id="signUp" class="button">Sign Up</button>
+            </li>
+        </ul>
+        <br/> Already have an account?
+        <span id="viewLoginPage" class="internalLink">Log in</span>
+    </div>
+</div>
+
+<!--Forgot View -->
+<div id='forgot_view_construct' class='join_view'>
+    <div id='forgot_view_top_construct' class='join_view_top'>
+        Forgot Password or Username?<br/>
+        <hr style="background:#F87431; border:0; height:7px" /><br/>
+    </div>
+    <div id='join_view_bottom_construct' class='join_view_bottom'>
+        <ul>
+			<li> Enter your Email to retrieve your login information
+			</li>
+            <li>
+                <label for="usermail_forgot">Email</label>
+                <input type="email" id="usermail_forgot" placeholder="Email" required>
+            </li> 
+            
+            <li>
+                <button id="forgot" class="button">Email Password</button>
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Note View -->
+<div id='note_view_construct' class='note_view'>
+    <div id='note_view_left_construct' class='note_view_left'></div>
+    <div id='note_view_right_construct' class='note_view_right'>
+        <div id='note_view_caption_construct' class='note_view_captions'></div>
+        <div id='note_view_audio_construct' class='note_view_audio'></div>
+        <div id='note_view_tags_construct' class='note_view_tags'></div>
+        <div id='note_view_comments_construct' class='note_view_comments'></div>
+        <div id='note_view_input_construct' class='note_view_input'></div>
+		<div id='note_view_shares_construct' class='note_view_shares'>Share:
+			<ul class='shares'>
+				<li id='shareLikes'> </li>
+				<li id='shareFacebook'> </li>
+				<li id='shareTwitter'></li>
+				<li id='sharePinterest'></li>
+				<li id='shareEmail'></li>
+			</ul>
+		</div>	
+
+    </div>
+</div>
+
+<!-- Note Content Cell -->
+<div id='note_content_cell_construct' class='note_content_cell'></div>
+
+<!-- Note Comment Cell -->
+	<div id='note_comment_cell_construct' class='note_comment_cell'>
+		<div id='note_comment_cell_header_construct' class='note_comment_cell_header note_view_owner'></div>
+	</div>
+
+</div>
+
+    <!-- Temporary Containers from v1 -->
+    <div id='darkBackgroundLayer'        class='darkBackgroundLayer'> <!--for dimming the background when popups have the focus CDH -->
+      <div id='note_view_container'        class='container'></div>
+      <div id='create_note_view_container' class='container'></div>
+      <div id='login_view_container'       class='container'></div>
+      <div id='join_view_container'        class='container'></div>
+      <div id='forgot_view_container'      class='container'></div>
+    </div>
+
+
     <!-- Delayed JS loading -->
     <script src="js/jquery.js"></script>
+    <script src="utils/jquery-cookie-master/jquery.cookie.js"></script>
     <script src="js/prefixfree.min.js"></script>
     <script src="js/sifter-mobile.js"></script>
+
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+
+    <!-- Sifter application -->
+    <script src="utils/json2.js"></script>
+    <script src="utils/server-conf.js"></script>
+    <script src="utils/nbutils.js"></script>
+    <script src="views.js"></script>
+    <script src="model.js"></script>
+    <script src="controller.js"></script>
+
+    <script src="utils/richmarker.js" ></script>
+    <script src="utils/markerclusterer.js"></script>
+    <script src="utils/recorder.js"></script>
+
+    <!-- Extraction from original index -->
+    <script src="application.js"></script>
+    <script src="events.js"></script>
+
 
   </body>
 </html>

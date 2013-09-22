@@ -48,7 +48,7 @@ function ListNote(callback, note, noteId)
     {
 		var noteImage = getImageToUse(note);
         if(noteImage != ""){
-        	this.html = "<div class='note_list_cell'>";
+        	this.html = "<div class='note_list_cell img'>";
         	this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
 			this.html += "</div>";
 		}
