@@ -12,6 +12,7 @@ function Controller()
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
 		model.views.darkness.style.display = 'block';
+        $('.sifter-modal-overlay').show();
     };
 
     this.createNote = function() 
