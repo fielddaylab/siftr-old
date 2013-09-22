@@ -211,7 +211,7 @@ function NoteView(note)
       return $(comments).map (function ()
       {
          return {author: this.username, text: this.title};
-      });
+      }).toArray();
     }
 
     this.loadComments = function()
