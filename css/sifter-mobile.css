@@ -202,11 +202,18 @@ button.filter-button.last
   width: 48%;
   margin: 1%;
   float: left;
+
+  /* Non square hack */
+  height: 0;
+  padding-bottom: 48%;
 }
 
 .img img
 {
   width: 100%;
+
+  /* Non square hack */
+  height: 100%;
 }
 
 
