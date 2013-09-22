@@ -288,6 +288,10 @@ html,body
   width: 23%;
   margin: 1%;
   float: left;
+
+  /* Non square hack */
+  height: 0;
+  padding-bottom: 23%;
 }
 
 .sifter-imagelist .img img
@@ -295,6 +299,9 @@ html,body
   width: 100%;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+
+  /* Non square hack */
+  height: 100%;
 }
 
 
