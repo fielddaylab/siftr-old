@@ -272,61 +272,44 @@
 </div>
 
 <!-- Login View -->
-<div id='login_view_construct' class='login_view'>
-    <div id='login_view_top_construct' class='login_view_top'>
-        <br />To upload content, you must login.<br />
-        <hr style="background:#F87431; border:0; height:7px" /><br /><br />
-    </div>
-    <div id='login_view_bottom_construct' class='login_view_bottom'>
-        <ul>
-            <li>
-                <label for="username_login">Username</label>
-                <input type="text" id="username_login" placeholder="username" required>
-            </li>
-            <li>
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="password" required></li>
-            <li>
-                <button id="login" class="button">Login</button>
-            </li>
+<script id="loginTemplate" type="text/template">
+  <div class='login_view modal-popup'>
+    <label for="username_login">Username</label>
+    <input type="text" id="username_login" placeholder="username" required>
+    <br />
 
+    <label for="password_login">Password</label>
+    <input type="password" id="password_login" placeholder="password" required></li>
+    <br />
 
-        </ul>
-        <br /><span id="noAccount" class="internalLink">Don't have an account?</span>
-        <br /><span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
-    </div>
-</div>
+    <button id="login" class="button">Login</button>
+
+    <br /><span id="noAccount" class="internalLink">Don't have an account?</span>
+    <br /><span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
+  </div>
+</script>
  
 
 <!-- Join View -->
-<div id='join_view_construct' class='join_view'>
-    <div id='join_view_top_construct' class='join_view_top'>
-        Join to contribute<br/>
-        <hr style="background:#F87431; border:0; height:7px" /><br/>
-    </div>
-    <div id='join_view_bottom_construct' class='join_view_bottom'>
-        <ul>
-            <li>
-                <label for="usermail_join">Email</label>
-                <input type="email" id="usermail_join" placeholder="Email" required>
-            </li> 
-            
-            <li> 
-                <label for="username_join">Username</label>
-                <input type="text" id="username_join" placeholder="username" required>
-            </li> 
-            <li>
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="password" required>
-            </li>
-            <li>
-                <button id="signUp" class="button">Sign Up</button>
-            </li>
-        </ul>
-        <br/> Already have an account?
-        <span id="viewLoginPage" class="internalLink">Log in</span>
-    </div>
-</div>
+<script id="joinTemplate" type="text/template">
+  <div class='join_view modal-popup'>
+      <label for="usermail_join">Email</label>
+      <input type="email" id="usermail_join" placeholder="Email" required>
+      <br />
+
+      <label for="username_join">Username</label>
+      <input type="text" id="username_join" placeholder="username" required>
+      <br />
+
+      <label for="password">Password</label>
+      <input type="password" id="password_join" placeholder="password" required>
+      <br />
+      <button id="signUp" class="button">Sign Up</button>
+
+      <br/> Already have an account?
+      <span id="viewLoginPage" class="internalLink">Log in</span>
+  </div>
+</script>
 
 <!--Forgot View -->
 <div id='forgot_view_construct' class='join_view'>
@@ -350,36 +333,6 @@
         </ul>
     </div>
 </div>
-
-<!-- Note View -->
-<div id='note_view_construct' class='note_view'>
-    <div id='note_view_left_construct' class='note_view_left'></div>
-    <div id='note_view_right_construct' class='note_view_right'>
-        <div id='note_view_caption_construct' class='note_view_captions'></div>
-        <div id='note_view_audio_construct' class='note_view_audio'></div>
-        <div id='note_view_tags_construct' class='note_view_tags'></div>
-        <div id='note_view_comments_construct' class='note_view_comments'></div>
-        <div id='note_view_input_construct' class='note_view_input'></div>
-		<div id='note_view_shares_construct' class='note_view_shares'>Share:
-			<ul class='shares'>
-				<li id='shareLikes'> </li>
-				<li id='shareFacebook'> </li>
-				<li id='shareTwitter'></li>
-				<li id='sharePinterest'></li>
-				<li id='shareEmail'></li>
-			</ul>
-		</div>	
-
-    </div>
-</div>
-
-<!-- Note Content Cell -->
-<div id='note_content_cell_construct' class='note_content_cell'></div>
-
-<!-- Note Comment Cell -->
-	<div id='note_comment_cell_construct' class='note_comment_cell'>
-		<div id='note_comment_cell_header_construct' class='note_comment_cell_header note_view_owner'></div>
-	</div>
 
 </div>
 

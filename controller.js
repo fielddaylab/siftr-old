@@ -60,7 +60,6 @@ function Controller()
         self.hideLoginView(); // only show one at a time
 		model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
-        model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
 		model.views.darkness.style.display = 'block';
