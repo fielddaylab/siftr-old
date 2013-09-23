@@ -507,3 +507,21 @@ html,body
   display: none;
 }
 
+
+.working
+{
+  text-align: center;
+  color: #cf2037;
+}
+
+.sifting
+{
+  animation: sift 2s infinite;
+}
+
+@keyframes sift
+{
+    0% { opacity: 0.0; }
+   50% { opacity: 1.0; }
+  100% { opacity: 0.0; }
+}
