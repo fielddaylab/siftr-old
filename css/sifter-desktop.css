@@ -375,6 +375,19 @@ html,body
 
 
 /* Modal style */
+.modal-popup
+{
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  border-radius: 4px;
+  padding: 2.5em;
+}
+
 .sifter-show-content .sifter-image img
 {
   width: 100%;
@@ -444,15 +457,3 @@ html,body
   display: none;
 }
 
-#message, .modal-popup
-{
-  position: fixed;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
-  border-radius: 4px;
-  padding: 2.5em;
-}
