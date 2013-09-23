@@ -66,7 +66,6 @@ function ListNote(callback, note, noteId)
 function NoteView(note)
 {
     var thism = this; //garbage
-    this.html = model.views.constructNoteView.cloneNode(true);
     this.note = note;
 	model.currentNote = note; // this is done so that the send email function over in controller can get at all the information
 
@@ -742,7 +741,8 @@ function clickBrowseAudio()
 function clickLogin()
 {
     var username = document.getElementById('username_login').value;
-    var password = document.getElementById('password').value;
+    var password = document.getElementById('password_login').value;
+    debugger;
 
     controller.login(username, password);
 }
@@ -760,7 +760,7 @@ function clickViewLoginPage()
 function clickSignUp()
 {
     var email = document.getElementById('usermail_join').value;
-    var password = document.getElementById('password').value;
+    var password = document.getElementById('password_join').value;
     var username = document.getElementById('username_join').value;	
     controller.createAccount(email, password, username); //CDH added in username
 }
@@ -787,12 +787,18 @@ function clickEmailPassword(){
 
 function LoginView()
 {
-    this.html = model.views.constructLoginView.cloneNode(true);
+    var template = $('#loginTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
 }
 
 function JoinView()
 {
-    this.html = model.views.constructJoinView.cloneNode(true);
+    var template = $('#joinTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
 }
 
 function ForgotView()
