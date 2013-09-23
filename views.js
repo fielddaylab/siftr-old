@@ -802,7 +802,10 @@ function JoinView()
 
 function ForgotView()
 {
-    this.html = model.views.constructForgotView.cloneNode(true);
+    var template = $('#forgotTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
 }
 
 function NoteCreateView()
