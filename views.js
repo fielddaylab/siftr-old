@@ -742,7 +742,6 @@ function clickLogin()
 {
     var username = document.getElementById('username_login').value;
     var password = document.getElementById('password_login').value;
-    debugger;
 
     controller.login(username, password);
 }
