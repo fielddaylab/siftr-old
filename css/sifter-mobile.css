@@ -14,6 +14,7 @@ html,body
 .sifter-footer-toolbar   { z-index: 100; }
 .show-dialog,
 .modal-popup             { z-index: 300; }
+.sifter-modal-overlay    { z-index: 299; }
 
 
 .sifter-content
@@ -251,7 +252,12 @@ button.filter-button.last
 
 .sifter-modal-overlay
 {
-  /* Unused */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(100,100,100, 0.5);
+  height: 100%;
+  width: 100%;
 }
 
 
@@ -278,6 +284,8 @@ button.filter-button.last
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
   border-radius: 4px;
   padding: 2em;
+  overflow-y: auto;
+  max-height: 100%;
 }
 
 .sifter-show-content .sifter-image img
@@ -320,6 +328,82 @@ button.filter-button.last
 }
 
 
+
+/* Login/Logout/Forgot popups */
+.login_view,
+.join_view
+{
+  color: #cf2037;
+}
+
+.modal-header h2
+{
+  margin: 0;
+  text-align: center;
+}
+
+.modal-footer
+{
+  margin: 1em 0;
+  margin-bottom: 0;
+}
+
+.modal-footer span
+{
+  display: block;
+}
+
+.input_group
+{
+  font-size: 125%;
+  margin: 1em 0;
+}
+
+.modal-popup button
+{
+  padding: 0.25em;
+  width: 100%;
+}
+
+
+/* Hide labels on mobile for space */
+.input_group label
+{
+  display: none;
+}
+
+.input_group input
+{
+  border: 0; 
+  background: #f7f7f7;
+  padding: 0.2em;
+}
+
+.modal-button
+{
+  color: #dedede;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: #f7f7f7;
+  background-repeat: repeat-x;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.1);
+
+  background-image: linear-gradient(to bottom, #ffffff, #f7f7f7);
+}
+
+.modal-button.button-active
+{
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: #cf2037;
+  background-repeat: repeat-x;
+  border: 1px solid #cf2037;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.5);
+
+  background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
+}
 
 /* util section */
 .clear

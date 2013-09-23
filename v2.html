@@ -131,7 +131,7 @@
         <span class="icon-tags"></span>
       </button>
 
-      <button class="sifter-add sifter-nav-button button-center">
+      <button class="sifter-show-login-button sifter-nav-button button-center">
         <span class="icon-camera"></span>
       </button>
 
@@ -209,12 +209,12 @@
 
         <div class="input_group">
           <label for="username_login">Username</label>
-          <input type="text" id="username_login" placeholder="username" required>
+          <input type="text" id="username_login" placeholder="Username" required>
         </div>
 
         <div class="input_group">
           <label for="password_login">Password</label>
-          <input type="password" id="password_login" placeholder="password" required></li>
+          <input type="password" id="password_login" placeholder="Password" required></li>
         </div>
 
         <div class="input_group">
@@ -245,12 +245,12 @@
 
         <div class="input_group">
           <label for="username_join">Username</label>
-          <input type="text" id="username_join" placeholder="username" required>
+          <input type="text" id="username_join" placeholder="Username" required>
         </div>
 
         <div class="input_group">
           <label for="password_join">Password</label>
-          <input type="password" id="password_join" placeholder="password" required>
+          <input type="password" id="password_join" placeholder="Password" required>
         </div>
 
         <div class="input_group">
@@ -263,6 +263,32 @@
       </div>
     </script> <!-- /Join View -->
 
+
+    <!--Forgot View -->
+    <script id="forgotTemplate" type="text/template">
+      <div class='join_view modal-popup closable'>
+        <div class="close-button">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+
+        <div class="modal-header"><h2>Forgot Password or Username?</h2></div>
+
+        <p>Enter your Email to retrieve your login information</p>
+
+        <div class="input_group">
+          <label for="usermail_forgot">Email</label>
+          <input type="email" id="usermail_forgot" placeholder="Email" required>
+        </div>
+
+        <div class="input_group">
+          <button id="forgot" class="button modal-button button-active">Email Password</button>
+        </div>
+
+        <div class="modal-footer">
+          <span id="viewLoginPage" class="internalLink">Remembered your password?</span>
+        </div>
+      </div>
+    </script>
 
 
 <!-- Temporary place for v1 constructs -->
@@ -336,28 +362,6 @@
 </div>
 
 
-<!--Forgot View -->
-<div id='forgot_view_construct' class='join_view'>
-    <div id='forgot_view_top_construct' class='join_view_top'>
-        Forgot Password or Username?<br/>
-        <hr style="background:#F87431; border:0; height:7px" /><br/>
-    </div>
-    <div id='join_view_bottom_construct' class='join_view_bottom'>
-        <ul>
-			<li> Enter your Email to retrieve your login information
-			</li>
-            <li>
-                <label for="usermail_forgot">Email</label>
-                <input type="email" id="usermail_forgot" placeholder="Email" required>
-            </li> 
-            
-            <li>
-                <button id="forgot" class="button">Email Password</button>
-
-            </li>
-        </ul>
-    </div>
-</div>
 
 </div>
 

@@ -37,6 +37,7 @@ function Controller()
     this.showLoginView = function() 
     {
         self.hideJoinView(); // only show one at a time
+        self.hideForgotView(); // only show one at a time
         model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
@@ -47,12 +48,11 @@ function Controller()
     this.showForgotView = function() 
     {
         self.hideLoginView(); // only show one at a time
-		model.views.forgotView = new ForgotView();
+        model.views.forgotView = new ForgotView();
         model.views.forgotViewContainer.innerHTML = '';
-        model.views.forgotViewContainer.appendChild(model.views.forgotViewCloseButton.html);
         model.views.forgotViewContainer.appendChild(model.views.forgotView.html);
         model.views.forgotViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
+        $('.sifter-modal-overlay').show();
     };
 
     this.showJoinView = function() 
@@ -62,7 +62,6 @@ function Controller()
         model.views.joinViewContainer.innerHTML = '';
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-        model.views.darkness.style.display = 'block';
         $('.sifter-modal-overlay').show();
     };
 
@@ -180,7 +179,7 @@ function Controller()
     {
         model.views.noteViewContainer.style.display = 'none';
         model.views.noteViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideNoteView, false);
     }
 
@@ -188,7 +187,7 @@ function Controller()
     {
         model.views.createNoteViewContainer.style.display = 'none';
         model.views.createNoteViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideCreateNoteView, false);
     }
 
@@ -203,7 +202,7 @@ function Controller()
     {
         model.views.forgotViewContainer.style.display = 'none';
         model.views.forgotViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideForgotView, false);
     }
 
@@ -211,7 +210,7 @@ function Controller()
     {
         model.views.joinViewContainer.style.display = 'none';
         model.views.joinViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideJoinView, false);
     }
 

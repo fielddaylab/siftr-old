@@ -22,7 +22,7 @@ $(document).ready (function ()
     startSift('mine');
   });
 
-  $('.sifter-show-login-button').on('click', function()
+  $('.sifter-show-login-button, .sifter-add').on('click', function()
   {
     controller.showLoginView();
   });
