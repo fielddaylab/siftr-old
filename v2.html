@@ -141,13 +141,15 @@
     </div>
 
 
-    <!-- New lightbox -->
-    <div class="new-dialog" id="new-dialog" style="display: none;">
-      hey new stuff!
-    </div>
+
+    <!-- Overlay -->
+    <div id="darkBackgroundLayer" class="sifter-modal-overlay" style="display: none;"></div>
 
 
-    <!-- Show lightbox -->
+
+    <!-- TEMPLATES ---------------------------------------- -->
+
+    <!-- Show View -->
     <script id="showTemplate" type="text/template">
       <div class="show-dialog closable" id="show-dialog">
         <div class="close-button">
@@ -196,8 +198,63 @@
     </script> <!-- /showTemplate -->
 
 
-    <!-- Overlay -->
-    <div id="darkBackgroundLayer" class="sifter-modal-overlay" style="display: none;"></div>
+    <!-- Login View -->
+    <script id="loginTemplate" type="text/template">
+      <div class='login_view modal-popup closable'>
+        <div class="close-button">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+
+        <div class="input_group">
+          <label for="username_login">Username</label>
+          <input type="text" id="username_login" placeholder="username" required>
+        </div>
+
+        <div class="input_group">
+          <label for="password_login">Password</label>
+          <input type="password" id="password_login" placeholder="password" required></li>
+        </div>
+
+        <button id="login" class="button">Login</button>
+
+        <div class="modal_footer">
+          <span id="noAccount" class="internalLink">Don't have an account?</span>
+          <span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
+        </div>
+      </div>
+    </script> <!-- /Login View -->
+
+
+    <!-- Join View -->
+    <script id="joinTemplate" type="text/template">
+      <div class='join_view modal-popup closable'>
+        <div class="close-button">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+
+        <div class="input_group">
+          <label for="usermail_join">Email</label>
+          <input type="email" id="usermail_join" placeholder="Email" required>
+        </div>
+
+        <div class="input_group">
+          <label for="username_join">Username</label>
+          <input type="text" id="username_join" placeholder="username" required>
+        </div>
+
+        <div class="input_group">
+          <label for="password_join">Password</label>
+          <input type="password" id="password_join" placeholder="password" required>
+        </div>
+
+        <button id="signUp" class="button">Sign Up</button>
+
+        <div class="modal_footer">
+          Already have an account?
+          <span id="viewLoginPage" class="internalLink">Log in</span>
+        </div>
+      </div>
+    </script> <!-- /Join View -->
 
 
 
@@ -271,63 +328,6 @@
     </div>
 </div>
 
-<!-- Login View -->
-<script id="loginTemplate" type="text/template">
-  <div class='login_view modal-popup closable'>
-    <div class="close-button">
-      <span class="glyphicon glyphicon-remove-circle"></span>
-    </div>
-
-    <div class="input_group">
-      <label for="username_login">Username</label>
-      <input type="text" id="username_login" placeholder="username" required>
-    </div>
-
-    <div class="input_group">
-      <label for="password_login">Password</label>
-      <input type="password" id="password_login" placeholder="password" required></li>
-    </div>
-
-    <button id="login" class="button">Login</button>
-
-    <div class="modal_footer">
-      <span id="noAccount" class="internalLink">Don't have an account?</span>
-      <span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
-    </div>
-  </div>
-</script>
- 
-
-<!-- Join View -->
-<script id="joinTemplate" type="text/template">
-  <div class='join_view modal-popup closable'>
-    <div class="close-button">
-      <span class="glyphicon glyphicon-remove-circle"></span>
-    </div>
-
-    <div class="input_group">
-      <label for="usermail_join">Email</label>
-      <input type="email" id="usermail_join" placeholder="Email" required>
-    </div>
-
-    <div class="input_group">
-      <label for="username_join">Username</label>
-      <input type="text" id="username_join" placeholder="username" required>
-    </div>
-
-    <div class="input_group">
-      <label for="password_join">Password</label>
-      <input type="password" id="password_join" placeholder="password" required>
-    </div>
-
-    <button id="signUp" class="button">Sign Up</button>
-
-    <div class="modal_footer">
-      Already have an account?
-      <span id="viewLoginPage" class="internalLink">Log in</span>
-    </div>
-  </div>
-</script>
 
 <!--Forgot View -->
 <div id='forgot_view_construct' class='join_view'>
@@ -354,7 +354,7 @@
 
 </div>
 
-    <!-- Render Containers -->
+    <!-- Template Render Containers -->
     <div id='note_view_container'        class='container'></div>
     <div id='create_note_view_container' class='container'></div>
     <div id='login_view_container'       class='container'></div>
