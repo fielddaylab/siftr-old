@@ -59,7 +59,8 @@ html,body
 
 .sifter-desktop-header  { z-index: 200; }
 .sifter-filters-popdown { z-index: 200; }
-.show-dialog            { z-index: 300; }
+.show-dialog,
+.modal-popup            { z-index: 300; }
 .sifter-modal-overlay   { z-index: 299; }
 
 
@@ -329,7 +330,7 @@ html,body
 
 
 /* Close */
-.show-dialog-close-button
+.close-button
 {
   position: absolute;
   right: 0;
@@ -340,7 +341,7 @@ html,body
   background: #fff;
 }
 
-.show-dialog-close-button:hover
+.close-button:hover
 {
   color: #cf2037;
 }
@@ -355,6 +356,7 @@ html,body
   height: 100%;
   width: 100%;
 }
+
 
 
 /* Modal Layout */
@@ -452,5 +454,5 @@ html,body
   background: #fff;
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
   border-radius: 4px;
-  padding: 2em;
+  padding: 2.5em;
 }

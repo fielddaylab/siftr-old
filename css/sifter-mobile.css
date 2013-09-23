@@ -12,7 +12,8 @@ html,body
 .sifter-filters-slideout { z-index:  50; }
 .sifter-header-toolbar,
 .sifter-footer-toolbar   { z-index: 100; }
-.show-dialog             { z-index: 300; }
+.show-dialog,
+.modal-popup             { z-index: 300; }
 
 
 .sifter-content
@@ -236,7 +237,7 @@ button.filter-button.last
 
 
 /* Close */
-.show-dialog-close-button
+.close-button
 {
   position: fixed;
   right: 0;
@@ -330,7 +331,7 @@ button.filter-button.last
   }
 */
 
-#message
+#message, .modal-popup
 {
   position: fixed;
 

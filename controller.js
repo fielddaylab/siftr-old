@@ -11,7 +11,6 @@ function Controller()
 
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
         $('.sifter-modal-overlay').show();
     };
 
@@ -33,15 +32,16 @@ function Controller()
             this.showLoginView();
     };
 
+    // TODO refactor all these into a function that accepts a view container, and content and takes care of clearing/showing/hiding.
+    // ex: model.views.popup(model.views.loginViewContainer, model.views.loginView);
     this.showLoginView = function() 
     {
         self.hideJoinView(); // only show one at a time
-		model.views.loginView = new LoginView();
+        model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
-        //model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
+        $('.sifter-modal-overlay').show();
     };
 
     this.showForgotView = function() 
@@ -58,11 +58,12 @@ function Controller()
     this.showJoinView = function() 
     {
         self.hideLoginView(); // only show one at a time
-		model.views.joinView = new JoinView();
+        model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
+        model.views.darkness.style.display = 'block';
+        $('.sifter-modal-overlay').show();
     };
 
     this.populateMapNotesFromModel = function(center)
@@ -195,7 +196,7 @@ function Controller()
     {
         model.views.loginViewContainer.style.display = 'none';
         model.views.loginViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideLoginView, false);
     }
     this.hideForgotView = function()

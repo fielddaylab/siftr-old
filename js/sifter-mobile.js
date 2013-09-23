@@ -36,31 +36,13 @@ $(document).ready(function ()
 
 
   /* Debug */
-  $('#show-dialog, .sifter-modal-overlay').hide();
+  $('.sifter-modal-overlay').hide();
 
-  /* Add new content dialog box */
-  $('.sifter-add').on('click', function()
+
+  /* Dialog and Overlay close */
+  $(document).on('click', '.close-button, .sifter-modal-overlay', function()
   {
-    alert('doin it');
-  });
-
-
-  /* Show existing content dialog box */
-  $('.sifter-imagelist .img').on('click', function()
-  {
-    $('#show-dialog, .sifter-modal-overlay').show();
-  });
-
-  $(document).on('click', '.show-dialog-close-button', function()
-  {
-    $('#show-dialog, .sifter-modal-overlay').hide();
-  });
-
-
-  /* Overlay close */
-  $('.sifter-modal-overlay').on('click', function()
-  {
-    $('.sifter-modal-overlay, #show-dialog, #new-dialog').hide();
+    $('.closable, .sifter-modal-overlay').hide();
   });
 
 });
