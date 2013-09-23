@@ -118,7 +118,7 @@ html,body
   vertical-align: middle;
 }
 
-.launchpad-button, .filter-button 
+.launchpad-button, .filter-button, .modal-button
 {
   color: #dedede;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
@@ -132,7 +132,8 @@ html,body
 }
 
 .launchpad-button.button-active,
-.filter-button.button-active
+.filter-button.button-active,
+.modal-button.button-active
 {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
@@ -456,7 +457,7 @@ html,body
 .modal-header h2
 {
   margin: 0;
-
+  text-align: center;
 }
 
 .modal-footer
@@ -474,6 +475,12 @@ html,body
 {
   font-size: 125%;
   margin: 1em 0;
+}
+
+.modal-popup button
+{
+  padding: 0.25em;
+  width: 100%;
 }
 
 .input_group label
