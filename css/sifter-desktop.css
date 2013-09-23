@@ -446,6 +446,49 @@ html,body
 
 
 
+/* Login/Logout/Forgot popups */
+.login_view,
+.join_view
+{
+  color: #cf2037;
+}
+
+.modal-header h2
+{
+  margin: 0;
+
+}
+
+.modal-footer
+{
+  margin: 1em 0;
+  margin-bottom: 0;
+}
+
+.modal-footer span
+{
+  display: block;
+}
+
+.input_group
+{
+  font-size: 125%;
+  margin: 1em 0;
+}
+
+.input_group label
+{
+  display: inline-block;
+  width: 6em;
+}
+
+.input_group input
+{
+  border: 0; 
+  background: #f7f7f7;
+  padding: 0.2em;
+}
+
 /* Util section */
 .clear
 {
