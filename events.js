@@ -22,6 +22,14 @@ $(document).ready (function ()
     startSift('mine');
   });
 
+  /* Set active on clicked button */
+  $('.filter-button').on('click', function(event)
+  {
+    $('.filter-button').removeClass('button-active');
+    $(event.target).addClass('button-active');
+  });
+
+
   $('.sifter-show-login-button, .sifter-add').on('click', function()
   {
     controller.showLoginView();
