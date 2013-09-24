@@ -59,6 +59,7 @@ function Controller()
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
 		model.views.darkness.style.display = 'block';
+
     };
 
     this.showForgotView = function() 
@@ -350,8 +351,15 @@ function Controller()
         callService("players.getLoginPlayerObject", this.loginReturned,"/"+username+"/"+password, false);
     }
 
+	this.facebookLogin = function(email, displayName, uid){
+		//it is possible for email to be blank
+		callService("players.getFacebookLoginPlayerObject", this.facebookLoginReturned, "/" + email + "/" +  displayName + "/" + uid, false);
+
+	}
+
     this.loginReturned = function(returnString)
     {
+		//be sure to sych changes with this to facebookLoginReturned
         var startJson = returnString.indexOf("{");
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
@@ -374,6 +382,45 @@ function Controller()
 	    	model.views.uploadButton.style.display = 'inline'; // show upload
 			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
 			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
+			model.views.fbloginButton.style.display = 'none'; //hide facebook login as we don't yet allow syching
+			
+			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
+		}
+        else
+            alert("Incorrect login. Please try again.");
+
+	}
+	else
+		alert(obj.returnCodeDescription + ". Please try again");
+	
+	}
+
+    this.facebookLoginReturned = function(returnString)
+    {
+		//be sure to sych changes with this to main loginReturned
+        var startJson = returnString.indexOf("{");
+        var jsonString = returnString.substr(startJson);
+        var obj = JSON.parse(jsonString);
+
+	// first check to see if you have a valid login
+	if (obj.data) {
+
+	// updated the display name and player ID to match getLoginPlayerObject data
+        var playerId = obj.data.player_id;
+		var displayName = obj.data.display_name; //in new user account creation this will be same as username
+		if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
+ 
+        model.playerId = playerId;
+		model.displayName = displayName;
+
+        if(model.playerId > 0)
+    	{
+            self.hideLoginView();
+	    	model.views.loginButton.style.display = 'none'; // hide login
+	    	model.views.uploadButton.style.display = 'inline'; // show upload
+			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
+			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
+			model.views.fbloginButton.style.display = 'none';
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
 		}
         else
@@ -388,6 +435,7 @@ function Controller()
 	this.logout = function(){
 		$.removeCookie('sifter'); //without the cookie, the user will have to log in again
 		model.views.loginButton.style.display = 'inline';
+		model.views.fbloginButton.style.display = 'inline';
 		model.views.uploadButton.style.display = 'none';
 		model.views.logoutButton.style.display = 'none';
 		model.views.siftMineButton.style.display = 'none';
