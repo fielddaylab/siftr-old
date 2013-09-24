@@ -911,3 +911,12 @@ function NoteCreateView()
 
     this.constructHTML();
 }
+
+
+function NoteCreateView()
+{
+    var template = $('#newTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
+}

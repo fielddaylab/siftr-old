@@ -104,11 +104,9 @@ function Model()
 		if(self.playerId > 0){ //if the cookie indicated they are logged in
 			this.loginButton.style.display = 'none'; // hide login
 			this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
-    		this.uploadButton.style.display = 'inline'; // show upload		
 			this.siftMineButton.style.display = 'inline'; //show sift by mine
 		}
 		else{
-			this.uploadButton.style.display = 'none'; // hide until login
 			this.logoutButton.style.display = 'none';
 			this.siftMineButton.style.display = 'none'; //this is meaningless until you are logged in
 		}

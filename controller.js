@@ -20,7 +20,6 @@ function Controller()
         {   
             model.views.noteCreateView = new NoteCreateView();
             model.views.createNoteViewContainer.innerHTML = '';
-            model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
 		    model.views.darkness.style.display = 'block';
@@ -353,7 +352,6 @@ function Controller()
     	{
             self.hideLoginView();
 	    	model.views.loginButton.style.display = 'none'; // hide login
-	    	model.views.uploadButton.style.display = 'inline'; // show upload
 			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
 			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
@@ -370,7 +368,6 @@ function Controller()
 	this.logout = function(){
 		$.removeCookie('sifter'); //without the cookie, the user will have to log in again
 		model.views.loginButton.style.display = 'inline';
-		model.views.uploadButton.style.display = 'none';
 		model.views.logoutButton.style.display = 'none';
 		model.views.siftMineButton.style.display = 'none';
 		model.playerId = 0;	
@@ -393,7 +390,6 @@ function Controller()
             self.hideLoginView();
             self.hideJoinView();
 		    model.views.loginButton.style.display = 'none'; // hide login
-		    model.views.uploadButton.style.display = 'inline'; // show upload
 	    
         }
     }
