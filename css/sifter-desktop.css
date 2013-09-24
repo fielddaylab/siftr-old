@@ -542,6 +542,13 @@ html,body
 
 
 
+/* Google Map style */
+.sifter-map-icon img
+{
+  width: 2em;
+  cursor: pointer;
+}
+
 
 /* Util section */
 .clear

@@ -445,6 +445,13 @@ button.filter-button.last
 }
 
 
+/* Google Map style */
+.sifter-map-icon img
+{
+  width: 2em;
+}
+
+
 /* util section */
 .clear
 {

@@ -139,6 +139,6 @@ function Model()
         
         this.markerclusterer = new MarkerClusterer(this.gmap,[],mcOptions);
         
-        this.markerclusterer.setMinimumClusterSize(3)
+        this.markerclusterer.setMinimumClusterSize(300)
     };
 }

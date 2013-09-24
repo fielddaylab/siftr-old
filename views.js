@@ -451,7 +451,7 @@ function MapMarker(callback, note)
         position: this.note.geoloc,
         map: model.views.gmap,
         draggable: false,
-        content: constructMarker(this.note)
+        content: xconstructMarker(this.note)
         });
 
     this.marker = imageMarker;
@@ -511,6 +511,17 @@ function constructMarker(note)
     html = outerDiv.outerHTML;
 
     return html;
+}
+
+
+function xconstructMarker(note)
+{
+  var container = document.createElement('div');
+  $(container).addClass ("sifter-map-icon");// scale-icon scale-mustdo");
+  var image = document.createElement('image');
+  image.src = "assets/images/icon_mustdo.svg";
+  $(container).append(image);
+  return container;
 }
 
 function getImageToUse(note)
