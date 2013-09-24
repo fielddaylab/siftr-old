@@ -23,7 +23,9 @@
 
   <body>
     <!-- Message Alert -->
-    <div id="message" class="modal-popup"></div>
+    <div id="message" class="modal-popup">
+      <div class='working'><div class='sifting'><span class='siftr-logo'></span></div></div>
+    </div>
 
     <!-- Mobile Header Bar -->
     <div class="sifter-header-toolbar hidden-desktop">
@@ -34,7 +36,7 @@
 
       <input class="sifter-search-field" type="text" placeholder="search" />
 
-      <button class="sifter-nav-button button-right">
+      <button class="sifter-nav-button button-right" style="display: none;">
         <span class="icon-cog"></span>
       </button>
     </div>
@@ -44,12 +46,16 @@
     <div class="sifter-desktop-header hidden-mobile">
       <div class="sifter-logo-box">
         <h1><span class="siftr-logo"></span> Siftr</h1>
+
       </div>
 
+
       <div class="sifter-rightside-launchpad">
+        <div style="display: none;">
         <button class="launchpad-button sifter-show-login-button" id="loginButton">L</button>
         <button class="launchpad-button sifter-show-logout-button" id="logoutButton">O</button>
         <button class="sifter-add launchpad-button sifter-show-upload-button" id="uploadButton"><span class="icon-plus"></span></button>
+        </div>
         <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
       </div>
 
@@ -107,7 +113,7 @@
       <div class="clear"></div>
 
       <div class="sifter-popdown-footer hidden-mobile">
-        About ∑ Contact ∑ Privacy & Terms ∑ Copyright & Trademark
+        About <!-- ∑ Contact ∑ Privacy & Terms ∑ Copyright & Trademark -->
       </div>
       
     </div>
@@ -116,7 +122,6 @@
     <!-- Main Content -->
     <div class="sifter-content">
       <div class="sifter-imagelist" id="main_view_left">
-        <div class="img"><img src="http://placekitten.com/400/400" /></div>
       </div>
       <div class="sifter-map" id="main_view_map">
       </div>
@@ -131,7 +136,7 @@
         <span class="icon-tags"></span>
       </button>
 
-      <button class="sifter-show-login-button sifter-nav-button button-center">
+      <button class="sifter-show-login-button sifter-nav-button button-center" style="display: none;">
         <span class="icon-camera"></span>
       </button>
 
@@ -149,6 +154,14 @@
 
     <!-- TEMPLATES ---------------------------------------- -->
 
+    <!-- Grid Image Cell ---------------------------------  -->
+    <script id="gridIconTemplate" type="text/template">
+      <div class="sifter-grid-note img">
+        <img class="sifter-grid-image" id="image{{note_id}}" src="{{image_url}}" />
+        <div class="scale-icon scale-{{category_class}}"></div>
+			</div>
+    </script>
+
     <!-- Show View -->
     <script id="showTemplate" type="text/template">
       <div class="show-dialog closable" id="show-dialog">
@@ -161,6 +174,7 @@
           <div class="sifter-image">
             <!-- TODO add icon to top right -->
             <img src="{{image_url}}" />
+            <div class="scale-icon scale-{{category_class}}"></div> 
           </div>
 
           <div class="sifter-show-linkbar">
@@ -188,7 +202,7 @@
             {{/comments}}
           </div>
 
-          <div class="sifter-new-comment">
+          <div class="sifter-new-comment" style="display: none;">
             <textarea placeholder="Add a comment..."></textarea>
           </div>
         </div>

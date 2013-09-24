@@ -118,7 +118,7 @@ function Controller()
             if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
             if(!this.matchesFilter(model.gameNotes[i], document.getElementById("filterbox").value)) continue;
             var listNote = new ListNote(this.noteSelected, model.gameNotes[i], i);
-            model.views.mainViewLeft.innerHTML += listNote.html;
+            model.views.mainViewLeft.appendChild( listNote.html );
         }
     };
 

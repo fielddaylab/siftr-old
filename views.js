@@ -46,19 +46,30 @@ function ListNote(callback, note, noteId)
 
     this.constructHTML = function()
     {
-		var noteImage = getImageToUse(note);
-        if(noteImage != ""){
-          /* FIXME Use a construct/template just like the rest of the site */
-        	this.html = "<div class='note_list_cell img'>";
-        	this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
-			this.html += "</div>";
-		}
-        else {
-			this.html = "";//clear out the entire node if no media
-        	console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
-		}
-    /* FIXME replace with delegate */
-		setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
+        var noteImage = getImageToUse(note);
+
+        if(noteImage != "")
+        {
+            /* Get Data */
+            var data = {}
+            data.image_url = noteImage;
+            data.note_id  = noteId;
+            data.category_class = "mustdo";
+            
+            /* Render View */
+            var template = $('#gridIconTemplate').html();
+            var view = Mustache.render (template, data);
+
+            this.html = $(view).get(0);
+        }
+        else
+        {
+            this.html = "";//clear out the entire node if no media
+            console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
+        }
+
+        /* FIXME replace with delegate */
+        setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
     }
     this.constructHTML();
 }
@@ -82,6 +93,7 @@ function NoteView(note)
       var data = {};
 
       data.image_url = getImageToUse (this.note);
+      data.category_class = "mustdo";
       data.audio_url = getAudioToUse (this.note); 
       data.details   = getTextToUse  (this.note);
       data.comments  = this.getCommentsJson (this.note.comments);
