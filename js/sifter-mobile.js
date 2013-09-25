@@ -40,7 +40,12 @@ $(document).ready(function ()
 
 
   /* Dialog and Overlay close */
-  $(document).on('click touchstart', '.close-button, .sifter-modal-overlay', function()
+  $('.sifter-modal-overlay').on('click', function()
+  {
+    $('.closable, .sifter-modal-overlay').hide();
+  });
+
+  $('.container').on('click', '.close-button', function()
   {
     $('.closable, .sifter-modal-overlay').hide();
   });
