@@ -335,6 +335,16 @@ function Controller()
     {
         callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/"+comment, false);
     }
+	
+	this.setCommentComplete = function(status)
+	{ //unless the comment is set to complete it won't return from any queries
+        var startJson = status.indexOf("{");
+        var jsonString = status.substr(startJson);
+        var obj = JSON.parse(jsonString); //obj.data will be the note ID needed for the call
+
+        callService("notes.setNoteComplete", function(){},"/"+obj.data, false);
+		
+	}
 
     this.addTagToNote = function(noteId, tag)
     {
