@@ -443,6 +443,14 @@ html,body
   margin-bottom: 0.25em;
 }
 
+.sifter-comment h2
+{
+  margin-top: 0.25em;
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #cacaca;
+}
+
 .sifter-comment-author
 {
   color: #cf2037;

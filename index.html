@@ -191,6 +191,9 @@
         <!-- right-side: comments list -->
         <div class="sifter-show-sidebar">
           <div class="sifter-comments">
+            <div class="sifter-comment">
+              <h2 class="sifter-comment-header">Comments</h2>
+            </div>
             {{#comments}}
               <div class="sifter-comment">
                 <h3 class="sifter-comment-author">{{author}}</h3>
@@ -199,8 +202,7 @@
             {{/comments}}
             {{^comments}}
               <div class="sifter-comment">
-                <h3 class="sifter-comment-author">Comments</h3>
-                <p class="sifter-comment-text">No Comments yet. Add one!</p>
+                <p class="sifter-comment-text">No Comments yet.<br/> Add one!</p>
               </div>
             {{/comments}}
           </div>
