@@ -13,7 +13,8 @@ html,body
 .sifter-header-toolbar,
 .sifter-footer-toolbar   { z-index: 100; }
 .show-dialog,
-.modal-popup             { z-index: 300; }
+.modal-popup,
+.modal-large             { z-index: 300; }
 .sifter-modal-overlay    { z-index: 299; }
 
 
@@ -229,19 +230,26 @@ button.filter-button.last
 
 /* Show Dialog ********************************************** */
 
-.show-dialog
+.show-dialog,
+.modal-large
 {
   position: fixed;
   top: 0;
   left: 0;
 
-  width: 100%;
+  width: auto; /* 100% is after padding */
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
 
   background: #fff;
   color: rgb(77,77,77);
+}
+
+
+.modal-large
+{
+  padding: 2.5em;
 }
 
 
@@ -451,6 +459,36 @@ button.filter-button.last
   width: 2em;
 }
 
+
+/* About View */
+
+.about_view h1,
+.about_view h2
+{
+  color: #cf2037;
+  font-weight: normal;
+}
+
+.about_view h1
+{
+  margin-top: 0;
+  text-align: center;
+}
+
+.about_view li
+{
+  list-style-type: circle;
+}
+
+.about_view ul
+{
+  padding-left: 1em;
+}
+
+.about_view .last
+{
+  padding-bottom: 2em; /* to counter height and container padding */
+}
 
 /* util section */
 .clear

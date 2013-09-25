@@ -104,4 +104,11 @@ $(document).ready (function ()
   /* Forgot View ******************************************** */
   $(document).on('click', '#forgot', clickEmailPassword);
 
+
+  /* About View ********************************************* */
+  $('.show-about').on('click', function()
+  {
+    controller.showAbout();
+  });
+
 });

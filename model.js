@@ -85,11 +85,13 @@ function Model()
         this.noteViewContainer         = document.getElementById('note_view_container');
         
 
+    this.staticContainer = document.getElementById('static_view_container');
 		this.loginViewContainer        = document.getElementById('login_view_container');
         this.joinViewContainer         = document.getElementById('join_view_container');
         this.forgotViewContainer       = document.getElementById('forgot_view_container');
         this.constructNoteView         = document.getElementById('note_view_construct');
         this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
+
         
 		this.constructLoginView     	= document.getElementById('login_view_construct');
         this.constructJoinView      	= document.getElementById('join_view_construct');
