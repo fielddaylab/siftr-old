@@ -237,7 +237,7 @@ button.filter-button.last
   top: 0;
   left: 0;
 
-  width: auto; /* 100% is after padding */
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -247,7 +247,7 @@ button.filter-button.last
 }
 
 
-.modal-large
+.modal-large .content
 {
   padding: 2.5em;
 }
@@ -485,10 +485,6 @@ button.filter-button.last
   padding-left: 1em;
 }
 
-.about_view .last
-{
-  padding-bottom: 2em; /* to counter height and container padding */
-}
 
 /* util section */
 .clear
