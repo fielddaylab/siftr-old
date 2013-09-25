@@ -46,17 +46,30 @@ function ListNote(callback, note, noteId)
 
     this.constructHTML = function()
     {
-		var noteImage = getImageToUse(note);
-        if(noteImage != ""){
-        	this.html = "<div class='note_list_cell'>";
-        	this.html += "<img id='image"+noteId+"' class='note_list_cell_media' src='"+noteImage+"' style='cursor:pointer;'/>"
-			this.html += "</div>";
-		}
-        else {
-			this.html = "";//clear out the entire node if no media
-        	console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
-		}
-		setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
+        var noteImage = getImageToUse(note);
+
+        if(noteImage != "")
+        {
+            /* Get Data */
+            var data = {}
+            data.image_url = noteImage;
+            data.note_id  = noteId;
+            data.category_class = getTagIconName(note);
+            
+            /* Render View */
+            var template = $('#gridIconTemplate').html();
+            var view = Mustache.render (template, data);
+
+            this.html = $(view).get(0);
+        }
+        else
+        {
+            this.html = "";//clear out the entire node if no media
+            console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
+        }
+
+        /* FIXME replace with delegate */
+        setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
     }
     this.constructHTML();
 }
@@ -64,7 +77,6 @@ function ListNote(callback, note, noteId)
 function NoteView(note)
 {
     var thism = this; //garbage
-    this.html = model.views.constructNoteView.cloneNode(true);
     this.note = note;
 	model.currentNote = note; // this is done so that the send email function over in controller can get at all the information
 
@@ -75,8 +87,30 @@ function NoteView(note)
 	//this.html.children [1][3] Comments
 	//this.html.children [1][4] Inputs (of more comments)
 	//this.html.children [1][5] Social Media
-
     this.constructHTML = function()
+    {
+      /* Get Data */
+      var data = {};
+
+      data.image_url = getImageToUse (this.note);
+      data.category_class = getTagIconName(this.note);
+      data.audio_url = getAudioToUse (this.note); 
+      data.details   = getTextToUse  (this.note);
+      data.comments  = this.getCommentsJson (this.note.comments);
+
+
+      /* TODO social stuff, new comment logic */
+  
+
+      /* Render View */
+      var template = $('#showTemplate').html();
+      var view = Mustache.render (template, data);
+
+      this.html = $(view).get(0);
+    }
+
+
+    this.old_constructHTML = function()
     {
         if(!this.note) return; 
 
@@ -148,7 +182,7 @@ function NoteView(note)
 			var b = document.createElement('button');
 			b.id = 'loginToComment';
 			b.classname = 'button';
-			b.onclick = controller.showLoginView();
+			b.onclick = controller.showLoginView;
 			b.innerHTML = 'Login to Comment';
 
 			//they can't submit to social media if they are not logged in, show static numbers
@@ -182,6 +216,14 @@ function NoteView(note)
 	//	this.html.children[1].children[5].appendChild(emailButton);
 
 	}
+
+    this.getCommentsJson = function(comments)
+    {
+      return $(comments).map (function ()
+      {
+         return {author: this.username, text: this.title};
+      }).toArray();
+    }
 
     this.loadComments = function()
     {
@@ -409,7 +451,7 @@ function MapMarker(callback, note)
         position: this.note.geoloc,
         map: model.views.gmap,
         draggable: false,
-        content: constructMarker(this.note)
+        content: xconstructMarker(this.note)
         });
 
     this.marker = imageMarker;
@@ -471,6 +513,17 @@ function constructMarker(note)
     return html;
 }
 
+
+function xconstructMarker(note)
+{
+  var container = document.createElement('div');
+  $(container).addClass ("sifter-map-icon");// scale-icon scale-mustdo");
+  var image = document.createElement('image');
+  image.src = "assets/images/icon_"+getTagIconName(note)+".svg";
+  $(container).append(image);
+  return container;
+}
+
 function getImageToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)
@@ -478,10 +531,34 @@ function getImageToUse(note)
     return "";
 }
 
+
+function getTagIconName(note)
+{
+
+  var lookup = {
+    "100 Years from Now"  : "100years",
+    "Innovation"          : "innovation",
+    "Stories of the Past" : "stories",
+    "Madison Culture"     : "culture",
+    "Must Do"             : "mustdo"
+  };
+  
+  var icon_name = lookup[note.tags[0].tag] || "search"; // unknown icon
+
+  return icon_name;
+}
+
 function getAudioToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)
-        if(note.contents[i].type == "AUDIO") return note.contents[i].meida.data.url;
+        if(note.contents[i].type == "AUDIO") return note.contents[i].media.data.url;
+    return "";
+};
+
+function getTextToUse(note)
+{
+    for(i = 0; i < note.contents.length; i++)
+        if(note.contents[i].type == "TEXT") return note.contents[i].text;
     return "";
 };
 
@@ -704,7 +781,7 @@ function clickBrowseAudio()
 function clickLogin()
 {
     var username = document.getElementById('username_login').value;
-    var password = document.getElementById('password').value;
+    var password = document.getElementById('password_login').value;
 
     controller.login(username, password);
 }
@@ -722,7 +799,7 @@ function clickViewLoginPage()
 function clickSignUp()
 {
     var email = document.getElementById('usermail_join').value;
-    var password = document.getElementById('password').value;
+    var password = document.getElementById('password_join').value;
     var username = document.getElementById('username_join').value;	
     controller.createAccount(email, password, username); //CDH added in username
 }
@@ -749,17 +826,26 @@ function clickEmailPassword(){
 
 function LoginView()
 {
-    this.html = model.views.constructLoginView.cloneNode(true);
+    var template = $('#loginTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
 }
 
 function JoinView()
 {
-    this.html = model.views.constructJoinView.cloneNode(true);
+    var template = $('#joinTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
 }
 
 function ForgotView()
 {
-    this.html = model.views.constructForgotView.cloneNode(true);
+    var template = $('#forgotTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
 }
 
 function NoteCreateView()
@@ -864,4 +950,13 @@ function NoteCreateView()
     }; //end constructHTML
 
     this.constructHTML();
+}
+
+
+function NoteCreateView()
+{
+    var template = $('#newTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
 }

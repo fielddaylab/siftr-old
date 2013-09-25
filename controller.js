@@ -3,33 +3,15 @@ function Controller()
 {
     var self = this; //<- I hate javascript.
 
-	this.showMapAsTab = function(){
-		model.views.mainViewLeft.className = 'behindView';		
-		model.views.map.className = 'selectedView';
- 		
-		document.getElementById("MapTab").className = "tabs selectedTab";
-		document.getElementById("ImagesTab").className = "tabs";
-	};
-
-	this.showImagesAsTab = function(){
-		model.views.mainViewLeft.className = 'selectedView';		
-		model.views.map.className = 'behindView';
-
-		document.getElementById("MapTab").className = "tabs";
-		document.getElementById("ImagesTab").className = "tabs selectedTab";
-
-	};
-
     this.noteSelected = function(sender) 
     {
         var note = sender.note;
         model.views.noteView = new NoteView(note);
         model.views.noteViewContainer.innerHTML = '';
 
-        model.views.noteViewContainer.appendChild(model.views.noteViewCloseButton.html);
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
         model.views.noteViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
+        $('.sifter-modal-overlay').show();
     };
 
     this.createNote = function() 
@@ -38,7 +20,6 @@ function Controller()
         {   
             model.views.noteCreateView = new NoteCreateView();
             model.views.createNoteViewContainer.innerHTML = '';
-            model.views.createNoteViewContainer.appendChild(model.views.createNoteViewCloseButton.html);
             model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
             model.views.createNoteViewContainer.style.display = 'block';
 		    model.views.darkness.style.display = 'block';
@@ -50,38 +31,37 @@ function Controller()
             this.showLoginView();
     };
 
+    // TODO refactor all these into a function that accepts a view container, and content and takes care of clearing/showing/hiding.
+    // ex: model.views.popup(model.views.loginViewContainer, model.views.loginView);
     this.showLoginView = function() 
     {
         self.hideJoinView(); // only show one at a time
-		model.views.loginView = new LoginView();
+        self.hideForgotView(); // only show one at a time
+        model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
-        model.views.loginViewContainer.appendChild(model.views.loginViewCloseButton.html);
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
         model.views.loginViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
-
+        $('.sifter-modal-overlay').show();
     };
 
     this.showForgotView = function() 
     {
         self.hideLoginView(); // only show one at a time
-		model.views.forgotView = new ForgotView();
+        model.views.forgotView = new ForgotView();
         model.views.forgotViewContainer.innerHTML = '';
-        model.views.forgotViewContainer.appendChild(model.views.forgotViewCloseButton.html);
         model.views.forgotViewContainer.appendChild(model.views.forgotView.html);
         model.views.forgotViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
+        $('.sifter-modal-overlay').show();
     };
 
     this.showJoinView = function() 
     {
         self.hideLoginView(); // only show one at a time
-		model.views.joinView = new JoinView();
+        model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
-        model.views.joinViewContainer.appendChild(model.views.joinViewCloseButton.html);
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
         model.views.joinViewContainer.style.display = 'block';
-		model.views.darkness.style.display = 'block';
+        $('.sifter-modal-overlay').show();
     };
 
     this.populateMapNotesFromModel = function(center)
@@ -94,7 +74,9 @@ function Controller()
         for(var i = 0; i < model.gameNotes.length; i++)
         {
             if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
-            if(!this.matchesFilter(model.gameNotes[i], document.getElementById("filterbox").value)) continue;
+
+            var search_value = $('.sifter-filter-search-input').filter(":visible").val();
+            if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
 
             tmpmarker = new MapMarker(this.noteSelected, model.gameNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
@@ -136,9 +118,10 @@ function Controller()
         for(var i = 0; i < model.gameNotes.length; i++)
         {
             if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
-            if(!this.matchesFilter(model.gameNotes[i], document.getElementById("filterbox").value)) continue;
+            var search_value = $('.sifter-filter-search-input').filter(":visible").val();
+            if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
             var listNote = new ListNote(this.noteSelected, model.gameNotes[i], i);
-            model.views.mainViewLeft.innerHTML += listNote.html;
+            model.views.mainViewLeft.appendChild( listNote.html );
         }
     };
 
@@ -198,7 +181,7 @@ function Controller()
     {
         model.views.noteViewContainer.style.display = 'none';
         model.views.noteViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideNoteView, false);
     }
 
@@ -206,7 +189,7 @@ function Controller()
     {
         model.views.createNoteViewContainer.style.display = 'none';
         model.views.createNoteViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideCreateNoteView, false);
     }
 
@@ -214,14 +197,14 @@ function Controller()
     {
         model.views.loginViewContainer.style.display = 'none';
         model.views.loginViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideLoginView, false);
     }
     this.hideForgotView = function()
     {
         model.views.forgotViewContainer.style.display = 'none';
         model.views.forgotViewContainer.innerHTML = '';
-		model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideForgotView, false);
     }
 
@@ -229,7 +212,7 @@ function Controller()
     {
         model.views.joinViewContainer.style.display = 'none';
         model.views.joinViewContainer.innerHTML = '';
-	model.views.darkness.style.display = 'none';
+        $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideJoinView, false);
     }
 
@@ -427,7 +410,6 @@ function Controller()
     	{
             self.hideLoginView();
 	    	model.views.loginButton.style.display = 'none'; // hide login
-	    	model.views.uploadButton.style.display = 'inline'; // show upload
 			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
 			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
 			model.views.fbloginButton.style.display = 'none';
@@ -469,7 +451,6 @@ function Controller()
             self.hideLoginView();
             self.hideJoinView();
 		    model.views.loginButton.style.display = 'none'; // hide login
-		    model.views.uploadButton.style.display = 'inline'; // show upload
 	    
         }
     }
