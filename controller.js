@@ -559,4 +559,12 @@ function Controller()
 		
 
 	}
+
+  this.showAbout = function()
+  {
+    model.views.aboutView = new AboutView();
+    model.views.staticContainer.innerHTML = '';
+    model.views.staticContainer.appendChild(model.views.aboutView.html);
+    $('.sifter-modal-overlay').show();
+  }
 }

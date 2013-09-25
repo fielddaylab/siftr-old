@@ -104,4 +104,19 @@ $(document).ready (function ()
   /* Forgot View ******************************************** */
   $(document).on('click', '#forgot', clickEmailPassword);
 
+
+  /* About View ********************************************* */
+  $('.show-about').on('click', function()
+  {
+    controller.showAbout();
+  });
+
+  /* Map Center ********************************************* */
+  $('.sifter-center-map').on('click', function()
+  {
+    var bascom_hill = new google.maps.LatLng(43.0753, -89.4041);
+    model.views.gmap.setCenter(bascom_hill);
+    model.views.gmap.setZoom(14);
+  });
+
 });

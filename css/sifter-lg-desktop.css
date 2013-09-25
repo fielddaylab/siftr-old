@@ -26,7 +26,15 @@
 }
 
 
-.show-dialog
+.show-dialog,
+.modal-large
 {
   width: 900px;
+}
+
+/* Navigation/Content shrink/expand animation */
+.sifter-filters-popdown,
+.sifter-content
+{
+  transition-duration: 0.25s;
 }
