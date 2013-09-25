@@ -51,12 +51,12 @@ $(document).ready (function ()
 
   $('.sifter-filter-checkbox-input').on('change', function()
   {
-    controller.populateAllFromModel();
+    startSift('tags');
   });
 
   $('.sifter-filter-search-input').on('change', function()
   {
-    controller.populateListNotesFromModel();
+    startSift('search');
   });
 
 
