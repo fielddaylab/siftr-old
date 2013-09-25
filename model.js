@@ -14,6 +14,7 @@ function Model()
 	this.tags = '';
 	this.serverCallsToLoad = 5; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
 	this.loadFinishCallback = '' ;
+	this.siftTypeCode = 0; //we keep track of this so we can sift from tag or search changes without forgetting what main sift we were using. Start with top
 
 	self.playerId = 0;
 
@@ -75,6 +76,31 @@ function Model()
 		
     };
 
+	this.getSiftTypeCode= function(siftType){
+		switch(siftType){
+       		case "top":
+				this.siftTypeCode = 0;
+        	    break;
+	       	case "recent":
+				this.siftTypeCode = 2;
+	            break;
+    	    case "popular":			
+				this.siftTypeCode = 1;
+	            break;
+    	   	case "mine":
+				this.siftTypeCode = 3;
+            	break;
+    	   	case "tags":
+				// in this case we don't change it but use the last setting
+	            break;
+    	    case "search":
+				// in this case we don't change it but use the last setting
+	            break;
+    	}
+		console.log(siftType + " " + this.siftTypeCode);
+		return(this.siftTypeCode);
+	}
+
     this.views = new function Views()
     { 
         //Content
@@ -85,11 +111,13 @@ function Model()
         this.noteViewContainer         = document.getElementById('note_view_container');
         
 
+    this.staticContainer = document.getElementById('static_view_container');
 		this.loginViewContainer        = document.getElementById('login_view_container');
         this.joinViewContainer         = document.getElementById('join_view_container');
         this.forgotViewContainer       = document.getElementById('forgot_view_container');
         this.constructNoteView         = document.getElementById('note_view_construct');
         this.constructNoteCreateView   = document.getElementById('note_create_view_construct');
+
         
 		this.constructLoginView     	= document.getElementById('login_view_construct');
         this.constructJoinView      	= document.getElementById('join_view_construct');

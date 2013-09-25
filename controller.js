@@ -73,10 +73,10 @@ function Controller()
         var tmpmarker;
         for(var i = 0; i < model.gameNotes.length; i++)
         {
-            if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
+         //   if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
 
-            var search_value = $('.sifter-filter-search-input').filter(":visible").val();
-            if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
+         //   var search_value = $('.sifter-filter-search-input').filter(":visible").val();
+         //   if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
 
             tmpmarker = new MapMarker(this.noteSelected, model.gameNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
@@ -117,9 +117,9 @@ function Controller()
 
         for(var i = 0; i < model.gameNotes.length; i++)
         {
-            if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
-            var search_value = $('.sifter-filter-search-input').filter(":visible").val();
-            if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
+           // if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
+           // var search_value = $('.sifter-filter-search-input').filter(":visible").val();
+           // if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
             var listNote = new ListNote(this.noteSelected, model.gameNotes[i], i);
             model.views.mainViewLeft.appendChild( listNote.html );
         }
@@ -559,4 +559,12 @@ function Controller()
 		
 
 	}
+
+  this.showAbout = function()
+  {
+    model.views.aboutView = new AboutView();
+    model.views.staticContainer.innerHTML = '';
+    model.views.staticContainer.appendChild(model.views.aboutView.html);
+    $('.sifter-modal-overlay').show();
+  }
 }
