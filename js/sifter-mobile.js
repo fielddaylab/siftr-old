@@ -40,12 +40,7 @@ $(document).ready(function ()
 
 
   /* Dialog and Overlay close */
-  $('.sifter-modal-overlay').on('click', function()
-  {
-    $('.closable, .sifter-modal-overlay').hide();
-  });
-
-  $('.container').on('click', '.close-button', function()
+  $(document).on('click', '.close-button, .sifter-modal-overlay', function()
   {
     $('.closable, .sifter-modal-overlay').hide();
   });

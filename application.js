@@ -16,7 +16,8 @@ function pageLoad()
 
 function startLoadGame()
 {
-    document.getElementById('message').innerHTML = "<div class='working'><div class='sifting'><span class='siftr-logo'></span></div><div>Loading</div></div>";
+    document.getElementById('messageContent').innerHTML = "Sifting";
+    document.getElementById('message').style.display = 'block';
     callService("notes.getNotesWithAttributes", finishLoadGame, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:model.playerId, tagIds:[], lastLocation:0, date:0}));
 }
 
@@ -27,7 +28,7 @@ function finishLoadGame(responseText)
     responseData=JSON.parse(responseText);
     if(responseData.returnCode == 1) //Error
     {
-        document.getElementById('message').innerHTML = responseData.data;	
+        document.getElementById('messageContent').innerHTML = responseData.data;
         return;
     }
     model.populateFromData(responseData.data);
@@ -36,7 +37,7 @@ function finishLoadGame(responseText)
     controller.populateAllFromModel();
 
     //  Set actual page visible
-    document.getElementById('message').innerHTML = "";
+    document.getElementById('messageContent').innerHTML = "";
     document.getElementById('message').style.display = 'none';
 
     google.maps.event.trigger(model.views.gmap, 'resize'); // To fix google maps incorrect sizing bug
@@ -45,7 +46,7 @@ function finishLoadGame(responseText)
 
 function startSift(siftType){
 	model.views.mainViewLeft.innerHTML = ''; //clear out old notes
-    document.getElementById('message').innerHTML = "<div class='working'><div class='sifting'><span class='siftr-logo'></span></div><div>Sifting</div></div>";
+    document.getElementById('messageContent').innerHTML = "Sifting...";
     document.getElementById('message').style.display = 'block'; //this is set to hidden after page loads first time
 
 	switch(siftType){
