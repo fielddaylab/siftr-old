@@ -14,6 +14,7 @@ function Model()
 	this.tags = '';
 	this.serverCallsToLoad = 5; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
 	this.loadFinishCallback = '' ;
+	this.siftTypeCode = 0; //we keep track of this so we can sift from tag or search changes without forgetting what main sift we were using. Start with top
 
 	self.playerId = 0;
 
@@ -74,6 +75,31 @@ function Model()
         }
 		
     };
+
+	this.getSiftTypeCode= function(siftType){
+		switch(siftType){
+       		case "top":
+				this.siftTypeCode = 0;
+        	    break;
+	       	case "recent":
+				this.siftTypeCode = 2;
+	            break;
+    	    case "popular":			
+				this.siftTypeCode = 1;
+	            break;
+    	   	case "mine":
+				this.siftTypeCode = 3;
+            	break;
+    	   	case "tags":
+				// in this case we don't change it but use the last setting
+	            break;
+    	    case "search":
+				// in this case we don't change it but use the last setting
+	            break;
+    	}
+		console.log(siftType + " " + this.siftTypeCode);
+		return(this.siftTypeCode);
+	}
 
     this.views = new function Views()
     { 
