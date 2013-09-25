@@ -1,0 +1,353 @@
+<html>
+<head>
+<title>Notebook</title>
+<link rel='stylesheet' type='text/css' href='css.css' />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+<script type="text/javascript" src="utils/json2.js"></script>
+<script type="text/javascript" src="utils/server-conf.js"></script>
+<script type="text/javascript" src="utils/nbutils.js"></script>
+<script type="text/javascript" src="views.js"></script>
+<script type="text/javascript" src="model.js"></script>
+<script type="text/javascript" src="controller.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+
+<script src="utils/jquery-1.10.2.min.js"></script>
+<script src="utils/jquery-cookie-master/jquery.cookie.js"></script>
+
+<script type="text/javascript" src="utils/richmarker.js" ></script>
+<script type="text/javascript" src="utils/markerclusterer.js"></script>
+<script src="utils/recorder.js"></script>
+<script src="application.js"></script>
+<script src="events.js"></script>
+</head>
+<body id='body'>
+
+<div id="fb-root"></div>
+<!--
+  Below we include the Login Button social plugin. This button uses the JavaScript SDK to
+  present a graphical Login button that triggers the FB.login() function when clicked.
+
+  Learn more about options for the login button plugin:
+  /docs/reference/plugins/login/ -->
+
+
+<div id='message'></div>
+
+<div id='header'>
+	<h1>Sifter</h1>
+        	<button class="button sifter-fetch-top-button">Top</button> 
+        	<button class="button sifter-fetch-recent-button">Recent</button> 
+        	<button class="button sifter-fetch-popular-button">Popular</button> 
+       
+          <button class="button sifter-fetch-mine-button" id="siftMineButton" >Mine</button><!--CDH Only displays after login -->
+
+        	<button class="button sifter-show-login-button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
+
+          <button class="button sifter-show-upload-button" id="uploadButton" >Upload</button> <!--CDH Only displays a
+    fter login -->
+			<button onClick=" FB.login(function(response) { }, {scope: 'email'});" class="button" id="fbloginButton" >Facebook Login</button> 
+			<button onClick="if(FB.IsLoggedIn){ FB.logout(function(response) { });}else{JavaScript:controller.logout();}" class="button" id="logoutButton" >Log Out</button> 
+
+</div>
+
+
+<div id= 'content'>
+
+<!-- Main View -->
+<div id='main_view_full' >
+    	<div id='main_view_left'></div>
+
+      <div id='main_view_right' >
+        <div id='main_view_map'></div>
+      
+        <div id='main_view_info'>
+            Tags:<br />
+            <input id="tag1" class="sifter-filter-checkbox-input" value="Innovation"          type="checkbox" checked="checked">Innovation         </input><br />
+            <input id="tag2" class="sifter-filter-checkbox-input" value="Stories of the Past" type="checkbox" checked="checked">Stories of the Past</input><br />
+            <input id="tag3" class="sifter-filter-checkbox-input" value="Madison Culture"     type="checkbox" checked="checked">Madison Culture    </input><br />
+            <input id="tag4" class="sifter-filter-checkbox-input" value="Must Do"             type="checkbox" checked="checked">Must Do            </input><br />
+            <input id="tag5" class="sifter-filter-checkbox-input" value="100 Years from Now"  type="checkbox" checked="checked">100 Years from Now </input><br />
+            <br />
+            <span>Search:<input id="filterbox" class="sifter-filter-search-input" type="text"/></span>
+            <br /><br /><br />
+        </div>
+    </div>
+</div> <!-- end main view full -->
+
+<!-- a thing with position absolute in the top left corner that takes up the full size of the screen. now popups can position themselves within this without guessing percentages -->
+	<div id='darkBackgroundLayer'        class='darkBackgroundLayer'> <!--for dimming the background when popups have the focus CDH -->
+    <div id='note_view_container'        class='container'></div>
+    <div id='create_note_view_container' class='container'></div>
+    <div id='login_view_container'       class='container'></div>
+    <div id='join_view_container'        class='container'></div>
+    <div id='forgot_view_container'      class='container'></div>
+
+</div>
+
+<!-- HTML CONSTRUCTIONS OF REUSABLE NODES -->
+<!-- These will never be seen. This is simply an area to construct nodes in raw html rather than dealing with doing so in javascript. From here, nodes can be accessed by their ID's, cloned, and renamed. -->
+<div id='constructs'>
+
+<!-- Close Buttons (?) --><!-- NOT re-used. Just put here so they don't show up, I guess? -->
+<div id='note_view_close_button'        class='close_button'>X</div>
+<div id='create_note_view_close_button' class='close_button'>X</div>
+<div id='login_view_close_button'       class='close_button'>X</div>
+<div id='forgot_view_close_button'      class='close_button'>X</div>
+<div id='join_view_close_button'        class='close_button'>X</div>
+
+
+<!-- Create Note View -->
+<div id='note_create_view_construct' class='note_create_view'>
+    <div id='note_create_view_left_construct' class='note_create_view_left'>
+        <div id='note_create_view_image_construct' class='note_create_view_image' style="border:0px single transparent" >
+            <br />Image: (jpg, gif or png) <br />
+            <img width=300 height=300 id="imageThumbnail" />
+            <input type="file" id="imageFileInput" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
+            <button id="browseImage" class="button">Browse</button>
+            <button id="showCamera" class="button">Camera</button>
+            <video id="video" width="200" height="200" autoplay class="hidden"></video>
+            <button id="snap" class="button hidden">Snap Photo</button>
+            <canvas id="canvas" width="200" height="200" style="display:none;"></canvas>
+        </div>
+        <div id='note_create_view_location_construct' class='note_create_view_location'>
+            <br />Location:<br />
+            <div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br />
+            <input type="text" name="location" id="searchTextField" style="width:300px" /><br />
+            <div id="latitude"></div>
+            <div id="longitude"></div>
+            <div id="address"></div>
+            <br /><br />
+        </div>
+    </div>
+    <div id='note_create_view_right_construct' class='note_create_view_right'>
+        <div id='note_create_view_caption_construct' class='note_create_view_caption'>
+            <br />Caption:<br /><textarea id="caption" rows="8" ></textarea> 
+        </div>
+        <div id='note_create_view_tags_construct' class='note_create_view_tags'>
+            <div id='note_create_view_tags_construct' class='note_create_view_tags'>
+                Tags:<br />
+                <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio">Innovation</input><br />
+                <input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">Stories of the Past</input><br />
+                <input id="create_tag_3" name="note_tag_select" value="Madison Culture"     type="radio">Madison Culture</input><br />
+                <input id="create_tag_4" name="note_tag_select" value="Must Do"             type="radio">Must Do</input><br />
+                <input id="create_tag_5" name="note_tag_select" value="100 Years from Now"  type="radio">100 Years from Now</input><br />
+                <br />
+            </div>
+            <div id='note_create_view_audio_construct' class='note_create_view_audio'>
+                Audio: (mp3, aac, m4a or caf)<br />
+                <button id="browseAudio" class="button">Browse</button><br />
+                <input type="file" id="audioFileInput" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
+             <!--
+				 <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
+                <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>
+                <button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button>
+            --> 
+			   <br />Preview:<br />
+                <audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio>
+                <br /><br />
+            </div>
+        </div>
+        <div id='note_create_view_submit_construct' class='note_create_view_submit'>
+            <br />
+            <button id="submitNote" class="button">Submit</button>
+            <button id="cancelNote" class="button">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Login View -->
+<div id='login_view_construct' class='login_view'>
+    <div id='login_view_top_construct' class='login_view_top'>
+        <br />To upload content, you must login.<br />
+        <hr style="background:#F87431; border:0; height:7px" /><br /><br />
+    </div>
+    <div id='login_view_bottom_construct' class='login_view_bottom'>
+        <ul>
+            <li>
+                <label for="username_login">Username</label>
+                <input type="text" id="username_login" placeholder="username" required>
+            </li>
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="password" required></li>
+            <li>
+                <button id="login" class="button">Login</button>
+            </li>
+
+
+        </ul>
+        <br /><span id="noAccount" class="internalLink">Don't have an account?</span>
+        <br /><span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
+    </div>
+</div>
+ 
+
+<!-- Join View -->
+<div id='join_view_construct' class='join_view'>
+    <div id='join_view_top_construct' class='join_view_top'>
+        Join to contribute<br/>
+        <hr style="background:#F87431; border:0; height:7px" /><br/>
+    </div>
+    <div id='join_view_bottom_construct' class='join_view_bottom'>
+        <ul>
+            <li>
+                <label for="usermail_join">Email</label>
+                <input type="email" id="usermail_join" placeholder="Email" required>
+            </li> 
+            
+            <li> 
+                <label for="username_join">Username</label>
+                <input type="text" id="username_join" placeholder="username" required>
+            </li> 
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="password" required>
+            </li>
+            <li>
+                <button id="signUp" class="button">Sign Up</button>
+            </li>
+        </ul>
+        <br/> Already have an account?
+        <span id="viewLoginPage" class="internalLink">Log in</span>
+    </div>
+</div>
+
+<!--Forgot View -->
+<div id='forgot_view_construct' class='join_view'>
+    <div id='forgot_view_top_construct' class='join_view_top'>
+        Forgot Password or Username?<br/>
+        <hr style="background:#F87431; border:0; height:7px" /><br/>
+    </div>
+    <div id='join_view_bottom_construct' class='join_view_bottom'>
+        <ul>
+			<li> Enter your Email to retrieve your login information
+			</li>
+            <li>
+                <label for="usermail_forgot">Email</label>
+                <input type="email" id="usermail_forgot" placeholder="Email" required>
+            </li> 
+            
+            <li>
+                <button id="forgot" class="button">Email Password</button>
+
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Note View -->
+<div id='note_view_construct' class='note_view'>
+    <div id='note_view_left_construct' class='note_view_left'></div>
+    <div id='note_view_right_construct' class='note_view_right'>
+        <div id='note_view_caption_construct' class='note_view_captions'></div>
+        <div id='note_view_audio_construct' class='note_view_audio'></div>
+        <div id='note_view_tags_construct' class='note_view_tags'></div>
+        <div id='note_view_comments_construct' class='note_view_comments'></div>
+        <div id='note_view_input_construct' class='note_view_input'></div>
+		<div id='note_view_shares_construct' class='note_view_shares'>Share:
+			<ul class='shares'>
+				<li id='shareLikes'> </li>
+				<li id='shareFacebook'> </li>
+				<li id='shareTwitter'></li>
+				<li id='sharePinterest'></li>
+				<li id='shareEmail'></li>
+			</ul>
+		</div>	
+
+    </div>
+</div>
+
+<!-- Note Content Cell -->
+<div id='note_content_cell_construct' class='note_content_cell'></div>
+
+<!-- Note Comment Cell -->
+	<div id='note_comment_cell_construct' class='note_comment_cell'>
+		<div id='note_comment_cell_header_construct' class='note_comment_cell_header note_view_owner'></div>
+	</div>
+
+</div>
+
+<script>
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '195203477326416', // App ID
+    channelUrl : '//dev.arisgames.org/caroline-yoi/channel.html', // Channel File
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
+
+  // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+  // for any authentication related change, such as login, logout or session refresh. This means that
+  // whenever someone who was previously logged out tries to log in again, the correct case below 
+  // will be handled.
+
+	FB.Event.subscribe('auth.logout', function(response) {
+		console.log("facebook logged out");
+    	controller.logout();
+		var uid = "";
+		var accessToken = "";
+		var expiresIn = "";
+		var signedRequest = "";
+	
+	});
+ 
+  FB.Event.subscribe('auth.authResponseChange', function(response) {
+  console.info("auth", response);
+    // Here we specify what we do with the response anytime this event occurs. 
+    if (response.status === 'connected') {
+      // The response object is returned with a status field that lets the app know the current
+      // login status of the person. In this case, we're handling the situation where they 
+      // have logged in to the app.
+		var uid = response.authResponse.userID;
+		var accessToken = response.authResponse.accessToken;
+		var expiresIn = response.authResponse.expiresIn;
+		var signedRequest = response.authResponse.signedRequest;
+	    FB.api('/me', function(response) {
+			controller.facebookLogin(response.email, uid, response.username);		
+       	});
+
+
+    } else if (response.status === 'not_authorized') {
+      // In this case, the person is logged into Facebook, but not into the app, so we call
+      // FB.login() to prompt them to do so. 
+      // In real-life usage, you wouldn't want to immediately prompt someone to login 
+      // like this, for two reasons:
+      // (1) JavaScript created popup windows are blocked by most browsers unless they 
+      // result from direct interaction from people using the app (such as a mouse click)
+      // (2) it is a bad experience to be continually prompted to login upon page load.
+      FB.login();
+	  console.log("response state not authorized");
+    
+	} else {
+      // In this case, the person is not logged into Facebook, so we call the login() 
+      // function to prompt them to do so. Note that at this stage there is no indication
+      // of whether they are logged into the app. If they aren't then they'll see the Login
+      // dialog right after they log in to Facebook. 
+      // The same caveats as above apply to the FB.login() call here.
+		console.log("response state else");
+    }
+  });
+
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d){
+   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+   if (d.getElementById(id)) {return;}
+   js = d.createElement('script'); js.id = id; js.async = true;
+   js.src = "//connect.facebook.net/en_US/all.js";
+   ref.parentNode.insertBefore(js, ref);
+  }(document));
+  // Here we run a very simple test of the Graph API after login is successful. 
+  // This testAPI() function is only called in those cases. 
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+  }
+
+
+
+</script>
+</body>
+</html>
