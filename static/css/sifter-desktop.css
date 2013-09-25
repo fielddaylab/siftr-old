@@ -1,0 +1,436 @@
+/* Full height mode */
+html,body
+{
+  height: 100%;
+  margin: 0;
+}
+
+/* Layout dimensions *************************************** */
+
+.sifter-desktop-header
+{
+  height: 15%;
+}
+
+
+  /* With pop down shown */
+  .sifter-filters-popdown
+  {
+    height: 25%;
+  }
+
+  .sifter-content.shrunk
+  {
+    height: 60%;
+  }
+
+  /* With pop down hidden */
+  .sifter-filters-popdown.slide-up
+  {
+    height: 0%;
+  }
+
+  .sifter-content
+  {
+    height: 85%;
+  }
+
+.sifter-imagelist
+{
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  width: 60%;
+}
+
+.sifter-map
+{
+  width: 40%;
+}
+
+.sifter-imagelist,
+.sifter-map
+{
+  float: left;
+  height: 100%;
+}
+
+
+/* Overlay Depth Indexes ************************************ */
+
+.sifter-desktop-header  { z-index: 200; }
+.sifter-filters-popdown { z-index: 200; }
+.show-dialog            { z-index: 300; }
+.sifter-modal-overlay   { z-index: 299; }
+
+
+
+/* Desktop Header ******************************************* */
+
+.sifter-desktop-header
+{
+  position: relative;
+  overflow: hidden; /* Prevent padding from wrapping the nav */
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+}
+
+.sifter-logo-box
+{
+  float: left;
+  margin: 20px;
+  color: #cf2037;
+  position: relative;
+  font-size: 20px;
+  top: 50%;
+  height: 100px;
+  vartical-align: middle;
+  margin-top: -50px;
+  text-shadow: 0 0 5px rgba(155, 155, 155, 0.1);
+}
+
+.sifter-logo-box .siftr-logo
+{
+  font-size: 150%;
+  vertical-align: middle;
+}
+
+.sifter-rightside-launchpad
+{
+  float: right;
+  position: relative;
+  top: 50%;
+  margin-top: -25px;
+  right: 50px;
+}
+
+.sifter-rightside-launchpad button
+{
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  padding: 0;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.sifter-rightside-launchpad button span
+{
+  vertical-align: middle;
+}
+
+.launchpad-button, .filter-button 
+{
+  color: #dedede;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: #f7f7f7;
+  background-repeat: repeat-x;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.1);
+
+  background-image: linear-gradient(to bottom, #ffffff, #f7f7f7);
+}
+
+.launchpad-button.button-active,
+.filter-button.button-active
+{
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: #cf2037;
+  background-repeat: repeat-x;
+  border: 1px solid #cf2037;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.5);
+
+  background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
+}
+
+/* catch the nexus 7 shrunken screen */
+/* FIXME really should switch to a fixed-height top bar like the mobile version
+   so it can gracefully shrink easier than vertically centered divs -Kevin */
+@media only screen and (max-height: 500px)
+{
+  .sifter-logo-box
+  {
+    margin-top: -55px;
+  }
+}
+
+
+
+/* Desktop Nav ********************************************* */
+
+.sifter-filters-popdown
+{
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  background: #fff;
+  position: relative;
+}
+
+.sifter-filters,
+.sifter-categories
+{
+  float: left;
+}
+
+  /* Filter Buttons */
+  .sifter-filters
+  {
+    width: 365px;
+    font-size: 110%;
+  }
+  .sifter-filters button
+  {
+    width: 150px;
+    margin-top: 1em;
+    margin-left: 1em;
+    color: #cf2037;
+    padding: 0.25em;
+  }
+
+
+  /* Category Links */
+  .sifter-categories
+  {
+    width: 525px;
+    font-size: 0.8em;
+    margin: 1em;
+    margin-left: 0;
+  }
+  .sifter-categories .sifter-category 
+  {
+    display: inline-block;
+    padding: 0.25em 0;
+    margin-bottom: 1em;
+    width: 170px;
+    overflow: hidden;
+    list-style: none;
+    color: #cf2037;
+  }
+  .sifter-category .icon
+  {
+    font-size: 2.55em; /* opera crunch */
+    vertical-align: middle;
+  }
+
+
+  .sifter-category input[type=checkbox]
+  {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+
+  .sifter-category input[type=checkbox] + span
+  {
+    color: #cacaca;
+  }
+
+  .sifter-category input[type=checkbox]:checked + span
+  {
+    color: #cf2037;
+  }
+
+  .desktop-search
+  {
+    display: inline;
+    height: 2em;
+    width: 100px;
+    border: 1px solid #f7f7f7;
+    border-radius: 50px;
+    padding-left: 10px;
+    box-shadow: inset 0 0 10px rgba(136, 136, 136, 0.2); 
+  }
+
+  /* Footer */
+  .sifter-popdown-footer
+  {
+    background: #f7f7f7;
+    border-top: 1px solid #cacaca;
+    color: #aaaaaa;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+  }
+
+/* catch the nexus 7 shrunken screen */
+@media only screen and (max-height: 640px)
+{
+  .sifter-popdown-footer
+  {
+    display: none;
+  }
+}
+
+/* Navigation/Content shrink/expand animation */
+.sifter-filters-popdown,
+.sifter-content
+{
+  transition-duration: 0.25s;
+}
+.sifter-filters-popdown
+{
+  overflow: hidden;
+}
+
+
+/* Content Area */
+.sifter-content
+{
+  background: #cacaca;
+}
+
+
+
+/* Image List */
+.sifter-imagelist .img
+{
+  width: 23%;
+  margin: 1%;
+  float: left;
+}
+
+.sifter-imagelist .img img
+{
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+}
+
+
+
+/* Show Dialog ********************************************** */
+
+.show-dialog
+{
+  position: fixed;
+
+  width: 600px;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: #fff;
+  color: rgb(77,77,77);
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  border-radius: 4px;
+}
+
+
+/* Close */
+.show-dialog-close-button
+{
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #cacaca;
+  font-size: 200%;
+  margin: 0.25em;
+  background: #fff;
+}
+
+.show-dialog-close-button:hover
+{
+  color: #cf2037;
+}
+
+
+.sifter-modal-overlay
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(100,100,100, 0.5);
+  height: 100%;
+  width: 100%;
+}
+
+
+/* Modal Layout */
+.show-dialog .sifter-show-content
+{
+  float: left;
+  width: 70%;
+}
+
+
+.show-dialog .sifter-show-sidebar
+{
+  float: left;
+  width: 30%;
+}
+
+
+/* Modal style */
+.sifter-show-content .sifter-image img
+{
+  width: 100%;
+}
+
+.sifter-comments .sifter-comment,
+.sifter-show-details
+{
+  padding: 0 0.75em;
+}
+
+.sifter-new-comment
+{
+  padding: 0.75em;
+}
+
+.sifter-comment p
+{
+  margin-top: 0.25em;
+  font-size: 90%;
+}
+
+.sifter-comment h3
+{
+  margin-bottom: 0.25em;
+}
+
+.sifter-comment-author
+{
+  color: #cf2037;
+}
+
+.sifter-new-comment textarea
+{
+  width: 95%;
+  border: 0;
+  background: #f7f7f7;
+}
+
+
+/* Modal Borders */
+.sifter-show-sidebar
+{
+  border-left: 1px solid #cacaca;
+  margin-right: -1px;
+}
+.sifter-show-content
+{
+  border-right: 1px solid #cacaca;
+  margin-right: -1px;
+}
+.sifter-new-comment
+{
+  border-top: 1px solid #cacaca;
+}
+
+
+
+/* Util section */
+.clear
+{
+  clear: both;
+}
+
+.hidden-desktop
+{
+  display: none;
+}

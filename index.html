@@ -1,171 +1,323 @@
-<html>
-<head>
-<title>Notebook</title>
-<link rel='stylesheet' type='text/css' href='css.css' />
-<link rel="stylesheet" type="text/css" href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-<script type="text/javascript" src="utils/json2.js"></script>
-<script type="text/javascript" src="utils/server-conf.js"></script>
-<script type="text/javascript" src="utils/nbutils.js"></script>
-<script type="text/javascript" src="views.js"></script>
-<script type="text/javascript" src="model.js"></script>
-<script type="text/javascript" src="controller.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Siftr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="utf-8">
 
-<script src="utils/jquery-1.10.2.min.js"></script>
-<script src="utils/jquery-cookie-master/jquery.cookie.js"></script>
+    <!-- Reset -->
+    <link href="css/normalize.css"      rel="stylesheet" media="screen">
 
-<script type="text/javascript" src="utils/richmarker.js" ></script>
-<script type="text/javascript" src="utils/markerclusterer.js"></script>
-<script src="utils/recorder.js"></script>
-<script type="text/javascript">
+    <!-- Siftr Theme -->
+    <link href="css/sifter-mobile.css"     rel="stylesheet" media="screen and (max-width: 906px)">
+    <link href="css/sifter-desktop.css"    rel="stylesheet" media="screen and (min-width: 907px)">
+    <link href="css/sifter-lg-desktop.css" rel="stylesheet" media="screen and (min-width: 1025px)">
+    <link href="css/sifter-hd-kiosk.css"   rel="stylesheet" media="screen and (min-width: 1400px)">
 
-window.addEventListener('load', pageLoad, false);
+    <!-- Symbol Fonts -->
+    <link href="css/glyphicons.css"     rel="stylesheet" media="screen">
+    <link href="css/icomoon.css"        rel="stylesheet" media="screen">
+    <link href="css/logofont.css"       rel="stylesheet" media="screen">
 
-//Defining here to make available to everyone
-var model;
-var controller;
+  </head>
 
-function pageLoad()
-{
-    //Initialize stuff
-    controller = new Controller();
-    model = new Model();
-	model.finishLoad(startLoadGame);
-
-    if(navigator.appName == 'Microsoft Internet Explorer') alert('You might need to install quicktime to properly view some media.\n(http://www.apple.com/quicktime/download)');
-}
-
-function startLoadGame()
-{
-    document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img> Waiting on Server...";
-	callService("notes.getNotesWithAttributes", finishLoadGame, '', JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:model.playerId, tagIds:[], lastLocation:0, date:0}));
-}
-
-
-function finishLoadGame(responseText)
-{
-    model.gameJSONText = responseText;
-    responseData=JSON.parse(responseText);
-    if(responseData.returnCode == 1) //Error
-    {
-        document.getElementById('message').innerHTML = responseData.data;	
-        return;
-    }
-    model.populateFromData(responseData.data);
-
-    document.getElementById('message').innerHTML = "";
-
-    controller.populateAllFromModel();
-
-    //  Set actual page visible
-    document.getElementById('message').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-
-    google.maps.event.trigger(model.views.gmap, 'resize'); // To fix google maps incorrect sizing bug
-
-}
-
-function startSift(siftType){
-	model.views.mainViewLeft.innerHTML = ''; //clear out old notes
-    document.getElementById('message').innerHTML = "&nbsp; <img height='12px' src='assets/images/spinner.gif'></img>Sifting....";
-    document.getElementById('message').style.display = 'block'; //this is set to hidden after page loads first time
-
-	switch(siftType){
-		case "top":
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:0, playerId:0, tagIds:[], lastLocation:0, date:0});
-			break;
-		case "recent":
-			//don't use the date paramenter, bc then it'll only find the notes created since that date. We want it to just sort the notes by date & give 50 mores recent
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:2, playerId:0, tagIds:[], lastLocation:0, date:""});
-			break;
-		case "popular":
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:1, playerId:0, tagIds:[], lastLocation:0, date:0});
-			break;
-		case "mine":
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:3, playerId:model.playerId, tagIds:[], lastLocation:0, date:0});
-			break;
-		default: siftString = "kSearchTop"; console.log("Error in sift type: " + siftType) ;
-	}
-    callService("notes.getNotesWithAttributes", finishLoadGame, '', siftString);
-}
-
-</script>
-</head>
-<body id='body'>
-
-<div id="fb-root"></div>
-<!--
-  Below we include the Login Button social plugin. This button uses the JavaScript SDK to
-  present a graphical Login button that triggers the FB.login() function when clicked.
-
-  Learn more about options for the login button plugin:
-  /docs/reference/plugins/login/ -->
-
-
-<div id='message'></div>
-
-<div id='header'>
-	<h1>Sifter</h1>
-        	<button onClick="JavaScript:startSift('top')" class = "button" id="siftButton" >Top</button> 
-        	<button onClick="JavaScript:startSift('recent')" class = "button" id="siftButton" >Recent</button> 
-        	<button onClick="JavaScript:startSift('popular')" class = "button" id="siftButton" >Popular</button> 
-        
-			<button onClick="JavaScript:startSift('mine')" class = "button" id="siftMineButton" >Mine</button><!--CDH Only displays after login -->
-
-        	<button onClick="JavaScript:controller.showLoginView()" class = "button" id="loginButton" >Login to Upload</button> <!-- CDH displays before login -->
-
-			<button onClick="JavaScript:controller.createNote()" class="button" id="uploadButton" >Upload</button> <!--CDH Only displays a
-fter login -->
-			<button onClick=" FB.login(function(response) { }, {scope: 'email'});" class="button" id="fbloginButton" >Facebook Login</button> 
-			<button onClick="if(FB.IsLoggedIn){ FB.logout(function(response) { });}else{JavaScript:controller.logout();}" class="button" id="logoutButton" >Log Out</button> 
-
-	
-	<ul>
-		<li class='tabs' id='ImagesTab' onclick="Javascript:controller.showImagesAsTab()" >Images </li>
-		<li class='tabs selectedTab' id='MapTab'onclick="Javascript:controller.showMapAsTab()">Map </li>
-	</ul>
-</div>
-
-
-<div id= 'content'>
-
-<!-- Main View -->
-<div id='main_view_full' >
-    	<div id='main_view_left' class='behindView'  ></div>
-    <div id='main_view_right' >
-
-        <div id='main_view_map' class='selectedView' >
-
-	</div>
-        <div id='main_view_info'>
-            Tags:<br />
-            <input id="tag1" value="Innovation"          type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Innovation         </input><br />
-            <input id="tag2" value="Stories of the Past" type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Stories of the Past</input><br />
-            <input id="tag3" value="Madison Culture"     type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Madison Culture    </input><br />
-            <input id="tag4" value="Must Do"             type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">Must Do            </input><br />
-            <input id="tag5" value="100 Years from Now"  type="checkbox" checked="checked" onchange="controller.populateAllFromModel()">100 Years from Now </input><br />
-            <br />
-            <span>Search:<input id="filterbox" type="text" onchange="controller.populateListNotesFromModel()"/></span>
-            <br /><br /><br />
-            
-		</div>
+  <body>
+    <!-- Message Alert -->
+    <div id="message" class="modal-popup">
+      <div class='working'>
+        <div class='sifting'><span class='siftr-logo'></span></div>
+        <div id="messageContent">Loading</div>
+      </div>
     </div>
-</div> <!-- end main view full -->
 
-<!-- a thing with position absolute in the top left corner that takes up the full size of the screen. now popups can position themselves within this without guessing percentages -->
-	<div id='darkBackgroundLayer'        class='darkBackgroundLayer'> <!--for dimming the background when popups have the focus CDH -->
-    <div id='note_view_container'        class='container'></div>
-    <div id='create_note_view_container' class='container'></div>
-    <div id='login_view_container'       class='container'></div>
-    <div id='join_view_container'        class='container'></div>
-    <div id='forgot_view_container'      class='container'></div>
+    <!-- Mobile Header Bar -->
+    <div class="sifter-header-toolbar hidden-desktop">
+      <button class="sifter-nav-button button-left switch-views">
+        <span class="switch-view-icon switch-map icon-map"></span>
+        <span class="switch-view-icon switch-images glyphicon glyphicon-th"></span>
+      </button>
 
-</div>
+      <input class="sifter-search-field sifter-filter-search-input" type="text" placeholder="search" />
 
-<!-- HTML CONSTRUCTIONS OF REUSABLE NODES -->
-<!-- These will never be seen. This is simply an area to construct nodes in raw html rather than dealing with doing so in javascript. From here, nodes can be accessed by their ID's, cloned, and renamed. -->
-<div id='constructs'>
+      <button class="sifter-nav-button button-right" style="display: none;">
+        <span class="icon-cog"></span>
+      </button>
+    </div>
+
+
+    <!-- Desktop Header -->
+    <div class="sifter-desktop-header hidden-mobile">
+      <div class="sifter-logo-box">
+        <h1><span class="siftr-logo"></span> Siftr</h1>
+
+      </div>
+
+
+      <div class="sifter-rightside-launchpad">
+        <div style="display: none;">
+        <button class="launchpad-button sifter-show-login-button" id="loginButton">L</button>
+        <button class="launchpad-button sifter-show-logout-button" id="logoutButton">O</button>
+        <button class="sifter-add launchpad-button sifter-show-upload-button" id="uploadButton"><span class="icon-plus"></span></button>
+        </div>
+        <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+
+    <!-- Category/Filter Mobile Slideout, Desktop Popdown -->
+    <div class="sifter-filters-slideout sifter-filters-popdown">
+      <div class="sifter-filters">
+        <button class="filter-button first button-active sifter-fetch-top-button">Top</button>
+        <button class="filter-button sifter-fetch-recent-button"      >Recent</button>
+        <button class="filter-button sifter-fetch-popular-button"      >Popular</button>
+        <button class="filter-button last sifter-fetch-mine-button" id="siftMineButton">Mine</button>
+        <div class="clear"></div>
+      </div>
+
+      <div class="sifter-categories">
+        <div class="hidden-mobile sifter-category">
+          <span class="icon icon-search"></span>
+          <input type="text" class="desktop-search sifter-filter-search-input" id="filterbox" placeholder="search" />
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" id="tag1" class="sifter-filter-checkbox-input" value="Innovation" checked="checked"/>
+            <span><span class="icon icon-innovation"></span> Innovation</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" id="tag2" class="sifter-filter-checkbox-input" value="Stories of the Past" checked="checked"/>
+            <span><span class="icon icon-stories"   ></span> Stories of the Past</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" id="tag4" class="sifter-filter-checkbox-input" value="Must Do" checked="checked"/>
+            <span><span class="icon icon-mustdo"    ></span> Must Do</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" id="tag3" class="sifter-filter-checkbox-input" value="Madison Culture" checked="checked"/>
+            <span><span class="icon icon-culture"   ></span> Madison Culture</span>
+          </label>
+        </div>
+        <div class="sifter-category">
+          <label>
+            <input type="checkbox" id="tag5" class="sifter-filter-checkbox-input" value="100 Years from Now" checked="checked"/>
+            <span><span class="icon icon-100years"  ></span> 100 Years From Now</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="sifter-popdown-footer hidden-mobile">
+        About <!-- ∑ Contact ∑ Privacy & Terms ∑ Copyright & Trademark -->
+      </div>
+      
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="sifter-content">
+      <div class="sifter-imagelist" id="main_view_left">
+      </div>
+      <div class="sifter-map" id="main_view_map">
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+
+    <!-- Footer Bar -->
+    <div class="sifter-footer-toolbar hidden-desktop">
+      <button class="sifter-nav-button sifter-filters-button button-left">
+        <span class="icon-tags"></span>
+      </button>
+
+      <button class="sifter-show-login-button sifter-nav-button button-center" style="display: none;">
+        <span class="icon-camera"></span>
+      </button>
+
+      <button class="sifter-nav-button button-right">
+        <span class="icon-target"></span>
+      </button>
+    </div>
+
+
+
+    <!-- Overlay -->
+    <div id="darkBackgroundLayer" class="sifter-modal-overlay" onclick="" style="display: none;"></div>
+
+
+
+    <!-- TEMPLATES ---------------------------------------- -->
+
+    <!-- Grid Image Cell ---------------------------------  -->
+    <script id="gridIconTemplate" type="text/template">
+      <div class="sifter-grid-note img">
+        <img class="sifter-grid-image" id="image{{note_id}}" src="{{image_url}}" />
+        <div class="scale-icon scale-{{category_class}}"></div>
+			</div>
+    </script>
+
+    <!-- Show View -->
+    <script id="showTemplate" type="text/template">
+      <div class="show-dialog closable" id="show-dialog">
+        <div class="close-button" onclick="">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+
+        <!-- left-side: image and description -->
+        <div class="sifter-show-content">
+          <div class="sifter-image">
+            <!-- TODO add icon to top right -->
+            <img src="{{image_url}}" />
+            <div class="scale-icon scale-{{category_class}}"></div> 
+          </div>
+
+          <div class="sifter-show-linkbar">
+          </div>
+
+          <div class="sifter-show-details">
+            <p>{{details}}</p>
+          </div>
+        </div>
+
+        <!-- right-side: comments list -->
+        <div class="sifter-show-sidebar">
+          <div class="sifter-comments">
+            {{#comments}}
+              <div class="sifter-comment">
+                <h3 class="sifter-comment-author">{{author}}</h3>
+                <p class="sifter-comment-text">{{text}}</p>
+              </div>
+            {{/comments}}
+            {{^comments}}
+              <div class="sifter-comment">
+                <h3 class="sifter-comment-author">Comments</h3>
+                <p class="sifter-comment-text">No Comments yet. Add one!</p>
+              </div>
+            {{/comments}}
+          </div>
+
+          <div class="sifter-new-comment" style="display: none;">
+            <textarea placeholder="Add a comment..."></textarea>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+    </script> <!-- /showTemplate -->
+
+
+    <!-- New View -->
+    <script id="newTemplate" type="text/template">
+      <div class="modal-popup closable">
+        HI
+      </div>
+    </script>
+
+
+    <!-- Login View -->
+    <script id="loginTemplate" type="text/template">
+      <div class='login_view modal-popup closable'>
+        <div class="close-button">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+
+        <div class="modal-header"><h2>Login to upload content</h2></div>
+
+        <div class="input_group">
+          <label for="username_login">Username</label>
+          <input type="text" id="username_login" placeholder="Username" required>
+        </div>
+
+        <div class="input_group">
+          <label for="password_login">Password</label>
+          <input type="password" id="password_login" placeholder="Password" required></li>
+        </div>
+
+        <div class="input_group">
+          <button id="login" class="modal-button button-active">Login</button>
+        </div>
+
+        <div class="modal-footer">
+          <span id="noAccount" class="internalLink">Don't have an account?</span>
+          <span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
+        </div>
+      </div>
+    </script> <!-- /Login View -->
+
+
+    <!-- Join View -->
+    <script id="joinTemplate" type="text/template">
+      <div class='join_view modal-popup closable'>
+        <div class="close-button">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+
+        <div class="modal-header"><h2>Sign up</h2></div>
+
+        <div class="input_group">
+          <label for="usermail_join">Email</label>
+          <input type="email" id="usermail_join" placeholder="Email" required>
+        </div>
+
+        <div class="input_group">
+          <label for="username_join">Username</label>
+          <input type="text" id="username_join" placeholder="Username" required>
+        </div>
+
+        <div class="input_group">
+          <label for="password_join">Password</label>
+          <input type="password" id="password_join" placeholder="Password" required>
+        </div>
+
+        <div class="input_group">
+          <button id="signUp" class="modal-button button-active">Sign Up</button>
+        </div>
+
+        <div class="modal-footer">
+          <span id="viewLoginPage" class="internalLink">Already have an account?</span>
+        </div>
+      </div>
+    </script> <!-- /Join View -->
+
+
+    <!--Forgot View -->
+    <script id="forgotTemplate" type="text/template">
+      <div class='join_view modal-popup closable'>
+        <div class="close-button">
+          <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+
+        <div class="modal-header"><h2>Forgot Password or Username?</h2></div>
+
+        <p>Enter your Email to retrieve your login information</p>
+
+        <div class="input_group">
+          <label for="usermail_forgot">Email</label>
+          <input type="email" id="usermail_forgot" placeholder="Email" required>
+        </div>
+
+        <div class="input_group">
+          <button id="forgot" class="button modal-button button-active">Email Password</button>
+        </div>
+
+        <div class="modal-footer">
+          <span id="viewLoginPage" class="internalLink">Remembered your password?</span>
+        </div>
+      </div>
+    </script>
+
+
+<!-- Temporary place for v1 constructs -->
+<div id='constructs' style="display: none;">
 
 <!-- Close Buttons (?) --><!-- NOT re-used. Just put here so they don't show up, I guess? -->
 <div id='note_view_close_button'        class='close_button'>X</div>
@@ -176,14 +328,14 @@ fter login -->
 
 
 <!-- Create Note View -->
-<div id='note_create_view_construct' class='note_create_view'>
+<div id='note_create_view_construct' class='note_create_view modal-popup closable'>
     <div id='note_create_view_left_construct' class='note_create_view_left'>
         <div id='note_create_view_image_construct' class='note_create_view_image' style="border:0px single transparent" >
             <br />Image: (jpg, gif or png) <br />
             <img width=300 height=300 id="imageThumbnail" />
-            <input type="file" id="imageFileInput" onchange="handleImageFileSelect(this.files)" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
-            <button id="browseImage" class="button" onclick="clickBrowseImage()">Browse</button>
-            <button id="showCamera" onclick="showVideo()" class="button">Camera</button>
+            <input type="file" id="imageFileInput" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
+            <button id="browseImage" class="button">Browse</button>
+            <button id="showCamera" class="button">Camera</button>
             <video id="video" width="200" height="200" autoplay class="hidden"></video>
             <button id="snap" class="button hidden">Snap Photo</button>
             <canvas id="canvas" width="200" height="200" style="display:none;"></canvas>
@@ -214,8 +366,8 @@ fter login -->
             </div>
             <div id='note_create_view_audio_construct' class='note_create_view_audio'>
                 Audio: (mp3, aac, m4a or caf)<br />
-                <button id="browseAudio" class="button" onclick="clickBrowseAudio()">Browse</button><br />
-                <input type="file" id="audioFileInput" onchange="handleAudioFileSelect(this.files)" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
+                <button id="browseAudio" class="button">Browse</button><br />
+                <input type="file" id="audioFileInput" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
              <!--
 				 <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
                 <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>
@@ -228,206 +380,50 @@ fter login -->
         </div>
         <div id='note_create_view_submit_construct' class='note_create_view_submit'>
             <br />
-            <button id="submitNote" onclick="submitNote()" class="button">Submit</button>
-            <button id="cancelNote" onclick="cancelNote()" class="button">Cancel</button>
+            <button id="submitNote" class="button">Submit</button>
+            <button id="cancelNote" class="button">Cancel</button>
         </div>
     </div>
 </div>
 
-<!-- Login View -->
-<div id='login_view_construct' class='login_view'>
-    <div id='login_view_top_construct' class='login_view_top'>
-        <br />To upload content, you must login.<br />
-        <hr style="background:#F87431; border:0; height:7px" /><br /><br />
-    </div>
-    <div id='login_view_bottom_construct' class='login_view_bottom'>
-        <ul>
-            <li>
-                <label for="username_login">Username</label>
-                <input type="text" id="username_login" placeholder="username" required>
-            </li>
-            <li>
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="password" required></li>
-            <li>
-                <button id="login" class="button" onclick="clickLogin()">Login</button>
-            </li>
 
-
-        </ul>
-        <br /><span id="noAccount" onClick="clickNoAccount()" class="internalLink">Don't have an account?</span>
-        <br /><span id="forgotPassword" onClick="clickForgotPassword()" class="internalLink">Forgot Username or Password?</span>
-    </div>
-</div>
- 
-
-<!-- Join View -->
-<div id='join_view_construct' class='join_view'>
-    <div id='join_view_top_construct' class='join_view_top'>
-        Join to contribute<br/>
-        <hr style="background:#F87431; border:0; height:7px" /><br/>
-    </div>
-    <div id='join_view_bottom_construct' class='join_view_bottom'>
-        <ul>
-            <li>
-                <label for="usermail_join">Email</label>
-                <input type="email" id="usermail_join" placeholder="Email" required>
-            </li> 
-            
-            <li> 
-                <label for="username_join">Username</label>
-                <input type="text" id="username_join" placeholder="username" required>
-            </li> 
-            <li>
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="password" required>
-            </li>
-            <li>
-                <button id="signUp" class="button" onclick="clickSignUp()">Sign Up</button>
-            </li>
-        </ul>
-        <br/> Already have an account?
-        <span id="viewLoginPage" onClick="clickViewLoginPage()" class="internalLink">Log in</span>
-    </div>
-</div>
-
-<!--Forgot View -->
-<div id='forgot_view_construct' class='join_view'>
-    <div id='forgot_view_top_construct' class='join_view_top'>
-        Forgot Password or Username?<br/>
-        <hr style="background:#F87431; border:0; height:7px" /><br/>
-    </div>
-    <div id='join_view_bottom_construct' class='join_view_bottom'>
-        <ul>
-			<li> Enter your Email to retrieve your login information
-			</li>
-            <li>
-                <label for="usermail_forgot">Email</label>
-                <input type="email" id="usermail_forgot" placeholder="Email" required>
-            </li> 
-            
-            <li>
-                <button id="forgot" class="button" onclick="clickEmailPassword()">Email Password</button>
-
-            </li>
-        </ul>
-    </div>
-</div>
-
-<!-- Note View -->
-<div id='note_view_construct' class='note_view'>
-    <div id='note_view_left_construct' class='note_view_left'></div>
-    <div id='note_view_right_construct' class='note_view_right'>
-        <div id='note_view_caption_construct' class='note_view_captions'></div>
-        <div id='note_view_audio_construct' class='note_view_audio'></div>
-        <div id='note_view_tags_construct' class='note_view_tags'></div>
-        <div id='note_view_comments_construct' class='note_view_comments'></div>
-        <div id='note_view_input_construct' class='note_view_input'></div>
-		<div id='note_view_shares_construct' class='note_view_shares'>Share:
-			<ul class='shares'>
-				<li id='shareLikes'> </li>
-				<li id='shareFacebook'> </li>
-				<li id='shareTwitter'></li>
-				<li id='sharePinterest'></li>
-				<li id='shareEmail'></li>
-			</ul>
-		</div>	
-
-    </div>
-</div>
-
-<!-- Note Content Cell -->
-<div id='note_content_cell_construct' class='note_content_cell'></div>
-
-<!-- Note Comment Cell -->
-	<div id='note_comment_cell_construct' class='note_comment_cell'>
-		<div id='note_comment_cell_header_construct' class='note_comment_cell_header note_view_owner'></div>
-	</div>
 
 </div>
 
-<script>
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '195203477326416', // App ID
-    channelUrl : '//dev.arisgames.org/caroline-yoi/channel.html', // Channel File
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
-  });
-
-  // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
-  // for any authentication related change, such as login, logout or session refresh. This means that
-  // whenever someone who was previously logged out tries to log in again, the correct case below 
-  // will be handled.
-
-	FB.Event.subscribe('auth.logout', function(response) {
-		console.log("facebook logged out");
-    	controller.logout();
-		var uid = "";
-		var accessToken = "";
-		var expiresIn = "";
-		var signedRequest = "";
-	
-	});
- 
-  FB.Event.subscribe('auth.authResponseChange', function(response) {
-  console.info("auth", response);
-    // Here we specify what we do with the response anytime this event occurs. 
-    if (response.status === 'connected') {
-      // The response object is returned with a status field that lets the app know the current
-      // login status of the person. In this case, we're handling the situation where they 
-      // have logged in to the app.
-		var uid = response.authResponse.userID;
-		var accessToken = response.authResponse.accessToken;
-		var expiresIn = response.authResponse.expiresIn;
-		var signedRequest = response.authResponse.signedRequest;
-	    FB.api('/me', function(response) {
-			controller.facebookLogin(response.email, uid, response.username);		
-       	});
+    <!-- Template Render Containers -->
+    <div id='note_view_container'        class='container'></div>
+    <div id='create_note_view_container' class='container'></div>
+    <div id='login_view_container'       class='container'></div>
+    <div id='join_view_container'        class='container'></div>
+    <div id='forgot_view_container'      class='container'></div>
 
 
-    } else if (response.status === 'not_authorized') {
-      // In this case, the person is logged into Facebook, but not into the app, so we call
-      // FB.login() to prompt them to do so. 
-      // In real-life usage, you wouldn't want to immediately prompt someone to login 
-      // like this, for two reasons:
-      // (1) JavaScript created popup windows are blocked by most browsers unless they 
-      // result from direct interaction from people using the app (such as a mouse click)
-      // (2) it is a bad experience to be continually prompted to login upon page load.
-      FB.login();
-	  console.log("response state not authorized");
-    
-	} else {
-      // In this case, the person is not logged into Facebook, so we call the login() 
-      // function to prompt them to do so. Note that at this stage there is no indication
-      // of whether they are logged into the app. If they aren't then they'll see the Login
-      // dialog right after they log in to Facebook. 
-      // The same caveats as above apply to the FB.login() call here.
-		console.log("response state else");
-    }
-  });
+    <!-- Delayed JS loading -->
+    <script src="js/jquery.js"></script>
+    <script src="utils/jquery-cookie-master/jquery.cookie.js"></script>
+    <script src="js/prefixfree.min.js"></script>
+    <script src="js/sifter-mobile.js"></script>
+    <script src="js/mustache.js"></script>
+
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+
+    <!-- Sifter application -->
+    <script src="utils/json2.js"></script>
+    <script src="utils/server-conf.js"></script>
+    <script src="utils/nbutils.js"></script>
+    <script src="views.js"></script>
+    <script src="model.js"></script>
+    <script src="controller.js"></script>
+
+    <script src="utils/richmarker.js" ></script>
+    <script src="utils/markerclusterer.js"></script>
+    <script src="utils/recorder.js"></script>
+
+    <!-- Extraction from original index -->
+    <script src="application.js"></script>
+    <script src="events.js"></script>
 
 
-  };
-
-  // Load the SDK asynchronously
-  (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "//connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
-  }(document));
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-  }
-
-
-
-</script>
-<script id="facebook-jssdk" src="//connect.facebook.net/en_US/all.js"></script>
-</body>
+  </body>
 </html>
