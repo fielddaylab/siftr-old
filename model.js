@@ -98,12 +98,25 @@ function Model()
 		this.uploadButton 				= document.getElementById('uploadButton'); 
 		this.loginButton				= document.getElementById('loginButton'); 
 		this.logoutButton				= document.getElementById('logoutButton');
+		this.fbloginButton				= document.getElementById('fbloginButton');
 		this.siftMineButton				= document.getElementById('siftMineButton');
 
     /* TODO toggle classes/use jquery */
 		if(self.playerId > 0){ //if the cookie indicated they are logged in
 			this.loginButton.style.display = 'none'; // hide login
-			this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
+			this.fbloginButton.style.display = 'none'; //they are already logged in
+
+			//check to see if they are logged into facebook and update the logout button accordingly
+			if(FB.IsLoggedIn){
+				console.log("facebook logged in");
+				this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
+			
+			}else{ //since they are only logged into siftr, use the siftr logout button 
+				console.log("facebook not logged in");
+				this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
+			}
+
+    		this.uploadButton.style.display = 'inline'; // show upload		
 			this.siftMineButton.style.display = 'inline'; //show sift by mine
 		}
 		else{

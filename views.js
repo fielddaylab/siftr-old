@@ -244,7 +244,7 @@ function NoteView(note)
 			note.comments.push({ "username":model.displayName, "title":comment, "created":today}); 
 	
 			// now add it to the server copy and re-display the updated note
-			controller.addCommentToNote(note.note_id, comment, function(status){ controller.noteSelected(thism);});
+			controller.addCommentToNote(note.note_id, comment, function(status){controller.setCommentComplete(status); controller.noteSelected(thism);});
 		}
 
 		else
