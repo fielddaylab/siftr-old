@@ -960,3 +960,12 @@ function NoteCreateView()
 
     this.html = $(view).get(0);
 }
+
+
+function AboutView()
+{
+    var template = $('#aboutTemplate').html();
+    var view = Mustache.render (template);
+
+    this.html = $(view).get(0);
+}

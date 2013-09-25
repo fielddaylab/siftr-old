@@ -77,25 +77,25 @@ function startSift(siftType){
 
 	switch(siftType){
 		case "top":
-			siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
+			siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:searchTerms, noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
 			break;
 		case "recent":
 			//don't use the date paramenter, bc then it'll only find the notes created since that date. We want it to just sort the notes by date & give 50 mores recent
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:""});
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:searchTerms, noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:""});
 			break;
 		case "popular":
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:searchTerms, noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
 			break;
 		case "mine":
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:searchTypeCode, playerId:model.playerId, tagIds:selectedTags, lastLocation:0, date:0});
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:searchTerms, noteCount:50, searchType:searchTypeCode, playerId:model.playerId, tagIds:selectedTags, lastLocation:0, date:0});
 			break;
 		case "tags":
 			
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:searchTerms, noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
 
 			break;
 		case "search":
-		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:[], noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
+		 	siftString =  JSON.stringify({ gameId:model.gameId, searchTerms:searchTerms, noteCount:50, searchType:searchTypeCode, playerId:0, tagIds:selectedTags, lastLocation:0, date:0});
 
 			break;
 
