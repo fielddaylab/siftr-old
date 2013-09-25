@@ -54,7 +54,7 @@ function ListNote(callback, note, noteId)
             var data = {}
             data.image_url = noteImage;
             data.note_id  = noteId;
-            data.category_class = "mustdo";
+            data.category_class = getTagIconName(note);
             
             /* Render View */
             var template = $('#gridIconTemplate').html();
@@ -93,7 +93,7 @@ function NoteView(note)
       var data = {};
 
       data.image_url = getImageToUse (this.note);
-      data.category_class = "mustdo";
+      data.category_class = getTagIconName(this.note);
       data.audio_url = getAudioToUse (this.note); 
       data.details   = getTextToUse  (this.note);
       data.comments  = this.getCommentsJson (this.note.comments);
@@ -519,7 +519,7 @@ function xconstructMarker(note)
   var container = document.createElement('div');
   $(container).addClass ("sifter-map-icon");// scale-icon scale-mustdo");
   var image = document.createElement('image');
-  image.src = "assets/images/icon_mustdo.svg";
+  image.src = "assets/images/icon_"+getTagIconName(note)+".svg";
   $(container).append(image);
   return container;
 }
@@ -531,10 +531,27 @@ function getImageToUse(note)
     return "";
 }
 
+
+function getTagIconName(note)
+{
+
+  var lookup = {
+    "100 Years from Now"  : "100years",
+    "Innovation"          : "innovation",
+    "Stories of the Past" : "stories",
+    "Madison Culture"     : "culture",
+    "Must Do"             : "mustdo"
+  };
+  
+  var icon_name = lookup[note.tags[0].tag] || "search"; // unknown icon
+
+  return icon_name;
+}
+
 function getAudioToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)
-        if(note.contents[i].type == "AUDIO") return note.contents[i].meida.data.url;
+        if(note.contents[i].type == "AUDIO") return note.contents[i].media.data.url;
     return "";
 };
 
