@@ -1,42 +1,3 @@
-function ActionButton(html, callback)
-{
-    var self = this; // <- I hate javascript.
-    this.hover = function()
-    {
-        self.hovered = true;
-        if(self.selected) self.html.style.backgroundColor = '#CCCCFF';
-        else self.html.style.backgroundColor = '#CCCCCC';
-    };
-    this.unhover = function()
-    {
-        self.hovered = false;
-        if(self.selected) self.html.style.backgroundColor = '#DDDDFF';
-        else self.html.style.backgroundColor = '#DDDDDD';
-    };
-    this.select = function()
-    {
-        self.selected = true;
-        if(self.hovered) self.html.style.backgroundColor = '#CCCCFF';
-        else self.html.style.backgroundColor = '#DDDDFF';
-    };
-    this.deselect = function()
-    {
-        self.selected = false;
-        if(self.hovered) self.html.style.backgroundColor = '#CCCCCC'
-        else self.html.style.backgroundColor = '#DDDDDD';
-        self.callback(self);
-    };
-    this.hovered = false;
-    this.selected = false;
-
-    this.html = html;
-    this.callback = callback;
-    this.html.addEventListener('mouseover', this.hover,    false);
-    this.html.addEventListener('mouseout',  this.unhover,  false);
-    this.html.addEventListener('mousedown', this.select,   false);
-    this.html.addEventListener('mouseup',   this.deselect, false);
-}
-
 function ListNote(callback, note, noteId)
 {
     var self = this; // <- I hate javascript.
@@ -68,15 +29,14 @@ function ListNote(callback, note, noteId)
             console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
         }
 
-        /* FIXME replace with delegate */
-        setTimeout(function () { if(document.getElementById("image"+noteId)) document.getElementById("image"+noteId).addEventListener("click", function() { self.callback(self); }); }, 300);
+        $(this.html).find('img').on('click', function() { self.callback(self); });
     }
     this.constructHTML();
 }
 
 function NoteView(note)
 {
-    var thism = this; //garbage
+    var thism = this; // FIXME needs better name, like view
     this.note = note;
 	model.currentNote = note; // this is done so that the send email function over in controller can get at all the information
 
@@ -97,9 +57,7 @@ function NoteView(note)
       data.audio_url = getAudioToUse (this.note); 
       data.details   = getTextToUse  (this.note);
       data.comments  = this.getCommentsJson (this.note.comments);
-
-
-      /* TODO social stuff, new comment logic */
+      data.logged_in = controller.logged_in();
   
 
       /* Render View */
@@ -107,6 +65,18 @@ function NoteView(note)
       var view = Mustache.render (template, data);
 
       this.html = $(view).get(0);
+
+
+      /* Attach login or comment events */
+      $(this.html).find('.login-to-comment').on('click', function() { alert('login') });
+
+      $(this.html).find('.post-comment').on('click', function() {
+        var text = $(thism.html).find('textarea').val();
+        thism.submitComment (thism.note, text)
+      });
+
+
+      /* TODO social stuff, new comment logic */
     }
 
 
@@ -234,7 +204,6 @@ function NoteView(note)
 
     this.submitComment = function(note, comment)
     {
-		controller.hideNoteView();
         if(model.playerId > 0){ 
 	
 			// in this section add the note to the cached HTML so we don't have to re-load the whole page   

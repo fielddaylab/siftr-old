@@ -120,7 +120,9 @@ html,body
   vertical-align: middle;
 }
 
-.launchpad-button, .filter-button, .modal-button
+.launchpad-button,
+.filter-button,
+.modal-button
 {
   color: #dedede;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
@@ -458,9 +460,18 @@ html,body
 
 .sifter-new-comment textarea
 {
-  width: 95%;
+  width: 100%;
+  box-sizing: border-box;
   border: 0;
   background: #f7f7f7;
+  margin-bottom: 0.75em;
+}
+
+
+button.touch-friendly
+{
+  width: 100%; 
+  padding: 0.25em;
 }
 
 
