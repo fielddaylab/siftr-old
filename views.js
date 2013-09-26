@@ -68,9 +68,13 @@ function NoteView(note)
 
 
       /* Attach login or comment events */
-      $(this.html).find('.login-to-comment').on('click', function() { alert('login') });
+      $(this.html).find('.login-to-comment').on('click', function()
+      {
+        controller.loginRequired (function () { controller.noteSelected(thism); });
+      });
 
-      $(this.html).find('.post-comment').on('click', function() {
+      $(this.html).find('.post-comment').on('click', function()
+      {
         var text = $(thism.html).find('textarea').val();
         thism.submitComment (thism.note, text)
       });
