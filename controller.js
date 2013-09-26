@@ -8,27 +8,18 @@ function Controller()
         var note = sender.note;
         model.views.noteView = new NoteView(note);
         model.views.noteViewContainer.innerHTML = '';
-
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
-        model.views.noteViewContainer.style.display = 'block';
         $('.sifter-modal-overlay').show();
     };
 
     this.createNote = function() 
     {
-        if(model.playerId > 0)
-        {   
-            model.views.noteCreateView = new NoteCreateView();
-            model.views.createNoteViewContainer.innerHTML = '';
-            model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
-            model.views.createNoteViewContainer.style.display = 'block';
-		    model.views.darkness.style.display = 'block';
+        model.views.noteCreateView = new NoteCreateView();
+        model.views.createNoteViewContainer.innerHTML = '';
+        model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
+        $('.sifter-modal-overlay').show();
 		
 		    document.getElementById("create_tag_1").checked = true; //this is the default tag, it should be checked (but can't do it in HTML for reasons)
-
-	    }
-        else
-            this.showLoginView();
     };
 
     // TODO refactor all these into a function that accepts a view container, and content and takes care of clearing/showing/hiding.
@@ -40,7 +31,6 @@ function Controller()
         model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
-        model.views.loginViewContainer.style.display = 'block';
         $('.sifter-modal-overlay').show();
     };
 
@@ -50,7 +40,6 @@ function Controller()
         model.views.forgotView = new ForgotView();
         model.views.forgotViewContainer.innerHTML = '';
         model.views.forgotViewContainer.appendChild(model.views.forgotView.html);
-        model.views.forgotViewContainer.style.display = 'block';
         $('.sifter-modal-overlay').show();
     };
 
@@ -60,7 +49,6 @@ function Controller()
         model.views.joinView = new JoinView();
         model.views.joinViewContainer.innerHTML = '';
         model.views.joinViewContainer.appendChild(model.views.joinView.html);
-        model.views.joinViewContainer.style.display = 'block';
         $('.sifter-modal-overlay').show();
     };
 
@@ -179,7 +167,6 @@ function Controller()
 
     this.hideNoteView = function()
     {
-        model.views.noteViewContainer.style.display = 'none';
         model.views.noteViewContainer.innerHTML = '';
         $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideNoteView, false);
@@ -187,7 +174,6 @@ function Controller()
 
     this.hideCreateNoteView = function()
     {
-        model.views.createNoteViewContainer.style.display = 'none';
         model.views.createNoteViewContainer.innerHTML = '';
         $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideCreateNoteView, false);
@@ -195,14 +181,12 @@ function Controller()
 
     this.hideLoginView = function()
     {
-        model.views.loginViewContainer.style.display = 'none';
         model.views.loginViewContainer.innerHTML = '';
         $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideLoginView, false);
     }
     this.hideForgotView = function()
     {
-        model.views.forgotViewContainer.style.display = 'none';
         model.views.forgotViewContainer.innerHTML = '';
         $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideForgotView, false);
@@ -210,7 +194,6 @@ function Controller()
 
     this.hideJoinView = function()
     {
-        model.views.joinViewContainer.style.display = 'none';
         model.views.joinViewContainer.innerHTML = '';
         $('.sifter-modal-overlay').hide();
         document.removeEventListener('click', controller.hideJoinView, false);
@@ -352,84 +335,114 @@ function Controller()
 
     this.loginReturned = function(returnString)
     {
-		//be sure to sych changes with this to facebookLoginReturned
+        //be sure to sych changes with this to facebookLoginReturned
         var startJson = returnString.indexOf("{");
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
 
-	// first check to see if you have a valid login
-	if (obj.data) {
+        // first check to see if you have a valid login
+        if (obj.data) {
 
-	// updated the display name and player ID to match getLoginPlayerObject data
-        var playerId = obj.data.player_id;
-		var displayName = obj.data.display_name; //in new user account creation this will be same as username
-		if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
- 
-        model.playerId = playerId;
-		model.displayName = displayName;
+            // updated the display name and player ID to match getLoginPlayerObject data
+            var playerId = obj.data.player_id;
+            var displayName = obj.data.display_name; //in new user account creation this will be same as username
+            if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
+       
+            model.playerId = playerId;
+            model.displayName = displayName;
 
-        if(model.playerId > 0)
-    	{
-        self.hideLoginView();
-			
-        $.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
-        $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
-		}
+            if(model.playerId > 0)
+            {
+                self.hideLoginView();
+              
+                $.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
+                $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
+                $('.sifter-show-logout-button').show();
+
+                /* Trigger original item that required login and clear it out */
+                controller.loginCallback();
+                controller.loginCallback = function() {};
+            }
+            else
+            {
+                  alert("Incorrect login. Please try again.");
+            }
+        }
         else
-            alert("Incorrect login. Please try again.");
-
-	}
-	else
-		alert(obj.returnCodeDescription + ". Please try again");
-	
-	}
+        {
+          alert(obj.returnCodeDescription + ". Please try again");  
+        }
+    }
 
     this.facebookLoginReturned = function(returnString)
     {
-		//be sure to sych changes with this to main loginReturned
+        //be sure to sych changes with this to main loginReturned
         var startJson = returnString.indexOf("{");
         var jsonString = returnString.substr(startJson);
         var obj = JSON.parse(jsonString);
 
-	// first check to see if you have a valid login
-	if (obj.data) {
+        // first check to see if you have a valid login
+        if (obj.data) {
 
-	// updated the display name and player ID to match getLoginPlayerObject data
-        var playerId = obj.data.player_id;
-		var displayName = obj.data.display_name; //in new user account creation this will be same as username
-		if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
- 
-        model.playerId = playerId;
-		model.displayName = displayName;
+            // updated the display name and player ID to match getLoginPlayerObject data
+            var playerId = obj.data.player_id;
+            var displayName = obj.data.display_name; //in new user account creation this will be same as username
+            if(!obj.display_name){displayName = obj.data.user_name; };//just in case set it to username if display name is blank
+       
+            model.playerId = playerId;
+            model.displayName = displayName;
 
-        if(model.playerId > 0)
-    	{
-        self.hideLoginView();
+            if(model.playerId > 0)
+            {
+                self.hideLoginView();
 
-        $.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
-        $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
-		}
+                $.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
+                $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
+                $('.sifter-show-logout-button').show();
+            }
+            else
+            {
+                alert("Incorrect login. Please try again.");
+            }
+        }
         else
-            alert("Incorrect login. Please try again.");
+        {
+          alert(obj.returnCodeDescription + ". Please try again");
+        }
+    }
 
-	}
-	else
-		alert(obj.returnCodeDescription + ". Please try again");
-	
-	}
+    this.logout = function()
+    {
+        $.removeCookie('sifter'); //without the cookie, the user will have to log in again
+        $('.sifter-show-logout-button').hide();
+        model.playerId = 0;	
+    }
 
-	this.logout = function(){
-		$.removeCookie('sifter'); //without the cookie, the user will have to log in again
-		model.playerId = 0;	
-	}
+    this.logged_in = function()
+    {
+        return model.playerId > 0;
+    }
 
-  this.logged_in = function()
-  {
-    return model.playerId > 0;
-  }
+    /* Send people back to where they requested the login from */
+    this.loginCallback = function() {}
+
+    this.loginRequired = function(callback)
+    {
+      if(this.logged_in() === true)
+      {
+        callback();
+      }
+      else
+      {
+        this.loginCallback = callback;
+        $('.closable, .sifter-modal-overlay').hide(); /* Close everything */
+        this.showLoginView();
+      }
+    }
 
     this.createAccount = function(email, password,username)
     {
+        model.displayName = username; /* Because nothing is contained in the callback and we're logging them in */
         callService("players.createPlayer", this.createPlayerReturned,"/"+username+"/"+password+"/"+username+"/"+username+"/"+email, false); //added username
     }
 
@@ -441,10 +454,17 @@ function Controller()
         else
         {
             model.playerId = obj.data;
+
+            $.cookie("sifter", model.playerId);	//give a cookies so they stay logged in until they close the browser
+            $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
+            $('.sifter-show-logout-button').show();
+
             self.hideLoginView();
             self.hideJoinView();
-		    model.views.loginButton.style.display = 'none'; // hide login
-	    
+
+            /* Trigger original item that required login and clear it out */
+            controller.loginCallback();
+            controller.loginCallback = function() {};
         }
     }
 

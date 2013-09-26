@@ -71,9 +71,9 @@
     <div class="sifter-filters-slideout sifter-filters-popdown">
       <div class="sifter-filters">
         <button class="filter-button first button-active sifter-fetch-top-button">Top</button>
-        <button class="filter-button sifter-fetch-recent-button"      >Recent</button>
-        <button class="filter-button sifter-fetch-popular-button"      >Popular</button>
-        <button class="filter-button last sifter-fetch-mine-button" id="siftMineButton" style="display: none;" >Mine</button>
+        <button class="filter-button sifter-fetch-recent-button"   >Recent</button>
+        <button class="filter-button sifter-fetch-popular-button"  >Popular</button>
+        <button class="filter-button last sifter-fetch-mine-button">Mine</button>
         <div class="clear"></div>
       </div>
 
@@ -118,6 +118,8 @@
 
       <div class="sifter-popdown-footer hidden-mobile">
         <span class="show-about">About</span> <!-- ∑ Contact ∑ Privacy & Terms ∑ Copyright & Trademark -->
+        ∑
+        <span class="sifter-show-logout-button">Logout</button>
       </div>
       
     </div>
@@ -208,7 +210,6 @@
             {{/comments}}
           </div>
 
-          <div style="display: none;">
           {{#logged_in}}
             <div class="sifter-new-comment">
               <textarea placeholder="Add a comment..."></textarea>
@@ -220,7 +221,6 @@
               <button class="modal-button button-active touch-friendly login-to-comment">Login to Comment</button>
             </div>
           {{/logged_in}}
-          </div>
         </div>
 
         <div class="clear"></div>
