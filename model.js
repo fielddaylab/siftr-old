@@ -131,8 +131,7 @@ function Model()
 		this.siftMineButton				= document.getElementById('siftMineButton');
 
     /* TODO toggle classes/use jquery */
-/*
-		if(self.playerId > 0){ //if the cookie indicated they are logged in
+/*		if(self.playerId > 0){ //if the cookie indicated they are logged in
 			this.loginButton.style.display = 'none'; // hide login
 			this.fbloginButton.style.display = 'none'; //they are already logged in
 
