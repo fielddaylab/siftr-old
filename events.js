@@ -4,29 +4,38 @@ $(document).ready (function ()
 
   $('.sifter-fetch-top-button').on('click', function()
   {
+    $('.filter-button').removeClass('button-active');
+    $(event.target).addClass('button-active');
+
     startSift('top');
   });
 
   $('.sifter-fetch-recent-button').on('click', function()
   {
+    $('.filter-button').removeClass('button-active');
+    $(event.target).addClass('button-active');
+
     startSift('recent');
   });
 
   $('.sifter-fetch-popular-button').on('click', function()
   {
+    $('.filter-button').removeClass('button-active');
+    $(event.target).addClass('button-active');
+
    	startSift('popular');
   });
 
   $('.sifter-fetch-mine-button').on('click', function()
   {
-    startSift('mine');
-  });
+    var target = event.target;
 
-  /* Set active on clicked button */
-  $('.filter-button').on('click', function(event)
-  {
-    $('.filter-button').removeClass('button-active');
-    $(event.target).addClass('button-active');
+    controller.loginRequired (function ()
+    {
+      $('.filter-button').removeClass('button-active');
+      $(target).addClass('button-active');
+      startSift('mine')
+    });
   });
 
 
@@ -37,7 +46,10 @@ $(document).ready (function ()
 
   $('.sifter-show-upload-button').on('click', function()
   {
-    controller.createNote();
+    controller.loginRequired (function ()
+    {
+      controller.createNote();
+    });
   });
 
   $('.sifter-show-logout-button').on('click', function()
