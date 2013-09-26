@@ -58,9 +58,6 @@ function NoteView(note)
       data.details   = getTextToUse  (this.note);
       data.comments  = this.getCommentsJson (this.note.comments);
       data.logged_in = controller.logged_in();
-
-
-      /* TODO social stuff, new comment logic */
   
 
       /* Render View */
@@ -69,12 +66,17 @@ function NoteView(note)
 
       this.html = $(view).get(0);
 
+
+      /* Attach login or comment events */
       $(this.html).find('.login-to-comment').on('click', function() { alert('login') });
 
       $(this.html).find('.post-comment').on('click', function() {
         var text = $(thism.html).find('textarea').val();
         thism.submitComment (thism.note, text)
       });
+
+
+      /* TODO social stuff, new comment logic */
     }
 
 
