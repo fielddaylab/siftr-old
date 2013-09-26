@@ -64,13 +64,18 @@ function startSift(siftType){
 			//each tag has an ID number, which must be sent to the JSON for the query to work right
 			var tagIdNum;
 			switch(tagItem.value.toLowerCase().trim()){
-				case "innovation": tagIdNum = 1404; break; //117 dev
-				case "must do": tagIdNum = 1413; break; //118 dev
-				case "madison culture": tagIdNum = 1410; break; //119 dev
-				case "stories of the past": tagIdNum = 1407; break; //120 dev
-				case "100 years from now": tagIdNum = 1414; break; //121 dev
-	
+				case model.tags[0].tag.toLowerCase().trim(): tagIdNum = model.tags[0].tag_id; break; 
+				case model.tags[1].tag.toLowerCase().trim(): tagIdNum = model.tags[1].tag_id; break; 
+				case model.tags[2].tag.toLowerCase().trim(): tagIdNum = model.tags[2].tag_id; break; 
+				case model.tags[3].tag.toLowerCase().trim(): tagIdNum = model.tags[3].tag_id; break; 
+				case model.tags[4].tag.toLowerCase().trim(): tagIdNum = model.tags[4].tag_id; break; 
 			}
+			//tag ids are below,but pull from array for safety
+			//innovation dev 117 prod 1404
+			//must do dev 118 prod 1413
+			//madison Culture dev 119 prod 1410
+			//stories of the past dev 120 prod 1407
+			//100 years form now dev 121 prod 1414
 			selectedTags[selectedTags.length] = tagIdNum;
 		}
 	}
