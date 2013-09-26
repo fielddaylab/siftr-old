@@ -55,9 +55,11 @@
 
 
       <div class="sifter-rightside-launchpad">
+        <div style="display: none;">
         <button class="launchpad-button sifter-show-login-button" id="loginButton">L</button>
         <button class="launchpad-button sifter-show-logout-button" id="logoutButton">O</button>
         <button class="sifter-add launchpad-button sifter-show-upload-button"><span class="icon-plus"></span></button>
+        </div>
         <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
       </div>
 
@@ -71,7 +73,7 @@
         <button class="filter-button first button-active sifter-fetch-top-button">Top</button>
         <button class="filter-button sifter-fetch-recent-button"      >Recent</button>
         <button class="filter-button sifter-fetch-popular-button"      >Popular</button>
-        <button class="filter-button last sifter-fetch-mine-button" id="siftMineButton">Mine</button>
+        <button class="filter-button last sifter-fetch-mine-button" id="siftMineButton" style="display: none;" >Mine</button>
         <div class="clear"></div>
       </div>
 
@@ -206,6 +208,7 @@
             {{/comments}}
           </div>
 
+          <div style="display: none;">
           {{#logged_in}}
             <div class="sifter-new-comment">
               <textarea placeholder="Add a comment..."></textarea>
@@ -217,6 +220,7 @@
               <button class="modal-button button-active touch-friendly login-to-comment">Login to Comment</button>
             </div>
           {{/logged_in}}
+          </div>
         </div>
 
         <div class="clear"></div>
@@ -356,13 +360,14 @@
            
           <h2>Produced By</h2>
           <p>
-            The Mobile Learning Incubator, DoIT Academic Technology <br/>
-            David Gagnon – Co-Producer, Co-Designer <br/>
-            Shelby Copeland – Co-Producer, Co-Designer <br/>
-            John Martin – Co-Designer <br/>
-            Jacob Hanshaw – iOS and Server Development <br/>
-            Caroline Hardin – Web Page Development <br/>
-            Philip Dougherty – Web and Server Development <br/>
+            The Mobile Learning Incubator, DoIT Academic Technology<br/>
+            David Gagnon – Co-Producer, Co-Designer<br/>
+            Shelby Copeland – Co-Producer, Co-Designer<br/>
+            John Martin – Co-Designer<br/>
+            Jacob Hanshaw – iOS and Server Development<br/>
+            Caroline Hardin – Web Page Development<br/>
+            Philip Dougherty – Web and Server Development<br/>
+            Kevin Alford – Web Page Design and Development<br/> 
             Kelly Kaschner – Branding and Graphic Design
           </p>
         </div>
