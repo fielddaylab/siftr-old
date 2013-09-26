@@ -1,3 +1,10 @@
+$(document).ready (function ()
+{
+  /* Template compile speed up test */
+  compiledShowTemplate = Mustache.compile( $('#showTemplate').html() );
+});
+
+
 function ListNote(callback, note, noteId)
 {
     var self = this; // <- I hate javascript.
@@ -61,10 +68,8 @@ function NoteView(note)
   
 
       /* Render View */
-      var template = $('#showTemplate').html();
-      var view = Mustache.render (template, data);
-
-      this.html = $(view).get(0);
+      var render = compiledShowTemplate (data);
+      this.html = $(render).get(0);
 
 
       /* Attach login or comment events */
