@@ -38,3 +38,8 @@
 {
   transition-duration: 0.25s;
 }
+
+button.touch-friendly
+{
+  font-size: 125%;
+}

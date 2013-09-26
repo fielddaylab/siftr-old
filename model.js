@@ -41,6 +41,7 @@ function Model()
 	if($.cookie("sifter") > 0)
 	{
 		self.playerId = $.cookie("sifter");
+    self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
 	}
 
 	this.loadTagsFromServer = function(response){
