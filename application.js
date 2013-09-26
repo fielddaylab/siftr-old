@@ -64,11 +64,11 @@ function startSift(siftType){
 			//each tag has an ID number, which must be sent to the JSON for the query to work right
 			var tagIdNum;
 			switch(tagItem.value.toLowerCase().trim()){
-				case "innovation": tagIdNum = 117; break;
-				case "must do": tagIdNum = 118; break;
-				case "madison culture": tagIdNum = 119; break;
-				case "stories of the past": tagIdNum = 120; break;
-				case "100 years from now": tagIdNum = 121; break;
+				case "innovation": tagIdNum = 1404; break; //117 dev
+				case "must do": tagIdNum = 1413; break; //118 dev
+				case "madison culture": tagIdNum = 1410; break; //119 dev
+				case "stories of the past": tagIdNum = 1407; break; //120 dev
+				case "100 years from now": tagIdNum = 1414; break; //121 dev
 	
 			}
 			selectedTags[selectedTags.length] = tagIdNum;
