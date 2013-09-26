@@ -124,7 +124,6 @@ function Model()
         this.constructJoinView      	= document.getElementById('join_view_construct');
         this.constructForgotView      	= document.getElementById('forgot_view_construct');
 
-		this.uploadButton 				= document.getElementById('uploadButton'); 
 		this.loginButton				= document.getElementById('loginButton'); 
 		this.logoutButton				= document.getElementById('logoutButton');
 		this.fbloginButton				= document.getElementById('fbloginButton');
@@ -145,12 +144,9 @@ function Model()
 				this.logoutButton.style.display = 'inline'; //They are logged in, let them log out
 			}
 
-    		this.uploadButton.style.display = 'inline'; // show upload		
-			this.siftMineButton.style.display = 'inline'; //show sift by mine
 		}
 		else{
 			this.logoutButton.style.display = 'none';
-			this.siftMineButton.style.display = 'none'; //this is meaningless until you are logged in
 		}
 */
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
