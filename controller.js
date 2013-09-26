@@ -375,9 +375,10 @@ function Controller()
 	    	model.views.uploadButton.style.display = 'inline'; // show upload
 			model.views.logoutButton.style.display = 'inline'; // Allow user to log out
 			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
-			model.views.fbloginButton.style.display = 'none'; //hide facebook login as we don't yet allow syching
+			//model.views.fbloginButton.style.display = 'none'; //hide facebook login as we don't yet allow syching
 			
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
+      $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
 		}
         else
             alert("Incorrect login. Please try again.");
@@ -414,6 +415,7 @@ function Controller()
 			model.views.siftMineButton.style.display = 'inline'; //now they can sift for their own
 			model.views.fbloginButton.style.display = 'none';
 			$.cookie("sifter", playerId);	//give a cookies so they stay logged in until they close the browser
+      $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
 		}
         else
             alert("Incorrect login. Please try again.");
@@ -427,13 +429,17 @@ function Controller()
 	this.logout = function(){
 		$.removeCookie('sifter'); //without the cookie, the user will have to log in again
 		model.views.loginButton.style.display = 'inline';
-		model.views.fbloginButton.style.display = 'inline';
+		//model.views.fbloginButton.style.display = 'inline';
 		model.views.uploadButton.style.display = 'none';
 		model.views.logoutButton.style.display = 'none';
 		model.views.siftMineButton.style.display = 'none';
 		model.playerId = 0;	
 	}
 
+  this.logged_in = function()
+  {
+    return model.playerId > 0;
+  }
 
     this.createAccount = function(email, password,username)
     {

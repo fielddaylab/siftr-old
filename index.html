@@ -54,11 +54,9 @@
 
 
       <div class="sifter-rightside-launchpad">
-        <div style="display: none;">
         <button class="launchpad-button sifter-show-login-button" id="loginButton">L</button>
         <button class="launchpad-button sifter-show-logout-button" id="logoutButton">O</button>
         <button class="sifter-add launchpad-button sifter-show-upload-button" id="uploadButton"><span class="icon-plus"></span></button>
-        </div>
         <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
       </div>
 
@@ -207,9 +205,17 @@
             {{/comments}}
           </div>
 
-          <div class="sifter-new-comment" style="display: none;">
-            <textarea placeholder="Add a comment..."></textarea>
-          </div>
+          {{#logged_in}}
+            <div class="sifter-new-comment">
+              <textarea placeholder="Add a comment..."></textarea>
+              <button class="modal-button button-active touch-friendly post-comment">Add Comment</button>
+            </div>
+          {{/logged_in}}
+          {{^logged_in}}
+            <div class="sifter-new-comment">
+              <button class="modal-button button-active touch-friendly login-to-comment">Login to Comment</button>
+            </div>
+          {{/logged_in}}
         </div>
 
         <div class="clear"></div>

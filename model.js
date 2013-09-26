@@ -41,6 +41,7 @@ function Model()
 	if($.cookie("sifter") > 0)
 	{
 		self.playerId = $.cookie("sifter");
+    self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
 	}
 
 	this.loadTagsFromServer = function(response){
@@ -130,6 +131,7 @@ function Model()
 		this.siftMineButton				= document.getElementById('siftMineButton');
 
     /* TODO toggle classes/use jquery */
+/*
 		if(self.playerId > 0){ //if the cookie indicated they are logged in
 			this.loginButton.style.display = 'none'; // hide login
 			this.fbloginButton.style.display = 'none'; //they are already logged in
@@ -151,7 +153,7 @@ function Model()
 			this.logoutButton.style.display = 'none';
 			this.siftMineButton.style.display = 'none'; //this is meaningless until you are logged in
 		}
-
+*/
         this.likeIcon     = '<img id="likeIcon" src="./assets/images/LikeIcon.png" height=10px; />';
         this.commentIcon  = '<img src="./assets/images/CommentIcon.png" height=8px; />';
         this.noteIcon     = '';
