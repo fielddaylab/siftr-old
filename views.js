@@ -937,6 +937,9 @@ function NoteCreateView()
     var view = Mustache.render (template);
 
     this.html = $(view).get(0);
+
+    $(this.html).find('#in-camera').on('change', CropHelper.watch_image_change);
+    $(this.html).find('#le-image' ).on('load',   CropHelper.initialize_jcrop); 
 }
 
 
