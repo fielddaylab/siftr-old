@@ -230,56 +230,32 @@
       </div>
     </script> <!-- /showTemplate -->
 
-    <style type="text/css">
-      #le-image
-      {
-        border: 2px solid red;
-        width: 100%;
-        box-sizing: border-box;
-      }
-      #le-canvas
-      {
-        display: none;
-      }
-
-      #mapCanvas
-      {
-        width: 100%;
-        background: yellow;
-        height: 0;
-        padding-bottom: 100%;
-      }
-      #searchTextField
-      {
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0.5em 0;
-      }
-    </style>
 
     <!-- New View -->
     <script id="newTemplate" type="text/template">
       <div class="new-dialog">
         <div class="new-left-side">
           <!-- Camera Box -->
+          <div class="camera_pad_box">
           <div class="camera_box">
-            <span class="icon-camera"></span>
-            <input  id="in-camera" type="file" accept="image/*" capture="camera" />
+            <span class="icon-camera center-big" id="browseImage"></span>
+            <input  id="in-camera" type="file" accept="image/*" capture="camera" style="display: none;" />
             <img    id="le-image" src="" />
             <canvas id="le-canvas" height="640" width="640"></canvas>
           </div>
+          </div>
 
           <!-- Map -->
-          <div class="map_box">
+          <div class="map_box input_box">
             <input type="text" name="location" id="searchTextField"/><br />
             <div id="mapCanvas"></div><br />
-            <div id="address"></div>
+            <div id="address" style="display: none;"></div>
           </div>
         </div> <!-- /left side -->
 
         <div class="new-right-side">
           <!-- Category -->
-          <div class="category_box">
+          <div class="category_box input_box">
             <div class="sifter-category">
               <label>
                 <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio" />
@@ -312,19 +288,19 @@
             </div>
           </div>
 
-          <div class="audio_box">
+          <div class="audio_box input_box" style="display: none;">
             Audio: (mp3, aac, m4a or caf)<br />
             <input type="file" id="audioFileInput" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
           </div>
 
           <!-- Description -->
-          <div class="description_box">
+          <div class="description_box input_box">
             <textarea id="caption"></textarea>
-          </div>
 
-          <div class="submit_box">
-            <button id="submitNote">Submit</button>
-            <button id="cancelNote">Cancel</button>
+            <div class="center">
+              <button id="submitNote" class="modal-button touch-friendly half-size">Submit</button>
+              <button id="cancelNote" class="modal-button touch-friendly half-size">Cancel</button>
+            </div>
           </div>
         </div> <!-- /right side -->
 

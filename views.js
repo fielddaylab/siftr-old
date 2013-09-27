@@ -314,39 +314,38 @@ function submitNote()
 
 	model.currentNote.text = document.getElementById("caption").value;
 
-    // check for required stuff 
-    var requirementsMet = true; 
-	var alertText = "Missing Items:";
+  // check for required stuff 
+  var requirementsMet = true; 
+  var errors = [];
 
-	//error borders may have been set earlier, remove them if so and check again
-	 document.getElementById("note_create_view_image_construct").className = document.getElementById("note_create_view_image_construct").className.replace(/(^|\s)error(?!\S)/g,'');
-	 document.getElementById("caption").className = document.getElementById("caption").className.replace(/(^|\s)error(?!\S)/g,'');
-	 document.getElementById("note_create_view_location_construct").className = document.getElementById("note_create_view_location_construct").className.replace(/(^|\s)error(?!\S)/g,'');
+  $('.error').removeClass('error');
 
-
-	if(!model.currentNote.imageFile){
-		alertText += " Image,"; 
-		document.getElementById("note_create_view_image_construct").className =	document.getElementById("note_create_view_image_construct").className + ' error'; // may need to remove this later if multiple missing things
+	if(!model.currentNote.imageFile)
+  {
+		errors.push ("select an image"); 
+    $('.camera_box').addClass ('error');
 		requirementsMet = false;
 	}
 
-	if(!model.currentNote.text){ //if string is not empty, null or blank
-		alertText += " Caption Text,";
-		document.getElementById("caption").className =	document.getElementById("caption").className + ' error'; 
+	if(!model.currentNote.text) //if string is not empty, null or blank
+  {
+		errors.push ("write a caption");
+    $('#caption').addClass ('error');
 		requirementsMet = false;
-
 	}
 
 	//map pin starts at default location in lake where no notes are expected. 
 	//Google maps map move the pin slightly during map creation, so can't do an exact == comparison
-	if(Math.abs(model.currentNote.lat-model.views.defaultLat)<.0001 &&  Math.abs(model.currentNote.lon-model.views.defaultLon)<.0001){
-		alertText += " Location";
-		document.getElementById("note_create_view_location_construct").className =	document.getElementById("note_create_view_location_construct").className + ' error'; 
+	if(Math.abs(model.currentNote.lat-model.views.defaultLat)<.0001 &&  Math.abs(model.currentNote.lon-model.views.defaultLon)<.0001)
+  {
+		errors.push ("choose a location");
+    // TODO add error to location
 		requirementsMet = false;
-
 	}
-	if(!requirementsMet){
-		alert(alertText);
+
+	if(!requirementsMet)
+  {
+		alert("Please "+errors.join(", "));
 	}
 	else{
 
@@ -749,7 +748,7 @@ function createDownloadLink()
 
 function clickBrowseImage()
 {
-    document.getElementById('imageFileInput').click();
+    $('#in-camera').click();
 }
 
 function clickBrowseAudio()

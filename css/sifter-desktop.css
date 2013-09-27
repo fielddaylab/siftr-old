@@ -136,6 +136,11 @@ html,body
   background-image: linear-gradient(to bottom, #ffffff, #f7f7f7);
 }
 
+.modal-button
+{
+  color: #777 !important;
+}
+
 .launchpad-button.button-active,
 .filter-button.button-active,
 .modal-button.button-active
@@ -478,12 +483,14 @@ button.touch-friendly
 
 
 /* Modal Borders */
-.sifter-show-sidebar
+.sifter-show-sidebar,
+.new-right-side
 {
   border-left: 1px solid #cacaca;
   margin-right: -1px;
 }
-.sifter-show-content
+.sifter-show-content,
+.new-left-side
 {
   border-right: 1px solid #cacaca;
   margin-right: -1px;
@@ -601,23 +608,130 @@ button.touch-friendly
 
 /* New Dialog */
 
+.error
+{
+  background: lightpink !important;
+}
+
 .new-left-side,
 .new-right-side
 {
   width: 50%;
   float: left;
-  padding: 0.2em;
   box-sizing: border-box;
 }
 
-.new-left-side
+.new-dialog .sifter-category
 {
-  background: pink;
+  margin: 1em;
 }
 
-.new-right-side
+.new-dialog .sifter-category span span
 {
-  background: cyan;
+  font-size: 2.25em;
+}
+
+.new-dialog .category_box,
+.new-dialog .camera_box
+{
+  border-bottom: 1px solid #cacaca;
+}
+
+.camera_pad_box
+{
+  padding: 0.5em;
+}
+
+.camera_box span
+{
+  display: inline-block;
+  position: relative;
+  padding: 0.2em;
+  float: left;
+  z-index: 1000;
+  font-size: 2em;
+  color: #f7f7f7;
+  cursor: pointer;
+}
+
+.camera_box span:hover
+{
+  color: #cf2037;
+}
+
+.camera_box span.center-big
+{
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  font-size: 4em;
+  transform: translate(-50%, -50%);
+}
+
+.jcrop-holder
+{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+  
+
+.camera_box
+{
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background: #cacaca;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+#le-image
+{
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+#le-canvas
+{
+  display: none;
+}
+
+#mapCanvas
+{
+  width: 100%;
+  background: yellow;
+  height: 0;
+  padding-bottom: 80%;
+}
+#searchTextField,
+#caption
+{
+  width: 100%;
+  border: 0;
+  padding: 0.2em;
+  box-sizing: border-box;
+  background: #f7f7f7;
+  margin-bottom: 0.5em;
+}
+.input_box
+{
+  padding: 0.5em;
+}
+
+.center
+{
+  text-align: center;
+}
+
+.touch-friendly.half-size
+{
+  width: 50%;
+  margin: -1px;
 }
 
 
