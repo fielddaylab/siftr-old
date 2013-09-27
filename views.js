@@ -20,7 +20,7 @@ function ListNote(callback, note, noteId)
             /* Render View */
             var template = $('#gridIconTemplate').html();
             var view = Mustache.render (template, data);
-
+		
             this.html = $(view).get(0);
         }
         else
@@ -57,8 +57,8 @@ function NoteView(note)
       data.audio_url = getAudioToUse (this.note); 
       data.details   = getTextToUse  (this.note);
       data.comments  = this.getCommentsJson (this.note.comments);
-      data.logged_in = controller.logged_in();
-  
+      data.logged_in = controller.logged_in();	
+	data.emailShare =  this.note.email_shares;
 
       /* Render View */
       var template = $('#showTemplate').html();
@@ -81,6 +81,12 @@ function NoteView(note)
 
 
       /* TODO social stuff, new comment logic */
+      $(this.html).find('.share-email').on('click', function()
+	{
+	 controller.sendEmail(model.playerId, model.currentNote.note_id);	
+      });
+		
+
     }
 
 

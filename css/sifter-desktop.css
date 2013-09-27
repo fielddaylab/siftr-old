@@ -626,3 +626,15 @@ button.touch-friendly
    50% { opacity: 1.0; }
   100% { opacity: 0.0; }
 }
+
+/*Icons for social media sharing  */
+.social-icon
+{
+cursor:pointer;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.1);
+
+	width:50px;
+}
