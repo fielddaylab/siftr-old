@@ -94,7 +94,7 @@ $(document).ready (function ()
   });
 
   $(document).on('click', '#submitNote', submitNote);
-  $(document).on('click', '#cancelNote', cancelNote);
+  $(document).on('click', '#cancelNote, #cancelNoteOverlay', cancelNote);
 
 
 

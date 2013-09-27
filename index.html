@@ -58,8 +58,8 @@
         <div style="display: none;">
         <button class="launchpad-button sifter-show-login-button" id="loginButton">L</button>
         <button class="launchpad-button sifter-show-logout-button" id="logoutButton">O</button>
-        <button class="sifter-add launchpad-button sifter-show-upload-button"><span class="icon-plus"></span></button>
         </div>
+        <button class="sifter-add launchpad-button sifter-show-upload-button"><span class="icon-plus"></span></button>
         <button class="sifter-menu-reveal launchpad-button"><span class="icon-menu"></span></button>
       </div>
 
@@ -142,7 +142,7 @@
         <span class="icon-tags"></span>
       </button>
 
-      <button class="sifter-nav-button button-center shifter-show-upload-button" style="display: none;">
+      <button class="sifter-nav-button button-center sifter-show-upload-button">
         <span class="icon-camera"></span>
       </button>
 
@@ -155,6 +155,7 @@
 
     <!-- Overlay -->
     <div id="darkBackgroundLayer" class="sifter-modal-overlay" onclick="" style="display: none;"></div>
+    <div id="cancelNoteOverlay"   class="sifter-modal-overlay" onclick="" style="display: none;"></div>
 
 
 
@@ -227,11 +228,69 @@
       </div>
     </script> <!-- /showTemplate -->
 
+    <style type="text/css">
+      #le-image
+      {
+        border: 2px solid red;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #le-canvas
+      {
+        display: none;
+      }
+    </style>
 
     <!-- New View -->
     <script id="newTemplate" type="text/template">
-      <div class="modal-popup closable">
-        HI
+      <div class="new-dialog">
+        <div class="new-left-side">
+          <!-- Camera Box -->
+          <div class="camera_box">
+            <span class="icon-camera"></span>
+            <input  id="in-camera" type="file" accept="image/*" capture="camera" />
+            <img    id="le-image" src="" />
+            <canvas id="le-canvas" height="640" width="640"></canvas>
+          </div>
+
+          <!-- Map -->
+          <div class="map_box">
+            <div id="mapCanvas"></div><br />
+            <input type="text" name="location" id="searchTextField"/><br />
+            <div id="latitude"></div>
+            <div id="longitude"></div>
+            <div id="address"></div>
+          </div>
+        </div> <!-- /left side -->
+
+        <div class="new-right-side">
+          <!-- Category -->
+          <div class="category_box">
+            <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio">Innovation</input><br />
+            <input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">Stories of the Past</input><br />
+            <input id="create_tag_3" name="note_tag_select" value="Madison Culture"     type="radio">Madison Culture</input><br />
+            <input id="create_tag_4" name="note_tag_select" value="Must Do"             type="radio">Must Do</input><br />
+            <input id="create_tag_5" name="note_tag_select" value="100 Years from Now"  type="radio">100 Years from Now</input><br />
+          </div>
+
+          <div class="audio_box">
+            Audio: (mp3, aac, m4a or caf)<br />
+            <input type="file" id="audioFileInput" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
+          </div>
+
+          <!-- Description -->
+          <div class="description_box">
+            <textarea id="caption"></textarea>
+          </div>
+
+          <div class="submit_box">
+            <button id="submitNote">Submit</button>
+            <button id="cancelNote">Cancel</button>
+          </div>
+        </div> <!-- /right side -->
+
+        <div class="clear"></div>
+
       </div>
     </script>
 
@@ -374,73 +433,6 @@
       </div>
     </script>
 
-
-<!-- Temporary place for v1 constructs -->
-<div id='constructs' style="display: none;">
-
-
-<!-- Create Note View -->
-<div id='note_create_view_construct' class='note_create_view modal-popup closable'>
-    <div id='note_create_view_left_construct' class='note_create_view_left'>
-        <div id='note_create_view_image_construct' class='note_create_view_image' style="border:0px single transparent" >
-            <br />Image: (jpg, gif or png) <br />
-            <img width=300 height=300 id="imageThumbnail" />
-            <input type="file" id="imageFileInput" style="display:none;" accept="image/gif, image/jpeg, image/png";  />
-            <button id="browseImage" class="button">Browse</button>
-            <button id="showCamera" class="button">Camera</button>
-            <video id="video" width="200" height="200" autoplay class="hidden"></video>
-            <button id="snap" class="button hidden">Snap Photo</button>
-            <canvas id="canvas" width="200" height="200" style="display:none;"></canvas>
-        </div>
-        <div id='note_create_view_location_construct' class='note_create_view_location'>
-            <br />Location:<br />
-            <div id="mapCanvas" style="width:300px;height:300px;border:1px solid black;"></div><br />
-            <input type="text" name="location" id="searchTextField" style="width:300px" /><br />
-            <div id="latitude"></div>
-            <div id="longitude"></div>
-            <div id="address"></div>
-            <br /><br />
-        </div>
-    </div>
-    <div id='note_create_view_right_construct' class='note_create_view_right'>
-        <div id='note_create_view_caption_construct' class='note_create_view_caption'>
-            <br />Caption:<br /><textarea id="caption" rows="8" ></textarea> 
-        </div>
-        <div id='note_create_view_tags_construct' class='note_create_view_tags'>
-            <div id='note_create_view_tags_construct' class='note_create_view_tags'>
-                Tags:<br />
-                <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio">Innovation</input><br />
-                <input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio">Stories of the Past</input><br />
-                <input id="create_tag_3" name="note_tag_select" value="Madison Culture"     type="radio">Madison Culture</input><br />
-                <input id="create_tag_4" name="note_tag_select" value="Must Do"             type="radio">Must Do</input><br />
-                <input id="create_tag_5" name="note_tag_select" value="100 Years from Now"  type="radio">100 Years from Now</input><br />
-                <br />
-            </div>
-            <div id='note_create_view_audio_construct' class='note_create_view_audio'>
-                Audio: (mp3, aac, m4a or caf)<br />
-                <button id="browseAudio" class="button">Browse</button><br />
-                <input type="file" id="audioFileInput" class="hidden" accept="audio/caf, audio/mp3, audio/aac, audio/m4a"; />
-             <!--
-				 <button id="recordAudio" onclick="recordAudio()" class="button">Record</button>
-                <button class="hidden button" id="startRecording" onclick="startRecording(this);">start</button>
-                <button id="stopRecording" onclick="stopRecording(this);" class="hidden button" disabled>stop</button>
-            --> 
-			   <br />Preview:<br />
-                <audio controls id="audioPreview"><source type="audio/ogg"><source type="audio/mpeg">Your browser does not support the audio element.</audio>
-                <br /><br />
-            </div>
-        </div>
-        <div id='note_create_view_submit_construct' class='note_create_view_submit'>
-            <br />
-            <button id="submitNote" class="button">Submit</button>
-            <button id="cancelNote" class="button">Cancel</button>
-        </div>
-    </div>
-</div>
-
-
-
-</div>
 
     <!-- Template Render Containers -->
     <div id='note_view_container'        class='container'></div>

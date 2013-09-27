@@ -27,6 +27,7 @@
 
 
 .show-dialog,
+.new-dialog,
 .modal-large
 {
   width: 900px;

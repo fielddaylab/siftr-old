@@ -61,6 +61,7 @@ html,body
 .sifter-desktop-header  { z-index: 200; }
 .sifter-filters-popdown { z-index: 200; }
 .show-dialog,
+.new-dialog,
 .modal-popup,
 .modal-large            { z-index: 300; }
 .sifter-modal-overlay   { z-index: 299; }
@@ -321,6 +322,7 @@ html,body
 /* Show Dialog ********************************************** */
 
 .show-dialog,
+.new-dialog,
 .modal-large
 {
   position: fixed;
@@ -594,6 +596,28 @@ button.touch-friendly
 .about_view ul
 {
   padding-left: 1em;
+}
+
+
+/* New Dialog */
+
+.new-left-side,
+.new-right-side
+{
+  width: 50%;
+  float: left;
+  padding: 0.2em;
+  box-sizing: border-box;
+}
+
+.new-left-side
+{
+  background: pink;
+}
+
+.new-right-side
+{
+  background: cyan;
 }
 
 

@@ -17,7 +17,7 @@ function Controller()
         model.views.noteCreateView = new NoteCreateView();
         model.views.createNoteViewContainer.innerHTML = '';
         model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
-        $('.sifter-modal-overlay').show();
+        $('#cancelNoteOverlay').show();
 		
 		    document.getElementById("create_tag_1").checked = true; //this is the default tag, it should be checked (but can't do it in HTML for reasons)
     };
