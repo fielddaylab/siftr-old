@@ -1,4 +1,3 @@
-	 	
 function Controller()
 {
     var self = this; //<- I hate javascript.
@@ -503,7 +502,6 @@ function Controller()
 	this.sendEmail = function(playerId, noteId)
 	{
 		//alert("email" + playerId + noteId);
-
 		note = model.currentNote;
 		if (!note.note_id == noteId) //we are making an assumption that the current note is the same as the one desired to email
 		{							 //just in case this is in error, record it	
@@ -542,15 +540,19 @@ function Controller()
 		//pull out the note text and photo url
 		for (var i = 0; i < note.contents.length; i++)
 		{
-			if(note.contents[i].type == 'TEXT')
-			{
-				bodyText += "\"" + note.contents[i].text + "\" \n";
+			//initialize audi variable becuase it could be blank and we don't want that to gum up the works
+			var bodyAudio = "";
+			switch(note.contents[i].type){
+				case "TEXT" :
+					bodyText += "\"" + note.contents[i].text + "\" \n \n";
+					 break;
+				case "PHOTO" :
+					var bodyImage = note.contents[i].media.data.url ;
+					 break;
+				case "AUDIO" :
+					bodyAudio = note.contents[i].media.data.url ;
+				 break;
 			}
-			if(note.contents[i].type == 'PHOTO')
-			{
-				var bodyImage =  note.contents[i].media.data.url ;
-			}
-
 		}
 
 		bodyText += "See the whole note at: www.sifter.org or download the Siftr app \n";
@@ -558,10 +560,10 @@ function Controller()
 		
 	
 		//add one to email sent count
-        callService("notes.sharedNoteToEmail", function(){},"/"+playerId+"/"+noteId, false); //add one to email count
+        callService("notes.sharedNoteToEmail", function(){},"/"+playerId+"/"+note.note_id, false); //add one to email count
 
 		//add all the accumulated strings together	
-		emailText = "mailto:?subject="+ escape(subjectText) +"&body=" + escape(bodyText);
+		emailText = "mailto:?subject="+ encodeURIComponent(subjectText) +"&body=" + encodeURIComponent(bodyText);
 
 		//send the email
 		window.open(emailText);		
