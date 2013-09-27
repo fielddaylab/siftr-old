@@ -107,11 +107,17 @@ html,body
   top: -30px;
   height: 100px;
   width: 100px;
-  margin-left: -60px;
+  margin-left: -50px;
   border-radius: 5000px; /* Gross, old android border radius fix */
-  font-size: 250%;
   color: #cf2037;
   background: #fefefe;
+  text-align: center;
+}
+
+.button-center span
+{
+  display: inline-block;
+  font-size: 2em;
 }
 
 .sifter-search-field
@@ -377,7 +383,7 @@ button.filter-button.last
 button.touch-friendly
 {
   width: 100%; 
-  padding: 0.25em;
+  padding: 0.5em 0.25em;
 }
 
 
@@ -551,43 +557,26 @@ button.touch-friendly
 .camera_box span
 {
   display: inline-block;
-  position: relative;
   padding: 0.2em;
-  float: left;
   z-index: 1000;
-  font-size: 2em;
+  font-size: 3em;
   color: #f7f7f7;
   cursor: pointer;
 }
 
-.camera_box span:hover
-{
-  color: #cf2037;
-}
 
 .camera_box span.center-big
 {
   display: inline-block;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  font-size: 4em;
-  transform: translate(-50%, -50%);
+  font-size: 5em;
+  
 }
 
-.jcrop-holder
-{
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-  
 
 .camera_box
 {
   width: 100%;
-  height: 0;
-  padding-bottom: 100%;
+
   background: #cacaca;
   box-sizing: border-box;
   text-align: center;
@@ -638,12 +627,6 @@ button.touch-friendly
 {
   width: 49%;
   margin: -1px;
-}
-
-.touch-friendly
-{
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
 }
 
 
