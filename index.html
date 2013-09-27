@@ -169,7 +169,7 @@
       <div class="sifter-grid-note img">
         <img class="sifter-grid-image" id="image{{note_id}}" src="{{image_url}}" />
         <div class="scale-icon scale-{{category_class}}"></div>
-			</div>
+      </div>
     </script>
 
     <!-- Show View -->
@@ -187,13 +187,12 @@
             <div class="scale-icon scale-{{category_class}}"></div> 
           </div>
 
-		<div class="sifter-show-linkbar">
-        		<div class ="social-icon">
-			<span class=" glyphicon glyphicon-envelope share-email ">
-				{{emailShare}}
-			</span>
-			</div>
-		</div>
+          <div class="sifter-show-linkbar">
+            <div class="shareable">
+              <span class="glyphicon glyphicon-envelope share-email"></span> {{emailShare}}
+            </div>
+            <div class="clear"></div>
+          </div>
 
           <div class="sifter-show-details">
             <p>{{details}}</p>
@@ -301,7 +300,7 @@
 
           <!-- Description -->
           <div class="description_box input_box">
-            <textarea id="caption"></textarea>
+            <textarea id="caption" placeholder="Add a caption"></textarea>
 
             <div class="center">
               <button id="submitNote" class="modal-button touch-friendly half-size">Submit</button>
@@ -319,7 +318,7 @@
     <!-- Login View -->
     <script id="loginTemplate" type="text/template">
       <div class='login_view modal-popup closable'>
-        <div class="close-button">
+        <div class="close-button" onclick="">
           <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 
@@ -350,7 +349,7 @@
     <!-- Join View -->
     <script id="joinTemplate" type="text/template">
       <div class='join_view modal-popup closable'>
-        <div class="close-button">
+        <div class="close-button" onclick="">
           <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 
@@ -385,7 +384,7 @@
     <!--Forgot View -->
     <script id="forgotTemplate" type="text/template">
       <div class='join_view modal-popup closable'>
-        <div class="close-button">
+        <div class="close-button" onclick="">
           <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 

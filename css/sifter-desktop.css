@@ -138,7 +138,7 @@ html,body
 
 .modal-button
 {
-  color: #777 !important;
+  color: #777;
 }
 
 .launchpad-button.button-active,
@@ -225,19 +225,22 @@ html,body
   }
 
 
-  .sifter-category input
+  .sifter-category input[type=checkbox],
+  .sifter-category input[type=radio]
   {
     display: none;
     height: 0;
     width: 0;
   }
 
-  .sifter-category input + span
+  .sifter-category input[type=checkbox] + span,
+  .sifter-category input[type=radio] + span
   {
     color: #cacaca;
   }
 
-  .sifter-category input:checked + span
+  .sifter-category input[type=checkbox]:checked + span,
+  .sifter-category input[type=radio]:checked + span
   {
     color: #cf2037;
   }
@@ -419,6 +422,7 @@ html,body
 .sifter-show-content .sifter-image img
 {
   width: 100%;
+  border-top-left-radius: 4px;
 }
 
 .sifter-image .scale-icon
@@ -765,14 +769,28 @@ button.touch-friendly
   100% { opacity: 0.0; }
 }
 
-/*Icons for social media sharing  */
-.social-icon
+/* Icons for social media sharing  */
+.sifter-show-linkbar
 {
-cursor:pointer;
-  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  border: 1px solid #dedede;
-  border-radius: 4px;
-  box-shadow: 0 0 5px rgba(150,150,150, 0.1);
+  border-bottom: 1px solid #cacaca;
+  padding: 0.2em;
+}
 
-	width:50px;
+.shareable
+{
+  display: inline-block;
+  float: right;
+  cursor:pointer;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  color: #96989b;
+}
+
+.shareable:hover
+{
+  color: #cf2037;
+}
+
+.shareable span
+{
+  vertical-align: text-top;
 }
