@@ -220,19 +220,19 @@ html,body
   }
 
 
-  .sifter-category input[type=checkbox]
+  .sifter-category input
   {
     display: none;
     height: 0;
     width: 0;
   }
 
-  .sifter-category input[type=checkbox] + span
+  .sifter-category input + span
   {
     color: #cacaca;
   }
 
-  .sifter-category input[type=checkbox]:checked + span
+  .sifter-category input:checked + span
   {
     color: #cf2037;
   }
