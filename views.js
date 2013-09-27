@@ -656,19 +656,20 @@ function cancelNote()
     controller.hideCreateNoteView();
 }
 
-function markerMoved(marker, map)
+function markerMoved(marker, map, html)
 {
     var point = marker.getPosition();
     map.panTo(point);
-    //document.getElementById("latitude").innerHTML = "Latitude: " + point.lat();
-    //document.getElementById("longitude").innerHTML = "Longitude: " + point.lng();
-    document.getElementById("latitude").innerHTML = "";
-    document.getElementById("longitude").innerHTML = "";
 
     var geocoder = new google.maps.Geocoder();
 
-    geocoder.geocode({latLng: point}, function(results, status) {
-        if(status == google.maps.GeocoderStatus.OK && results[0]) document.getElementById("address").innerHTML = "Approximate Address:<br> " + results[0].formatted_address.replace(/,/g,",<br />");
+    geocoder.geocode({latLng: point}, function(results, status)
+    {
+        if(status == google.maps.GeocoderStatus.OK && results[0])
+        {
+          var address_string = results[0].formatted_address;
+          document.getElementById('address').innerHTML = address_string; 
+        }
     });
     model.currentNote.lat = point.lat();
     model.currentNote.lon = point.lng();
@@ -933,13 +934,97 @@ function NoteCreateView()
 
 function NoteCreateView()
 {
-    var template = $('#newTemplate').html();
-    var view = Mustache.render (template);
+    var thism = this; // FIXME needs better name, like view
 
-    this.html = $(view).get(0);
+    /* Constructor */
+    this.initialize = function()
+    {
+      /* Render */
+      var template = $('#newTemplate').html();
+      var view = Mustache.render (template);
 
-    $(this.html).find('#in-camera').on('change', CropHelper.watch_image_change);
-    $(this.html).find('#le-image' ).on('load',   CropHelper.initialize_jcrop); 
+      this.html = $(view).get(0);
+
+      controller.createNewNote ();
+      //this.initialize_map ();
+
+
+      /* Events */
+      $(this.html).find('#in-camera').on('change', CropHelper.watch_image_change);
+      $(this.html).find('#le-image' ).on('load',   CropHelper.initialize_jcrop);
+    };
+
+
+    /* Methods */ 
+    this.initialize_map = function()
+    {
+      /* Map and Marker */
+      var mapOptions = { zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP };
+      var map = new google.maps.Map (document.getElementById('mapCanvas'), mapOptions);
+
+      var pos = new google.maps.LatLng (model.views.defaultLat, model.views.defaultLon);
+      map.setCenter(pos);
+
+      marker = new google.maps.Marker({ map: map, position: pos, draggable: true });
+
+      google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
+      markerMoved(marker, map);
+
+
+      /* Locate User */
+      if(navigator.geolocation) //this may take time to complete, so it'll just move the default when it's ready
+      {
+        function positionFound(position)
+        {
+          if(!position) { return; }
+          pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          map.setCenter(pos);
+          marker.setPosition(pos);
+          markerMoved(marker, map);
+        }
+
+        function positionNotFound() { handleNoGeolocation(true); }
+
+        navigator.geolocation.getCurrentPosition(positionFound, positionNotFound);
+      }
+
+
+      /* Auto complete location */
+      var input = document.getElementById('searchTextField');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.bindTo('bounds', map);
+
+      google.maps.event.addListener(autocomplete, 'place_changed', function()
+      {
+          var place = autocomplete.getPlace();
+          if(place.geometry.viewport)
+          {
+              map.fitBounds(place.geometry.viewport);
+          }
+          else
+          {
+              map.setCenter(place.geometry.location);
+              map.setZoom(17);  // Why 17? Because it looks good.
+          }
+
+          marker.setPosition(place.geometry.location);
+          markerMoved(marker, map);
+
+          var address = '';
+          if(place.address_components)
+          {
+              address = [
+                  (place.address_components[0] && place.address_components[0].short_name || ''),
+                  (place.address_components[1] && place.address_components[1].short_name || ''),
+                  (place.address_components[2] && place.address_components[2].short_name || '')
+              ].join(' ');
+          }
+      });
+    };
+
+
+    this.initialize();
+    setTimeout(this.initialize_map,300);
 }
 
 

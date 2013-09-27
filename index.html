@@ -241,6 +241,20 @@
       {
         display: none;
       }
+
+      #mapCanvas
+      {
+        width: 100%;
+        background: yellow;
+        height: 0;
+        padding-bottom: 100%;
+      }
+      #searchTextField
+      {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0.5em 0;
+      }
     </style>
 
     <!-- New View -->
@@ -257,10 +271,8 @@
 
           <!-- Map -->
           <div class="map_box">
-            <div id="mapCanvas"></div><br />
             <input type="text" name="location" id="searchTextField"/><br />
-            <div id="latitude"></div>
-            <div id="longitude"></div>
+            <div id="mapCanvas"></div><br />
             <div id="address"></div>
           </div>
         </div> <!-- /left side -->
