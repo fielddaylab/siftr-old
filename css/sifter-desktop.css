@@ -141,6 +141,12 @@ html,body
   color: #777;
 }
 
+.modal-button:hover,
+.launchpad-button:hover
+{
+  color: #cf2037;
+}
+
 .launchpad-button.button-active,
 .filter-button.button-active,
 .modal-button.button-active
@@ -154,6 +160,11 @@ html,body
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
 
   background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
+}
+
+.modal-button.button-active:hover
+{
+  color: #ccc;
 }
 
 /* catch the nexus 7 shrunken screen */
@@ -228,19 +239,24 @@ html,body
   .sifter-category input[type=checkbox],
   .sifter-category input[type=radio]
   {
-    display: none;
-    height: 0;
-    width: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: -5000px;
   }
 
   .sifter-category input[type=checkbox] + span,
-  .sifter-category input[type=radio] + span
+  .sifter-category input[type=radio] + span,
+  .sifter-category input[type=checkbox] + label,
+  .sifter-category input[type=radio] + label
   {
     color: #cacaca;
   }
 
   .sifter-category input[type=checkbox]:checked + span,
-  .sifter-category input[type=radio]:checked + span
+  .sifter-category input[type=radio]:checked + span,
+  .sifter-category input[type=checkbox]:checked + label,
+  .sifter-category input[type=radio]:checked + label
   {
     color: #cf2037;
   }
@@ -646,9 +662,8 @@ button.touch-friendly
   padding: 0.5em;
 }
 
-.camera_box span
+.camera_box .left-small
 {
-  display: inline-block;
   position: relative;
   padding: 0.2em;
   float: left;
@@ -663,14 +678,15 @@ button.touch-friendly
   color: #cf2037;
 }
 
-.camera_box span.center-big
+.camera_box .center-big
 {
-  display: inline-block;
   position: relative;
   top: 50%;
   left: 50%;
   font-size: 4em;
   transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: #f7f7f7;
 }
 
 .jcrop-holder
@@ -683,9 +699,8 @@ button.touch-friendly
 
 .camera_box
 {
-  width: 100%;
-  height: 0;
-  padding-bottom: 100%;
+  width: 283px;
+  height: 283px;
   background: #cacaca;
   box-sizing: border-box;
   text-align: center;
@@ -705,10 +720,18 @@ button.touch-friendly
   display: none;
 }
 
+#in-camera
+{
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: -5000px;
+}
+
 #mapCanvas
 {
   width: 100%;
-  background: yellow;
+  background: #cacaca;
   height: 0;
   padding-bottom: 80%;
 }
@@ -734,7 +757,7 @@ button.touch-friendly
 
 .touch-friendly.half-size
 {
-  width: 50%;
+  width: 49%;
   margin: -1px;
 }
 

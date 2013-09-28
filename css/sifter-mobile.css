@@ -596,10 +596,18 @@ button.touch-friendly
   display: none;
 }
 
+#in-camera
+{
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: -5000px;
+}
+
 #mapCanvas
 {
   width: 100%;
-  background: yellow;
+  background: #cacaca;
   height: 0;
   padding-bottom: 80%;
 }

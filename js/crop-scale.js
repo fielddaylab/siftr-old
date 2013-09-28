@@ -3,7 +3,7 @@ var CropHelper = {
   /* Image File/Camera grabbers */
   watch_image_change: function (event)
   {
-    $('.center-big').removeClass('center-big');
+    $('.center-big').removeClass('center-big').addClass('left-small');
     var reader = new FileReader();
     reader.readAsDataURL (event.target.files[0]);
 

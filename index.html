@@ -226,7 +226,7 @@
           {{/logged_in}}
           {{^logged_in}}
             <div class="sifter-new-comment">
-              <button class="modal-button button-active touch-friendly login-to-comment">Login to Comment</button>
+              <button class="modal-button touch-friendly login-to-comment">Login to Comment</button>
             </div>
           {{/logged_in}}
         </div>
@@ -243,8 +243,8 @@
           <!-- Camera Box -->
           <div class="camera_pad_box">
           <div class="camera_box">
-            <span class="icon-camera center-big" id="browseImage"></span>
-            <input  id="in-camera" type="file" accept="image/*" capture="camera" style="display: none;" />
+            <div class="center-big"> <span class="icon-camera" id="browseImage"></span> </div>
+            <input  id="in-camera" type="file" accept="image/*" capture="camera" />
             <img    id="le-image" src="" />
             <canvas id="le-canvas" height="640" width="640"></canvas>
           </div>
@@ -262,32 +262,32 @@
           <!-- Category -->
           <div class="category_box input_box">
             <div class="sifter-category">
-              <label>
                 <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio" />
+              <label for="create_tag_1">
                 <span><span class="icon icon-innovation"></span> Innovation</span>
               </label>
             </div>
             <div class="sifter-category">
-              <label>
                 <input id="create_tag_2" name="note_tag_select" value="Stories of the Past" type="radio" />
+              <label for="create_tag_2">
                 <span><span class="icon icon-stories"   ></span> Stories of the Past</span>
               </label>
             </div>
             <div class="sifter-category">
-              <label>
                 <input id="create_tag_4" name="note_tag_select" value="Must Do"             type="radio" />
+              <label for="create_tag_4">
                 <span><span class="icon icon-mustdo"    ></span> Must Do</span>
               </label>
             </div>
             <div class="sifter-category">
-              <label>
                 <input id="create_tag_3" name="note_tag_select" value="Madison Culture"     type="radio" />
+              <label for="create_tag_3">
                 <span><span class="icon icon-culture"   ></span> Madison Culture</span>
               </label>
             </div>
             <div class="sifter-category">
-              <label>
                 <input id="create_tag_5" name="note_tag_select" value="100 Years from Now"  type="radio" />
+              <label for="create_tag_5">
                 <span><span class="icon icon-100years"  ></span> 100 Years From Now</span>
               </label>
             </div>
