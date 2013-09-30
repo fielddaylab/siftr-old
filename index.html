@@ -189,8 +189,12 @@
 
           <div class="sifter-show-linkbar">
             <div class="shareable">
-              <span class="glyphicon glyphicon-envelope share-email"></span> {{emailShare}}
-            </div>
+              <span class="glyphicon glyphicon-envelope " id="shareEmail">{{emailShare}}</span>
+			</div>
+            <div class="shareable" >
+              <span class="glyphicon glyphicon-heart-empty" id="shareLike">{{likeShare}}</span> 
+            	<!--The like icon will be determined in views by if they have or have not liked it before -->
+		</div>
             <div class="clear"></div>
           </div>
 

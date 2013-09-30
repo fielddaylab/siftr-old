@@ -66,10 +66,15 @@ function NoteView(note)
       data.comments  = this.getCommentsJson (this.note.comments);
       data.logged_in = controller.logged_in();	
 	data.emailShare =  this.note.email_shares;
+	data.likeShare = this.note.likes;
+
 
       /* Render View */
       var render = compiledShowTemplate (data);
       this.html = $(render).get(0);
+
+
+	this.likeToggle(this.note.player_liked);	
 
 
       /* Attach login or comment events */
@@ -86,11 +91,13 @@ function NoteView(note)
 
 
       /* TODO social stuff, new comment logic */
-      $(this.html).find('.share-email').on('click', function()
-	{
-	 controller.sendEmail(model.playerId, model.currentNote.note_id);	
+
+		// when share email clicked, send an email
+      $(this.html).find('#shareEmail').on('click', function()
+		{
+	 	controller.sendEmail(model.playerId, model.currentNote.note_id);	
       });
-		
+
 
     }
 
@@ -254,49 +261,91 @@ function NoteView(note)
 	this.likeToggle = function(hasLiked)
 	{
 	//user may or maynot have already like the note, this changes the display and effect of clicking	
+		
+		//check to see if they are logged in
+		if(!model.playerId == 0){
+
+			if(hasLiked == 0) 
+			{ //the user has not yet liked it
+				//then allow them to like it	
 	
-		//start button
-		var likeButton = document.createElement('button');
-   	   	likeButton.id = 'likeButton';
+		     		$(this.html).find('#shareLike').on('click', function()
+    		  		{
+					thism.likeNote();
+	    	  		});
 
-		if(hasLiked == 0) 
-		{ //the user has not yet liked it
+			}
+			else if(hasLiked == 1)
+			{	//user has already liked the note
+	      		
+				//show filled heart for liking
+				$(this.html).find("#shareLike").removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
 
-			//then allow them to like it	
-       		likeButton.className = 'button';
-	       	likeButton.onclick = function(){thism.likeNote();};
+				//set onclick to unliking
+				$(this.html).find('#shareLike').on('click', function()
+	    			  {
+					thism.unlikeNote();
+		    	  	});
+
+			}	
+		
 		}
-		else if(hasLiked == 1)
-		{	//user has already liked the note
-			likeButton.className = 'clickedButton';
-			likeButton.onclick = function(){thism.unlikeNote();};
-		}	
+		else{
+			//they have not yet logged in, so clicking the button should prompt them to
+		      $(this.html).find('#shareLike').on('click', function()
+    		  {
+		        controller.loginRequired (function () { controller.noteSelected(thism); });
+	    	  });
 
-		//finish common elements of button and add it to HTML		
-		likeButton.innerHTML = thism.note.likes +  " " +  model.views.likeIcon;
-		thism.html.children[1].appendChild(likeButton);	
+
+		}
+	
 	}	
 
 	this.likeNote = function()
 	{
+		//increment the number of likes which display
 		this.note.likes = parseInt(this.note.likes) + 1;
-		var likeB = document.getElementById('likeButton');
-		likeB.innerHTML = this.note.likes + " "  + model.views.likeIcon;
-       	likeB.onclick = function(){thism.unlikeNote();};
-		likeB.className = 'clickedButton';
+		var likeB = document.getElementById('shareLike');
+		likeB.innerHTML = this.note.likes;
+
+		//update button
+		$("#shareLike").removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
+
+		//tell server that you liked it
 		controller.like(model.playerId, this.note.note_id);
+		
+		//set player liked toggle for this note
 		this.note.player_liked = 1;
+
+	//clear out old event handler with .off and add new one with .on 
+      $(this.html).find('#shareLike').off('click').on('click', function()
+		  { thism.unlikeNote();
+	      });
+
 	}
 
 	this.unlikeNote = function()
 	{
+		//decrement the number of likes which display
 		this.note.likes = parseInt(this.note.likes) - 1;
-		var likeB = document.getElementById('likeButton');
-		likeB.innerHTML = this.note.likes + " "  + model.views.likeIcon;
-       	likeB.onclick = function(){thism.likeNote();};
-		likeB.className = 'Button';
+		var likeB = document.getElementById('shareLike');
+		likeB.innerHTML = this.note.likes;
+
+		//update button
+		$(this.html).find("#shareLike").removeClass("glyphicon-heart").addClass("glyphicon-heart-empty");
+
+		//tell server that you unliked it
 		controller.unlike(model.playerId, this.note.note_id);
+		
+		//set player liked toggle for this note
 		this.note.player_liked = 0;
+
+	//clear out old event handler with .off and add new one with .on 
+      $(this.html).find('#share-like').off('click').on('click', function()
+		  { thism.likeNote();
+	      });
+
 	}
 
 
