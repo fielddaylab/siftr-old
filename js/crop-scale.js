@@ -72,8 +72,10 @@ var CropHelper = {
   attach_to_note: function ()
   {
     var canvas = $('#le-canvas').get(0);
-    var image = canvas.toDataURL('image/jpeg');
 
-    model.currentNote.imageFile = dataURItoBlob(image);
+    canvas.toBlob(
+        function (blob) { model.currentNote.imageFile = blob; },
+        'image/jpeg'
+    );
   },
 } /* end CropHelper */

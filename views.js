@@ -32,7 +32,7 @@ function ListNote(callback, note, noteId)
         }
         else
         {
-            this.html = "";//clear out the entire node if no media
+            this.html = $("<div></div>").get(0);//clear out the entire node if no media
             console.log("Error: Note with no image in database: noteID# " + noteId ); //since this shouldn't happen, log it if it does
         }
 
@@ -686,45 +686,6 @@ function handleNoGeolocation(errorFlag)
     else          var content = 'Error: Your browser doesn\'t support geolocation.';
 }
 
-function dataURItoBlob(dataURI)
-{
-    var binary = atob(dataURI.split(',')[1]);
-    var array = [];
-    for(var i = 0; i < binary.length; i++)
-        array.push(binary.charCodeAt(i));
-
-    var blob = null;
-
-    try {
-      blob = new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
-    }
-    catch(e)
-    {
-      // TypeError old chrome and FF
-      window.BlobBuilder = window.BlobBuilder || 
-                           window.WebKitBlobBuilder || 
-                           window.MozBlobBuilder || 
-                           window.MSBlobBuilder;
-
-      if(e.name == 'TypeError' && window.BlobBuilder)
-      {
-          var bb = new BlobBuilder();
-          bb.append([array.buffer]);
-          blob = bb.getBlob("image/jpeg");
-      }
-      else if(e.name == "InvalidStateError")
-      {
-          // InvalidStateError (tested on FF13 WinXP)
-          blob = new Blob( [array.buffer], {type : "image/jpeg"});
-      }
-      else{
-          // We're screwed, blob constructor unsupported entirely   
-          alert("Image cropping unsupported");
-      }
-    }
-
-    return blob;
-}
 
 function unhide(div)
 {
@@ -862,111 +823,6 @@ function ForgotView()
 
     this.html = $(view).get(0);
 }
-
-function NoteCreateView()
-{
-    this.html = model.views.constructNoteCreateView.cloneNode(true);
-	
-    controller.createNewNote();
-
-    this.constructHTML = function()
-    {
-	
-	    function refreshMap() 
-        {
-            var mapOptions = {
-                zoom: 12,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-		
-			// set up map. Geolocation will move marker when/if it gets the new position
-            var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
-			var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon); //start at default, the let geolocation update it if it can
-           	marker = new google.maps.Marker({ 
-   	        	map: map,
-       			position: pos,
-               	draggable: true
-           	});
-			
-			google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
-			map.setCenter(pos);
-			markerMoved(marker, map);
-		
-			if(navigator.geolocation) //this may take time to complete, so it'll just move the default when it's ready
-			{
-				function positionFound(position)
-				{
-					if(!position) return;
-					pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-					map.setCenter(pos);
-					marker.setPosition(pos); 
-					markerMoved(marker, map);
-				}   
-
-				function positionNotFound()
-				{
-					handleNoGeolocation(true);
-				}   
-
-				navigator.geolocation.getCurrentPosition(positionFound, positionNotFound);
-		
-			} 
-			 
-
-
-        	var input = document.getElementById('searchTextField');
-         	var autocomplete = new google.maps.places.Autocomplete(input);
-            autocomplete.bindTo('bounds', map);
-
-            google.maps.event.addListener(autocomplete, 'place_changed', function()
-				 {
-                	var place = autocomplete.getPlace();
-                	if(place.geometry.viewport) 
-                    	map.fitBounds(place.geometry.viewport);
-                	else
-                	{
-                    	map.setCenter(place.geometry.location);
-                    	map.setZoom(17);  // Why 17? Because it looks good.
-                	}
-
-                	marker.setPosition(place.geometry.location);
-                	markerMoved(marker, map);
-    
-                	var address = '';
-                	if(place.address_components)
-                	{
-                    	address = [
-                        	(place.address_components[0] && place.address_components[0].short_name || ''),
-                        	(place.address_components[1] && place.address_components[1].short_name || ''),
-                        	(place.address_components[2] && place.address_components[2].short_name || '')
-                    	].join(' ');
-                	}
-            	});
-
-			//if user clicks 'Camera' then 'Snap Photo'
-            document.getElementById("snap").addEventListener("click", function()
-            {
-                var canvas = document.getElementById("canvas");
-                var context = canvas.getContext("2d");
-
-                video = document.getElementById("video");
-                context.drawImage(video, 0, 0, 200, 200);
-                var image = canvas.toDataURL('image/jpeg');
-    
-                var img = document.getElementById("imageThumbnail");
-                img.src = image;
-                model.currentNote.imageFile = dataURItoBlob(image); // it looks like there will eventually be a method canvas.toBlob() method for HTML5 but it is not implemented yet in most browsers as of April 2013
-            }, false );
-    
-	    }//end RefreshMap
-	
-        setTimeout(refreshMap,300);
-
-    }; //end constructHTML
-
-    this.constructHTML();
-}
-
 
 function NoteCreateView()
 {
