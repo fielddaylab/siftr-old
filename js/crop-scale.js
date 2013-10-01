@@ -40,6 +40,9 @@ var CropHelper = {
       CropHelper.attach_to_note();
     };
 
+    $('.new-dialog').addClass('shrink');
+    $('#crop_box').show(); /* Mobile full frame */
+
     setTimeout(function ()
     {
       $('#le-image').Jcrop (

@@ -85,13 +85,25 @@ $(document).ready (function ()
   });
 
   $(document).on('click', '#browseImage', clickBrowseImage);
-  $(document).on('click', '#showCamera',  showVideo);
   $(document).on('click', '#browseAudio', clickBrowseAudio);
+  $(document).on('click', '#finishCrop',  function()
+  {
+    $('.new-dialog').removeClass('shrink');
+    $('#crop_box').hide();
+    $('#le-canvas').show();
+  });
+
+  $(document).on('click', '#le-canvas', function()
+  {
+    $('.new-dialog').addClass('shrink');
+    $('#crop_box').show();
+  });
 
   $(document).on('change', '#audioFileInput', function()
   {
     handleAudioFileSelect(this.files);
   });
+
 
   $(document).on('click', '#submitNote', submitNote);
   $(document).on('click', '#cancelNote, #cancelNoteOverlay', cancelNote);

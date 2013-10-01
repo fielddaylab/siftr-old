@@ -692,7 +692,38 @@ function dataURItoBlob(dataURI)
     var array = [];
     for(var i = 0; i < binary.length; i++)
         array.push(binary.charCodeAt(i));
-    return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+
+    var blob = null;
+
+    try {
+      blob = new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+    }
+    catch(e)
+    {
+      // TypeError old chrome and FF
+      window.BlobBuilder = window.BlobBuilder || 
+                           window.WebKitBlobBuilder || 
+                           window.MozBlobBuilder || 
+                           window.MSBlobBuilder;
+
+      if(e.name == 'TypeError' && window.BlobBuilder)
+      {
+          var bb = new BlobBuilder();
+          bb.append([array.buffer]);
+          blob = bb.getBlob("image/jpeg");
+      }
+      else if(e.name == "InvalidStateError")
+      {
+          // InvalidStateError (tested on FF13 WinXP)
+          blob = new Blob( [array.buffer], {type : "image/jpeg"});
+      }
+      else{
+          // We're screwed, blob constructor unsupported entirely   
+          alert("Image cropping unsupported");
+      }
+    }
+
+    return blob;
 }
 
 function unhide(div)
