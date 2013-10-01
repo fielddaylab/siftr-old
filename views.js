@@ -68,7 +68,6 @@ function NoteView(note)
 	data.emailShare =  this.note.email_shares;
 	data.likeShare = this.note.likes;
 
-
       /* Render View */
       var render = compiledShowTemplate (data);
       this.html = $(render).get(0);
@@ -860,7 +859,10 @@ function clickEmailPassword(){
 function LoginView()
 {
     var template = $('#loginTemplate').html();
-    var view = Mustache.render (template);
+    var data = {};
+	data.fb_enabled = (typeof FB  != 'undefined'); //if they have a script blocker with makes FB undefined, don't show the facebook login
+
+	var view = Mustache.render (template,data);
 
     this.html = $(view).get(0);
 }
