@@ -46,10 +46,14 @@ $(document).ready (function ()
 
   $('.sifter-show-upload-button').on('click', function()
   {
-    controller.loginRequired (function ()
+    if(CropHelper.canvas_jpeg_support ())
     {
-      controller.createNote();
-    });
+      controller.loginRequired (function ()
+      {
+        controller.createNote();
+      });
+    }
+    else { alert("This browser does not support uploading, please try Chrome"); }
   });
 
   $('.sifter-show-logout-button').on('click', function()
