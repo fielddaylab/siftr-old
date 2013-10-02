@@ -555,7 +555,7 @@ function Controller()
 			}
 		}
 
-		bodyText += "See the whole note at: www.sifter.org or download the Siftr app \n";
+		bodyText += "See the whole note at: www.siftr.org or download the Siftr app \n";
 		bodyText += bodyImage;
 		
 	
