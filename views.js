@@ -425,7 +425,6 @@ function submitNote()
         imgxhr.onreadystatechange = function ClientSideUpdate() {
             if (imgxhr.readyState == 4) 
             {
-                alert('name:'+imgxhr.responseText);
                 model.currentNote.arisImageFileName = imgxhr.responseText;
                 // FIXME this timeout seems to fix the old ipads
                 setTimeout(function() {controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisImageFileName, "PHOTO", '')}, 100);
