@@ -54,8 +54,20 @@ $(document).ready (function ()
 
   $('.sifter-show-logout-button').on('click', function()
   {
-    controller.logout();
-  });
+	
+	if(typeof FB != 'undefined'){ //check this first or you'll get errors
+		FB.getLoginStatus(function(response) { //check to see if they are currently logged in
+			if (response.status === 'connected'){ 
+				FB.logout(function(response){}); //which will run controller.logout when it's done
+ 			}else {controller.logout(); //they are not currently logged in to facebook, so you can run the plain controller.logout
+			}
+		});
+
+	}else{
+	    controller.logout(); //this deletes all the cookies
+	}
+	
+	});
 
 
 

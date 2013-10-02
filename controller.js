@@ -104,11 +104,9 @@ function Controller()
 
         for(var i = 0; i < model.gameNotes.length; i++)
         {
-           // if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
-           // var search_value = $('.sifter-filter-search-input').filter(":visible").val();
-           // if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
             var listNote = new ListNote(this.noteSelected, model.gameNotes[i], i);
-            model.views.mainViewLeft.appendChild( listNote.html );
+			if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
+			//make sure it's not blank, if it is it'll crash	
         }
     };
 
@@ -412,9 +410,11 @@ function Controller()
 
     this.logout = function()
     {
+		$.removeCookie('displayName');
         $.removeCookie('sifter'); //without the cookie, the user will have to log in again
         $('.sifter-show-logout-button').hide();
         model.playerId = 0;	
+		
     }
 
     this.logged_in = function()

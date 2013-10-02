@@ -28,10 +28,11 @@
   <body>
 <div id="fb-root"></div>
 
+<script src="utils/server-conf.js"></script> <!--this is declared below also, but facebook needs one of those vars now -->
 <script>
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '195203477326416', // App ID
+    appId      : FACEBOOK_ID,  //'195203477326416', // App ID
     channelUrl : '//dev.arisgames.org/caroline-yoi/channel.html', // Channel File
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
