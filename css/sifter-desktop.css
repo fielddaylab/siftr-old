@@ -689,6 +689,13 @@ button.touch-friendly
   color: #f7f7f7;
 }
 
+
+#crop_box,#crop_view
+{
+  height: 100%;
+  width: 100%;
+}
+
 .jcrop-holder
 {
   top: 50%;

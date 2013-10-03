@@ -135,9 +135,9 @@ html,body
 .sifter-filters-slideout
 {
   position: fixed;
-  height: 160px;
+  height: 190px;
   margin-bottom: 50px;
-  bottom: -220px;
+  bottom: -250px;
   padding-bottom: 60px;
   background: rgba(255, 255, 255, 0.85);
   width: 100%;
@@ -152,7 +152,7 @@ html,body
 
 .sifter-filters
 {
-  font-size: 1em;
+  font-size: 1.25em;
   margin: 1em;
 }
 
@@ -187,17 +187,26 @@ button.filter-button.last
 }
 
 
-.sifter-categories div
+.sifter-categories div,
+.category_box div
 {
-  font-size: 1.2em;
+  font-size: 1.25em;
   margin-left: 1em;
+  margin-bottom: 0.2em;
 }
 
 .sifter-categories span,
 .category_box span
 {
-  vertical-align: -2px;
+  vertical-align: middle;
+  color: #000;
+}
+
+.sifter-categories span span,
+.category_box span span
+{
   color: #cf2037;
+  font-size: 1.25em;
 }
 
 .sifter-categories input,
@@ -549,6 +558,11 @@ button.touch-friendly
   border-bottom: 1px solid #cacaca;
 }
 
+.new-dialog.shrink
+{
+  overflow: hidden;
+}
+
 .camera_pad_box
 {
   padding: 0.5em;
@@ -559,19 +573,28 @@ button.touch-friendly
   display: inline-block;
   padding: 0.2em;
   z-index: 1000;
-  font-size: 3em;
   color: #f7f7f7;
   cursor: pointer;
+  font-size: 3em;
 }
 
-
-.camera_box span.center-big
+.camera_box .left-small
 {
-  display: inline-block;
-  font-size: 5em;
-  
+  float: left;
+  width: 60%;
+  padding-top: 10%;
 }
 
+.camera_box .left-small span
+{
+  padding: 0;
+}
+
+
+.camera_box .right-small
+{
+  float: left;
+}
 
 .camera_box
 {
@@ -594,6 +617,12 @@ button.touch-friendly
 #le-canvas
 {
   display: none;
+  width: 40%;
+}
+
+#le-canvas.small-right
+{
+  float: right;
 }
 
 #in-camera
@@ -609,8 +638,48 @@ button.touch-friendly
   width: 100%;
   background: #cacaca;
   height: 0;
-  padding-bottom: 80%;
+  padding-bottom: 35%;
 }
+
+
+/* Full frame cropper */
+#crop_box
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #cacaca;
+  z-index: 8000;
+}
+
+#crop_view
+{
+  padding-bottom: 50px;
+  box-sizing: border-box;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#crop_buttons
+{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+#finishCrop
+{
+  margin-top: 5px;
+  width: 90%;
+}
+
 #searchTextField,
 #caption
 {
