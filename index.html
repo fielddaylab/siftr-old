@@ -335,14 +335,22 @@
           <div class="camera_box">
             <div class="center-big"> <span class="icon-camera" id="browseImage"></span> </div>
             <input  id="in-camera" type="file" accept="image/*" capture="camera" />
-            <img    id="le-image" src="" />
-            <canvas id="le-canvas" height="640" width="640"></canvas>
+            <div    id="crop_box" style="display: none;">
+              <div id="crop_view">
+                <img    id="le-image" src="" style="hiddden-mobile"/>
+              </div>
+              <div id="crop_buttons" class="hidden-desktop">
+                <button id="finishCrop" class="modal-button touch-friendly">Crop</button>
+              </div>
+            </div>
+            <canvas id="le-canvas" height="640" width="640" class="small-right hidden-desktop"></canvas>
+            <div class="clear"></div>
           </div>
           </div>
 
           <!-- Map -->
           <div class="map_box input_box">
-            <input type="text" name="location" id="searchTextField"/><br />
+            <input type="text" name="location" id="searchTextField" placeholder="Type or drag pin to location"/><br />
             <div id="mapCanvas"></div><br />
             <div id="address" style="display: none;"></div>
           </div>
@@ -563,6 +571,7 @@
     <!-- Delayed JS loading -->
     <script src="js/jquery.js"></script>
     <script src="js/jquery.Jcrop.js"></script>
+    <script src="js/canvas-to-blob.js"></script>
     <script src="utils/jquery-cookie-master/jquery.cookie.js"></script>
     <script src="js/prefixfree.min.js"></script>
     <script src="js/sifter-mobile.js"></script>

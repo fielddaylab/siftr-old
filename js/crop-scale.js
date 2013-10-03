@@ -40,6 +40,9 @@ var CropHelper = {
       CropHelper.attach_to_note();
     };
 
+    $('.new-dialog').addClass('shrink');
+    $('#crop_box').show(); /* Mobile full frame */
+
     setTimeout(function ()
     {
       $('#le-image').Jcrop (
@@ -69,8 +72,80 @@ var CropHelper = {
   attach_to_note: function ()
   {
     var canvas = $('#le-canvas').get(0);
-    var image = canvas.toDataURL('image/jpeg');
 
-    model.currentNote.imageFile = dataURItoBlob(image);
+    if(CropHelper.canvas_jpeg_support ())
+    {
+      canvas.toBlob(
+          function (blob) { model.currentNote.imageFile = blob; },
+          'image/jpeg'
+      );
+    }
+
+    /* Future notes */
+    /* Android browser currently cant:
+       - Make a jpeg from canvas. (solved with encoder)
+       - Use modern blob constructor (solved with builder)
+       - Send the blob properly to server (NOT FIXED)
+
+      var encoder = new JPEGEncoder();
+      var jpeg = encoder.encode(canvas.getContext("2d").getImageData(0,0,640,640), 90);
+      model.currentNote.imageFile = CropHelper.dataURItoBlob(jpeg);
+    */
   },
+
+
+  /* Browser blob test */
+  canvas_jpeg_support: function()
+  {
+    return (document.createElement('canvas').toDataURL('image/jpeg').substring(11,15) === "jpeg");
+  },
+
+
+  /* Blob helper for older devices UNUSED */
+  dataURItoBlob: function(dataURI)
+  {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+
+    /* For browsers without Blob */
+    var blob = null;
+
+    try{
+      blob = new Blob( [ab], {type : mimeString});
+    }
+    catch(e)
+    {
+        // TypeError old chrome and FF
+        window.BlobBuilder = window.BlobBuilder || 
+                             window.WebKitBlobBuilder || 
+                             window.MozBlobBuilder || 
+                             window.MSBlobBuilder;
+        if(window.BlobBuilder)
+        {
+            var bb = new BlobBuilder();
+            bb.append([ab]);
+            blob = bb.getBlob(mimeString);
+        }
+        else
+        {
+            alert("Uploading not supported in your browser.");
+        }
+    }
+    return blob;
+  }
 } /* end CropHelper */
