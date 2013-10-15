@@ -198,7 +198,7 @@ function Controller()
 
     this.populateAllFromModel = function()
     {
-        this.populateMapNotesFromModel(true);
+        this.populateMapNotesFromModel(false);
         this.populateListNotesFromModel();
     }
 

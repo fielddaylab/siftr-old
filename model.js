@@ -2,6 +2,7 @@ function Model()
 {
 	self = this;
     this.gameId = YOI_GAME_ID;
+
 	this.displayName = ""; // for displaying newly added content
     this.gameJSONText = '';
 	this.gameNotes = []; //this is using new API
@@ -161,13 +162,14 @@ function Model()
 
         //Map
         this.map = document.getElementById('main_view_map');
-        var centerLoc = new google.maps.LatLng(0, 0);
-        var myOptions = { zoom:5, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
+        var centerLoc = new google.maps.LatLng(43.081829, -89.402313);
+
+        var myOptions = { zoom:13, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
         this.gmap = new google.maps.Map(this.map, myOptions);
-		
-		//default map pin location is in lake, where no notes are expected. User must move this pin to submit a note.
-		this.defaultLat = 43.081829;
-		this.defaultLon = -89.402313;
+
+        //default map pin location is in lake, where no notes are expected. User must move this pin to submit a note.
+        this.defaultLat = 43.081829;
+        this.defaultLon = -89.402313;
  
         // marker clusterer
         var mcOptions = { styles: [
