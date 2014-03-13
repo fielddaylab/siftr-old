@@ -550,7 +550,8 @@ function xconstructMarker(note)
 {
   var container = document.createElement('div');
   $(container).addClass ("sifter-map-icon");// scale-icon scale-mustdo");
-  var image = document.createElement('image');
+  var image = document.createElement('img');
+
   image.src = "assets/images/icon_"+getTagIconName(note)+".svg";
   $(container).append(image);
   return container;
