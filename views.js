@@ -490,6 +490,11 @@ function MapMarker(callback, note)
     model.views.markerclusterer.addMarker(this.marker);
 
     google.maps.event.addListener(this.marker, 'click', function(e) { self.callback(self); });
+    google.maps.event.addListener(this.marker, 'mouseover', function()
+    {
+    	console.log(note);
+
+    });
 }
 
 function constructMarker(note)
@@ -901,10 +906,12 @@ function NoteCreateView()
 
 
     /* Methods */ 
+    //NOTE: I don't think this map initialize actually happens, getting results from model.js
     this.initialize_map = function()
     {
       /* Map and Marker */
       var mapOptions = { zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP };
+      console.log("new map");
       var map = new google.maps.Map (document.getElementById('mapCanvas'), mapOptions);
 
       var pos = new google.maps.LatLng (model.views.defaultLat, model.views.defaultLon);

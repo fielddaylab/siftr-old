@@ -1,3 +1,4 @@
+
 function Model()
 {
 	self = this;
@@ -109,7 +110,8 @@ function Model()
     this.views = new function Views()
     { 
         //Content
-        //this.mainView.addEventListener('click', function(e) { e.stopPropagation(); }); 
+        //this.mainView.addEventgmao
+        ('click', function(e) { e.stopPropagation(); }); 
 		//don't know why this is commented out, but if we don't need it we don't need the removeEventListeners either
         this.mainViewLeft              = document.getElementById('main_view_left');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
@@ -166,6 +168,71 @@ function Model()
 
         var myOptions = { zoom:13, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
         this.gmap = new google.maps.Map(this.map, myOptions);
+		var newBoundsEvent;
+      	google.maps.event.addListener(this.gmap, 'bounds_changed', function() 
+      	{
+
+			if(newBoundsEvent!=null)clearTimeout(newBoundsEvent);	//if something is happening with newBoundsEvent, stop it
+			newBoundsEvent = window.setTimeout(function()
+			{
+				/*
+		         ---------STEP 0: need a method to check if object is in array---------
+		        */
+		        function isInArray(obj, arr)
+		        {
+		            var isIn = false;
+		            for (var i = 0; i < arr.length; i++)
+		            {
+		                if(obj === arr[i])
+		                {
+		                    isIn = true;
+		                }
+		            }
+		            return isIn;
+		        }
+
+		        /*
+		        ---------STEP 1: empty the left side so you can put stuff on it---------
+		        */
+		        model.views.mainViewLeft.innerHTML = '';
+		       
+		        /*
+		        ---------STEP 2: get the notes of the visible markers---------
+		        */
+		        var bounds = model.views.gmap.getBounds();
+		        var notesWithinBounds = [];
+		        for (var i = 0; i < model.mapMarkers.length; i++)
+		        {
+		            if(bounds.contains(model.mapMarkers[i].note.geoloc))
+		            {
+		                notesWithinBounds.push(model.mapMarkers[i].note);
+		            }
+		        }	     
+
+		        /*
+		        -------STEP 3: put notes on the left---------
+		        */
+		        //STEP 3A: first the visible markers
+		        for(var i = 0; i < notesWithinBounds.length; i++)
+		        {
+		            var listNote = new ListNote(controller.noteSelected, notesWithinBounds[i], model.mapMarkers[i].note.noteId);
+		            if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
+		            //make sure it's not blank, if it is it'll crash    
+		        }
+		        // STEP 3B: then the rest of the notes
+		        for(var i = 0; i < model.mapMarkers.length; i++)
+		        {
+		            if (  !isInArray(model.mapMarkers[i].note, notesWithinBounds)  )
+		            {
+		                var listNote = new ListNote(controller.noteSelected, model.mapMarkers[i].note, model.mapMarkers[i].note.noteId);
+		                if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
+		                //make sure it's not blank, if it is it'll crash    
+		            }
+		        }	
+			}, 400);
+
+      	});
+
 
         //default map pin location is in lake, where no notes are expected. User must move this pin to submit a note.
         this.defaultLat = 43.081829;

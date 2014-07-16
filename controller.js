@@ -199,7 +199,8 @@ function Controller()
     this.populateAllFromModel = function()
     {
         this.populateMapNotesFromModel(false);
-        this.populateListNotesFromModel();
+        this.populateListNotesFromModel();    // <-- regular one
+        //this.populateListNotesFromMarkers();    // jazmyn special
     }
 
     this.createNewNote = function()
