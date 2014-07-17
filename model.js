@@ -186,6 +186,8 @@ function Model()
 		                if(obj === arr[i])
 		                {
 		                    isIn = true;
+		                    console.log(obj.note_id + " ---- " + arr[i].note_id);	//TODO: delete debug line
+		                    break;
 		                }
 		            }
 		            return isIn;
@@ -195,19 +197,34 @@ function Model()
 		        ---------STEP 1: empty the left side so you can put stuff on it---------
 		        */
 		        model.views.mainViewLeft.innerHTML = '';
-		       
+
+				// TODO: replacing use of mapMarkers list with gameNotes list		       
+		        // /*
+		        // ---------STEP 2: get the notes of the visible markers---------
+		        // */
+		        // var bounds = model.views.gmap.getBounds();
+		        // var notesWithinBounds = [];
+		        // for (var i = 0; i < model.mapMarkers.length; i++)
+		        // {
+		        //     if(bounds.contains(model.mapMarkers[i].note.geoloc))
+		        //     {
+		        //         notesWithinBounds.push(model.mapMarkers[i].note);
+		        //     }
+		        // }	     
+
+		        // TODO: this is STEP 2 using gameNotes instead of mapMarkers
 		        /*
 		        ---------STEP 2: get the notes of the visible markers---------
 		        */
 		        var bounds = model.views.gmap.getBounds();
 		        var notesWithinBounds = [];
-		        for (var i = 0; i < model.mapMarkers.length; i++)
+		        for (var i = 0; i < model.gameNotes.length; i++)
 		        {
-		            if(bounds.contains(model.mapMarkers[i].note.geoloc))
+		            if(bounds.contains(model.gameNotes[i].geoloc))		
 		            {
-		                notesWithinBounds.push(model.mapMarkers[i].note);
+		                notesWithinBounds.push(model.gameNotes[i]);
 		            }
-		        }	     
+		        }	
 
 		        /*
 		        -------STEP 3: put notes on the left---------
@@ -215,20 +232,21 @@ function Model()
 		        //STEP 3A: first the visible markers
 		        for(var i = 0; i < notesWithinBounds.length; i++)
 		        {
-		            var listNote = new ListNote(controller.noteSelected, notesWithinBounds[i], model.mapMarkers[i].note.noteId);
+		            var listNote = new ListNote(controller.noteSelected, notesWithinBounds[i], model.gameNotes[i].note_id);
 		            if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
 		            //make sure it's not blank, if it is it'll crash    
 		        }
 		        // STEP 3B: then the rest of the notes
-		        for(var i = 0; i < model.mapMarkers.length; i++)
+		        for(var i = 0; i < model.gameNotes.length; i++)
 		        {
-		            if (  !isInArray(model.mapMarkers[i].note, notesWithinBounds)  )
+		            if (  !isInArray(model.gameNotes[i], notesWithinBounds)  )
 		            {
-		                var listNote = new ListNote(controller.noteSelected, model.mapMarkers[i].note, model.mapMarkers[i].note.noteId);
+		                var listNote = new ListNote(controller.noteSelected, model.gameNotes[i], model.gameNotes[i].note_id);
 		                if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
 		                //make sure it's not blank, if it is it'll crash    
 		            }
-		        }	
+		        }
+
 			}, 400);
 
       	});

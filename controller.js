@@ -104,7 +104,7 @@ function Controller()
 
         for(var i = 0; i < model.gameNotes.length; i++)
         {
-            var listNote = new ListNote(this.noteSelected, model.gameNotes[i], i);
+            var listNote = new ListNote(this.noteSelected, model.gameNotes[i], model.gameNotes[i].note_id);
 			if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
 			//make sure it's not blank, if it is it'll crash	
         }
@@ -199,8 +199,7 @@ function Controller()
     this.populateAllFromModel = function()
     {
         this.populateMapNotesFromModel(false);
-        this.populateListNotesFromModel();    // <-- regular one
-        //this.populateListNotesFromMarkers();    // jazmyn special
+        this.populateListNotesFromModel();  
     }
 
     this.createNewNote = function()
@@ -583,4 +582,5 @@ function Controller()
     model.views.staticContainer.appendChild(model.views.aboutView.html);
     $('.sifter-modal-overlay').show();
   }
+
 }
