@@ -47,6 +47,8 @@ function NoteView(note)
     this.note = note;
 	model.currentNote = note; // this is done so that the send email function over in controller can get at all the information
 
+
+
 	//this.html.children[0] is for the image
 	//this.html.children [1][0] Caption 
 	//this.html.children [1][1] Audio
@@ -65,16 +67,24 @@ function NoteView(note)
       data.details   = getTextToUse  (this.note);
       data.comments  = this.getCommentsJson (this.note.comments);
       data.logged_in = controller.logged_in();	
-	data.emailShare =  this.note.email_shares;
-	data.likeShare = this.note.likes;
+	  data.emailShare =  this.note.email_shares;
+	  data.likeShare = this.note.likes;
+
+	  data.author = model.playerId === this.note.owner_id ? "You" : this.note.username;
+	  data.isAuthor = model.playerId === this.note.owner_id ? true : false; //TODO: need real authentication for this
+
+	  //TODO: find a better place for this, controller?
+	  data.tweetShare = this.note.tweets ? this.note.tweets: 0;	//TODO: this.note.tweets will be null for all already-made notes
+
+  	  //TODO: find a better place for this, controller?
+	  data.pinShare = this.note.pins ? this.note.pins: 0;	//TODO: this.note.tweets will be null for all already-made notes
 
       /* Render View */
       var render = compiledShowTemplate (data);
       this.html = $(render).get(0);
 
 
-	this.likeToggle(this.note.player_liked);	
-
+	  this.likeToggle(this.note.player_liked);	
 
       /* Attach login or comment events */
       $(this.html).find('.login-to-comment').on('click', function()
@@ -88,19 +98,37 @@ function NoteView(note)
         thism.submitComment (thism.note, text)
       });
 
+      //TODO: note is deleted but not right away, how to fix? - Jazmyn
+      $(this.html).find('.delete-note').on('click', function()
+      {
+        if (confirm("Are you sure you want to delete this note?"))
+        {
+	        controller.deleteNote(thism.note.note_id);
+	        controller.hideNoteView();
+	    }
+      });
 
       /* TODO social stuff, new comment logic */
 
 		// when share email clicked, send an email
       $(this.html).find('#shareEmail').on('click', function()
-		{
+	  {
 	 	controller.sendEmail(model.playerId, model.currentNote.note_id);	
       });
 
+      $(this.html).find('#shareTweet').on('click', function()
+	  {
+	 	controller.sendTweet(model.playerId, model.currentNote.note_id);
+      });
+
+      $(this.html).find('#sharePin').on('click', function()
+      {
+      	controller.getPinLink(model.playerId, model.currentNote.note_id);
+      });
 
     }
 
-
+    //Is this still in use? - Jazmyn
     this.old_constructHTML = function()
     {
         if(!this.note) return; 
@@ -169,7 +197,8 @@ function NoteView(note)
 		//above only works second time you run it
 
 		}
-		else{
+		else
+		{
 			var b = document.createElement('button');
 			b.id = 'loginToComment';
 			b.classname = 'button';
@@ -178,8 +207,8 @@ function NoteView(note)
 
 			//they can't submit to social media if they are not logged in, show static numbers
 
-//			document.getElementById('shareFacebook').innerHTML = this.note.facebook_shares + " Facebook";
-//			document.getElementById('shareLikes').innerHTML = this.note.likes + " " + model.views.likeIcon;		
+			// document.getElementById('shareFacebook').innerHTML = this.note.facebook_shares + " Facebook";
+			// document.getElementById('shareLikes').innerHTML = this.note.likes + " " + model.views.likeIcon;		
 
 	    	var likeButtonHTML =  this.note.likes + " " +  model.views.likeIcon ;
 
@@ -348,8 +377,47 @@ function NoteView(note)
 	}
 
 
+  	// TODO: delete if not used
+	this.tweetToggle = function(hasTweeted)
+	{
+	//user may or maynot have already tweeted the note, this changes the display and effect of clicking	
+		
+		//check to see if they are logged in
+		if(!model.playerId == 0){
 
+			if(hasTweeted == 0) 
+			{ //the user has not yet tweeted it
+				//
+	     		$(this.html).find('#shareTweet').on('click', function()
+		  		{
+					thism.tweetNote();
+    	  		});
 
+			}
+			else if(hasLiked == 1)
+			{	//user has already tweeted the note
+	      		
+				//show filled bird for tweeting
+				$(this.html).find("#shareTweet").removeClass("tweet-empty").addClass("tweet-full");
+
+				//set onclick to unliking
+				$(this.html).find('#shareTweet').on('click', function()
+			    {
+					thism.unlikeNote();
+		    	});
+
+			}	
+		
+		}
+		else
+		{
+		//they have not yet logged in, so clicking the button should prompt them to
+          $(this.html).find('#shareTweet').on('click', function()
+		  {
+	        controller.loginRequired (function () { controller.noteSelected(thism); });
+    	  });
+		}
+	}	
 
     this.constructHTML();
 }
@@ -365,8 +433,7 @@ function getLocation()
 
 function submitNote() 
 {
-
-	model.currentNote.text = document.getElementById("caption").value;
+  model.currentNote.text = document.getElementById("caption").value;
 
   // check for required stuff 
   var requirementsMet = true; 
@@ -375,30 +442,30 @@ function submitNote()
   $('.error').removeClass('error');
 
 	if(!model.currentNote.imageFile)
-  {
+  	{
 		errors.push ("select an image"); 
     $('.camera_box').addClass ('error');
 		requirementsMet = false;
 	}
 
 	if(!model.currentNote.text) //if string is not empty, null or blank
-  {
+  	{
 		errors.push ("write a caption");
-    $('#caption').addClass ('error');
+    	$('#caption').addClass ('error');
 		requirementsMet = false;
 	}
 
 	//map pin starts at default location in lake where no notes are expected. 
 	//Google maps map move the pin slightly during map creation, so can't do an exact == comparison
 	if(Math.abs(model.currentNote.lat-model.views.defaultLat)<.0001 &&  Math.abs(model.currentNote.lon-model.views.defaultLon)<.0001)
-  {
+  	{
 		errors.push ("choose a location");
     // TODO add error to location
 		requirementsMet = false;
 	}
 
 	if(!requirementsMet)
-  {
+  	{
 		alert("Please "+errors.join(", "));
 	}
 	else{
@@ -413,7 +480,7 @@ function submitNote()
 
     // add text to note
 	controller.addContentToNote(model.currentNote.noteId, '', "TEXT", model.currentNote.text);
-
+	
     // add image content
     
         var form = new FormData();
@@ -428,7 +495,7 @@ function submitNote()
                 model.currentNote.arisImageFileName = imgxhr.responseText;
                 // FIXME this timeout seems to fix the old ipads
                 setTimeout(function() {controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisImageFileName, "PHOTO", '')}, 100);
-		}
+			}
         };
         imgxhr.send(form);
     
@@ -483,75 +550,16 @@ function MapMarker(callback, note)
         position: this.note.geoloc,
         map: model.views.gmap,
         draggable: false,
-        content: xconstructMarker(this.note)
+        content: constructSVGMarker(this.note)
         });
 
     this.marker = imageMarker;
     model.views.markerclusterer.addMarker(this.marker);
 
     google.maps.event.addListener(this.marker, 'click', function(e) { self.callback(self); });
-    google.maps.event.addListener(this.marker, 'mouseover', function()
-    {
-    	console.log(note);
-
-    });
 }
 
-function constructMarker(note)
-{
-    var html;
-	
-	//if we haven't determined this note's tag icon url yet (i.e. first time we're rendering it) then figure it out!	
-	if(!(note.tags[0].tag_url))
-	{
-	 	note.tags[0].tag_url = controller.getTagIconURL(note.tags[0].tag);
-	}
-    var clip;
-    var size;
-    var height;
-    var width;
-    var left;
-    var top;
-
-	//everything is a photo
-        clip = "rect(2px 30px 32px 2px)";
-        size = "height='40' width='40'";
-        position = "top:0;left:0;";
-        height = 40;
-        width = 30;
-        top = 0;
-        left = 0;
-
-    var image = new Image();
-    var imageSource = getImageToUse(note);
-	image.onload = function() { /*replaceMarkerImage(imageSource);*/ }
-    image.src = note.tags[0].tag_url;// imageSource;
-    image.style.top = top;
-    image.style.left = left;
-    image.style.position = "absolute";
-    image.style.clip = clip;
-    image.height = height;
-    image.width = width;
-
-    var outerDiv = document.createElement('div'); 
-    outerDiv.style.cursor = "pointer";
-
-    var speechBubble = new Image();
-    speechBubble.src = './assets/images/speechBubble2.png';
-    speechBubble.height = 51;
-    speechBubble.width = 32;
-
-    outerDiv.appendChild(speechBubble);
-    outerDiv.appendChild(image);
-    //outerDiv.appendChild(innerDiv);
-
-    html = outerDiv.outerHTML;
-
-    return html;
-}
-
-
-function xconstructMarker(note)
+function constructSVGMarker(note)
 {
   var container = document.createElement('div');
   $(container).addClass ("sifter-map-icon");// scale-icon scale-mustdo");
@@ -593,10 +601,11 @@ function getAudioToUse(note)
     return "";
 };
 
+//TODO: {{details}} is truncating # signs, problem might be here or within Mustache.compile when filling template
 function getTextToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)
-        if(note.contents[i].type == "TEXT") return note.contents[i].text;
+        if(note.contents[i].type == "TEXT") { return note.contents[i].text;}
     return "";
 };
 
@@ -906,12 +915,10 @@ function NoteCreateView()
 
 
     /* Methods */ 
-    //NOTE: I don't think this map initialize actually happens, getting results from model.js
     this.initialize_map = function()
     {
       /* Map and Marker */
       var mapOptions = { zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP };
-      console.log("new map");
       var map = new google.maps.Map (document.getElementById('mapCanvas'), mapOptions);
 
       var pos = new google.maps.LatLng (model.views.defaultLat, model.views.defaultLon);
