@@ -826,3 +826,8 @@ button.touch-friendly
 {
   vertical-align: text-top;
 }
+
+.sifter-delete-note
+{
+  padding: 0.75em;
+}
