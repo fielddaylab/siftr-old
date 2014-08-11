@@ -51,9 +51,10 @@ function Model()
 
 	this.loadTagsFromServer = function(response){
 		//format tag array
-		model.tags = JSON.parse("[" + response + "]")[0].data;
+		model.tags = JSON.parse("[" + response + "]")[0].data;	//is this all the tags?
 
-	
+		controller.showFilters();
+		
 		//retrieve and store icon URLs
 		//TODO: load svg files from server, change counter back to 5 when you uncomment
 		// callService("media.getMediaObject", function(response){model.tags[0].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[0].media_id, false);
@@ -117,9 +118,10 @@ function Model()
         this.mainViewLeft              = document.getElementById('main_view_left');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
         this.noteViewContainer         = document.getElementById('note_view_container');
+        this.filtersContainer		   = document.getElementById('filters_view_container');
         
 
-    this.staticContainer = document.getElementById('static_view_container');
+   		this.aboutContainer = document.getElementById('about_view_container');
 		this.loginViewContainer        = document.getElementById('login_view_container');
         this.joinViewContainer         = document.getElementById('join_view_container');
         this.forgotViewContainer       = document.getElementById('forgot_view_container');
@@ -171,37 +173,27 @@ function Model()
         this.gmap = new google.maps.Map(this.map, myOptions);
 		
         var newBoundsEvent;
-      	google.maps.event.addListener(this.gmap, 'bounds_changed', function() 
+		google.maps.event.addListener(this.gmap, 'bounds_changed', function() 
       	{
 			if(newBoundsEvent!=null)clearTimeout(newBoundsEvent);	//if something is happening with newBoundsEvent, stop it
 			// TODO: optimize
 			newBoundsEvent = window.setTimeout(function()
 			{
 
-		        function isInArray(obj, arr)
-		        {
-		            var isIn = false;
-		            for (var i = 0; i < arr.length; i++)
-		            {
-		                if(obj === arr[i])
-		                {
-		                    isIn = true;
-		                    break;
-		                }
-		            }
-		            return isIn;
-		        }
-
 		        model.views.mainViewLeft.innerHTML = '';
-
 				
 		        var bounds = model.views.gmap.getBounds();
 		        var notesWithinBounds = [];
+		        var notesOutsideBounds = [];
 		        for (var i = 0; i < model.gameNotes.length; i++)
 		        {
 		            if(bounds.contains(model.gameNotes[i].geoloc))		
 		            {
 		                notesWithinBounds.push(model.gameNotes[i]);
+		            }
+		            else
+		            {
+		            	notesOutsideBounds.push(model.gameNotes[i]);
 		            }
 		        }	
 
@@ -212,14 +204,11 @@ function Model()
 		            if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
 		            //make sure it's not blank, if it is it'll crash    
 		        }
-		        for(var i = 0; i < model.gameNotes.length; i++)
+		        for(var i = 0; i < notesOutsideBounds.length; i++)
 		        {
-		            if (  !isInArray(model.gameNotes[i], notesWithinBounds)  )
-		            {
-		                var listNote = new ListNote(controller.noteSelected, model.gameNotes[i], model.gameNotes[i].note_id);
-		                if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
-		                //make sure it's not blank, if it is it'll crash    
-		            }
+	                var listNote = new ListNote(controller.noteSelected, notesOutsideBounds[i], notesOutsideBounds[i].note_id);
+	                if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
+	                //make sure it's not blank, if it is it'll crash    
 		        }
 
 			}, 400);

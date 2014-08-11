@@ -42,7 +42,6 @@ $(document).ready(function ()
   /* Dialog and Overlay close */
   $(document).on('click', '.close-button, .sifter-modal-overlay', function()
   {
-    window.history.pushState('', '', '/index.html');
     $('.closable, .sifter-modal-overlay').hide();
   });
 

@@ -565,9 +565,16 @@ function Controller()
   this.showAbout = function()
   {
     model.views.aboutView = new AboutView();
-    model.views.staticContainer.innerHTML = '';
-    model.views.staticContainer.appendChild(model.views.aboutView.html);
+    model.views.aboutContainer.innerHTML = '';
+    model.views.aboutContainer.appendChild(model.views.aboutView.html);
     $('.sifter-modal-overlay').show();
+  }
+
+  this.showFilters = function ()
+  {
+    model.views.filtersView = new FiltersView();
+    model.views.filtersContainer.innerHTML = '';
+    model.views.filtersContainer.appendChild(model.views.filtersView.html);
   }
 
   this.getNoteFromURL = function()
@@ -723,12 +730,6 @@ function Controller()
     note.pins ? note.pins = parseInt(note.pins, 10) + 1: note.pins = 1;
     console.log(pinLink);
     window.open(pinLink);
-
-  }
-
-  //TODO: refactor the part that figures out what to say about given note, might have to specialize by email, tweet, pin
-  this.generateNoteDescription = function(playerId, note)
-  {
 
   }
 

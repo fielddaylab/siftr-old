@@ -989,8 +989,37 @@ function NoteCreateView()
 
 function AboutView()
 {
+	var data = {};
+	data.aboutSiftr = ABOUT_SIFTR;
+	data.introTags = TAG_INTRO;
+	data.aboutTags = [];
+
+	for (var i = 0; i < TAG_DESCRIPTIONS.length; i++)
+	{
+		if(i == 5){ break; }
+		data.aboutTags.push({"tagName": TAG_DESCRIPTIONS[i]});
+	}
+
+
     var template = $('#aboutTemplate').html();
-    var view = Mustache.render (template);
+	var view = Mustache.render (template, data);
+
+    this.html = $(view).get(0);
+}
+
+function FiltersView()
+{
+	var data = {};
+	data.categories = [];
+
+		data.categories.push({"category" : "Innovation", "category_css" : "innovation", "category_number" : "1"});
+		data.categories.push({"category" : "Stories of the Past", "category_css" : "stories", "category_number" : "2"});
+		data.categories.push({"category" : "Must Do", "category_css" : "mustdo", "category_number" : "4"});
+		data.categories.push({"category" : "Madison Culture", "category_css" : "culture", "category_number" : "3"});
+		data.categories.push({"category" : "100 Years From Now", "category_css" : "100years", "category_number" : "5"});
+					 
+    var template = $('#filtersTemplate').html();
+	var view = Mustache.render (template, data);
 
     this.html = $(view).get(0);
 }
