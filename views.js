@@ -1011,15 +1011,36 @@ function FiltersView()
 {
 	var data = {};
 	data.categories = [];
+	for (var i = 0; i < model.tags.length; i++)
+	{
+		
+		if(i == 5){ break; }
 
-		data.categories.push({"category" : "Innovation", "category_css" : "innovation", "category_number" : "1"});
-		data.categories.push({"category" : "Stories of the Past", "category_css" : "stories", "category_number" : "2"});
-		data.categories.push({"category" : "Must Do", "category_css" : "mustdo", "category_number" : "4"});
-		data.categories.push({"category" : "Madison Culture", "category_css" : "culture", "category_number" : "3"});
-		data.categories.push({"category" : "100 Years From Now", "category_css" : "100years", "category_number" : "5"});
+		//TODO: css and category number things should probably happen in a config file
+		var css = "";
+		var category_number = "";
+		switch(model.tags[i].tag.toLowerCase()){
+			case("innovation"): css = "innovation";category_number = 1; break;
+			case("must do"): css= "mustdo"; category_number = 4; break;
+			case("stories of the past"): css = "stories"; category_number = 2; break;
+			case("100 years from now"): css = "100years"; category_number = 5; break;
+			case("madison culture"): css = "culture";  category_number = 3; break;
+
+		}
+
+		data.categories.push( {
+								"category" : model.tags[i].tag,
+								"category_css" : css,
+								"category_number" : category_number
+							  }
+							);
+	}
 					 
     var template = $('#filtersTemplate').html();
 	var view = Mustache.render (template, data);
 
     this.html = $(view).get(0);
+    
 }
+
+

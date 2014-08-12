@@ -575,6 +575,17 @@ function Controller()
     model.views.filtersView = new FiltersView();
     model.views.filtersContainer.innerHTML = '';
     model.views.filtersContainer.appendChild(model.views.filtersView.html);
+
+    //Need event listeners to be set after the html is actually there
+    $('.sifter-filter-checkbox-input').on('change', function()
+    {
+        startSift('tags');
+    });
+
+    $('.sifter-filter-search-input').on('change', function()
+    {
+        startSift('search');
+    });
   }
 
   this.getNoteFromURL = function()

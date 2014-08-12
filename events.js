@@ -76,7 +76,7 @@ $(document).ready (function ()
 
 
   /* Search and Filter change ******************************* */
-
+  //Now that filters are set-up from tags in server, this is no longer used, happens too early
   $('.sifter-filter-checkbox-input').on('change', function()
   {
     startSift('tags');

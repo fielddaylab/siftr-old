@@ -51,7 +51,7 @@ function Model()
 
 	this.loadTagsFromServer = function(response){
 		//format tag array
-		model.tags = JSON.parse("[" + response + "]")[0].data;	//is this all the tags?
+		model.tags = JSON.parse("[" + response + "]")[0].data;
 
 		controller.showFilters();
 		

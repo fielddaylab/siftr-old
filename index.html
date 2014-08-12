@@ -85,59 +85,11 @@
         <button class="filter-button last sifter-fetch-mine-button">Mine</button>
         <div class="clear"></div>
       </div>
+
+      <div id="filters_view_container" class='container'></div>
       
-
-<!--       <div class="sifter-categories">
-        <div class="hidden-mobile sifter-category">
-          <span class="icon icon-search"></span>
-          <input type="text" class="desktop-search sifter-filter-search-input" id="filterbox" placeholder="search" />
-        </div>
-        <div class="sifter-category">
-          <label>
-            <input type="checkbox" id="tag1" class="sifter-filter-checkbox-input" value="Innovation" checked="checked"/>
-            <span><span class="icon icon-innovation"></span> Innovation</span>
-          </label>
-        </div>
-        <div class="sifter-category">
-          <label>
-            <input type="checkbox" id="tag2" class="sifter-filter-checkbox-input" value="Stories of the Past" checked="checked"/>
-            <span><span class="icon icon-stories"   ></span> Stories of the Past</span>
-          </label>
-        </div>
-        <div class="sifter-category">
-          <label>
-            <input type="checkbox" id="tag4" class="sifter-filter-checkbox-input" value="Must Do" checked="checked"/>
-            <span><span class="icon icon-mustdo"    ></span> Must Do</span>
-          </label>
-        </div>
-        <div class="sifter-category">
-          <label>
-            <input type="checkbox" id="tag3" class="sifter-filter-checkbox-input" value="Madison Culture" checked="checked"/>
-            <span><span class="icon icon-culture"   ></span> Madison Culture</span>
-          </label>
-        </div>
-        <div class="sifter-category">
-          <label>
-            <input type="checkbox" id="tag5" class="sifter-filter-checkbox-input" value="100 Years from Now" checked="checked"/>
-            <span><span class="icon icon-100years"  ></span> 100 Years From Now</span>
-          </label>
-        </div>
-      </div>  -->
-
-
-      
-      <div class="sifter-categories">
-        <div class="hidden-mobile sifter-category">
-          <span class="icon icon-search"></span>
-          <input type="text" class="desktop-search sifter-filter-search-input" id="filterbox" placeholder="search" />
-        </div>
-        
-        <!-- find a way to get filters_view_container to wrap around the search field div above -->
-        <div id="filters_view_container" class='container'></div>
-
-      </div>
-
       <div class="clear"></div>
+
 
       <div class="sifter-popdown-footer hidden-mobile">
         <span class="show-about">About</span> <!-- ∑ Contact ∑ Privacy & Terms ∑ Copyright & Trademark -->
@@ -146,6 +98,7 @@
       </div>
       
     </div>
+
 
     <!-- Main Content -->
     <div class="sifter-content">
@@ -499,16 +452,23 @@
     </script>
    
     <!-- Filters View Template -->
-    <script id="filtersTemplate" type="text/template">
-        
-        {{#categories}}
-        <div class="sifter-category">
-          <label>
-            <input type="checkbox" id="tag{{category_number}}" class="sifter-filter-checkbox-input" value="{{category}}" checked="checked"/>
-            <span><span class="icon icon-{{category_css}}"></span>{{category}}</span>
-          </label>
+     <script id="filtersTemplate" type="text/template">
+        <div class="sifter-categories">
+              
+          <div class="hidden-mobile sifter-category">
+            <span class="icon icon-search"></span>
+            <input type="text" class="desktop-search sifter-filter-search-input" id="filterbox" placeholder="search" />
+          </div>
+          {{#categories}}
+          <div class="sifter-category">
+            <label>
+              <input type="checkbox" id="tag{{category_number}}" class="sifter-filter-checkbox-input" value="{{category}}" checked="checked"/>
+              <span><span class="icon icon-{{category_css}}"></span>{{category}}</span>
+            </label>
+          </div>
+          {{/categories}}
+
         </div>
-        {{/categories}}
       
      </script>
 
