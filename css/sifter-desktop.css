@@ -573,13 +573,12 @@ button.touch-friendly
 
 
 /* SVG icons */
-
-.scale-mustdo     { background: url("../assets/images/icon_mustdo.svg");     }
-.scale-100years   { background: url("../assets/images/icon_100years.svg");   }
-.scale-culture    { background: url("../assets/images/icon_culture.svg");    }
-.scale-innovation { background: url("../assets/images/icon_innovation.svg"); }
-.scale-stories    { background: url("../assets/images/icon_stories.svg");    }
-.scale-search     { background: url("../assets/images/icon_search.svg");     }
+.scale_tag_1          { background: url("../assets/images/icon_tag_1.svg"); }
+.scale_tag_2          { background: url("../assets/images/icon_tag_2.svg"); }
+.scale_tag_3          { background: url("../assets/images/icon_tag_3.svg"); }
+.scale_tag_4          { background: url("../assets/images/icon_tag_4.svg"); }
+.scale_tag_5          { background: url("../assets/images/icon_tag_5.svg"); }
+.scale-search         { background: url("../assets/images/icon_search.svg");}
 
 .scale-icon
 {

@@ -140,7 +140,7 @@
     <script id="gridIconTemplate" type="text/template">
       <div class="sifter-grid-note img">
         <img class="sifter-grid-image" id="image{{note_id}}" src="{{image_url}}" />
-        <div class="scale-icon scale-{{category_class}}"></div>
+        <div class="scale-icon scale_{{category_class}}"></div>
       </div>
     </script>
 
@@ -156,7 +156,7 @@
           <div class="sifter-image">
             <!-- TODO add icon to top right -->
             <img src="{{image_url}}" />
-            <div class="scale-icon scale-{{category_class}}"></div> 
+            <div class="scale-icon scale_{{category_class}}"></div> 
           </div>
 
           <div class="sifter-show-linkbar">
@@ -254,6 +254,17 @@
         <div class="new-right-side">
           <!-- Category -->
           <div class="category_box input_box">
+            
+            {{#categories}}
+            <div class="sifter-category">
+              <input  id="create_tag_{{category_number}}" name="note_tag_select" value="{{category}}" type="radio"/>
+              <label for="create_tag_{{category_number}}">
+                <span><span class="icon icon-{{category_number}}"></span>{{category}}</span>
+              </label>
+            </div>
+            {{/categories}}
+
+<!-- TODO: delete once mustaches work
             <div class="sifter-category">
                 <input id="create_tag_1" name="note_tag_select" value="Innovation"          type="radio" />
               <label for="create_tag_1">
@@ -285,6 +296,7 @@
               </label>
             </div>
           </div>
+--> 
 
           <div class="audio_box input_box" style="display: none;">
             Audio: (mp3, aac, m4a or caf)<br />
@@ -463,7 +475,7 @@
           <div class="sifter-category">
             <label>
               <input type="checkbox" id="tag{{category_number}}" class="sifter-filter-checkbox-input" value="{{category}}" checked="checked"/>
-              <span><span class="icon icon-{{category_css}}"></span>{{category}}</span>
+              <span><span class="scale-icon scale_tag_{{category_number}}"></span>{{category}}</span>
             </label>
           </div>
           {{/categories}}

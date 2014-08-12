@@ -22,6 +22,7 @@ function ListNote(callback, note, noteId)
             var data = {}
             data.image_url = noteImage;
             data.note_id  = noteId;
+
             data.category_class = getTagIconName(note);
             
             /* Render View */
@@ -581,16 +582,15 @@ function getImageToUse(note)
 function getTagIconName(note)
 {
 
-  var lookup = {
-    "100 Years from Now"  : "100years",
-    "Innovation"          : "innovation",
-    "Stories of the Past" : "stories",
-    "Madison Culture"     : "culture",
-    "Must Do"             : "mustdo"
-  };
+  var lookup = {};
   
-  var icon_name = lookup[note.tags[0].tag] || "search"; // unknown icon
+  for (var i = 0; i < model.tags.length; i++)
+  {
+  	var attr = model.tags[i].tag;
+  	lookup[attr] = "tag_" + (i + 1);
+  }
 
+  var icon_name = lookup[note.tags[0].tag] || "search"; // unknown icon
   return icon_name;
 }
 
@@ -898,13 +898,16 @@ function NoteCreateView()
     /* Constructor */
     this.initialize = function()
     {
+      var data = {};
+      data.categories = getTagListForRender();
+
       /* Render */
       var template = $('#newTemplate').html();
-      var view = Mustache.render (template);
+      var view = Mustache.render (template, data);
 
       this.html = $(view).get(0);
 
-      controller.createNewNote ();
+      controller.createNewNote();
       //this.initialize_map ();
 
 
@@ -996,10 +999,8 @@ function AboutView()
 
 	for (var i = 0; i < TAG_DESCRIPTIONS.length; i++)
 	{
-		if(i == 5){ break; }
 		data.aboutTags.push({"tagName": TAG_DESCRIPTIONS[i]});
 	}
-
 
     var template = $('#aboutTemplate').html();
 	var view = Mustache.render (template, data);
@@ -1010,37 +1011,22 @@ function AboutView()
 function FiltersView()
 {
 	var data = {};
-	data.categories = [];
-	for (var i = 0; i < model.tags.length; i++)
-	{
-		
-		if(i == 5){ break; }
-
-		//TODO: css and category number things should probably happen in a config file
-		var css = "";
-		var category_number = "";
-		switch(model.tags[i].tag.toLowerCase()){
-			case("innovation"): css = "innovation";category_number = 1; break;
-			case("must do"): css= "mustdo"; category_number = 4; break;
-			case("stories of the past"): css = "stories"; category_number = 2; break;
-			case("100 years from now"): css = "100years"; category_number = 5; break;
-			case("madison culture"): css = "culture";  category_number = 3; break;
-
-		}
-
-		data.categories.push( {
-								"category" : model.tags[i].tag,
-								"category_css" : css,
-								"category_number" : category_number
-							  }
-							);
-	}
+	data.categories = getTagListForRender();
 					 
     var template = $('#filtersTemplate').html();
 	var view = Mustache.render (template, data);
 
     this.html = $(view).get(0);
-    
 }
 
+function getTagListForRender()
+{
+	var category_list = [];
+	for (var i = 0; i < model.tags.length ; i++)
+	{
+		category_list.push({ "category" : model.tags[i].tag, "category_number" : i + 1 });
+	}
+
+	return category_list;
+}
 
