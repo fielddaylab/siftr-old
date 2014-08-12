@@ -17,3 +17,8 @@ var CATEGORIES = [
 					];
 
 var ABOUT_SIFTR = "Introducing Siftr, a social photography app that promotes creative discussion about innovation and culture at UW Madison.";
+
+
+
+
+
