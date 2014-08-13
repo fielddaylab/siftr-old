@@ -75,6 +75,7 @@ html,body
   position: relative;
   overflow: hidden; /* Prevent padding from wrapping the nav */
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  background-color: #b70101;
 }
 
 .sifter-logo-box
@@ -147,7 +148,17 @@ html,body
   color: #cf2037;
 }
 
-.launchpad-button.button-active,
+.launchpad-button.button-active
+{
+  color: #cf2037;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: #cf2037;
+  background-repeat: repeat-x;
+  border: 1px solid #cf2037;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.5);
+}
+
 .filter-button.button-active,
 .modal-button.button-active
 {
@@ -158,6 +169,7 @@ html,body
   border: 1px solid #cf2037;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
+
 
   background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
 }
@@ -185,7 +197,8 @@ html,body
 .sifter-filters-popdown
 {
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
-  background: #fff;
+  /*background: #fff;*/
+  background-color: #f7f5e8; 
   position: relative;
 }
 
@@ -229,7 +242,7 @@ html,body
     list-style: none;
     color: #cf2037;
   }
-  .sifter-category .icon
+  .sifter-category .scale-icon
   {
     font-size: 2.55em; /* opera crunch */
     vertical-align: middle;
@@ -275,9 +288,11 @@ html,body
   /* Footer */
   .sifter-popdown-footer
   {
-    background: #f7f7f7;
+    /*background: #f7f7f7;*/
+    background-color: #E7D9C1;
     border-top: 1px solid #cacaca;
-    color: #aaaaaa;
+    /*color: #aaaaaa;*/
+    color: #b70101;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -578,7 +593,8 @@ button.touch-friendly
 .scale_tag_3          { background: url("../assets/images/icon_tag_3.svg"); }
 .scale_tag_4          { background: url("../assets/images/icon_tag_4.svg"); }
 .scale_tag_5          { background: url("../assets/images/icon_tag_5.svg"); }
-.scale-search         { background: url("../assets/images/icon_search.svg");}
+.scale_search         { background: url("../assets/images/icon_search.svg");}
+.scale_logo           { height: 1.5em; }
 
 .scale-icon
 {
