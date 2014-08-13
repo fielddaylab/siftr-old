@@ -133,8 +133,6 @@ html,body
   border: 1px solid #dedede;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.1);
-
-  background-image: linear-gradient(to bottom, #ffffff, #f7f7f7);
 }
 
 .modal-button
@@ -152,7 +150,7 @@ html,body
 {
   color: #cf2037;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: #cf2037;
+  background-color: #f7f7f7;
   background-repeat: repeat-x;
   border: 1px solid #cf2037;
   border-radius: 4px;
@@ -164,14 +162,11 @@ html,body
 {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: #cf2037;
+  background-color: #b70101;
   background-repeat: repeat-x;
   border: 1px solid #cf2037;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
-
-
-  background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
 }
 
 .modal-button.button-active:hover
@@ -197,7 +192,6 @@ html,body
 .sifter-filters-popdown
 {
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
-  /*background: #fff;*/
   background-color: #f7f5e8; 
   position: relative;
 }
