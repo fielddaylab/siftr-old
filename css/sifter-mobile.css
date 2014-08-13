@@ -485,7 +485,10 @@ button.touch-friendly
 .scale_tag_3          { background: url("../assets/images/icon_tag_3.svg"); }
 .scale_tag_4          { background: url("../assets/images/icon_tag_4.svg"); }
 .scale_tag_5          { background: url("../assets/images/icon_tag_5.svg"); }
-.scale-search         { background: url("../assets/images/icon_search.svg");}
+.scale_search         { background: url("../assets/images/icon_search.svg");}
+.scale_logo           { height: 1.5em; }
+/*.scale_logo           { background: url("../assets/images/icon_logo.png");  }*/
+
 
 .scale-icon
 {

@@ -57,8 +57,9 @@
 
     <!-- Desktop Header -->
     <div class="sifter-desktop-header hidden-mobile">
+
       <div class="sifter-logo-box">
-        <h1><span class="siftr-logo"></span> Siftr</h1>
+        <h1> <img src="../assets/images/icon_logo.png" class="scale_logo"/></h1>
 
       </div>
 
@@ -259,7 +260,7 @@
             <div class="sifter-category">
               <input  id="create_tag_{{category_number}}" name="note_tag_select" value="{{category}}" type="radio"/>
               <label for="create_tag_{{category_number}}">
-                <span><span class="scale-icon scale_tag_{{category_number}}"></span>{{category}}</span>
+                <span><span class="scale-icon scale_tag_{{category_number}}"></span>  {{category}}</span>
               </label>
             </div>
             {{/categories}}
@@ -435,14 +436,14 @@
         <div class="sifter-categories">
               
           <div class="hidden-mobile sifter-category">
-            <span class="icon icon-search"></span>
+            <span class="scale-icon scale_search"></span>
             <input type="text" class="desktop-search sifter-filter-search-input" id="filterbox" placeholder="search" />
           </div>
           {{#categories}}
           <div class="sifter-category">
             <label>
               <input type="checkbox" id="tag{{category_number}}" class="sifter-filter-checkbox-input" value="{{category}}" checked="checked"/>
-              <span><span class="scale-icon scale_tag_{{category_number}}"></span>{{category}}</span>
+              <span><span class="scale-icon scale_tag_{{category_number}}"></span>  {{category}}</span>
             </label>
           </div>
           {{/categories}}
