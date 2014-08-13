@@ -502,13 +502,10 @@ function submitNote()
     
 
     // add tags
-	var tags = "Innovation"; //this is the default tag and its radio button is checked, but in case that fails we'll set it here 
-
-    if(document.getElementById("create_tag_1").checked){tags = document.getElementById("create_tag_1").value; controller.addTagToNote(model.currentNote.noteId, tags); }
-    if(document.getElementById("create_tag_2").checked){tags = document.getElementById("create_tag_2").value; controller.addTagToNote(model.currentNote.noteId, tags); }
-    if(document.getElementById("create_tag_3").checked){tags = document.getElementById("create_tag_3").value; controller.addTagToNote(model.currentNote.noteId, tags); }
-    if(document.getElementById("create_tag_4").checked){tags = document.getElementById("create_tag_4").value; controller.addTagToNote(model.currentNote.noteId, tags); }
-    if(document.getElementById("create_tag_5").checked){tags = document.getElementById("create_tag_5").value; controller.addTagToNote(model.currentNote.noteId, tags); }
+	var tags = ""; //this is the default tag and its radio button is checked, but in case that fails we'll set it here 
+	for (var i = 1; i < model.tags.length + 1; i++) {
+		if(document.getElementById("create_tag_" + i).checked){tags = document.getElementById("create_tag_" + i).value; controller.addTagToNote(model.currentNote.noteId, tags); }
+	};
 
     // add audio content (optional)
     if(model.currentNote.audioFile != null)

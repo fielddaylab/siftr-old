@@ -57,7 +57,7 @@ function startSift(siftType){
 
 	//see which tags have been set and put their id #s in the selectedTags array
 	var selectedTags = [];
-	for(var i = 1; i <=5; i++){
+	for(var i = 1; i <=model.tags.length; i++){
 		tagItem = document.getElementById("tag"+i);
 		if(tagItem.checked ) {
 		
