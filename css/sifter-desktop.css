@@ -257,7 +257,7 @@ html,body
   .sifter-category input[type=checkbox] + label,
   .sifter-category input[type=radio] + label
   {
-    color: #cacaca;
+	opacity: 0.4;
   }
 
   .sifter-category input[type=checkbox]:checked + span,
@@ -266,6 +266,7 @@ html,body
   .sifter-category input[type=radio]:checked + label
   {
     color: #cf2037;
+	opacity: 1.0;
   }
 
   .desktop-search
