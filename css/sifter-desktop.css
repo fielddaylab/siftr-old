@@ -839,4 +839,5 @@ button.touch-friendly
 .sifter-delete-note
 {
   padding: 0.75em;
+  padding-top: 0;
 }
