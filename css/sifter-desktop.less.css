@@ -1,0 +1,890 @@
+/****************************************
+              CONSTANTS
+****************************************/
+@badgerRed: #b70101;
+@UWCream: #f7f5e8;
+@UWGold: #E7D9C1;
+
+@siftrWhite: #f7f7f7;
+@siftrGrey87: #dedede;
+@siftrGreyDark: #cacaca;
+@siftrRed: #cf2037;
+
+/****************************************
+              VARIABLES
+****************************************/
+@primaryColor: @badgerRed;
+@secondaryColor: @UWCream;
+@tertiaryColor: @UWGold;
+@quaternaryColor: @siftrWhite;
+
+@primaryColorBorder: @primaryColor + #111;
+@secondaryColorBorder: @secondaryColor + #111;
+
+/* Full height mode */
+html,body
+{
+  height: 100%;
+  margin: 0;
+}
+
+/* Layout dimensions *************************************** */
+
+.sifter-desktop-header
+{
+  height: 15%;
+}
+
+
+  /* With pop down shown */
+  .sifter-filters-popdown
+  {
+    height: 25%;
+  }
+
+  .sifter-content.shrunk
+  {
+    height: 60%;
+  }
+
+  /* With pop down hidden */
+  .sifter-filters-popdown.slide-up
+  {
+    height: 0%;
+  }
+
+  .sifter-content
+  {
+    height: 85%;
+  }
+
+.sifter-imagelist
+{
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 60%;
+}
+
+.sifter-map
+{
+  width: 40%;
+}
+
+.sifter-imagelist,
+.sifter-map
+{
+  float: left;
+  height: 100%;
+}
+
+
+/* Overlay Depth Indexes ************************************ */
+
+.sifter-desktop-header  { z-index: 200; }
+.sifter-filters-popdown { z-index: 200; }
+.show-dialog,
+.new-dialog,
+.modal-popup,
+.modal-large            { z-index: 300; }
+.sifter-modal-overlay   { z-index: 299; }
+
+
+
+/* Desktop Header ******************************************* */
+
+.sifter-desktop-header
+{
+  position: relative;
+  overflow: hidden; /* Prevent padding from wrapping the nav */
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  background-color: @primaryColor;
+}
+
+.sifter-logo-box
+{
+  float: left;
+  margin: 20px;
+  /*color: #cf2037;*/
+  color: @primaryColor;
+  position: relative;
+  font-size: 20px;
+  top: 50%;
+  height: 100px;
+  vertical-align: middle;
+  margin-top: -50px;
+  text-shadow: 0 0 5px rgba(155, 155, 155, 0.1);
+}
+
+.sifter-logo-box .siftr-logo
+{
+  font-size: 150%;
+  vertical-align: middle;
+}
+
+.sifter-rightside-launchpad
+{
+  float: right;
+  position: relative;
+  top: 50%;
+  margin-top: -25px;
+  right: 50px;
+}
+
+.sifter-rightside-launchpad button
+{
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  padding: 0;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.sifter-rightside-launchpad button span
+{
+  vertical-align: middle;
+}
+
+.launchpad-button,
+.filter-button,
+.modal-button
+{
+  /*color: #dedede;*/
+  color: @siftrGrey87;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: @quaternaryColor;
+  background-repeat: repeat-x;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.1);
+}
+
+.modal-button
+{
+  color: #777;
+}
+
+.modal-button:hover,
+.launchpad-button:hover
+{
+  /*color: #cf2037;*/
+  color: @primaryColor;
+}
+
+.launchpad-button.button-active
+{
+  /*color: #cf2037;*/
+  color: @primaryColor;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: @secondaryColor;
+  background-repeat: repeat-x;
+  /*border: 1px solid #cf2037;*/
+  border: 1px solid @tertiaryColor;
+
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.5);
+}
+
+.filter-button.button-active,
+.modal-button.button-active
+{
+  /*color: #fff;*/
+  color: @secondaryColor;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  background-color: @primaryColor;
+  background-repeat: repeat-x;
+  /*border: 1px solid #cf2037;*/
+  border: 1px solid @tertiaryColor;
+
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(150,150,150, 0.5);
+}
+
+.modal-button.button-active:hover
+{
+  color: #ccc;
+}
+
+/* catch the nexus 7 shrunken screen */
+/* FIXME really should switch to a fixed-height top bar like the mobile version
+   so it can gracefully shrink easier than vertically centered divs -Kevin */
+@media only screen and (max-height: 500px)
+{
+  .sifter-logo-box
+  {
+    margin-top: -55px;
+  }
+}
+
+
+
+/* Desktop Nav ********************************************* */
+
+.sifter-filters-popdown
+{
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  background-color: @secondaryColor; 
+  position: relative;
+}
+
+.sifter-filters,
+.sifter-categories
+{
+  float: left;
+}
+
+  /* Filter Buttons */
+  .sifter-filters
+  {
+    width: 365px;
+    font-size: 110%;
+  }
+  .sifter-filters button
+  {
+    width: 150px;
+    margin-top: 1em;
+    margin-left: 1em;
+    /*color: #cf2037;*/
+    color: @primaryColor;
+    padding: 0.25em;
+  }
+
+
+  /* Category Links */
+  .sifter-categories
+  {
+    width: 800px;
+    font-size: 0.7em;
+    margin: 1em;
+    margin-left: 0;
+  }
+  .sifter-categories .sifter-category 
+  {
+    display: inline-block;
+    padding: 0.25em 0;
+    margin-bottom: 1em;
+    width: 260px;
+    overflow: hidden;
+    list-style: none;
+    /*color: #cf2037;*/
+    color: @primaryColor;
+  }
+  .sifter-category .scale-icon
+  {
+    font-size: 2.55em; /* opera crunch */
+    vertical-align: middle;
+  }
+
+
+  .sifter-category input[type=checkbox],
+  .sifter-category input[type=radio]
+  {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: -5000px;
+  }
+
+  .sifter-category input[type=checkbox] + span,
+  .sifter-category input[type=radio] + span,
+  .sifter-category input[type=checkbox] + label,
+  .sifter-category input[type=radio] + label
+  {
+	opacity: 0.4;
+  }
+
+  .sifter-category input[type=checkbox]:checked + span,
+  .sifter-category input[type=radio]:checked + span,
+  .sifter-category input[type=checkbox]:checked + label,
+  .sifter-category input[type=radio]:checked + label
+  {
+    /*color: #cf2037;*/
+    color: @primaryColor;
+	opacity: 1.0;
+  }
+
+  .desktop-search
+  {
+    display: inline;
+    height: 2em;
+    width: 100px;
+    border: 1px solid #f7f7f7;
+    border-radius: 50px;
+    padding-left: 10px;
+    box-shadow: inset 0 0 10px rgba(136, 136, 136, 0.2); 
+  }
+
+  /* Footer */
+  .sifter-popdown-footer
+  {
+    /*background: #f7f7f7;*/
+    background-color: @tertiaryColor;
+    border-top: 1px solid #cacaca;
+    /*color: #aaaaaa;*/
+    color: #b70101;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+    padding-left: 1em;
+  }
+
+/* catch the nexus 7 shrunken screen */
+@media only screen and (max-height: 740px)
+{
+  .sifter-popdown-footer
+  {
+    display: none;
+  }
+}
+
+.sifter-filters-popdown
+{
+  overflow: hidden;
+}
+
+
+/* Content Area */
+.sifter-content
+{
+  background: #cacaca;
+}
+
+
+
+/* Image List */
+.sifter-imagelist .sifter-grid-note
+{
+  width: 23%;
+  margin: 1%;
+  float: left;
+  position: relative; /* for icons to be absolute */
+
+  /* Non square hack */
+  /*height: 0;
+  padding-bottom: 23%;*/
+
+  border-radius: 4px;
+}
+
+.sifter-imagelist .sifter-grid-note img
+{
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+
+  cursor: pointer;
+}
+
+.sifter-imagelist .scale-icon
+{
+  position: absolute;
+  font-size: 100%;
+  top: 0;
+  right: 0;
+  margin: 0.25em;
+}
+
+
+
+/* Show Dialog ********************************************** */
+
+.show-dialog,
+.new-dialog,
+.modal-large
+{
+  position: fixed;
+
+  width: 600px;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: #fff;
+  color: rgb(77,77,77);
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  border-radius: 4px;
+}
+
+
+.modal-large
+{
+  padding: 2.5em;
+}
+
+
+/* Close */
+.close-button
+{
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #cacaca;
+  font-size: 200%;
+  margin: 0.25em;
+  background: #fff;
+}
+
+.close-button:hover
+{
+  /*color: #cf2037;*/
+  color: @primaryColor;
+}
+
+
+.sifter-modal-overlay
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(100,100,100, 0.5);
+  height: 100%;
+  width: 100%;
+}
+
+
+
+/* Modal Layout */
+.show-dialog .sifter-show-content
+{
+  float: left;
+  width: 70%;
+}
+
+
+.show-dialog .sifter-show-sidebar
+{
+  float: left;
+  width: 30%;
+}
+
+
+/* Modal style */
+.modal-popup
+{
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
+  border-radius: 4px;
+  padding: 2.5em;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sifter-show-content .sifter-image img
+{
+  width: 100%;
+  border-top-left-radius: 4px;
+}
+
+.sifter-image .scale-icon
+{
+  position: absolute;
+  font-size: 200%;
+  top: 0;
+  left: 0;
+  margin: 0.25em;
+}
+
+.sifter-comments .sifter-comment,
+.sifter-show-details
+{
+  padding: 0 0.75em;
+}
+
+.sifter-new-comment
+{
+  padding: 0.75em;
+}
+
+.sifter-comment p
+{
+  margin-top: 0.25em;
+  font-size: 90%;
+}
+
+.sifter-comment h3
+{
+  margin-bottom: 0.25em;
+}
+
+.sifter-comment h2
+{
+  margin-top: 0.25em;
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #cacaca;
+}
+
+.sifter-comment-author
+{
+  /*color: #cf2037;*/
+  color: @siftrRed;
+}
+
+.sifter-new-comment textarea
+{
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  /*background: #f7f7f7;*/
+  background: @quaternaryColor;
+  margin-bottom: 0.75em;
+}
+
+
+button.touch-friendly
+{
+  width: 100%; 
+  padding: 0.25em;
+}
+
+
+/* Modal Borders */
+.sifter-show-sidebar,
+.new-right-side
+{
+  border-left: 1px solid #cacaca;
+  margin-right: -1px;
+}
+.sifter-show-content,
+.new-left-side
+{
+  border-right: 1px solid #cacaca;
+  margin-right: -1px;
+}
+.sifter-new-comment
+{
+  border-top: 1px solid #cacaca;
+}
+
+
+
+/* Login/Logout/Forgot popups */
+.login_view,
+.join_view
+{
+  /*color: #cf2037;*/
+  color: @primaryColor;
+}
+
+.modal-header h2
+{
+  margin: 0;
+  text-align: center;
+}
+
+.modal-footer
+{
+  margin: 1em 0;
+  margin-bottom: 0;
+}
+
+.modal-footer span
+{
+  display: block;
+}
+
+.input_group
+{
+  font-size: 125%;
+  margin: 1em 0;
+}
+
+.modal-popup button
+{
+  padding: 0.25em;
+  width: 100%;
+}
+
+.input_group label
+{
+  display: inline-block;
+  width: 6em;
+}
+
+.input_group input
+{
+  border: 0; 
+  background: #f7f7f7;
+  padding: 0.2em;
+}
+
+
+/* SVG icons */
+.scale_tag_1          { background: url("assets/images/icon_tag_1.svg"); }
+.scale_tag_2          { background: url("assets/images/icon_tag_2.svg"); }
+.scale_tag_3          { background: url("assets/images/icon_tag_3.svg"); }
+.scale_tag_4          { background: url("assets/images/icon_tag_4.svg"); }
+.scale_tag_5          { background: url("assets/images/icon_tag_5.svg"); }
+.scale_search         { background: url("assets/images/icon_search.svg");}
+.scale_logo           { height: 1.5em; }
+
+.scale-icon
+{
+  height: 1em;
+  width: 1em;
+  background-position: center;
+  background-size: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+
+/* Google Map style */
+.sifter-map-icon img
+{
+  width: 2em;
+  cursor: pointer;
+}
+
+
+/* About View */
+.about_view h1,
+.about_view h2
+{
+  /*color: #cf2037;*/
+  color: @primaryColor;
+  font-weight: normal;
+}
+
+.about_view h1
+{
+  margin-top: 0;
+  text-align: center;
+}
+
+.about_view li
+{
+  list-style-type: circle;
+}
+
+.about_view ul
+{
+  padding-left: 1em;
+}
+
+
+/* New Dialog */
+
+.error
+{
+  background: lightpink !important;
+}
+
+.new-left-side,
+.new-right-side
+{
+  width: 50%;
+  float: left;
+  box-sizing: border-box;
+}
+
+.new-dialog .sifter-category
+{
+  margin: 1em;
+}
+
+.new-dialog .sifter-category span span
+{
+  font-size: 2.25em;
+}
+
+.new-dialog .category_box,
+.new-dialog .camera_box
+{
+  border-bottom: 1px solid #cacaca;
+}
+
+.camera_pad_box
+{
+  padding: 0.5em;
+}
+
+.camera_box .left-small
+{
+  position: relative;
+  padding: 0.2em;
+  float: left;
+  z-index: 1000;
+  font-size: 2em;
+  /*color: #f7f7f7;*/
+  color: @quaternaryColor;
+  cursor: pointer;
+}
+
+.camera_box span:hover
+{
+  /*color: #cf2037;*/
+  color: @siftrRed;
+}
+
+.camera_box .center-big
+{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  font-size: 4em;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  /*color: #f7f7f7;*/
+  color: @quaternaryColor;
+}
+
+
+#crop_box,#crop_view
+{
+  height: 100%;
+  width: 100%;
+}
+
+.jcrop-holder
+{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+  
+
+.camera_box
+{
+  width: 283px;
+  height: 283px;
+  background: #cacaca;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+#le-image
+{
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+}
+#le-canvas
+{
+  display: none;
+}
+
+#in-camera
+{
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: -5000px;
+}
+
+#mapCanvas
+{
+  width: 100%;
+  background: #cacaca;
+  height: 0;
+  padding-bottom: 80%;
+}
+#searchTextField,
+#caption
+{
+  width: 100%;
+  border: 0;
+  padding: 0.2em;
+  box-sizing: border-box;
+  /*background: #f7f7f7;*/
+  background: @quaternaryColor;
+  margin-bottom: 0.5em;
+}
+.input_box
+{
+  padding: 0.5em;
+}
+
+.center
+{
+  text-align: center;
+}
+
+.touch-friendly.half-size
+{
+  width: 49%;
+  margin: -1px;
+}
+
+
+/* Util section */
+.clear
+{
+  clear: both;
+}
+
+.hidden-desktop
+{
+  display: none;
+}
+
+
+.working
+{
+  text-align: center;
+  /*color: #cf2037;*/
+  color: @primaryColor;
+}
+
+.sifting
+{
+  animation: sift 2s infinite;
+}
+
+@keyframes sift
+{
+    0% { opacity: 0.0; }
+   50% { opacity: 1.0; }
+  100% { opacity: 0.0; }
+}
+
+/* Icons for social media sharing  */
+.sifter-show-linkbar
+{
+  border-bottom: 1px solid #cacaca;
+  padding: 0.2em;
+}
+
+.shareable
+{
+  display: inline-block;
+  cursor:pointer;
+  text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  color: #96989b;
+  padding-right: 0.25em;
+  font-family:sans-serif;
+  width: 21%;
+}
+
+.shareable:hover
+{
+  /*color: #cf2037;*/
+  color: @primaryColor;
+}
+
+.shareable span
+{
+  vertical-align: text-top;
+}
+
+.sifter-delete-note
+{
+  padding: 0.75em;
+  padding-top: 0;
+}

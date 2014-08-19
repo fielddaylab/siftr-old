@@ -14,7 +14,7 @@ function Model()
 	this.contentWaitingToUpload = 0; // when user uploads multiple contents, you'll have to wait till all are uploaded before you can push it to HTML
     this.mapMarkers = [];
 	this.tags = '';
-	this.serverCallsToLoad = 5; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
+	this.serverCallsToLoad = 0; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
 	this.loadFinishCallback = '' ;
 	this.siftTypeCode = 0; //we keep track of this so we can sift from tag or search changes without forgetting what main sift we were using. Start with top
 
@@ -44,7 +44,7 @@ function Model()
 	if($.cookie("sifter") > 0)
 	{
 		self.playerId = $.cookie("sifter");
-    self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
+	    self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
 
     $('.sifter-show-logout-button').show();
 	}
@@ -53,14 +53,16 @@ function Model()
 		//format tag array
 		model.tags = JSON.parse("[" + response + "]")[0].data;
 
-	
+		controller.showFilters();
+		
 		//retrieve and store icon URLs
-
-			callService("media.getMediaObject", function(response){model.tags[0].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[0].media_id, false);
-			callService("media.getMediaObject", function(response){model.tags[1].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[1].media_id, false);
-			callService("media.getMediaObject", function(response){model.tags[2].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[2].media_id, false);
-			callService("media.getMediaObject", function(response){model.tags[3].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[3].media_id, false);
-			callService("media.getMediaObject", function(response){model.tags[4].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[4].media_id, false);
+		//TODO: load svg files from server, change counter back to 5 when you uncomment
+		// callService("media.getMediaObject", function(response){model.tags[0].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[0].media_id, false);
+		// callService("media.getMediaObject", function(response){model.tags[1].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[1].media_id, false);
+		// callService("media.getMediaObject", function(response){model.tags[2].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[2].media_id, false);
+		// callService("media.getMediaObject", function(response){model.tags[3].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[3].media_id, false);
+		// callService("media.getMediaObject", function(response){model.tags[4].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[4].media_id, false);
+		model.finishLoad();
 	}
 
     this.addNoteFromData = function(note)
@@ -116,9 +118,10 @@ function Model()
         this.mainViewLeft              = document.getElementById('main_view_left');
         this.createNoteViewContainer   = document.getElementById('create_note_view_container');
         this.noteViewContainer         = document.getElementById('note_view_container');
+        this.filtersContainer		   = document.getElementById('filters_view_container');
         
 
-    this.staticContainer = document.getElementById('static_view_container');
+   		this.aboutContainer = document.getElementById('about_view_container');
 		this.loginViewContainer        = document.getElementById('login_view_container');
         this.joinViewContainer         = document.getElementById('join_view_container');
         this.forgotViewContainer       = document.getElementById('forgot_view_container');
@@ -168,87 +171,48 @@ function Model()
 
         var myOptions = { zoom:13, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
         this.gmap = new google.maps.Map(this.map, myOptions);
-		var newBoundsEvent;
-      	google.maps.event.addListener(this.gmap, 'bounds_changed', function() 
+		
+        var newBoundsEvent;
+		google.maps.event.addListener(this.gmap, 'bounds_changed', function() 
       	{
-
 			if(newBoundsEvent!=null)clearTimeout(newBoundsEvent);	//if something is happening with newBoundsEvent, stop it
+			// TODO: optimize
 			newBoundsEvent = window.setTimeout(function()
 			{
-				/*
-		         ---------STEP 0: need a method to check if object is in array---------
-		        */
-		        function isInArray(obj, arr)
-		        {
-		            var isIn = false;
-		            for (var i = 0; i < arr.length; i++)
-		            {
-		                if(obj === arr[i])
-		                {
-		                    isIn = true;
-		                    console.log(obj.note_id + " ---- " + arr[i].note_id);	//TODO: delete debug line
-		                    break;
-		                }
-		            }
-		            return isIn;
-		        }
 
-		        /*
-		        ---------STEP 1: empty the left side so you can put stuff on it---------
-		        */
 		        model.views.mainViewLeft.innerHTML = '';
-
-				// TODO: replacing use of mapMarkers list with gameNotes list		       
-		        // /*
-		        // ---------STEP 2: get the notes of the visible markers---------
-		        // */
-		        // var bounds = model.views.gmap.getBounds();
-		        // var notesWithinBounds = [];
-		        // for (var i = 0; i < model.mapMarkers.length; i++)
-		        // {
-		        //     if(bounds.contains(model.mapMarkers[i].note.geoloc))
-		        //     {
-		        //         notesWithinBounds.push(model.mapMarkers[i].note);
-		        //     }
-		        // }	     
-
-		        // TODO: this is STEP 2 using gameNotes instead of mapMarkers
-		        /*
-		        ---------STEP 2: get the notes of the visible markers---------
-		        */
+				
 		        var bounds = model.views.gmap.getBounds();
 		        var notesWithinBounds = [];
+		        var notesOutsideBounds = [];
 		        for (var i = 0; i < model.gameNotes.length; i++)
 		        {
 		            if(bounds.contains(model.gameNotes[i].geoloc))		
 		            {
 		                notesWithinBounds.push(model.gameNotes[i]);
 		            }
+		            else
+		            {
+		            	notesOutsideBounds.push(model.gameNotes[i]);
+		            }
 		        }	
 
-		        /*
-		        -------STEP 3: put notes on the left---------
-		        */
-		        //STEP 3A: first the visible markers
+		        
 		        for(var i = 0; i < notesWithinBounds.length; i++)
 		        {
 		            var listNote = new ListNote(controller.noteSelected, notesWithinBounds[i], model.gameNotes[i].note_id);
 		            if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
 		            //make sure it's not blank, if it is it'll crash    
 		        }
-		        // STEP 3B: then the rest of the notes
-		        for(var i = 0; i < model.gameNotes.length; i++)
+		        for(var i = 0; i < notesOutsideBounds.length; i++)
 		        {
-		            if (  !isInArray(model.gameNotes[i], notesWithinBounds)  )
-		            {
-		                var listNote = new ListNote(controller.noteSelected, model.gameNotes[i], model.gameNotes[i].note_id);
-		                if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
-		                //make sure it's not blank, if it is it'll crash    
-		            }
+	                var listNote = new ListNote(controller.noteSelected, notesOutsideBounds[i], notesOutsideBounds[i].note_id);
+	                if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
+	                //make sure it's not blank, if it is it'll crash    
 		        }
 
 			}, 400);
-
+      	
       	});
 
 

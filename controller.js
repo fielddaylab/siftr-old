@@ -8,7 +8,7 @@ function Controller()
         model.views.noteView = new NoteView(note);
         model.views.noteViewContainer.innerHTML = '';
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
-        $('.sifter-modal-overlay').show();
+        $('.sifter-modal-overlay').show(); 
     };
 
     this.createNote = function() 
@@ -108,6 +108,7 @@ function Controller()
 			if(!!listNote.html)  model.views.mainViewLeft.appendChild( listNote.html ); 
 			//make sure it's not blank, if it is it'll crash	
         }
+        controller.getNoteFromURL();
     };
 
     this.matchesFilter = function(note, filter)
@@ -141,27 +142,12 @@ function Controller()
         return false;
     };
 
-	this.getTagIconURL = function (tag){
-		var tagIconMediaId = '';
-		switch(tag){
-			case( model.tags[0].tag): return  model.tags[0].iconURL;   break;
-			case( model.tags[1].tag): return  model.tags[1].iconURL;   break;
-			case( model.tags[2].tag): return  model.tags[2].iconURL;   break;
-			case( model.tags[3].tag): return  model.tags[3].iconURL;   break;
-			case( model.tags[4].tag): return  model.tags[4].iconURL;   break;
-
-		default:
-			console.log("unexpected tag name");
-		}
-    
-	}
-
-
     this.rightSideOfCell = function(text)
     {
         return "<div id='selector_cell_right_id' class='selector_cell_right' style='float:right; vertical-align:middle; padding-top:5px; padding-right:20px';>" + text + "</div>";
     }
 
+    // NOTE: Don't think this is used, click event from sifter-mobile.js is called instead - Jazmyn
     this.hideNoteView = function()
     {
         model.views.noteViewContainer.innerHTML = '';
@@ -239,7 +225,8 @@ function Controller()
 
         if(type == "TEXT")
         {
-            var getString = "/"+ noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + text;
+            // var getString = "/"+ noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + text;
+            var getString = "/"+ noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + encodeURIComponent(text);            
             callService("notes.addContentToNote", function(){}, getString, false);	
         }
         else
@@ -324,10 +311,10 @@ function Controller()
         callService("players.getLoginPlayerObject", this.loginReturned,"/"+username+"/"+password, false);
     }
 
-	this.facebookLogin = function(email, displayName, uid){
+	this.facebookLogin = function(email, displayName, uid)
+    {
 		//it is possible for email to be blank
 		callService("players.getFacebookLoginPlayerObject", this.facebookLoginReturned, "/" + email + "/" +  displayName + "/" + uid, false);
-
 	}
 
     this.loginReturned = function(returnString)
@@ -472,8 +459,8 @@ function Controller()
         callService("players.resetAndEmailNewPassword", controller.resetPasswordMessage, "/"+ email, false);
     }
 
-	this.resetPasswordMessage = function(returnString){
-
+	this.resetPasswordMessage = function(returnString)
+    {
 		console.log(returnString);
 
 		responseMessage = JSON.parse(returnString);
@@ -531,7 +518,7 @@ function Controller()
 		subjectText += tagText ;
 		
 		//customize on if they made it or found it		
-		if(playerId == note.owner_id) bodyText += "I made ";
+		if(playerId == note.owner_id) bodyText += "I made "; 
 		else bodyText += "I found ";
 
 		bodyText += "on the UW-Madison Campus: " +"\n";		
@@ -547,7 +534,7 @@ function Controller()
 					bodyText += "\"" + note.contents[i].text + "\" \n \n";
 					 break;
 				case "PHOTO" :
-					var bodyImage = note.contents[i].media.data.url ;
+					var bodyImage = note.contents[i].media.data.url ;  
 					 break;
 				case "AUDIO" :
 					bodyAudio = note.contents[i].media.data.url ;
@@ -556,7 +543,8 @@ function Controller()
 		}
 
 		bodyText += "See the whole note at: www.siftr.org or download the Siftr app \n";
-		bodyText += bodyImage;
+		// bodyText += bodyImage;
+        bodyText += "www.siftr.org/#" + note.note_id;
 		
 	
 		//add one to email sent count
@@ -572,15 +560,188 @@ function Controller()
 		note.email_shares = parseInt(note.email_shares) + 1;
 		document.getElementById("emailButton").innerHTML = note.email_shares + " Emails" ;
 		
-
 	}
 
   this.showAbout = function()
   {
     model.views.aboutView = new AboutView();
-    model.views.staticContainer.innerHTML = '';
-    model.views.staticContainer.appendChild(model.views.aboutView.html);
+    model.views.aboutContainer.innerHTML = '';
+    model.views.aboutContainer.appendChild(model.views.aboutView.html);
     $('.sifter-modal-overlay').show();
+  }
+
+  this.showFilters = function ()
+  {
+    model.views.filtersView = new FiltersView();
+    model.views.filtersContainer.innerHTML = '';
+    model.views.filtersContainer.appendChild(model.views.filtersView.html);
+
+    //Need event listeners to be set after the html is actually there
+    $('.sifter-filter-checkbox-input').on('change', function()
+    {
+        startSift('tags');
+    });
+
+    $('.sifter-filter-search-input').on('change', function()
+    {
+        startSift('search');
+    });
+  }
+
+  this.getNoteFromURL = function()
+  {    
+    var match = window.location.href.match(/#(.*)$/);    
+    var noteFromHash;
+    if (match)
+    {
+        for (var i = 0; i < model.gameNotes.length; i++)
+        {
+          if (model.gameNotes[i].note_id === match[1]) 
+          {
+            noteFromHash = model.gameNotes[i];
+            break;
+          }
+        }
+        if (noteFromHash)
+        {
+            var sender = {note: noteFromHash};
+            controller.noteSelected(sender);
+        }
+        else
+        {
+          //else they gave an invalid note_id
+          window.history.pushState('', '', '/index.html');
+        } 
+    } 
+  };
+
+  this.sendTweet = function(playerId, noteId) 
+  {
+
+    note = model.currentNote;
+    if (!note.note_id == noteId) //we are making an assumption that the current note is the same as the one desired to tweet
+    {                            //just in case this is in error, record it 
+        console.log("Error in tweet: "+ model.currentNote.note_id + " " + noteId);
+    }   
+
+        //initialize the text
+        var bodyText = "Check out this note about ";
+        var subjectText = "Interesting note on ";
+        
+        //customize based on the tag
+        var tagText = "";
+        var formattedTag = note.tagString.toLowerCase().trim();
+        switch(formattedTag){
+            case("innovation"): tagText = "Innovation " ; break;
+            case("must do"): tagText= "a Must Do "; break;
+            case("stories of the past"):tagText = "Stories of the Past ";  break;
+            case("100 years from now"):tagText = "100 Years From Now ";  break;
+            case("madison culture"): tagText = "Madison Culture ";  break;
+
+            default:
+                console.log("unexpected tag string on tweet " + formattedTag + " " + note.tagString);
+                tagText = note.tagString;
+        }
+
+        bodyText += tagText;
+        subjectText += tagText ;
+        
+        //customize on if they made it or found it      
+        if(playerId == note.owner_id) bodyText += "I made "; 
+        else bodyText += "I found ";
+
+        bodyText += "on the UW-Madison Campus: " +"\n";     
+        subjectText += "from UW-Madison Campus";
+
+        bodyText += encodeURIComponent("siftr.org/#" + model.currentNote.note_id) + ". ";
+        
+        noteURL = encodeURIComponent("siftr.org/#" + model.currentNote.note_id);
+        shareURL = "https://twitter.com/share?&url="+noteURL;    
+    
+        //add all the accumulated strings together  
+        tweetURL = shareURL + "&text=" + bodyText;
+
+        //open window to send tweet
+        window.open(tweetURL);
+
+        //add one to tweet count and increment the user side HTML
+        note.tweets ? note.tweets = parseInt(note.tweets, 10) + 1: note.tweets = 1;
+  };
+
+
+  this.getPinLink = function (playerId, noteId)
+  {
+    note = model.currentNote;
+    if (!note.note_id == noteId) //we are making an assumption that the current note is the same as the one desired to pin
+    {                            //just in case this is in error, record it 
+        console.log("Error in pin: "+ model.currentNote.note_id + " " + noteId);
+    }   
+
+
+    //initialize the text
+    var pinDescr = "Interesting note on ";
+    
+    //customize based on the tag
+    var tagText = "";
+    var formattedTag = note.tagString.toLowerCase().trim();
+    switch(formattedTag){
+        case("innovation"): tagText = "Innovation " ; break;
+        case("must do"): tagText= "a Must Do "; break;
+        case("stories of the past"):tagText = "Stories of the Past ";  break;
+        case("100 years from now"):tagText = "100 Years From Now ";  break;
+        case("madison culture"): tagText = "Madison Culture ";  break;
+
+        default:
+            console.log("unexpected tag string on pin " + formattedTag + " " + note.tagString);
+            tagText = note.tagString;
+    }
+
+    pinDescr += tagText;
+    
+    //customize on if they made it or found it      
+    if(playerId == note.owner_id) pinDescr += "I made "; 
+    else pinDescr += "I found ";
+
+    pinDescr += "on the UW-Madison Campus: " + "siftr.org/#" + model.currentNote.note_id ;
+    var pinLink = "";
+  
+
+    //TODO: keeping text, audi, and image for now because might be able to embed them in pin
+    var pinText = "";
+    var pinImage = "";
+
+    //pull out the note text and photo url
+    for (var i = 0; i < note.contents.length; i++)
+    {
+        //initialize audi variable becuase it could be blank and we don't want that to gum up the works
+        var bodyAudio = "";
+        switch(note.contents[i].type){
+            case "TEXT" :
+                pinText += "\"" + note.contents[i].text + "\" \n \n";
+                break;
+            case "PHOTO" :
+                pinImage = note.contents[i].media.data.url ;  
+                break;
+            case "AUDIO" :
+                pinAudio = note.contents[i].media.data.url ;
+                break;
+        }
+    }
+
+    console.log(pinImage);
+
+    //assemble link for pinterest button
+    pinLink += "http://www.pinterest.com/pin/create/button/";
+    pinLink += "?url=" + encodeURIComponent( "siftr.org/#" + model.currentNote.note_id );
+    pinLink += '&media=' + encodeURIComponent(pinImage);
+    pinLink += '&description=' + encodeURIComponent(pinDescr);
+
+
+    //add one to pin count and increment the user side HTML
+    note.pins ? note.pins = parseInt(note.pins, 10) + 1: note.pins = 1;
+    console.log(pinLink);
+    window.open(pinLink);
+
   }
 
 }
