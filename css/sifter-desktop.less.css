@@ -1,3 +1,26 @@
+/****************************************
+              CONSTANTS
+****************************************/
+@badgerRed: #b70101;
+@UWCream: #f7f5e8;
+@UWGold: #E7D9C1;
+
+@siftrWhite: #f7f7f7;
+@siftrGrey87: #dedede;
+@siftrGreyDark: #cacaca;
+@siftrRed: #cf2037;
+
+/****************************************
+              VARIABLES
+****************************************/
+@primaryColor: @badgerRed;
+@secondaryColor: @UWCream;
+@tertiaryColor: @UWGold;
+@quaternaryColor: @siftrWhite;
+
+@primaryColorBorder: @primaryColor + #111;
+@secondaryColorBorder: @secondaryColor + #111;
+
 /* Full height mode */
 html,body
 {
@@ -75,14 +98,15 @@ html,body
   position: relative;
   overflow: hidden; /* Prevent padding from wrapping the nav */
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
-  background-color: #b70101;
+  background-color: @primaryColor;
 }
 
 .sifter-logo-box
 {
   float: left;
   margin: 20px;
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
   position: relative;
   font-size: 20px;
   top: 50%;
@@ -126,9 +150,10 @@ html,body
 .filter-button,
 .modal-button
 {
-  color: #dedede;
+  /*color: #dedede;*/
+  color: @siftrGrey87;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: #f7f7f7;
+  background-color: @quaternaryColor;
   background-repeat: repeat-x;
   border: 1px solid #dedede;
   border-radius: 4px;
@@ -143,16 +168,20 @@ html,body
 .modal-button:hover,
 .launchpad-button:hover
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
 }
 
 .launchpad-button.button-active
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: #f7f7f7;
+  background-color: @secondaryColor;
   background-repeat: repeat-x;
-  border: 1px solid #cf2037;
+  /*border: 1px solid #cf2037;*/
+  border: 1px solid @tertiaryColor;
+
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
 }
@@ -160,11 +189,14 @@ html,body
 .filter-button.button-active,
 .modal-button.button-active
 {
-  color: #fff;
+  /*color: #fff;*/
+  color: @secondaryColor;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: #b70101;
+  background-color: @primaryColor;
   background-repeat: repeat-x;
-  border: 1px solid #cf2037;
+  /*border: 1px solid #cf2037;*/
+  border: 1px solid @tertiaryColor;
+
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
 }
@@ -192,7 +224,7 @@ html,body
 .sifter-filters-popdown
 {
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
-  background-color: #f7f5e8; 
+  background-color: @secondaryColor; 
   position: relative;
 }
 
@@ -213,7 +245,8 @@ html,body
     width: 150px;
     margin-top: 1em;
     margin-left: 1em;
-    color: #cf2037;
+    /*color: #cf2037;*/
+    color: @primaryColor;
     padding: 0.25em;
   }
 
@@ -221,7 +254,7 @@ html,body
   /* Category Links */
   .sifter-categories
   {
-    width: 525px;
+    width: 800px;
     font-size: 0.7em;
     margin: 1em;
     margin-left: 0;
@@ -231,10 +264,11 @@ html,body
     display: inline-block;
     padding: 0.25em 0;
     margin-bottom: 1em;
-    width: 170px;
+    width: 260px;
     overflow: hidden;
     list-style: none;
-    color: #cf2037;
+    /*color: #cf2037;*/
+    color: @primaryColor;
   }
   .sifter-category .scale-icon
   {
@@ -265,7 +299,8 @@ html,body
   .sifter-category input[type=checkbox]:checked + label,
   .sifter-category input[type=radio]:checked + label
   {
-    color: #cf2037;
+    /*color: #cf2037;*/
+    color: @primaryColor;
 	opacity: 1.0;
   }
 
@@ -284,7 +319,7 @@ html,body
   .sifter-popdown-footer
   {
     /*background: #f7f7f7;*/
-    background-color: #E7D9C1;
+    background-color: @tertiaryColor;
     border-top: 1px solid #cacaca;
     /*color: #aaaaaa;*/
     color: #b70101;
@@ -397,7 +432,8 @@ html,body
 
 .close-button:hover
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
 }
 
 
@@ -492,7 +528,8 @@ html,body
 
 .sifter-comment-author
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @siftrRed;
 }
 
 .sifter-new-comment textarea
@@ -500,7 +537,8 @@ html,body
   width: 100%;
   box-sizing: border-box;
   border: 0;
-  background: #f7f7f7;
+  /*background: #f7f7f7;*/
+  background: @quaternaryColor;
   margin-bottom: 0.75em;
 }
 
@@ -536,7 +574,8 @@ button.touch-friendly
 .login_view,
 .join_view
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
 }
 
 .modal-header h2
@@ -615,7 +654,8 @@ button.touch-friendly
 .about_view h1,
 .about_view h2
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
   font-weight: normal;
 }
 
@@ -679,13 +719,15 @@ button.touch-friendly
   float: left;
   z-index: 1000;
   font-size: 2em;
-  color: #f7f7f7;
+  /*color: #f7f7f7;*/
+  color: @quaternaryColor;
   cursor: pointer;
 }
 
 .camera_box span:hover
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @siftrRed;
 }
 
 .camera_box .center-big
@@ -696,7 +738,8 @@ button.touch-friendly
   font-size: 4em;
   transform: translate(-50%, -50%);
   cursor: pointer;
-  color: #f7f7f7;
+  /*color: #f7f7f7;*/
+  color: @quaternaryColor;
 }
 
 
@@ -759,7 +802,8 @@ button.touch-friendly
   border: 0;
   padding: 0.2em;
   box-sizing: border-box;
-  background: #f7f7f7;
+  /*background: #f7f7f7;*/
+  background: @quaternaryColor;
   margin-bottom: 0.5em;
 }
 .input_box
@@ -794,7 +838,8 @@ button.touch-friendly
 .working
 {
   text-align: center;
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
 }
 
 .sifting
@@ -829,7 +874,8 @@ button.touch-friendly
 
 .shareable:hover
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @primaryColor;
 }
 
 .shareable span

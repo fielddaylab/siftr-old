@@ -10,12 +10,13 @@
 
     <!-- Reset -->
     <link href="css/normalize.css"      rel="stylesheet" media="screen">
+   
+   <!-- Siftr Theme --> 
+    <link href="css/sifter-mobile.less.css"     rel="stylesheet/less"  media="screen and (max-width: 906px)" type="text/css">
+    <link href="css/sifter-desktop.less.css"    rel="stylesheet/less"  media="screen and (min-width: 907px)" type="text/css">  
+    <link href="css/sifter-lg-desktop.css"      rel="stylesheet"       media="screen and (min-width: 1025px)">
+    <link href="css/sifter-hd-kiosk.css"        rel="stylesheet"       media="screen and (min-width: 1400px)">
 
-    <!-- Siftr Theme -->
-    <link href="css/sifter-mobile.css"     rel="stylesheet" media="screen and (max-width: 906px)">
-    <link href="css/sifter-desktop.css"    rel="stylesheet" media="screen and (min-width: 907px)">
-    <link href="css/sifter-lg-desktop.css" rel="stylesheet" media="screen and (min-width: 1025px)">
-    <link href="css/sifter-hd-kiosk.css"   rel="stylesheet" media="screen and (min-width: 1400px)">
 
     <!-- Symbol Fonts -->
     <link href="css/glyphicons.css"     rel="stylesheet" media="screen">
@@ -23,7 +24,9 @@
     <link href="css/logofont.css"       rel="stylesheet" media="screen">
 
     <link href="css/jquery.Jcrop.css"   rel="stylesheet" media="screen">
-
+    
+    <script src="utils/less-1.7.4.min.js"></script>
+    
   </head>
 
   <body>
@@ -59,7 +62,7 @@
     <div class="sifter-desktop-header hidden-mobile">
 
       <div class="sifter-logo-box">
-        <h1> <img src="assets/images/icon_logo.png" class="scale_logo"/></h1>
+        <h1> <img src="assets/images/icon_logo.png" class="scale_logo"/></h1> <!-- TODO: move this to a config folder? -->
 
       </div>
 
@@ -318,7 +321,7 @@
 	{{/fb_enabled}}
 	
         <div class="modal-footer">
-          <span id="noAccount" class="internalLink">Dont have an account?</span>
+          <span id="noAccount" class="internalLink">Don\'t have an account?</span> <!--'TODO: delete this comment-->
           <span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
         </div>
       </div>
@@ -395,7 +398,6 @@
         </div>
         <div class="content">
           <h1><span class='siftr-logo'></span> Siftr</h1>
-          <!-- TODO: template this for all the custom siftrs --> 
           <p>
             {{aboutSiftr}}
           </p>
@@ -501,9 +503,6 @@
       ga('create', 'UA-43951622-1', 'siftr.org');
       ga('send', 'pageview');
     </script>
-
-    <!-- testing this out  -->
-    <!-- <script src="test.js"></script>-->
 
   </body>
 </html>

@@ -1,3 +1,29 @@
+/****************************************
+              CONSTANTS
+****************************************/
+@badgerRed: #b70101;
+@UWCream: #f7f5e8;
+@UWGold: #E7D9C1;
+
+@siftrWhite: #f7f7f7;
+@siftrMobileWhite: #f5f5f5;
+@siftrGrey: #dedede;
+@siftrGreyDark: #cacaca;
+@siftrRed: #cf2037;
+
+@noteGridBackground: #ddd;
+@linkBarBackgroundColor: #222222;
+@linkBarFontColor: #eeeeee;
+
+/****************************************
+              THEME COLORS
+****************************************/
+@primaryColor: @badgerRed;
+@secondaryColor: @UWCream;
+@tertiaryColor: @UWGold;
+@quaternaryColor: @siftrMobileWhite;
+
+
 /* Full height mode */
 html,body
 {
@@ -37,7 +63,8 @@ html,body
 .sifter-footer-toolbar,
 .sifter-header-toolbar
 {
-  background: #fefefe;
+  /*background: #fefefe;*/
+  background: @primaryColor;
 }
 
 .sifter-header-toolbar
@@ -54,7 +81,8 @@ html,body
 {
   box-sizing: border-box;
   height: 100%;
-  background: #f5f5f5;
+  /*background: #f5f5f5;*/
+  background: @quaternaryColor;
 }
 
 .sifter-imagelist
@@ -78,7 +106,8 @@ html,body
   border: 0;
   height: 100%;
   width: 50px;
-  color: #333;
+  /*color: #333;*/
+  color: @secondaryColor;
   font-size: 150%;
 }
 
@@ -109,8 +138,9 @@ html,body
   width: 100px;
   margin-left: -50px;
   border-radius: 5000px; /* Gross, old android border radius fix */
-  color: #cf2037;
-  background: #fefefe;
+  color: @secondaryColor;
+  /*background: #fefefe;*/
+  background: @primaryColor;
   text-align: center;
 }
 
@@ -158,9 +188,12 @@ html,body
 
 .sifter-filters button.filter-button
 {
-  color: #cf2037;
-  background-color: #f7f7f7;
-  border: 1px solid #cacaca;
+  /*color: #cf2037;*/
+  color: @secondaryColor;
+  /*background-color: #f7f7f7;*/
+  background-color: @primaryColor;
+  /*border: 1px solid #cacaca;*/
+  border: 1px solid @tertiaryColor;
   width: 25%;
   overflow: hidden;
   padding: 0.2em;
@@ -170,9 +203,12 @@ html,body
 }
 .sifter-filters button.filter-button.button-active
 {
-  color: #fff;
-  background: #cf2037;
-  border: 1px solid #bb1c2b;
+  /*color: #fff;*/
+  color: @primaryColor;
+  /*background: #cf2037;*/
+  background: @secondaryColor;
+  /*border: 1px solid #bb1c2b;*/
+  border: 1px solid @tertiaryColor;
 }
 
 button.filter-button.first
@@ -205,7 +241,8 @@ button.filter-button.last
 .sifter-categories span span,
 .category_box span span
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: ;
   font-size: 1.25em;
 }
 
@@ -261,7 +298,8 @@ button.filter-button.last
   overflow-y: scroll;
   overflow-x: hidden;
 
-  background: #fff;
+  /*background: #fff;*/
+  background: @quaternaryColor;
   color: rgb(77,77,77);
   -webkit-overflow-scrolling: touch;
 }
@@ -316,7 +354,8 @@ button.filter-button.last
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
+  /*background: #fff;*/
+  background: @quaternaryColor;
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
   border-radius: 4px;
   padding: 2em;
@@ -377,14 +416,16 @@ button.filter-button.last
 
 .sifter-comment-author
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @secondaryColor;
 }
 
 .sifter-new-comment textarea
 {
   width: 100%;
   border: 0;
-  background: #f7f7f7;
+  /*background: #f7f7f7;*/
+  background: @quaternaryColor;
   box-sizing: border-box;
   margin-bottom: 0.75em;
 }
@@ -400,7 +441,8 @@ button.touch-friendly
 .login_view,
 .join_view
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @siftrRed;
 }
 
 .modal-header h2
@@ -450,13 +492,16 @@ button.touch-friendly
 {
   color: #dedede;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: #f7f7f7;
+  /*background-color: #f7f7f7;*/
+  background-color: @quaternaryColor;
   background-repeat: repeat-x;
-  border: 1px solid #dedede;
+  /*border: 1px solid #dedede;*/
+  border: 1px solid @siftrGrey;
+
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.1);
 
-  background-image: linear-gradient(to bottom, #ffffff, #f7f7f7);
+  /*background-image: linear-gradient(to bottom, #ffffff, #f7f7f7);*/
 }
 
 .modal-button
@@ -466,15 +511,19 @@ button.touch-friendly
 
 .modal-button.button-active
 {
-  color: #fff;
+  /*color: #fff;*/
+  color: @secondaryColor;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: #cf2037;
+  /*background-color: #cf2037;*/
+  background-color: @primaryColor;
   background-repeat: repeat-x;
-  border: 1px solid #cf2037;
+  /*border: 1px solid #cf2037;*/
+  border: 1px solid @tertiaryColor;
+  
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
 
-  background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);
+  /*background-image: linear-gradient(to bottom, #d31a36, #bb1c2b);*/
 }
 
 
@@ -512,7 +561,8 @@ button.touch-friendly
 .about_view h1,
 .about_view h2
 {
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @siftrRed;
   font-weight: normal;
 }
 
@@ -735,7 +785,8 @@ button.touch-friendly
 .working
 {
   text-align: center;
-  color: #cf2037;
+  /*color: #cf2037;*/
+  color: @siftrRed;
 }
 
 .sifting
@@ -754,8 +805,8 @@ button.touch-friendly
 .sifter-show-linkbar
 {
   padding: 0.5em;
-  background: #222;
-  color: #eee !important;
+  background: @linkBarBackgroundColor;
+  color: @linkBarFontColor !important;
 }
 
 .shareable
