@@ -165,17 +165,17 @@
 
           <div class="sifter-show-linkbar">
             <div class="shareable">
-              <span class="glyphicon glyphicon-envelope " id="shareEmail">{{emailShare}}</span>
+              <span class="glyphicon glyphicon-envelope " id="shareEmail"></span> {{emailShare}}
       			</div>
             <div class="shareable" >
-              <span class="glyphicon glyphicon-heart-empty" id="shareLike">{{likeShare}}</span> 
+              <span class="glyphicon glyphicon-heart-empty" id="shareLike"></span> {{likeShare}}
             	<!--The like icon will be determined in views by if they have or have not liked it before -->
         		</div>
             <div class="shareable">
-              <span class="glyphicon glyphicon-retweet" id="shareTweet">{{tweetShare}}</span>
+              <span class="glyphicon glyphicon-retweet" id="shareTweet"></span> {{tweetShare}}
             </div>
             <div class="shareable">
-              <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin">{{pinShare}}</span>
+              <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin"></span> {{pinShare}}
             </div>
             <div class="clear"></div>
           </div>
@@ -267,6 +267,7 @@
               </label>
             </div>
             {{/categories}}
+          </div>
 
           <div class="audio_box input_box" style="display: none;">
             Audio: (mp3, aac, m4a or caf)<br />
@@ -281,7 +282,6 @@
               <button id="submitNote" class="modal-button touch-friendly half-size">Submit</button>
               <button id="cancelNote" class="modal-button touch-friendly half-size">Cancel</button>
             </div>
-          </div>
         </div> <!-- /right side -->
 
         <div class="clear"></div>

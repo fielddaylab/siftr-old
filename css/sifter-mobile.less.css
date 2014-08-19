@@ -81,7 +81,6 @@ html,body
 {
   box-sizing: border-box;
   height: 100%;
-  /*background: #f5f5f5;*/
   background: @quaternaryColor;
 }
 
@@ -106,7 +105,6 @@ html,body
   border: 0;
   height: 100%;
   width: 50px;
-  /*color: #333;*/
   color: @secondaryColor;
   font-size: 150%;
 }
@@ -183,7 +181,7 @@ html,body
 .sifter-filters
 {
   font-size: 1.25em;
-  margin: 1em;
+  margin: 0.5em;
 }
 
 .sifter-filters button.filter-button
@@ -492,10 +490,8 @@ button.touch-friendly
 {
   color: #dedede;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  /*background-color: #f7f7f7;*/
   background-color: @quaternaryColor;
   background-repeat: repeat-x;
-  /*border: 1px solid #dedede;*/
   border: 1px solid @siftrGrey;
 
   border-radius: 4px;
@@ -511,13 +507,10 @@ button.touch-friendly
 
 .modal-button.button-active
 {
-  /*color: #fff;*/
   color: @secondaryColor;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  /*background-color: #cf2037;*/
   background-color: @primaryColor;
   background-repeat: repeat-x;
-  /*border: 1px solid #cf2037;*/
   border: 1px solid @tertiaryColor;
   
   border-radius: 4px;
@@ -561,7 +554,6 @@ button.touch-friendly
 .about_view h1,
 .about_view h2
 {
-  /*color: #cf2037;*/
   color: @siftrRed;
   font-weight: normal;
 }
@@ -625,7 +617,7 @@ button.touch-friendly
   display: inline-block;
   padding: 0.2em;
   z-index: 1000;
-  color: #f7f7f7;
+  color: @siftrWhite;
   cursor: pointer;
   font-size: 3em;
 }
@@ -736,10 +728,10 @@ button.touch-friendly
 #caption
 {
   width: 100%;
-  border: 0;
+  border: 1px solid @siftrGreyDark;
   padding: 0.2em;
   box-sizing: border-box;
-  background: #f7f7f7;
+  background: @siftrWhite;
   margin-bottom: 0.5em;
 }
 .input_box
@@ -785,7 +777,6 @@ button.touch-friendly
 .working
 {
   text-align: center;
-  /*color: #cf2037;*/
   color: @siftrRed;
 }
 
@@ -812,7 +803,7 @@ button.touch-friendly
 .shareable
 {
   display: inline-block;
-  float: right;
+  width: 21%;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
 }
 .shareable span

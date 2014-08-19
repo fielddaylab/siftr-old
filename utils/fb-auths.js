@@ -4,7 +4,7 @@
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true,  // parse XFBML
-    version    : 'v2.0'
+    version    : 'v2.1'
   });
 
   // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
