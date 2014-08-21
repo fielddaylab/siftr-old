@@ -64,7 +64,9 @@ var CropHelper = {
     var context = canvas.getContext('2d');
 
     var coords = window.jcrop_coords;
-    context.drawImage (image, coords.x, coords.y, coords.w, coords.h, 0, 0, 640, 640);    
+    var dpr = window.devicePixelRatio;
+    if (dpr === undefined) dpr = 1;
+    context.drawImage (image, coords.x / dpr, coords.y / dpr, coords.w / dpr, coords.h / dpr, 0, 0, 640, 640);
   },
 
 
