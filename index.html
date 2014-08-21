@@ -164,19 +164,22 @@
           </div>
 
           <div class="sifter-show-linkbar">
-            <div class="shareable">
-              <span class="glyphicon glyphicon-envelope " id="shareEmail"></span> {{emailShare}}
-      			</div>
-            <div class="shareable" >
-              <span class="glyphicon glyphicon-heart-empty" id="shareLike"></span> {{likeShare}}
-            	<!--The like icon will be determined in views by if they have or have not liked it before -->
-        		</div>
-            <div class="shareable">
-              <span class="glyphicon glyphicon-retweet" id="shareTweet"></span> {{tweetShare}}
-            </div>
-            <div class="shareable">
-              <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin"></span> {{pinShare}}
-            </div>
+              <div class="shareable">
+                <span class="glyphicon glyphicon-envelope " id="shareEmail"></span> {{emailShare}}
+        			</div>
+
+              <div class="shareable" >
+                <span class="glyphicon glyphicon-heart-empty" id="shareLike"></span> {{likeShare}}
+              	<!--The like icon will be determined in views by if they have or have not liked it before -->
+          		</div>
+
+              <div class="shareable">
+                <span class="glyphicon glyphicon-retweet" id="shareTweet"></span> {{tweetShare}}
+              </div>
+
+              <div class="shareable">
+                <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin"></span> {{pinShare}}
+              </div>
             <div class="clear"></div>
           </div>
           <div class="sifter-show-details">
@@ -321,7 +324,7 @@
 	{{/fb_enabled}}
 	
         <div class="modal-footer">
-          <span id="noAccount" class="internalLink">Don\'t have an account?</span> <!--'TODO: delete this comment-->
+          <span id="noAccount" class="internalLink">Don't have an account?</span>
           <span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
         </div>
       </div>

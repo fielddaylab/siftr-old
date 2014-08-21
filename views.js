@@ -918,7 +918,15 @@ function NoteCreateView()
     this.initialize_map = function()
     {
       /* Map and Marker */
-      var mapOptions = { zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP };
+      var mapOptions = { 	zoom: 12, 
+      						mapTypeId: google.maps.MapTypeId.ROADMAP,
+						    panControl: false,
+							zoomControl: false,
+							mapTypeControl: false,
+							scaleControl: false,
+							streetViewControl: false,
+							overviewMapControl: false
+      					};
       var map = new google.maps.Map (document.getElementById('mapCanvas'), mapOptions);
 
       var pos = new google.maps.LatLng (model.views.defaultLat, model.views.defaultLon);
@@ -927,6 +935,7 @@ function NoteCreateView()
       marker = new google.maps.Marker({ map: map, position: pos, draggable: true });
 
       google.maps.event.addListener(marker, 'dragend', function() { markerMoved(marker, map); } );
+
       markerMoved(marker, map);
 
 
@@ -1026,4 +1035,3 @@ function getTagListForRender()
 
 	return category_list;
 }
-

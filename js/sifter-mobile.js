@@ -42,6 +42,10 @@ $(document).ready(function ()
   /* Dialog and Overlay close */
   $(document).on('click', '.close-button, .sifter-modal-overlay', function()
   {
+    if(window.location.href.indexOf("#") > -1) 
+    {
+      window.history.pushState('', '', '/');
+    }
     $('.closable, .sifter-modal-overlay').hide();
   });
 

@@ -11,7 +11,7 @@
 @siftrRed: #cf2037;
 
 /****************************************
-              VARIABLES
+              THEME COLORS
 ****************************************/
 @primaryColor: @badgerRed;
 @secondaryColor: @UWCream;
@@ -20,6 +20,36 @@
 
 @primaryColorBorder: @primaryColor + #111;
 @secondaryColorBorder: @secondaryColor + #111;
+@tertiaryColorBorder: @tertiaryColor + #111;
+
+/****************************************
+              VARIABLES
+****************************************/
+@buttonColor: @primaryColor;
+@buttonBackgroundColor: @secondaryColor;
+@buttonBorderColor: @tertiaryColor;
+
+@buttonColorActive: @secondaryColor;
+@buttonBackgroundColorActive: @primaryColor;
+@buttonBorderColorActive: @tertiaryColor;
+
+@categoryFontColor: @primaryColor;
+
+@footerColor: @tertiaryColor;
+@footerBorderColor: @tertiaryColorBorder;
+@footerFontColor: @primaryColor;
+
+@headerColor: @primaryColor;
+@hoverColor: @primaryColor;
+
+@logoColor: @siftrRed;
+
+@popupFontColor: @siftrRed;
+@popDownBackgroundColor: @secondaryColor;
+
+
+@textFieldBorder: @siftrGreyDark;
+@textFieldBackground: @siftrWhite;
 
 /* Full height mode */
 html,body
@@ -98,15 +128,14 @@ html,body
   position: relative;
   overflow: hidden; /* Prevent padding from wrapping the nav */
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
-  background-color: @primaryColor;
+  background-color: @headerColor;
 }
 
 .sifter-logo-box
 {
   float: left;
   margin: 20px;
-  /*color: #cf2037;*/
-  color: @primaryColor;
+  color: @logoColor; /*changes color of icons if icons are webfont*/
   position: relative;
   font-size: 20px;
   top: 50%;
@@ -150,12 +179,11 @@ html,body
 .filter-button,
 .modal-button
 {
-  /*color: #dedede;*/
   color: @siftrGrey87;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
   background-color: @quaternaryColor;
   background-repeat: repeat-x;
-  border: 1px solid #dedede;
+  border: 1px solid @siftrGrey87;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.1);
 }
@@ -168,19 +196,16 @@ html,body
 .modal-button:hover,
 .launchpad-button:hover
 {
-  /*color: #cf2037;*/
-  color: @primaryColor;
+  color: @hoverColor;
 }
 
 .launchpad-button.button-active
 {
-  /*color: #cf2037;*/
-  color: @primaryColor;
+  color: @buttonBackgroundColorActive;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: @secondaryColor;
+  background-color: @buttonColorActive;
   background-repeat: repeat-x;
-  /*border: 1px solid #cf2037;*/
-  border: 1px solid @tertiaryColor;
+  border: 1px solid @buttonBorderColorActive;
 
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
@@ -189,13 +214,11 @@ html,body
 .filter-button.button-active,
 .modal-button.button-active
 {
-  /*color: #fff;*/
-  color: @secondaryColor;
+  color: @buttonBackgroundColorActive;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: @primaryColor;
+  background-color: @buttonColorActive;
   background-repeat: repeat-x;
-  /*border: 1px solid #cf2037;*/
-  border: 1px solid @tertiaryColor;
+  border: 1px solid @buttonBorderColorActive;
 
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
@@ -224,7 +247,7 @@ html,body
 .sifter-filters-popdown
 {
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
-  background-color: @secondaryColor; 
+  background-color: @popDownBackgroundColor; 
   position: relative;
 }
 
@@ -246,7 +269,8 @@ html,body
     margin-top: 1em;
     margin-left: 1em;
     /*color: #cf2037;*/
-    color: @primaryColor;
+    /*color: @primaryColor;*/
+    color: @buttonColor;
     padding: 0.25em;
   }
 
@@ -254,7 +278,7 @@ html,body
   /* Category Links */
   .sifter-categories
   {
-    width: 800px;
+    width: 525px;
     font-size: 0.7em;
     margin: 1em;
     margin-left: 0;
@@ -264,11 +288,11 @@ html,body
     display: inline-block;
     padding: 0.25em 0;
     margin-bottom: 1em;
-    width: 260px;
+    width: 170px;
     overflow: hidden;
     list-style: none;
     /*color: #cf2037;*/
-    color: @primaryColor;
+    color: @categoryFontColor;
   }
   .sifter-category .scale-icon
   {
@@ -300,8 +324,8 @@ html,body
   .sifter-category input[type=radio]:checked + label
   {
     /*color: #cf2037;*/
-    color: @primaryColor;
-	opacity: 1.0;
+    color: @categoryFontColor;
+	 opacity: 1.0;
   }
 
   .desktop-search
@@ -318,11 +342,9 @@ html,body
   /* Footer */
   .sifter-popdown-footer
   {
-    /*background: #f7f7f7;*/
-    background-color: @tertiaryColor;
-    border-top: 1px solid #cacaca;
-    /*color: #aaaaaa;*/
-    color: #b70101;
+    background-color: @footerColor;
+    border-top: 1px solid @footerBorderColor;
+    color: @footerFontColor;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -538,7 +560,7 @@ html,body
   box-sizing: border-box;
   border: 0;
   /*background: #f7f7f7;*/
-  background: @quaternaryColor;
+  background: @textFieldBackground;
   margin-bottom: 0.75em;
 }
 
@@ -575,7 +597,7 @@ button.touch-friendly
 .join_view
 {
   /*color: #cf2037;*/
-  color: @primaryColor;
+  color: @popupFontColor;
 }
 
 .modal-header h2
@@ -616,7 +638,7 @@ button.touch-friendly
 .input_group input
 {
   border: 0; 
-  background: #f7f7f7;
+  background: @textFieldBackground;
   padding: 0.2em;
 }
 
@@ -655,7 +677,7 @@ button.touch-friendly
 .about_view h2
 {
   /*color: #cf2037;*/
-  color: @primaryColor;
+  color: @popupFontColor;
   font-weight: normal;
 }
 
@@ -803,7 +825,7 @@ button.touch-friendly
   padding: 0.2em;
   box-sizing: border-box;
   /*background: #f7f7f7;*/
-  background: @quaternaryColor;
+  background: @textFieldBackground;
   margin-bottom: 0.5em;
 }
 .input_box
@@ -839,7 +861,7 @@ button.touch-friendly
 {
   text-align: center;
   /*color: #cf2037;*/
-  color: @primaryColor;
+  color: @popupFontColor;
 }
 
 .sifting
@@ -870,6 +892,7 @@ button.touch-friendly
   padding-right: 0.25em;
   font-family:sans-serif;
   width: 21%;
+  text-align: center;
 }
 
 .shareable:hover

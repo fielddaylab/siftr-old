@@ -109,6 +109,45 @@ function Model()
 		return(this.siftTypeCode);
 	}
 
+	this.setGMapOptions = function()
+    {
+		var screenWidth = document.body.clientWidth;
+		if (screenWidth>906) { 
+			//desktop
+			model.views.gmap.setOptions(
+			{
+			  panControl: true,
+			  zoomControl: true,
+			  mapTypeControl: true,
+			  scaleControl: true,
+			  streetViewControl: false,
+			  overviewMapControl: false
+			});	
+		} else if(screenWidth < 600){
+			//mobile phone
+			model.views.gmap.setOptions(
+			{
+			  panControl: false,
+			  zoomControl: false,
+			  mapTypeControl: false,
+			  scaleControl: false,
+			  streetViewControl: false,
+			  overviewMapControl: false
+			});	
+		} else {
+			//big-ish tablet
+			model.views.gmap.setOptions(
+			{
+			  panControl: false,
+			  zoomControl: false,
+			  mapTypeControl: true,
+			  scaleControl: false,
+			  streetViewControl: false,
+			  overviewMapControl: false
+			});	
+		}
+    }
+
     this.views = new function Views()
     { 
         //Content
@@ -169,9 +208,53 @@ function Model()
         this.map = document.getElementById('main_view_map');
         var centerLoc = new google.maps.LatLng(43.081829, -89.402313);
 
-        var myOptions = { zoom:13, center:centerLoc, mapTypeId:google.maps.MapTypeId.ROADMAP };
+        var myOptions = { 	zoom:13, 
+        					center:centerLoc, 
+        					mapTypeId:google.maps.MapTypeId.ROADMAP, 
+        					panControl: true,
+						  	zoomControl: true,
+						  	mapTypeControl: true,
+						  	scaleControl: true,
+						  	streetViewControl: false,
+						  	overviewMapControl: false};
         this.gmap = new google.maps.Map(this.map, myOptions);
-		
+
+	    var screenWidth = document.body.clientWidth;
+		if (screenWidth>906) { 
+			//desktop
+			this.gmap.setOptions(
+			{
+			  panControl: true,
+			  zoomControl: true,
+			  mapTypeControl: true,
+			  scaleControl: true,
+			  streetViewControl: false,
+			  overviewMapControl: false
+			});	
+		} else if(screenWidth < 600){
+			//mobile phone
+			this.gmap.setOptions(
+			{
+			  panControl: false,
+			  zoomControl: false,
+			  mapTypeControl: false,
+			  scaleControl: false,
+			  streetViewControl: false,
+			  overviewMapControl: false
+			});	
+		} else {
+			//big-ish tablet
+			this.gmap.setOptions(
+			{
+			  panControl: false,
+			  zoomControl: false,
+			  mapTypeControl: true,
+			  scaleControl: false,
+			  streetViewControl: false,
+			  overviewMapControl: false
+			});	
+		}	
+
         var newBoundsEvent;
 		google.maps.event.addListener(this.gmap, 'bounds_changed', function() 
       	{
@@ -214,6 +297,13 @@ function Model()
 			}, 400);
       	
       	});
+		
+		var windowOpts;
+	    google.maps.event.addDomListener(window, 'resize', function()
+    	{
+    		if (windowOpts!=null)clearTimeout(windowOpts);
+    		windowOpts = window.setTimeout(model.setGMapOptions(), 1000);
+    	});
 
 
         //default map pin location is in lake, where no notes are expected. User must move this pin to submit a note.

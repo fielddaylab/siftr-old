@@ -518,8 +518,8 @@ function Controller()
 		subjectText += tagText ;
 		
 		//customize on if they made it or found it		
-		if(playerId == note.owner_id) bodyText += "I made "; 
-		else bodyText += "I found ";
+		if(playerId == note.owner_id) bodyText += " I made "; 
+		else bodyText += " I found ";
 
 		bodyText += "on the UW-Madison Campus: " +"\n";		
 		subjectText += "from UW-Madison Campus";
@@ -623,49 +623,32 @@ function Controller()
     {                            //just in case this is in error, record it 
         console.log("Error in tweet: "+ model.currentNote.note_id + " " + noteId);
     }   
+    //different versions of siftr will have different URLs
+    currentURL = window.location.href;
 
-        //initialize the text
-        var bodyText = "Check out this note about ";
-        var subjectText = "Interesting note on ";
-        
-        //customize based on the tag
-        var tagText = "";
-        var formattedTag = note.tagString.toLowerCase().trim();
-        switch(formattedTag){
-            case("innovation"): tagText = "Innovation " ; break;
-            case("must do"): tagText= "a Must Do "; break;
-            case("stories of the past"):tagText = "Stories of the Past ";  break;
-            case("100 years from now"):tagText = "100 Years From Now ";  break;
-            case("madison culture"): tagText = "Madison Culture ";  break;
-
-            default:
-                console.log("unexpected tag string on tweet " + formattedTag + " " + note.tagString);
-                tagText = note.tagString;
-        }
-
-        bodyText += tagText;
-        subjectText += tagText ;
-        
-        //customize on if they made it or found it      
-        if(playerId == note.owner_id) bodyText += "I made "; 
-        else bodyText += "I found ";
-
-        bodyText += "on the UW-Madison Campus: " +"\n";     
-        subjectText += "from UW-Madison Campus";
-
-        bodyText += encodeURIComponent("siftr.org/#" + model.currentNote.note_id) + ". ";
-        
-        noteURL = encodeURIComponent("siftr.org/#" + model.currentNote.note_id);
-        shareURL = "https://twitter.com/share?&url="+noteURL;    
+    //initialize the text
+    var bodyText = "Check out this note about ";
     
-        //add all the accumulated strings together  
-        tweetURL = shareURL + "&text=" + bodyText;
+    //customize based on the tag
+    bodyText += note.tagString;
+    
+    //customize on if they made it or found it      
+    if(playerId == note.owner_id) bodyText += " I made "; 
+    else bodyText += " I found ";
 
-        //open window to send tweet
-        window.open(tweetURL);
+    bodyText += "on the UW-Madison Campus:";     
+    
+    noteURL = encodeURIComponent(currentURL+ "#" + model.currentNote.note_id);
+    shareURL = "https://twitter.com/share?&url="+noteURL;    
 
-        //add one to tweet count and increment the user side HTML
-        note.tweets ? note.tweets = parseInt(note.tweets, 10) + 1: note.tweets = 1;
+    //add all the accumulated strings together  
+    tweetURL = shareURL + "&text=" + bodyText;
+
+    //open window to send tweet
+    window.open(tweetURL);
+
+    //add one to tweet count and increment the user side HTML
+    note.tweets ? note.tweets = parseInt(note.tweets, 10) + 1: note.tweets = 1;
   };
 
 
@@ -677,32 +660,20 @@ function Controller()
         console.log("Error in pin: "+ model.currentNote.note_id + " " + noteId);
     }   
 
+    //different versions of siftr will have different URLs
+    currentURL = window.location.href;
 
     //initialize the text
     var pinDescr = "Interesting note on ";
     
     //customize based on the tag
-    var tagText = "";
-    var formattedTag = note.tagString.toLowerCase().trim();
-    switch(formattedTag){
-        case("innovation"): tagText = "Innovation " ; break;
-        case("must do"): tagText= "a Must Do "; break;
-        case("stories of the past"):tagText = "Stories of the Past ";  break;
-        case("100 years from now"):tagText = "100 Years From Now ";  break;
-        case("madison culture"): tagText = "Madison Culture ";  break;
+    pinDescr += note.tagString;
 
-        default:
-            console.log("unexpected tag string on pin " + formattedTag + " " + note.tagString);
-            tagText = note.tagString;
-    }
-
-    pinDescr += tagText;
-    
     //customize on if they made it or found it      
-    if(playerId == note.owner_id) pinDescr += "I made "; 
-    else pinDescr += "I found ";
+    if(playerId == note.owner_id) pinDescr += " I made "; 
+    else pinDescr += " I found ";
 
-    pinDescr += "on the UW-Madison Campus: " + "siftr.org/#" + model.currentNote.note_id ;
+    pinDescr += "on the UW-Madison Campus: " + currentURL + "#" + model.currentNote.note_id ;
     var pinLink = "";
   
 
@@ -732,7 +703,7 @@ function Controller()
 
     //assemble link for pinterest button
     pinLink += "http://www.pinterest.com/pin/create/button/";
-    pinLink += "?url=" + encodeURIComponent( "siftr.org/#" + model.currentNote.note_id );
+    pinLink += "?url=" + encodeURIComponent( currentURL + "#" + model.currentNote.note_id );
     pinLink += '&media=' + encodeURIComponent(pinImage);
     pinLink += '&description=' + encodeURIComponent(pinDescr);
 

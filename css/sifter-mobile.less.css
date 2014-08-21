@@ -14,6 +14,8 @@
 @noteGridBackground: #ddd;
 @linkBarBackgroundColor: #222222;
 @linkBarFontColor: #eeeeee;
+@categoryFontColor: #000000;
+
 
 /****************************************
               THEME COLORS
@@ -22,6 +24,23 @@
 @secondaryColor: @UWCream;
 @tertiaryColor: @UWGold;
 @quaternaryColor: @siftrMobileWhite;
+
+
+/****************************************
+              VARIABLES
+****************************************/
+@buttonColor: @secondaryColor;
+@buttonBackgroundColor: @primaryColor;
+@buttonBorderColor: @tertiaryColor;
+
+@buttonColorActive: @primaryColor;
+@buttonBackgroundColorActive: @secondaryColor;
+@buttonBorderColorActive: @tertiaryColor;
+
+@popupFontColor: @siftrRed;
+@textFieldBorder: @siftrGrey;
+@textFieldBackground: @siftrMobileWhite;
+@toolbarColor: @primaryColor;
 
 
 /* Full height mode */
@@ -64,7 +83,7 @@ html,body
 .sifter-header-toolbar
 {
   /*background: #fefefe;*/
-  background: @primaryColor;
+  background: @toolbarColor;
 }
 
 .sifter-header-toolbar
@@ -87,7 +106,7 @@ html,body
 .sifter-imagelist
 {
   height: 100%;
-  background: #ddd;
+  background: @noteGridBackground;
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -105,7 +124,7 @@ html,body
   border: 0;
   height: 100%;
   width: 50px;
-  color: @secondaryColor;
+  color: @buttonColor;
   font-size: 150%;
 }
 
@@ -136,9 +155,8 @@ html,body
   width: 100px;
   margin-left: -50px;
   border-radius: 5000px; /* Gross, old android border radius fix */
-  color: @secondaryColor;
-  /*background: #fefefe;*/
-  background: @primaryColor;
+  color: @buttonColor;
+  background: @buttonBackgroundColor;
   text-align: center;
 }
 
@@ -150,7 +168,7 @@ html,body
 
 .sifter-search-field
 {
-  border: 1px solid #ddd;
+  border: 1px solid @textFieldBorder;
   border-radius: 5000px;
   padding-left: 10px;
   width: 40%;
@@ -180,18 +198,17 @@ html,body
 
 .sifter-filters
 {
-  font-size: 1.25em;
-  margin: 0.5em;
+  font-size: 1.2em;
+  margin: 0.25em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .sifter-filters button.filter-button
 {
-  /*color: #cf2037;*/
-  color: @secondaryColor;
-  /*background-color: #f7f7f7;*/
-  background-color: @primaryColor;
-  /*border: 1px solid #cacaca;*/
-  border: 1px solid @tertiaryColor;
+  color: @buttonColor;
+  background-color: @buttonBackgroundColor;
+  border: 1px solid @buttonBorderColor;
   width: 25%;
   overflow: hidden;
   padding: 0.2em;
@@ -201,12 +218,9 @@ html,body
 }
 .sifter-filters button.filter-button.button-active
 {
-  /*color: #fff;*/
-  color: @primaryColor;
-  /*background: #cf2037;*/
-  background: @secondaryColor;
-  /*border: 1px solid #bb1c2b;*/
-  border: 1px solid @tertiaryColor;
+  color: @buttonColorActive;
+  background: @buttonBackgroundColorActive;
+  border: 1px solid @buttonBorderColorActive;
 }
 
 button.filter-button.first
@@ -233,14 +247,13 @@ button.filter-button.last
 .category_box span
 {
   vertical-align: middle;
-  color: #000;
+  color: @categoryFontColor;
 }
 
 .sifter-categories span span,
 .category_box span span
 {
-  /*color: #cf2037;*/
-  color: ;
+  color: @siftrRed; /*changes color of icons if icons are webfont*/
   font-size: 1.25em;
 }
 
@@ -440,7 +453,7 @@ button.touch-friendly
 .join_view
 {
   /*color: #cf2037;*/
-  color: @siftrRed;
+  color: @popupFontColor;
 }
 
 .modal-header h2
@@ -488,11 +501,11 @@ button.touch-friendly
 
 .modal-button
 {
-  color: #dedede;
+  color: @siftrGreyDark;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
   background-color: @quaternaryColor;
   background-repeat: repeat-x;
-  border: 1px solid @siftrGrey;
+  border: 1px solid @siftrGreyDark;
 
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.1);
@@ -502,16 +515,16 @@ button.touch-friendly
 
 .modal-button
 {
-  color: #777;
+  color: @siftrGreyDark;
 }
 
 .modal-button.button-active
 {
-  color: @secondaryColor;
+  color: @buttonBackgroundColorActive;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: @primaryColor;
+  background-color: @buttonColorActive;
   background-repeat: repeat-x;
-  border: 1px solid @tertiaryColor;
+  border: 1px solid @buttonBorderColorActive;
   
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.5);
@@ -554,7 +567,7 @@ button.touch-friendly
 .about_view h1,
 .about_view h2
 {
-  color: @siftrRed;
+  color: @popupFontColor;
   font-weight: normal;
 }
 
@@ -728,10 +741,10 @@ button.touch-friendly
 #caption
 {
   width: 100%;
-  border: 1px solid @siftrGreyDark;
+  border: 1px solid @textFieldBorder;
   padding: 0.2em;
   box-sizing: border-box;
-  background: @siftrWhite;
+  background: @textFieldBackground;
   margin-bottom: 0.5em;
 }
 .input_box
@@ -777,7 +790,7 @@ button.touch-friendly
 .working
 {
   text-align: center;
-  color: @siftrRed;
+  color: @popupFontColor;
 }
 
 .sifting
@@ -798,6 +811,8 @@ button.touch-friendly
   padding: 0.5em;
   background: @linkBarBackgroundColor;
   color: @linkBarFontColor !important;
+  text-align: center;
+
 }
 
 .shareable
@@ -810,7 +825,6 @@ button.touch-friendly
 {
   vertical-align: text-top;
 }
-
 
 .sifter-delete-note
 {
