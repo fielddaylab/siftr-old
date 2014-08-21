@@ -1,5 +1,6 @@
 function callService(serviceName, callback, GETparams, POSTparams)
 {
+    console.log("calling for service", arguments);
     var url;
     if(GETparams) url = SERVER_URL+'/json.php/v1.'+serviceName+GETparams;
     else          url = SERVER_URL+'/json.php/v1.'+serviceName;

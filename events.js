@@ -76,7 +76,7 @@ $(document).ready (function ()
 
 
   /* Search and Filter change ******************************* */
-
+  //Now that filters are set-up from tags in server, this is no longer used, happens too early
   $('.sifter-filter-checkbox-input').on('change', function()
   {
     startSift('tags');
@@ -95,7 +95,7 @@ $(document).ready (function ()
      inline onClick events get cloned with their DOM element */
 
   /* FIXME Replacing this with a backbone view is ideal */
-  $(document).on('change', '#imageFileInput', function()
+  $(document).on('change', '#imageFileInput', function()  
   {
     handleImageFileSelect(this.files);
   });
@@ -117,7 +117,7 @@ $(document).ready (function ()
 
   $(document).on('change', '#audioFileInput', function()
   {
-    handleAudioFileSelect(this.files);
+    handleAudioFileSelect(this.files); //never run, HTML tag no longer exists
   });
 
 
