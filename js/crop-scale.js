@@ -32,46 +32,48 @@ var CropHelper = {
     var center_x = width  / 2;
     var center_y = height / 2;
 
-    var update_coords = function(coords)
-    {
-      window.jcrop_coords = coords;
+    delete element.exifdata; // Ensure exif.js loads fresh data
+    EXIF.getData(element, function() {
+      var orientation = EXIF.getTag(element, 'Orientation');
+      console.log(orientation);
 
-      CropHelper.crop_to_canvas();
-      CropHelper.attach_to_note();
-    };
-
-    $('.new-dialog').addClass('shrink');
-    $('#crop_box').show(); /* Mobile full frame */
-
-    setTimeout(function ()
-    {
-      $('#le-image').Jcrop (
+      var update_coords = function(coords)
       {
-        aspectRatio: 1,
-        trueSize: [width, height],
-        setSelect: [center_x - offset, center_y - offset, center_x + offset, center_y + offset],
-        onSelect: update_coords,
-      });
-    }, 200);
+        window.jcrop_coords = coords;
+
+        CropHelper.crop_to_canvas(orientation);
+        CropHelper.attach_to_note();
+      };
+
+      $('.new-dialog').addClass('shrink');
+      $('#crop_box').show(); /* Mobile full frame */
+
+      setTimeout(function ()
+      {
+        $('#le-image').Jcrop (
+        {
+          aspectRatio: 1,
+          trueSize: [width, height],
+          setSelect: [center_x - offset, center_y - offset, center_x + offset, center_y + offset],
+          onSelect: update_coords,
+        });
+      }, 200);
+    });
   },
 
 
   /* Draw to canvas with crop from jScale an resize */
-  crop_to_canvas: function ()
+  crop_to_canvas: function (orientation)
   {
     var image   = $('#le-image').get(0);
     var canvas  = $('#le-canvas').get(0);
     var context = canvas.getContext('2d');
 
-    EXIF.getData(image, function() {
-      var orientation = EXIF.getTag(image, 'Orientation');
-      console.log(orientation);
-
-      var coords = window.jcrop_coords;
-      var dpr = window.devicePixelRatio;
-      if (dpr === undefined) dpr = 1;
-      context.drawImage (image, coords.x / dpr, coords.y / dpr, coords.w / dpr, coords.h / dpr, 0, 0, 640, 640);
-    });
+    var coords = window.jcrop_coords;
+    var dpr = window.devicePixelRatio;
+    if (dpr === undefined) dpr = 1;
+    context.drawImage (image, coords.x / dpr, coords.y / dpr, coords.w / dpr, coords.h / dpr, 0, 0, 640, 640);
+    delete image.exifdata;
   },
 
 
