@@ -214,9 +214,9 @@ html,body
 .filter-button.button-active,
 .modal-button.button-active
 {
-  color: @buttonBackgroundColorActive;
+  color: @buttonColorActive;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
-  background-color: @buttonColorActive;
+  background-color: @buttonBackgroundColorActive;
   background-repeat: repeat-x;
   border: 1px solid @buttonBorderColorActive;
 
