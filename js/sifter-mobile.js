@@ -44,7 +44,7 @@ $(document).ready(function ()
   {
     if(window.location.href.indexOf("#") > -1) 
     {
-      window.history.pushState('', '', '/');
+      window.history.pushState('', '', window.location.href.split("#")[0]);
     }
     $('.closable, .sifter-modal-overlay').hide();
   });

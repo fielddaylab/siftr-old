@@ -610,7 +610,7 @@ function Controller()
         else
         {
           //else they gave an invalid note_id
-          window.history.pushState('', '', '/index.html');
+          window.history.pushState('', '', window.location.href.split("#")[0]);
         } 
     } 
   };
