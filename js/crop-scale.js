@@ -143,7 +143,41 @@ var CropHelper = {
         context.restore();
         break;
       case 8: // Rotate image 90 degrees counterclockwise to display correctly
-        // TODO
+        var fakeHeight = image.height;
+        var fakeWidth = image.width;
+        var realHeight = image.width;
+        var realWidth = image.height;
+        var portrait = {
+          x1: coords.x / fakeWidth * realWidth,
+          x2: coords.x2 / fakeWidth * realWidth,
+          y1: coords.y / fakeHeight * realHeight,
+          y2: coords.y2 / fakeHeight * realHeight,
+        };
+        var landscape = {
+          x1: portrait.y1,
+          x2: portrait.y2,
+          y1: portrait.x1,
+          y2: portrait.x2,
+        };
+        var unflipped = {
+          x1: image.width - landscape.x2,
+          x2: image.width - landscape.x1,
+          y1: landscape.y1, // Shouldn't these have "image.height -" ???
+          y2: landscape.y2, // I don't know why it works
+        }
+        context.save();
+        context.translate(320, 320);
+        context.rotate(1.5 * Math.PI);
+        context.translate(-320, -320);
+        context.drawImage (
+          image,
+          unflipped.x1,
+          unflipped.y1,
+          unflipped.x2 - unflipped.x1,
+          unflipped.y2 - unflipped.y1,
+          0, 0, 640, 640
+        );
+        context.restore();
         break;
       default:
         // Others are possible, see http://jpegclub.org/exif_orientation.html
