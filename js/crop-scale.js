@@ -35,7 +35,6 @@ var CropHelper = {
     delete element.exifdata; // Ensure exif.js loads fresh data
     EXIF.getData(element, function() {
       var orientation = EXIF.getTag(element, 'Orientation');
-      console.log(orientation);
 
       var update_coords = function(coords)
       {
