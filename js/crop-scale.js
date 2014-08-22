@@ -72,8 +72,9 @@ var CropHelper = {
     var coords = window.jcrop_coords;
     var dpr = window.devicePixelRatio;
     if (dpr === undefined) dpr = 1;
+    if (orientation === undefined) orientation = 1;
+    
     context.drawImage (image, coords.x / dpr, coords.y / dpr, coords.w / dpr, coords.h / dpr, 0, 0, 640, 640);
-    delete image.exifdata;
   },
 
 
