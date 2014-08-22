@@ -165,20 +165,20 @@
 
           <div class="sifter-show-linkbar">
               <div class="shareable">
-                <span class="glyphicon glyphicon-envelope " id="shareEmail"></span> {{emailShare}}
+                <span class="glyphicon glyphicon-envelope" id="shareEmail">{{emailShare}}</span> 
         			</div>
 
               <div class="shareable" >
-                <span class="glyphicon glyphicon-heart-empty" id="shareLike"></span> {{likeShare}}
+                <span class="glyphicon glyphicon-heart-empty" id="shareLike">{{likeShare}}</span>
               	<!--The like icon will be determined in views by if they have or have not liked it before -->
           		</div>
 
               <div class="shareable">
-                <span class="glyphicon glyphicon-retweet" id="shareTweet"></span> {{tweetShare}}
+                <span class="glyphicon glyphicon-retweet" id="shareTweet">{{tweetShare}}</span>
               </div>
 
               <div class="shareable">
-                <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin"></span> {{pinShare}}
+                <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin">{{pinShare}}</span>
               </div>
             <div class="clear"></div>
           </div>
@@ -235,7 +235,7 @@
           <!-- Camera Box -->
           <div class="camera_pad_box">
           <div class="camera_box">
-            <div class="center-big"> <span class="icon-camera" id="browseImage"></span> </div>
+            <div class="center-big" id="browseImage"> <span class="icon-camera" ></span> </div>
             <input  id="in-camera" type="file" accept="image/*,video/*" capture="camera" />
             <div    id="crop_box" style="display: none;">
               <div id="crop_view">
@@ -324,7 +324,7 @@
 	{{/fb_enabled}}
 	
         <div class="modal-footer">
-          <span id="noAccount" class="internalLink">Don't have an account?</span><--!' comment here for apostophe-->
+          <span id="noAccount" class="internalLink">Don't have an account?</span>
           <span id="forgotPassword" class="internalLink">Forgot Username or Password?</span>
         </div>
       </div>

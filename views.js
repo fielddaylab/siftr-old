@@ -74,11 +74,10 @@ function NoteView(note)
 	  data.author = model.playerId === this.note.owner_id ? "You" : this.note.username;
 	  data.isAuthor = model.playerId === this.note.owner_id ? true : false; //TODO: need real authentication for this
 
-	  //TODO: find a better place for this, controller?
-	  data.tweetShare = this.note.tweets ? this.note.tweets: 0;	//TODO: this.note.tweets will be null for all already-made notes
-
-  	  //TODO: find a better place for this, controller?
-	  data.pinShare = this.note.pins ? this.note.pins: 0;	//TODO: this.note.tweets will be null for all already-made notes
+	  //TODO: find a better place for these, controller? 
+	  //TODO: note.tweets and note.pins don't exist on server, replace with style-stripped official counters 
+	  data.tweetShare = this.note.tweets ? this.note.tweets: 0;
+	  data.pinShare = this.note.pins ? this.note.pins: 0;
 
       /* Render View */
       var render = compiledShowTemplate (data);
@@ -99,7 +98,6 @@ function NoteView(note)
         thism.submitComment (thism.note, text)
       });
 
-      //TODO: note is deleted but not right away, how to fix? - Jazmyn
       $(this.html).find('.delete-note').on('click', function()
       {
         if (confirm("Are you sure you want to delete this note?"))
@@ -120,11 +118,16 @@ function NoteView(note)
       $(this.html).find('#shareTweet').on('click', function()
 	  {
 	 	controller.sendTweet(model.playerId, model.currentNote.note_id);
+	 	//TODO: increment html for tweet
+		document.getElementById('shareTweet').innerHTML = note.tweets;
       });
 
       $(this.html).find('#sharePin').on('click', function()
       {
       	controller.getPinLink(model.playerId, model.currentNote.note_id);
+	 	//TODO: increment html for pin
+		document.getElementById('sharePin').innerHTML = note.pins;
+
       });
 
     }
@@ -292,8 +295,8 @@ function NoteView(note)
 	//user may or maynot have already like the note, this changes the display and effect of clicking	
 		
 		//check to see if they are logged in
-		if(!model.playerId == 0){
-
+		if(!model.playerId == 0)
+		{
 			if(hasLiked == 0) 
 			{ //the user has not yet liked it
 				//then allow them to like it	
@@ -312,21 +315,18 @@ function NoteView(note)
 
 				//set onclick to unliking
 				$(this.html).find('#shareLike').on('click', function()
-	    			  {
+	    		{
 					thism.unlikeNote();
-		    	  	});
-
+		    	});
 			}	
-		
 		}
-		else{
-			//they have not yet logged in, so clicking the button should prompt them to
-		      $(this.html).find('#shareLike').on('click', function()
-    		  {
-		        controller.loginRequired (function () { controller.noteSelected(thism); });
-	    	  });
-
-
+		else
+		{
+		//they have not yet logged in, so clicking the button should prompt them to
+	      $(this.html).find('#shareLike').on('click', function()
+		  {
+	        controller.loginRequired (function () { controller.noteSelected(thism); });
+    	  });
 		}
 	
 	}	
@@ -347,7 +347,7 @@ function NoteView(note)
 		//set player liked toggle for this note
 		this.note.player_liked = 1;
 
-	//clear out old event handler with .off and add new one with .on 
+		//clear out old event handler with .off and add new one with .on 
       $(this.html).find('#shareLike').off('click').on('click', function()
 		  { thism.unlikeNote();
 	      });
@@ -370,55 +370,12 @@ function NoteView(note)
 		//set player liked toggle for this note
 		this.note.player_liked = 0;
 
-	//clear out old event handler with .off and add new one with .on 
-      $(this.html).find('#share-like').off('click').on('click', function()
-		  { thism.likeNote();
-	      });
+		//clear out old event handler with .off and add new one with .on 
+	    $(this.html).find('#shareLike').off('click').on('click', function()
+	    { thism.likeNote();
+	    });
 
 	}
-
-
-  	// TODO: delete if not used
-	this.tweetToggle = function(hasTweeted)
-	{
-	//user may or maynot have already tweeted the note, this changes the display and effect of clicking	
-		
-		//check to see if they are logged in
-		if(!model.playerId == 0){
-
-			if(hasTweeted == 0) 
-			{ //the user has not yet tweeted it
-				//
-	     		$(this.html).find('#shareTweet').on('click', function()
-		  		{
-					thism.tweetNote();
-    	  		});
-
-			}
-			else if(hasLiked == 1)
-			{	//user has already tweeted the note
-	      		
-				//show filled bird for tweeting
-				$(this.html).find("#shareTweet").removeClass("tweet-empty").addClass("tweet-full");
-
-				//set onclick to unliking
-				$(this.html).find('#shareTweet').on('click', function()
-			    {
-					thism.unlikeNote();
-		    	});
-
-			}	
-		
-		}
-		else
-		{
-		//they have not yet logged in, so clicking the button should prompt them to
-          $(this.html).find('#shareTweet').on('click', function()
-		  {
-	        controller.loginRequired (function () { controller.noteSelected(thism); });
-    	  });
-		}
-	}	
 
     this.constructHTML();
 }
@@ -598,7 +555,6 @@ function getAudioToUse(note)
     return "";
 };
 
-//TODO: {{details}} is truncating # signs, problem might be here or within Mustache.compile when filling template
 function getTextToUse(note)
 {
     for(i = 0; i < note.contents.length; i++)

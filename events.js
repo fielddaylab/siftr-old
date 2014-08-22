@@ -66,7 +66,7 @@ $(document).ready (function ()
  			}else {controller.logout(); //they are not currently logged in to facebook, so you can run the plain controller.logout
 			}
 		});
-
+    controller.logout(); //TODO: hack to make sure logout happens until fb urls resolved, DELETE after move to siftr.org/CUSTOM_NAME
 	}else{
 	    controller.logout(); //this deletes all the cookies
 	}
@@ -158,5 +158,5 @@ $(document).ready (function ()
     model.views.gmap.setCenter(bascom_hill);
     model.views.gmap.setZoom(14);
   });
-
+  
 });
