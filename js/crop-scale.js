@@ -116,7 +116,31 @@ var CropHelper = {
         context.restore();
         break;
       case 3: // Rotate image 180 degrees clockwise to display correctly
-        // TODO
+        var flipped = {
+          x1: coords.x,
+          x2: coords.x2,
+          y1: coords.y,
+          y2: coords.y2,
+        };
+        var original = {
+          x1: image.width - flipped.x2,
+          x2: image.width - flipped.x1,
+          y1: image.height - flipped.y2,
+          y2: image.height - flipped.y1,
+        }
+        context.save();
+        context.translate(320, 320);
+        context.rotate(1 * Math.PI);
+        context.translate(-320, -320);
+        context.drawImage (
+          image,
+          original.x1,
+          original.y1,
+          original.x2 - original.x1,
+          original.y2 - original.y1,
+          0, 0, 640, 640
+        );
+        context.restore();
         break;
       case 8: // Rotate image 90 degrees counterclockwise to display correctly
         // TODO
