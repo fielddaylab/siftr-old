@@ -81,7 +81,7 @@ var CropHelper = {
         break;
       case 6:
         // First off, the coordinates from jcrop are totally wrong.
-        // Jcrop calculates them as proportions of the what the image says its height and width are.
+        // Jcrop calculates them as proportions of what the image says its height and width are.
         // But they're mixed up because the displayed image is rotated.
         // So we need to divide them by the fake height/width and multiply by the real ones.
         var fakeHeight = image.height;
@@ -115,6 +115,13 @@ var CropHelper = {
           0, 0, 640, 640
         );
         context.restore();
+        break;
+      default:
+        // iOS only makes images of 1 (landscape) or 6 (portrait).
+        // Others are possible, see http://jpegclub.org/exif_orientation.html
+        // But for now we'll just draw it as landscape and hope for the best.
+        console.log('Unknown EXIF orientation: ' + orientation);
+        context.drawImage (image, coords.x, coords.y, coords.w, coords.h, 0, 0, 640, 640);
         break;
     }
   },
