@@ -70,11 +70,53 @@ var CropHelper = {
     var context = canvas.getContext('2d');
 
     var coords = window.jcrop_coords;
-    var dpr = window.devicePixelRatio;
-    if (dpr === undefined) dpr = 1;
+    //var dpr = window.devicePixelRatio;
+    //if (dpr === undefined) dpr = 1;
     if (orientation === undefined) orientation = 1;
     
-    context.drawImage (image, coords.x / dpr, coords.y / dpr, coords.w / dpr, coords.h / dpr, 0, 0, 640, 640);
+    switch (orientation)
+    {
+      case 1:
+        context.drawImage (image, coords.x, coords.y, coords.w, coords.h, 0, 0, 640, 640);
+        break;
+      case 6:
+        // First off, the coordinates from jcrop are totally wrong.
+        // Jcrop calculates them as proportions of the what the image says its height and width are.
+        // But they're mixed up because the displayed image is rotated.
+        // So we need to divide them by the fake height/width and multiply by the real ones.
+        var fakeHeight = image.height;
+        var fakeWidth = image.width;
+        var realHeight = image.width;
+        var realWidth = image.height;
+        var portrait = {
+          x1: coords.x / fakeWidth * realWidth,
+          x2: coords.x2 / fakeWidth * realWidth,
+          y1: coords.y / fakeHeight * realHeight,
+          y2: coords.y2 / fakeHeight * realHeight,
+        };
+        // Next, we flip the x's and y's because we want coordinates into the real (landscape) image.
+        var landscape = {
+          x1: portrait.y1,
+          x2: portrait.y2,
+          y1: portrait.x1,
+          y2: portrait.x2,
+        };
+        // Finally, we need to draw from the landscape image into a rotated canvas context.
+        context.save();
+        context.translate(320, 320);
+        context.rotate(0.5 * Math.PI);
+        context.translate(-320, -320);
+        context.drawImage (
+          image,
+          landscape.x1,
+          landscape.y1,
+          landscape.x2 - landscape.x1,
+          landscape.y2 - landscape.y1,
+          0, 0, 640, 640
+        );
+        context.restore();
+        break;
+    }
   },
 
 
