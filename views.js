@@ -118,8 +118,12 @@ function NoteView(note)
       $(this.html).find('#shareTweet').on('click', function()
 	  {
 	 	controller.sendTweet(model.playerId, model.currentNote.note_id);
-	 	//TODO: increment html for tweet
-		document.getElementById('shareTweet').innerHTML = note.tweets;
+	 	
+	    //get tweet count from twitter
+	    $.getJSON("http://cdn.api.twitter.com/1/urls/count.json?callback=?&url=" + encodeURIComponent(document.location.href + "#/" + note.note_id), function(data) {
+	        console.log("tweet count is: " + data.count);
+	        document.getElementById('shareTweet').innerHTML = data.count ? data.count : 0;
+	    });
       });
 
       $(this.html).find('#sharePin').on('click', function()
@@ -371,8 +375,10 @@ function NoteView(note)
 		this.note.player_liked = 0;
 
 		//clear out old event handler with .off and add new one with .on 
-	    $(this.html).find('#shareLike').off('click').on('click', function()
-	    { thism.likeNote();
+	    $(this.html).find('#shareLike').off('click');
+	    $(this.html).find('#shareLike').on('click', function()
+	    { 
+	    	thism.likeNote();
 	    });
 
 	}
@@ -391,6 +397,10 @@ function getLocation()
 
 function submitNote() 
 {
+  //This should dismiss the keyboard on mobile 
+  document.activeElement.blur();
+
+
   model.currentNote.text = document.getElementById("caption").value;
 
   // check for required stuff 

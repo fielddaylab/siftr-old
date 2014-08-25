@@ -79,7 +79,9 @@ function Model()
 		this.rawNotes = rawNotes;
         for(var i = 0; i < this.rawNotes.length; i++)
         {
-                this.addNoteFromData(this.rawNotes[i]);
+           	if (rawNotes[i].tags.length != 0){
+	            this.addNoteFromData(this.rawNotes[i]);
+	        }
         }
 		
     };

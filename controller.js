@@ -617,7 +617,6 @@ function Controller()
 
   this.sendTweet = function(playerId, noteId) 
   {
-
     note = model.currentNote;
     if (!note.note_id == noteId) //we are making an assumption that the current note is the same as the one desired to tweet
     {                            //just in case this is in error, record it 
