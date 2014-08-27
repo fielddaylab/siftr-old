@@ -46,12 +46,12 @@ function Model()
 		self.playerId = $.cookie("sifter");
 	    self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
 
-    $('.sifter-show-logout-button').show();
+    $('.sifter-show-logout-button').show();    
 	}
 
 	this.loadTagsFromServer = function(response){
 		//format tag array
-		model.tags = JSON.parse("[" + response + "]")[0].data;
+		model.tags = JSON.parse("[" + response + "]")[0].data; 
 
 		controller.showFilters();
 		
@@ -79,9 +79,7 @@ function Model()
 		this.rawNotes = rawNotes;
         for(var i = 0; i < this.rawNotes.length; i++)
         {
-           	if (rawNotes[i].tags.length != 0){
-	            this.addNoteFromData(this.rawNotes[i]);
-	        }
+            this.addNoteFromData(this.rawNotes[i]);
         }
 		
     };

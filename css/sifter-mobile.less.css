@@ -25,6 +25,11 @@
 @tertiaryColor: @UWGold;
 @quaternaryColor: @siftrMobileWhite;
 
+@primaryColorBorder: @primaryColor + #111;
+@secondaryColorBorder: @secondaryColor + #111;
+@tertiaryColorBorder: @tertiaryColor + #111;
+@quaternaryColorBorder: @siftrGreyDark;
+
 
 /****************************************
               VARIABLES
@@ -37,7 +42,7 @@
 @buttonBackgroundColorActive: @secondaryColor;
 @buttonBorderColorActive: @tertiaryColor;
 
-@popupFontColor: @siftrRed;
+@popupFontColor: @primaryColor;
 @textFieldBorder: @siftrGrey;
 @textFieldBackground: @siftrMobileWhite;
 @toolbarColor: @primaryColor;
@@ -308,7 +313,6 @@ button.filter-button.last
   overflow-y: scroll;
   overflow-x: hidden;
 
-  /*background: #fff;*/
   background: @quaternaryColor;
   color: rgb(77,77,77);
   -webkit-overflow-scrolling: touch;
@@ -632,6 +636,7 @@ button.touch-friendly
   color: @siftrWhite;
   cursor: pointer;
   font-size: 3em;
+  width: 100%;
 }
 
 .camera_box .left-small
@@ -829,4 +834,14 @@ button.touch-friendly
 {
   padding: 0.75em;
   padding-top: 0em;
+}
+
+.account-info
+{
+  display: inline-block;
+  text-align: center;
+  width:100%;
+  padding: 1em;
+  background: @linkBarBackgroundColor;
+  color: @quaternaryColor;
 }

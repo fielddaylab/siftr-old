@@ -4,8 +4,8 @@
 @badgerRed: #b70101;
 @UWCream: #f7f5e8;
 @UWGold: #E7D9C1;
-
 @siftrWhite: #f7f7f7;
+
 @siftrGrey87: #dedede;
 @siftrGreyDark: #cacaca;
 @siftrRed: #cf2037;
@@ -21,6 +21,7 @@
 @primaryColorBorder: @primaryColor + #111;
 @secondaryColorBorder: @secondaryColor + #111;
 @tertiaryColorBorder: @tertiaryColor + #111;
+@quaternaryColorBorder: @siftrGreyDark;
 
 /****************************************
               VARIABLES
@@ -34,6 +35,8 @@
 @buttonBorderColorActive: @tertiaryColor;
 
 @categoryFontColor: @primaryColor;
+@cameraBoxBackground: @quaternaryColorBorder;
+@closeButtonColor: @siftrGreyDark;
 
 @footerColor: @tertiaryColor;
 @footerBorderColor: @tertiaryColorBorder;
@@ -42,14 +45,14 @@
 @headerColor: @primaryColor;
 @hoverColor: @primaryColor;
 
-@logoColor: @siftrRed;
+@logoColor: @primaryColor;
 
-@popupFontColor: @siftrRed;
+@popupFontColor: @primaryColor;
 @popDownBackgroundColor: @secondaryColor;
 
 
-@textFieldBorder: @siftrGreyDark;
-@textFieldBackground: @siftrWhite;
+@textFieldBorder: @quaternaryColorBorder;
+@textFieldBackground: @quaternaryColor;
 
 /* Full height mode */
 html,body
@@ -179,11 +182,11 @@ html,body
 .filter-button,
 .modal-button
 {
-  color: @siftrGrey87;
+  color: @quaternaryColorBorder;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
   background-color: @quaternaryColor;
   background-repeat: repeat-x;
-  border: 1px solid @siftrGrey87;
+  border: 1px solid @quaternaryColorBorder;
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(150,150,150, 0.1);
 }
@@ -268,8 +271,6 @@ html,body
     width: 150px;
     margin-top: 1em;
     margin-left: 1em;
-    /*color: #cf2037;*/
-    /*color: @primaryColor;*/
     color: @buttonColor;
     padding: 0.25em;
   }
@@ -291,7 +292,6 @@ html,body
     width: 170px;
     overflow: hidden;
     list-style: none;
-    /*color: #cf2037;*/
     color: @categoryFontColor;
   }
   .sifter-category .scale-icon
@@ -323,7 +323,6 @@ html,body
   .sifter-category input[type=checkbox]:checked + label,
   .sifter-category input[type=radio]:checked + label
   {
-    /*color: #cf2037;*/
     color: @categoryFontColor;
 	 opacity: 1.0;
   }
@@ -333,7 +332,7 @@ html,body
     display: inline;
     height: 2em;
     width: 100px;
-    border: 1px solid #f7f7f7;
+    border: 1px solid @quaternaryColor;
     border-radius: 50px;
     padding-left: 10px;
     box-shadow: inset 0 0 10px rgba(136, 136, 136, 0.2); 
@@ -446,7 +445,7 @@ html,body
   position: absolute;
   right: 0;
   top: 0;
-  color: #cacaca;
+  color: @closeButtonColor;
   font-size: 200%;
   margin: 0.25em;
   background: #fff;
@@ -454,7 +453,6 @@ html,body
 
 .close-button:hover
 {
-  /*color: #cf2037;*/
   color: @primaryColor;
 }
 
@@ -559,7 +557,6 @@ html,body
   width: 100%;
   box-sizing: border-box;
   border: 0;
-  /*background: #f7f7f7;*/
   background: @textFieldBackground;
   margin-bottom: 0.75em;
 }
@@ -576,18 +573,18 @@ button.touch-friendly
 .sifter-show-sidebar,
 .new-right-side
 {
-  border-left: 1px solid #cacaca;
+  border-left: 1px solid @quaternaryColorBorder;
   margin-right: -1px;
 }
 .sifter-show-content,
 .new-left-side
 {
-  border-right: 1px solid #cacaca;
+  border-right: 1px solid @quaternaryColorBorder;
   margin-right: -1px;
 }
 .sifter-new-comment
 {
-  border-top: 1px solid #cacaca;
+  border-top: 1px solid @quaternaryColorBorder;
 }
 
 
@@ -596,7 +593,6 @@ button.touch-friendly
 .login_view,
 .join_view
 {
-  /*color: #cf2037;*/
   color: @popupFontColor;
 }
 
@@ -676,7 +672,6 @@ button.touch-friendly
 .about_view h1,
 .about_view h2
 {
-  /*color: #cf2037;*/
   color: @popupFontColor;
   font-weight: normal;
 }
@@ -741,7 +736,6 @@ button.touch-friendly
   float: left;
   z-index: 1000;
   font-size: 2em;
-  /*color: #f7f7f7;*/
   color: @quaternaryColor;
   cursor: pointer;
 }
@@ -760,10 +754,13 @@ button.touch-friendly
   font-size: 4em;
   transform: translate(-50%, -50%);
   cursor: pointer;
-  /*color: #f7f7f7;*/
   color: @quaternaryColor;
 }
 
+.camera_box span
+{
+  width: 100%;
+}
 
 #crop_box,#crop_view
 {
@@ -783,7 +780,7 @@ button.touch-friendly
 {
   width: 283px;
   height: 283px;
-  background: #cacaca;
+  background: @cameraBoxBackground;
   box-sizing: border-box;
   text-align: center;
   vertical-align: middle;
@@ -813,7 +810,7 @@ button.touch-friendly
 #mapCanvas
 {
   width: 100%;
-  background: #cacaca;
+  background: @quaternaryColorBorder;
   height: 0;
   padding-bottom: 80%;
 }
@@ -824,7 +821,6 @@ button.touch-friendly
   border: 0;
   padding: 0.2em;
   box-sizing: border-box;
-  /*background: #f7f7f7;*/
   background: @textFieldBackground;
   margin-bottom: 0.5em;
 }
@@ -860,7 +856,6 @@ button.touch-friendly
 .working
 {
   text-align: center;
-  /*color: #cf2037;*/
   color: @popupFontColor;
 }
 
@@ -897,7 +892,6 @@ button.touch-friendly
 
 .shareable:hover
 {
-  /*color: #cf2037;*/
   color: @primaryColor;
 }
 

@@ -397,9 +397,10 @@ function getLocation()
 
 function submitNote() 
 {
-  //This should dismiss the keyboard on mobile 
-  document.activeElement.blur();
-
+  //TODO dismiss the keyboard on mobile 
+  // document.activeElement.blur();
+    // $("input").blur();
+  // console.log("keyboard go away");
 
   model.currentNote.text = document.getElementById("caption").value;
 
@@ -968,6 +969,8 @@ function AboutView()
 	data.aboutSiftr = ABOUT_SIFTR;
 	data.introTags = TAG_INTRO;
 	data.aboutTags = [];
+	data.username = model.displayName;
+	data.loggedIn = controller.logged_in();
 
 	for (var i = 0; i < TAG_DESCRIPTIONS.length; i++)
 	{
@@ -978,6 +981,39 @@ function AboutView()
 	var view = Mustache.render (template, data);
 
     this.html = $(view).get(0);
+
+    //TODO: find a better way of getting around the fact that you have to wait until the element is rendered to attach an eventlistener
+	if($.cookie("sifter") > 0)
+	{
+		self.playerId = $.cookie("sifter");
+	    self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
+
+	    // $(this.html).find('.sifter-show-logout-button').show();
+	} else {		
+	    $(this.html).find('.sifter-show-logout-button').hide();
+	}
+
+ 	$(this.html).find('.sifter-show-logout-button').on('click', function()
+  	{
+	  	if(typeof FB != 'undefined'){ //check this first or you'll get errors
+	  		FB.getLoginStatus(function(response) { //check to see if they are currently logged in
+	  			if (response.status === 'connected'){ 
+	  				FB.logout(function(response){}); //which will run controller.logout when it's done
+	   			}else {
+					$('.account-info').hide();
+	   				controller.logout(); //they are not currently logged in to facebook, so you can run the plain controller.logout
+	  			}
+	  		});
+			$('.account-info').hide();
+
+		    controller.logout(); //TODO: hack to make sure logout happens until url sent to FB finalized
+	  	}else{
+			$('.account-info').hide();
+
+			controller.logout(); //this deletes all the cookies
+	  	}
+	});
+
 }
 
 function FiltersView()
@@ -1000,4 +1036,9 @@ function getTagListForRender()
 	}
 
 	return category_list;
+}
+
+function clickLogout()
+{
+	$('.sifter-show-logout-button').click();
 }

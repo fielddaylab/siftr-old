@@ -62,7 +62,7 @@
     <div class="sifter-desktop-header hidden-mobile">
 
       <div class="sifter-logo-box">
-        <h1> <img src="assets/images/icon_logo.png" class="scale_logo"/></h1> <!-- TODO: move this to a config folder? -->
+        <h1> <img src="assets/images/icon_logo.png" class="scale_logo"/></h1>
 
       </div>
 
@@ -164,20 +164,20 @@
           </div>
 
           <div class="sifter-show-linkbar">
-              <div class="shareable">
+              <div class="shareable" title="Email">
                 <span class="glyphicon glyphicon-envelope" id="shareEmail">{{emailShare}}</span> 
         			</div>
 
-              <div class="shareable" >
+              <div class="shareable" title="Like">
                 <span class="glyphicon glyphicon-heart-empty" id="shareLike">{{likeShare}}</span>
               	<!--The like icon will be determined in views by if they have or have not liked it before -->
           		</div>
 
-              <div class="shareable">
+              <div class="shareable" title="Tweet">
                 <span class="glyphicon glyphicon-retweet" id="shareTweet">{{tweetShare}}</span>
               </div>
 
-              <div class="shareable">
+              <div class="shareable" title="Pin">
                 <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin">{{pinShare}}</span>
               </div>
             <div class="clear"></div>
@@ -233,9 +233,9 @@
       <div class="new-dialog">
         <div class="new-left-side">
           <!-- Camera Box -->
-          <div class="camera_pad_box">
+          <div class="camera_pad_box" >
           <div class="camera_box">
-            <div class="center-big" id="browseImage"> <span class="icon-camera" ></span> </div>
+            <div class="center-big"id="browseImage"> <span class="icon-camera" ></span> </div>
             <input  id="in-camera" type="file" accept="image/*,video/*" capture="camera" />
             <div    id="crop_box" style="display: none;">
               <div id="crop_view">
@@ -398,11 +398,21 @@
       <div class="about_view modal-large closable">
         <div class="close-button" onclick="">
           <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>
+        </div>	
+        {{#loggedIn}}
+          <div class="hidden-desktop account-info">
+            <p>You are logged in as:</p>
+            <p> {{username}}</p>
+          	<div class="sifter-show-logout-button" id="mobile-logout" onclick="">
+    	        <h2> Logout </h2>
+          	</div>	
+          </div>
+        {{/loggedIn}}
+
         <div class="content">
           <h1><span class='siftr-logo'></span> Siftr</h1>
           <h2>About Us:</h2>
-	  <p>
+      	  <p>
             {{aboutSiftr}}
           </p>
 
