@@ -252,7 +252,7 @@ function Controller()
 		if(model.contentsWaitingToUpload == 0){
 			
 			//second, is set the publicToMap and publicToNotebook flags to true
-			updateNoteString =  "/" + model.currentNote.noteId + "/" +model.currentNote.text.substring(0,10) + "/1/1" ; //updateNote(noteId, title(displays in Editor Only) ,publicToMap, publicToNotebook
+			updateNoteString =  "/" + model.currentNote.noteId + "/" +encodeURIComponent(model.currentNote.text).substring(0,10) + "/1/1" ; //updateNote(noteId, title(displays in Editor Only) ,publicToMap, publicToNotebook
 			callService("notes.updateNote", controller.setNoteComplete ,updateNoteString , false); 
 			
 		}
