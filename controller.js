@@ -283,7 +283,7 @@ function Controller()
 
     this.addCommentToNote = function(noteId, comment, callback)
     {
-        callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/"+comment, false);
+        callService("notes.addCommentToNote", callback, "/"+model.gameId+"/"+model.playerId+"/"+noteId+"/"+encodeURIComponent(comment), false);
     }
 	
 	this.setCommentComplete = function(status)
