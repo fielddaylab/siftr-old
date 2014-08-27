@@ -59,17 +59,20 @@ $(document).ready (function ()
   $('.sifter-show-logout-button').on('click', function()
   {
 	
-	if(typeof FB != 'undefined'){ //check this first or you'll get errors
-		FB.getLoginStatus(function(response) { //check to see if they are currently logged in
-			if (response.status === 'connected'){ 
-				FB.logout(function(response){}); //which will run controller.logout when it's done
- 			}else {controller.logout(); //they are not currently logged in to facebook, so you can run the plain controller.logout
-			}
-		});
-    controller.logout(); //TODO: hack to make sure logout happens until fb urls resolved, DELETE after move to siftr.org/CUSTOM_NAME
-	}else{
-	    controller.logout(); //this deletes all the cookies
-	}
+  	if(typeof FB != 'undefined'){ //check this first or you'll get errors
+  		FB.getLoginStatus(function(response) { //check to see if they are currently logged in
+  			if (response.status === 'connected'){ 
+  				FB.logout(function(response){}); //which will run controller.logout when it's done
+   			}
+        else 
+        {
+          controller.logout(); //they are not currently logged in to facebook, so you can run the plain controller.logout
+  			}
+  		});
+      controller.logout(); //TODO: hack to make sure logout happens until url sent to FB finalized, DELETE after move to siftr.org/CUSTOM_NAME
+  	}else{
+  	    controller.logout(); //this deletes all the cookies
+  	}
 	
 	});
 
@@ -151,12 +154,17 @@ $(document).ready (function ()
     controller.showAbout();
   });
 
+  
   /* Map Center ********************************************* */
   $('.sifter-center-map').on('click', function()
   {
-    var bascom_hill = new google.maps.LatLng(43.0753, -89.4041);
-    model.views.gmap.setCenter(bascom_hill);
-    model.views.gmap.setZoom(14);
+    // var bascom_hill = new google.maps.LatLng(43.0753, -89.4041);
+    // model.views.gmap.setCenter(bascom_hill);
+    // model.views.gmap.setZoom(14);
+
+    var map_center = new google.maps.LatLng(MAP_CENTER_LATITUDE, MAP_CENTER_LONGITUDE);
+    model.views.gmap.setCenter(map_center);
+    model.views.gmap.setZoom(MAP_ZOOM_LEVEL);
   });
-  
+
 });
