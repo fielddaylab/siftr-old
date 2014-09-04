@@ -86,19 +86,22 @@ function NoteView(note)
 
 	  this.likeToggle(this.note.player_liked);	
 
+      var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+      var clickEvent = iOS ? 'touchend' : 'click';
+
       /* Attach login or comment events */
-      $(this.html).find('.login-to-comment').on('click', function()
+      $(this.html).find('.login-to-comment').on(clickEvent, function()
       {
         controller.loginRequired (function () { controller.noteSelected(thism); });
       });
 
-      $(this.html).find('.post-comment').on('click', function()
+      $(this.html).find('.post-comment').on(clickEvent, function()
       {
         var text = $(thism.html).find('textarea').val();
         thism.submitComment (thism.note, text)
       });
 
-      $(this.html).find('.delete-note').on('click', function()
+      $(this.html).find('.delete-note').on(clickEvent, function()
       {
         if (confirm("Are you sure you want to delete this note?"))
         {
