@@ -124,8 +124,9 @@ $(document).ready (function ()
   });
 
 
-  $(document).on('click', '#submitNote', submitNote);
-  $(document).on('click', '#cancelNote, #cancelNoteOverlay', cancelNote);
+  //$(document).on('click', '#submitNote', submitNote);
+  //$(document).on('click', '#cancelNote, #cancelNoteOverlay', cancelNote);
+  // MT: moved to controller.js in Controller::createNote() method
 
 
 

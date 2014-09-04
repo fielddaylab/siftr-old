@@ -16,6 +16,11 @@ function Controller()
         model.views.noteCreateView = new NoteCreateView();
         model.views.createNoteViewContainer.innerHTML = '';
         model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
+        var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+        var clickEvent = iOS ? 'touchend' : 'click';
+        $('#submitNote').on(clickEvent, submitNote);
+        $('#cancelNote').on(clickEvent, cancelNote);
+        $('#cancelNoteOverlay').on(clickEvent, cancelNote);
         $('#cancelNoteOverlay').show();
 		
 		    document.getElementById("create_tag_1").checked = true; //this is the default tag, it should be checked (but can't do it in HTML for reasons)
