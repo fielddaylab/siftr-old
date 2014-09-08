@@ -63,6 +63,11 @@ function Model() {
 
     this.addNoteFromData = function(note) {
         //Fix up note tags
+        if (note.tags[0] === undefined) {
+            console.log('Warning, note passed to model.addNoteFromData has no tag:');
+            console.log(note);
+            return;
+        }
         note.tagString = note.tags[0].tag; //all notes are required to have one, and only one, tag
         note.geoloc = new google.maps.LatLng(note.lat, note.lon);
         this.gameNotes[this.gameNotes.length] = note;
@@ -78,12 +83,13 @@ function Model() {
     };
 
     this.deleteNote = function(searchID) {
-        var ix = this.gameNotes.findIndex(function(note){
-            return parseInt(note.note_id, 10) === parseInt(searchID, 10);
-        });
-        if (ix !== undefined) {
-            this.gameNotes.splice(ix, 1); // remove gameNotes[ix]
-        };
+        for (var i = 0; i < this.gameNotes.length; i++) {
+            var note = this.gameNotes[i];
+            if (parseInt(note.note_id, 10) === parseInt(searchID, 10)) {
+                this.gameNotes.splice(i, 1); // remove gameNotes[i]
+                return;
+            }
+        }
     };
 
     this.getSiftTypeCode = function(siftType) {
