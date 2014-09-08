@@ -77,6 +77,15 @@ function Model() {
 
     };
 
+    this.deleteNote = function(searchID) {
+        var ix = this.gameNotes.findIndex(function(note){
+            return parseInt(note.note_id, 10) === parseInt(searchID, 10);
+        });
+        if (ix !== undefined) {
+            this.gameNotes.splice(ix, 1); // remove gameNotes[ix]
+        };
+    };
+
     this.getSiftTypeCode = function(siftType) {
         switch (siftType) {
             case "top":

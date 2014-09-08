@@ -275,6 +275,8 @@ function Controller() {
 
     this.deleteNote = function(noteId) {
         callService("notes.deleteNote", function() {}, "/" + noteId, false);
+        model.deleteNote(noteId);
+        controller.populateAllFromModel(); //re-display the map and left hand images
     }
 
     this.login = function(username, password) {
