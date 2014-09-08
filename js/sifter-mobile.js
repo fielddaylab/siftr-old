@@ -1,52 +1,46 @@
-$(document).ready(function ()
-{
-  /* MOBILE */
+$(document).ready(function() {
+    /* MOBILE */
 
-  /* Initial state of Map/Image List and Toggle Button */
-  $('.sifter-imagelist').addClass ("hidden-mobile");
-  $('.switch-map'      ).addClass ("hidden-mobile");
+    /* Initial state of Map/Image List and Toggle Button */
+    $('.sifter-imagelist').addClass("hidden-mobile");
+    $('.switch-map').addClass("hidden-mobile");
 
-  $('.switch-views').on('click', function()
-  {
-    $('.switch-view-icon').toggleClass ("hidden-mobile");
-    $('.sifter-map'      ).toggleClass ("hidden-mobile");
-    $('.sifter-imagelist').toggleClass ("hidden-mobile");
-  });
+    $('.switch-views').on('click', function() {
+        $('.switch-view-icon').toggleClass("hidden-mobile");
+        $('.sifter-map').toggleClass("hidden-mobile");
+        $('.sifter-imagelist').toggleClass("hidden-mobile");
+    });
 
 
-  /* Filter slide up toggle */
-  $('.sifter-filters-button').on('click', function()
-  {
-    $('.sifter-filters-slideout').toggleClass('sifter-filters-expanded');
-  });
+    /* Filter slide up toggle */
+    $('.sifter-filters-button').on('click', function() {
+        $('.sifter-filters-slideout').toggleClass('sifter-filters-expanded');
+    });
 
 
 
-  /* DESKTOP */
+    /* DESKTOP */
 
-  /* Initial state of Menu and Content */
-  $('.sifter-filters-popdown').addClass('slide-up');
+    /* Initial state of Menu and Content */
+    $('.sifter-filters-popdown').addClass('slide-up');
 
-  $('.sifter-menu-reveal').on('click', function()
-  {
-    $('.sifter-menu-reveal').toggleClass('button-active');
-    $('.sifter-filters-popdown').toggleClass ('slide-up');
-    $('.sifter-content').toggleClass ('shrunk');
-  });
-
-
-  /* Debug */
-  $('.sifter-modal-overlay').hide();
+    $('.sifter-menu-reveal').on('click', function() {
+        $('.sifter-menu-reveal').toggleClass('button-active');
+        $('.sifter-filters-popdown').toggleClass('slide-up');
+        $('.sifter-content').toggleClass('shrunk');
+    });
 
 
-  /* Dialog and Overlay close */
-  $(document).on('click', '.close-button, .sifter-modal-overlay', function()
-  {
-    if(window.location.href.indexOf("#") > -1) 
-    {
-      window.history.pushState('', '', window.location.href.split("#")[0]);
-    }
-    $('.closable, .sifter-modal-overlay').hide();
-  });
+    /* Debug */
+    $('.sifter-modal-overlay').hide();
+
+
+    /* Dialog and Overlay close */
+    $(document).on('click', '.close-button, .sifter-modal-overlay', function() {
+        if (window.location.href.indexOf("#") > -1) {
+            window.history.pushState('', '', window.location.href.split("#")[0]);
+        }
+        $('.closable, .sifter-modal-overlay').hide();
+    });
 
 });
