@@ -94,12 +94,23 @@ var CropHelper = {
         }
         coords.w = coords.x2 - coords.x1;
         coords.h = coords.y2 - coords.y1;
-        console.log(coords);
 
         var mp = new MegaPixImage(image);
         var tempCanvas = document.createElement('canvas');
+        var tempContext = tempCanvas.getContext('2d');
+        tempContext.clearRect(0, 0, tempContext.width, tempContext.height);
         mp.render(tempCanvas, {orientation: orientation});
-        context.drawImage(tempCanvas, coords.x1, coords.y1, coords.w, coords.h, 0, 0, 640, 640);
+
+        var isTransparent = tempContext.getImageData(0, 0, 1, 1).data[3] === 0;
+        console.log(coords);
+        if (isTransparent) {
+            console.log('Subsampled. Drawing straight from image, half y/height.');
+            context.drawImage(image, coords.x1, coords.y1 / 2, coords.w, coords.h / 2, 0, 0, 640, 640);
+        }
+        else {
+            console.log('Drawing from temporary canvas.');
+            context.drawImage(tempCanvas, coords.x1, coords.y1, coords.w, coords.h, 0, 0, 640, 640);
+        }
     },
 
 
