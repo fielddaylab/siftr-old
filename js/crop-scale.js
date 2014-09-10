@@ -104,8 +104,8 @@ var CropHelper = {
         var isTransparent = tempContext.getImageData(0, 0, 1, 1).data[3] === 0;
         console.log(coords);
         if (isTransparent) {
-            console.log('Subsampled. Drawing straight from image, half y/height.');
-            context.drawImage(image, coords.x1, coords.y1 / 2, coords.w, coords.h / 2, 0, 0, 640, 640);
+            console.log('Subsampled. Drawing straight from image, half dimensions.');
+            context.drawImage(image, coords.x1 / 2, coords.y1 / 2, coords.w / 2, coords.h / 2, 0, 0, 640, 640);
         }
         else {
             console.log('Drawing from temporary canvas.');
