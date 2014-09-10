@@ -67,117 +67,39 @@ var CropHelper = {
         if (orientation === undefined) orientation = 1;
 
         switch (orientation) {
-            case 1:
-                context.drawImage(image, coords.x, coords.y, coords.w, coords.h, 0, 0, 640, 640);
-                break;
-            case 6: // Rotate image 90 degrees clockwise to display correctly
-                // First off, the coordinates from jcrop are totally wrong.
-                // Jcrop calculates them as proportions of what the image says its height and width are.
-                // But they're mixed up because the displayed image is rotated.
-                // So we need to divide them by the fake height/width and multiply by the real ones.
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                // We have to fix the values we got from jcrop
                 var fakeHeight = image.height;
                 var fakeWidth = image.width;
                 var realHeight = image.width;
                 var realWidth = image.height;
-                var portrait = {
+                coords = {
                     x1: coords.x / fakeWidth * realWidth,
                     x2: coords.x2 / fakeWidth * realWidth,
                     y1: coords.y / fakeHeight * realHeight,
                     y2: coords.y2 / fakeHeight * realHeight,
                 };
-                // Next, we flip the x's and y's because we want coordinates into the real (landscape) image.
-                var landscape = {
-                    x1: portrait.y1,
-                    x2: portrait.y2,
-                    y1: portrait.x1,
-                    y2: portrait.x2,
-                };
-                // Finally, we need to draw from the landscape image into a rotated canvas context.
-                context.save();
-                context.translate(320, 320);
-                context.rotate(0.5 * Math.PI);
-                context.translate(-320, -320);
-                context.drawImage(
-                    image,
-                    landscape.x1,
-                    landscape.y1,
-                    landscape.x2 - landscape.x1,
-                    landscape.y2 - landscape.y1,
-                    0, 0, 640, 640
-                );
-                context.restore();
                 break;
-            case 3: // Rotate image 180 degrees clockwise to display correctly
-                var flipped = {
+            default:
+                coords = {
                     x1: coords.x,
                     x2: coords.x2,
                     y1: coords.y,
                     y2: coords.y2,
                 };
-                var original = {
-                    x1: image.width - flipped.x2,
-                    x2: image.width - flipped.x1,
-                    y1: image.height - flipped.y2,
-                    y2: image.height - flipped.y1,
-                };
-                context.save();
-                context.translate(320, 320);
-                context.rotate(1 * Math.PI);
-                context.translate(-320, -320);
-                context.drawImage(
-                    image,
-                    original.x1,
-                    original.y1,
-                    original.x2 - original.x1,
-                    original.y2 - original.y1,
-                    0, 0, 640, 640
-                );
-                context.restore();
-                break;
-            case 8: // Rotate image 90 degrees counterclockwise to display correctly
-                var fakeHeight = image.height;
-                var fakeWidth = image.width;
-                var realHeight = image.width;
-                var realWidth = image.height;
-                var portrait = {
-                    x1: coords.x / fakeWidth * realWidth,
-                    x2: coords.x2 / fakeWidth * realWidth,
-                    y1: coords.y / fakeHeight * realHeight,
-                    y2: coords.y2 / fakeHeight * realHeight,
-                };
-                var landscape = {
-                    x1: portrait.y1,
-                    x2: portrait.y2,
-                    y1: portrait.x1,
-                    y2: portrait.x2,
-                };
-                var unflipped = {
-                    x1: image.width - landscape.x2,
-                    x2: image.width - landscape.x1,
-                    y1: landscape.y1, // Shouldn't these have "image.height -" ???
-                    y2: landscape.y2, // I don't know why it works
-                };
-                context.save();
-                context.translate(320, 320);
-                context.rotate(1.5 * Math.PI);
-                context.translate(-320, -320);
-                context.drawImage(
-                    image,
-                    unflipped.x1,
-                    unflipped.y1,
-                    unflipped.x2 - unflipped.x1,
-                    unflipped.y2 - unflipped.y1,
-                    0, 0, 640, 640
-                );
-                context.restore();
-                break;
-            default:
-                // Others are possible, see http://jpegclub.org/exif_orientation.html
-                // But we'll assume no mirrored images are likely to be uploaded for now
-                console.log('Unknown EXIF orientation: ' + orientation);
-                context.drawImage(image, coords.x, coords.y, coords.w, coords.h, 0, 0, 640, 640);
                 break;
         }
+        coords.w = coords.x2 - coords.x1;
+        coords.h = coords.y2 - coords.y1;
+        console.log(coords);
+
+        var mp = new MegaPixImage(image);
+        var tempCanvas = document.createElement('canvas');
+        mp.render(tempCanvas, {orientation: orientation});
+        context.drawImage(tempCanvas, coords.x1, coords.y1, coords.w, coords.h, 0, 0, 640, 640);
     },
 
 
