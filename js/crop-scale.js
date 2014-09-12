@@ -105,7 +105,17 @@ var CropHelper = {
         console.log(coords);
         if (isTransparent) {
             console.log('Subsampled. Drawing straight from image, half dimensions.');
-            context.drawImage(image, coords.x1 / 2, coords.y1 / 2, coords.w / 2, coords.h / 2, 0, 0, 640, 640);
+            tempCanvas.width = image.width / 2;
+            tempCanvas.height = image.height / 2;
+            console.log(tempCanvas.width + ' by ' + tempCanvas.height);
+            tempContext.drawImage(image, 0, 0, image.width / 2, image.height / 2, 0, 0, image.width / 2, image.height / 2);
+            var img = document.createElement('img');
+            img.src = tempCanvas.toDataURL();
+            console.log(img);
+            mp = new MegaPixImage(img);
+            mp.render(tempCanvas, {orientation: orientation});
+            console.log('Orientation: ' + orientation);
+            context.drawImage(tempCanvas, coords.x1 / 2, coords.y1 / 2, coords.w / 2, coords.h / 2, 0, 0, 640, 640);
         }
         else {
             console.log('Drawing from temporary canvas.');
