@@ -114,9 +114,10 @@ $(document).ready(function() {
 
     /* Login View ********************************************* */
 
-    $(document).on('click', '#login', clickLogin);
-    $(document).on('click', '#noAccount', clickNoAccount);
-    $(document).on('click', '#forgotPassword', clickForgotPassword);
+    //$(document).on('click', '#login', clickLogin);
+    //$(document).on('click', '#noAccount', clickNoAccount);
+    //$(document).on('click', '#forgotPassword', clickForgotPassword);
+    // MT: moved to controller.js in Controller::showLoginView() method
 
 
 

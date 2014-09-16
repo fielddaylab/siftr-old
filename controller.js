@@ -13,6 +13,7 @@ function Controller() {
         model.views.noteCreateView = new NoteCreateView();
         model.views.createNoteViewContainer.innerHTML = '';
         model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
+        
         var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
         var clickEvent = iOS ? 'touchend' : 'click';
         $('#submitNote').on(clickEvent, submitNote);
@@ -31,6 +32,13 @@ function Controller() {
         model.views.loginView = new LoginView();
         model.views.loginViewContainer.innerHTML = '';
         model.views.loginViewContainer.appendChild(model.views.loginView.html);
+
+        var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
+        var clickEvent = iOS ? 'touchend' : 'click';
+        $('#login'         ).on(clickEvent, clickLogin         );
+        $('#noAccount'     ).on(clickEvent, clickNoAccount     );
+        $('#forgotPassword').on(clickEvent, clickForgotPassword);
+
         $('.sifter-modal-overlay').show();
     };
 
