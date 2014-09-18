@@ -39,6 +39,17 @@ function Controller() {
         $('#noAccount'     ).on(clickEvent, clickNoAccount     );
         $('#forgotPassword').on(clickEvent, clickForgotPassword);
 
+        // Bind enter-key handlers
+        var enterHandler = function(evt) {
+            if (evt.which === 13) {
+                $('#login').click();
+                return false;
+            }
+            return true;
+        };
+        $('#username_login').keypress(enterHandler);
+        $('#password_login').keypress(enterHandler);
+
         $('.sifter-modal-overlay').show();
     };
 
