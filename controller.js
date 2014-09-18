@@ -272,6 +272,7 @@ function Controller() {
         if (fullNote.contents.length == 0) console.log("Empty uploaded note"); //if the contents haven't loaded, it won't display
         model.addNoteFromData(fullNote); //add it in to the cached model
         controller.populateAllFromModel(); //re-display the map and left hand images
+        controller.noteSelected({note: fullNote}); //show the new note
     }
 
 
