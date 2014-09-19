@@ -527,9 +527,9 @@ function Controller() {
             }
         }
 
-        bodyText += "See the whole note at: www.siftr.org or download the Siftr app \n";
+        bodyText += "See the whole note at: siftr.org/folklore100 or download the Siftr app \n";
         // bodyText += bodyImage;
-        bodyText += "www.siftr.org/#" + note.note_id;
+        bodyText += "siftr.org/folklore100/#" + note.note_id;
 
 
         //add one to email sent count
