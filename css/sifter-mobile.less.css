@@ -838,10 +838,6 @@ button.touch-friendly
 
 .account-info
 {
-  display: inline-block;
   text-align: center;
   width:100%;
-  padding: 1em;
-  background: @linkBarBackgroundColor;
-  color: @quaternaryColor;
 }

@@ -400,11 +400,10 @@
         </div>	
         {{#loggedIn}}
           <div class="hidden-desktop account-info">
-            <p>You are logged in as:</p>
-            <p> {{username}}</p>
-          	<div class="sifter-show-logout-button" id="mobile-logout" onclick="">
-    	        <h2> Logout </h2>
-          	</div>	
+            <p>You are logged in as: {{username}}</p>
+          	<h2>
+    	        <span class="sifter-show-logout-button" onclick="">Logout</span>
+          	</h2>	
           </div>
         {{/loggedIn}}
 
