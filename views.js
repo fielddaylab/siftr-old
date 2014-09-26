@@ -264,16 +264,23 @@ function NoteView(note) {
             var day = new Date();
             var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
 
-            note.comments.push({
-                "username": model.displayName,
-                "title": comment,
-                "created": today
-            });
-
             // now add it to the server copy and re-display the updated note
             controller.addCommentToNote(note.note_id, comment, function(status) {
-                controller.setCommentComplete(status);
-                controller.noteSelected(thism);
+                if (status === false) {
+                    // User is probably not really logged in
+                    alert('Error while posting comment! Try logging out and back in, then retry your comment.');
+                }
+                else {
+                    // All good
+                    note.comments.push({
+                        "username": model.displayName,
+                        "title": comment,
+                        "created": today
+                    });
+
+                    controller.setCommentComplete(status);
+                    controller.noteSelected(thism);
+                }
             });
         } else {
             controller.showLoginView();
