@@ -15,7 +15,6 @@ function Model() {
     this.serverCallsToLoad = 0; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
     this.loadFinishCallback = '';
     this.siftTypeCode = 0; //we keep track of this so we can sift from tag or search changes without forgetting what main sift we were using. Start with top
-    this.howMany = 50;
 
     self.playerId = 0;
 
@@ -290,6 +289,8 @@ function Model() {
                     if (!!listNote.html) model.views.mainViewLeft.appendChild(listNote.html);
                     //make sure it's not blank, if it is it'll crash    
                 }
+                var loadMoreButton = '<button onclick="siftMore();" style="margin: 10px;">Load More</button>';
+                model.views.mainViewLeft.innerHTML += '<br />' + loadMoreButton;
 
             }, 400);
 
