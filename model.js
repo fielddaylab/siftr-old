@@ -15,6 +15,7 @@ function Model() {
     this.serverCallsToLoad = 0; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
     this.loadFinishCallback = '';
     this.siftTypeCode = 0; //we keep track of this so we can sift from tag or search changes without forgetting what main sift we were using. Start with top
+    this.howMany = 50;
 
     self.playerId = 0;
 

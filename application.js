@@ -14,18 +14,7 @@ function pageLoad() {
 }
 
 function startLoadGame() {
-    document.getElementById('messageContent').innerHTML = "Sifting";
-    document.getElementById('message').style.display = 'block';
-    callService("notes.getNotesWithAttributes", finishLoadGame, '', JSON.stringify({
-        gameId: model.gameId,
-        searchTerms: [],
-        noteCount: 50,
-        searchType: 0,
-        playerId: model.playerId,
-        tagIds: [],
-        lastLocation: 0,
-        date: 0
-    }));
+    startSift('top');
 }
 
 
@@ -50,7 +39,16 @@ function finishLoadGame(responseText) {
 
 }
 
-function startSift(siftType) {
+function siftMore() {
+    model.howMany += 50;
+    startSift(model.lastSiftType, model.howMany);
+}
+
+function startSift(siftType, howMany) {
+    if (howMany === undefined) howMany = 50;
+    model.howMany = howMany;
+    model.lastSiftType = siftType;
+
     model.views.mainViewLeft.innerHTML = ''; //clear out old notes
     document.getElementById('messageContent').innerHTML = "Sifting...";
     document.getElementById('message').style.display = 'block'; //this is set to hidden after page loads first time
@@ -101,7 +99,7 @@ function startSift(siftType) {
             siftString = JSON.stringify({
                 gameId: model.gameId,
                 searchTerms: searchTerms,
-                noteCount: 50,
+                noteCount: howMany,
                 searchType: searchTypeCode,
                 playerId: 0,
                 tagIds: selectedTags,
@@ -110,11 +108,11 @@ function startSift(siftType) {
             });
             break;
         case "recent":
-            //don't use the date paramenter, bc then it'll only find the notes created since that date. We want it to just sort the notes by date & give 50 mores recent
+            //don't use the date paramenter, bc then it'll only find the notes created since that date. We want it to just sort the notes by date & give "howMany" most recent
             siftString = JSON.stringify({
                 gameId: model.gameId,
                 searchTerms: searchTerms,
-                noteCount: 50,
+                noteCount: howMany,
                 searchType: searchTypeCode,
                 playerId: 0,
                 tagIds: selectedTags,
@@ -126,7 +124,7 @@ function startSift(siftType) {
             siftString = JSON.stringify({
                 gameId: model.gameId,
                 searchTerms: searchTerms,
-                noteCount: 50,
+                noteCount: howMany,
                 searchType: searchTypeCode,
                 playerId: 0,
                 tagIds: selectedTags,
@@ -138,7 +136,7 @@ function startSift(siftType) {
             siftString = JSON.stringify({
                 gameId: model.gameId,
                 searchTerms: searchTerms,
-                noteCount: 50,
+                noteCount: howMany,
                 searchType: searchTypeCode,
                 playerId: model.playerId,
                 tagIds: selectedTags,
@@ -151,7 +149,7 @@ function startSift(siftType) {
             siftString = JSON.stringify({
                 gameId: model.gameId,
                 searchTerms: searchTerms,
-                noteCount: 50,
+                noteCount: howMany,
                 searchType: searchTypeCode,
                 playerId: 0,
                 tagIds: selectedTags,
@@ -164,7 +162,7 @@ function startSift(siftType) {
             siftString = JSON.stringify({
                 gameId: model.gameId,
                 searchTerms: searchTerms,
-                noteCount: 50,
+                noteCount: howMany,
                 searchType: searchTypeCode,
                 playerId: 0,
                 tagIds: selectedTags,
