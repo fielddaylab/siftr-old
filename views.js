@@ -927,16 +927,8 @@ function NoteCreateView() {
 function AboutView() {
     var data = {};
     data.aboutSiftr = ABOUT_SIFTR;
-    data.introTags = TAG_INTRO;
-    data.aboutTags = [];
     data.username = model.displayName;
     data.loggedIn = controller.logged_in();
-
-    for (var i = 0; i < TAG_DESCRIPTIONS.length; i++) {
-        data.aboutTags.push({
-            "tagName": TAG_DESCRIPTIONS[i]
-        });
-    }
 
     var template = $('#aboutTemplate').html();
     var view = Mustache.render(template, data);

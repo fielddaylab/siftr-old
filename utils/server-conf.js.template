@@ -1,8 +1,0 @@
-// aris services endpoint (/services and /json get appended to this)
-var SERVER_URL = "http://arisurl/server";
-
-// Facebook app id for FB Connect
-var FACEBOOK_ID = 123456;
-
-// Aris game id with search tags and note storage
-var YOI_GAME_ID = 10690;
