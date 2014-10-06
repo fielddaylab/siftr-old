@@ -532,9 +532,17 @@ function Controller() {
             }
         }
 
-        bodyText += "See the whole note at: siftr.org/folklore100 or download the Siftr app \n";
+        var thisSiftr = '';
+        var result = document.URL.match(/siftr.org\/(\w+)/);
+        if (result !== null) {
+            thisSiftr = result[1];
+        }
+
+        bodyText += "See the whole note at: siftr.org/" + thisSiftr + " or download the Siftr app \n";
         // bodyText += bodyImage;
-        bodyText += "siftr.org/folklore100/#" + note.note_id;
+        if (thisSiftr !== '') {
+            bodyText += "siftr.org/" + thisSiftr + "/#" + note.note_id;
+        }
 
 
         //add one to email sent count
