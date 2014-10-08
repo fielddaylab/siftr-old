@@ -280,6 +280,69 @@ function Controller() {
         controller.noteSelected({note: fullNote}); //show the new note
     }
 
+    // New, simpler note upload function
+    this.oneStepNote = function () {
+        var gameId = model.gameId;
+        var playerId = model.playerId;
+        var lat = model.currentNote.lat;
+        var lon = model.currentNote.lon;
+        var caption = model.currentNote.text;
+        var tags = [];
+        for (var i = 1; i < model.tags.length + 1; i++) {
+            if (document.getElementById("create_tag_" + i).checked) {
+                var tag = document.getElementById("create_tag_" + i).value;
+                tags.push(tag);
+            }
+        };
+        var photoData = $('#le-canvas').get(0).toDataURL('image/jpeg');
+        var dataPrefix = 'data:image/jpeg;base64,';
+        var photoBase64 = '';
+        if (photoData.indexOf(dataPrefix) === 0)
+        {
+            photoBase64 = photoData.substring(dataPrefix.length);
+        }
+        else
+        {
+            console.log("controller.oneStepNote: Couldn't encode photo to base64");
+        }
+
+        var json = {
+            "gameId": gameId,
+            "playerId": playerId,
+            "title": caption.substring(0, 10),
+            "description": caption,
+            // ^ This gets turned into a TEXT note_content, *not* the note table description column.
+            "publicToMap": 1,
+            "publicToBook": 1,
+            "location":
+                {
+                    "latitude": lat,
+                    "longitude": lon,
+                },
+            "media":
+                [
+                    {
+                        "path": gameId,           // <- Often gameId. the folder within gamedata that you want the image saved
+                        "filename": "upload.jpg", // <- Unimportant (will get changed), but MUST have correct extension (ie '.jpg')
+                        "data": photoBase64,      // <- base64 encoded media data
+                    }
+                ],
+            "tags": tags
+        }
+
+        callService("notebook.addNoteFromJSON",
+            controller.pushNewNoteData,
+            encodeURIComponent(JSON.stringify(json)),
+            false);
+    };
+    // Like pushNewNote, but it takes just the .data of the JSON
+    this.pushNewNoteData = function (noteData) {
+        var fullNote = JSON.parse(noteData); //the note will have come in like text
+        if (fullNote.contents.length == 0) console.log("Empty uploaded note"); //if the contents haven't loaded, it won't display
+        model.addNoteFromData(fullNote); //add it in to the cached model
+        controller.populateAllFromModel(); //re-display the map and left hand images
+        controller.noteSelected({note: fullNote}); //show the new note
+    };
 
     this.addCommentToNote = function(noteId, comment, callback) {
         callService("notes.addCommentToNote", callback, "/" + model.gameId + "/" + model.playerId + "/" + noteId + "/" + encodeURIComponent(comment), false);
