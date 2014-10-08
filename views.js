@@ -428,6 +428,11 @@ function submitNote() {
         alert("Please " + errors.join(", "));
     } else {
 
+        controller.hideCreateNoteView();
+        controller.oneStepNote();
+
+        /*
+
         //count how many things we'll be uploading before pushing it to HTML
         model.contentsWaitingToUpload = 1; //we have to have an image
         if (model.currentNote.audioFile != null) model.contentsWaitingToUpload += 1; //add one for the audio
@@ -489,6 +494,8 @@ function submitNote() {
 
         //hide create note view
         controller.hideCreateNoteView();
+
+        */
 
     } //end else (required content is all present)
 }
