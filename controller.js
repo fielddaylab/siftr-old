@@ -206,7 +206,7 @@ function Controller() {
 
         var gameId = model.gameId;
         var playerId = model.playerId;
-        callService("notes.createNewNoteStartIncomplete", this.newNoteCreated, "/" + gameId + "/" + playerId, false);
+        //callService("notes.createNewNoteStartIncomplete", this.newNoteCreated, "/" + gameId + "/" + playerId, false);
     }
 
     this.newNoteCreated = function(returnString) {
@@ -331,10 +331,14 @@ function Controller() {
         }
 
         callService("notebook.addNoteFromJSON",
-            controller.pushNewNote,
+            controller.oneStepGetNote,
             '',
             JSON.stringify(json));
     };
+    this.oneStepGetNote = function getNewNoteFromServer(response) {
+        // retrieve the note object back from the server so you can push it to HTML
+        callService("notes.getNoteById", controller.pushNewNote, "/" + JSON.parse(response).data.note_id + "/" + model.playerId, false);
+    }
 
     this.addCommentToNote = function(noteId, comment, callback) {
         callService("notes.addCommentToNote", callback, "/" + model.gameId + "/" + model.playerId + "/" + noteId + "/" + encodeURIComponent(comment), false);
