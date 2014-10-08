@@ -428,8 +428,8 @@ function submitNote() {
         alert("Please " + errors.join(", "));
     } else {
 
-        controller.hideCreateNoteView();
         controller.oneStepNote();
+        controller.hideCreateNoteView();
 
         /*
 
@@ -536,7 +536,8 @@ function constructSVGMarker(note) {
 
 function getImageToUse(note) {
     for (i = 0; i < note.contents.length; i++)
-        if (note.contents[i].type == "PHOTO") return note.contents[i].media.data.url;
+        if (note.contents[i].type == "PHOTO" || note.contents[i].type == "MEDIA")
+            return note.contents[i].media.data.url;
     return "";
 }
 

@@ -331,17 +331,9 @@ function Controller() {
         }
 
         callService("notebook.addNoteFromJSON",
-            controller.pushNewNoteData,
-            encodeURIComponent(JSON.stringify(json)),
-            false);
-    };
-    // Like pushNewNote, but it takes just the .data of the JSON
-    this.pushNewNoteData = function (noteData) {
-        var fullNote = JSON.parse(noteData); //the note will have come in like text
-        if (fullNote.contents.length == 0) console.log("Empty uploaded note"); //if the contents haven't loaded, it won't display
-        model.addNoteFromData(fullNote); //add it in to the cached model
-        controller.populateAllFromModel(); //re-display the map and left hand images
-        controller.noteSelected({note: fullNote}); //show the new note
+            controller.pushNewNote,
+            '',
+            JSON.stringify(json));
     };
 
     this.addCommentToNote = function(noteId, comment, callback) {
