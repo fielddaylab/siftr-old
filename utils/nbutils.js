@@ -1,6 +1,14 @@
 function callService(serviceName, callback, GETparams, POSTparams)
 {
-    console.log("calling for service", arguments);
+    var displayArguments = Array.prototype.slice.call(arguments, 0);
+    if (displayArguments[0] === 'players.getLoginPlayerObject')
+    {
+        var namePass = displayArguments[2];
+        var slash = namePass.lastIndexOf('/');
+        namePass = namePass.substring(0, slash + 1) + '******';
+        displayArguments[2] = namePass;
+    }
+    console.log("calling for service", displayArguments);
     var url;
     if(GETparams) url = SERVER_URL+'/json.php/v1.'+serviceName+GETparams;
     else          url = SERVER_URL+'/json.php/v1.'+serviceName;
