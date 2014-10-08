@@ -209,67 +209,6 @@ function Controller() {
         //callService("notes.createNewNoteStartIncomplete", this.newNoteCreated, "/" + gameId + "/" + playerId, false);
     }
 
-    this.newNoteCreated = function(returnString) {
-        var startJson = returnString.indexOf("{");
-        var jsonString = returnString.substr(startJson);
-        var obj = JSON.parse(jsonString);
-
-        var noteId = obj.data;
-
-        model.currentNote.noteId = noteId;
-    }
-
-    this.updateNoteLocation = function(noteId, lat, lon) {
-        var gameId = model.gameId;
-        var getString = "/" + gameId + "/" + noteId + "/" + lat + "/" + lon;
-        callService("notes.updateLocation", function() {}, getString, false);
-    }
-
-    this.addContentToNote = function(noteId, filename, type, text) {
-        var gameId = model.gameId;
-        var playerId = model.playerId;
-
-        if (type == "TEXT") {
-            // var getString = "/"+ noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + text;
-            var getString = "/" + noteId + "/" + gameId + "/" + playerId + "/0/" + type + "/" + encodeURIComponent(text);
-            callService("notes.addContentToNote", function() {}, getString, false);
-        } else {
-            var getString = "/" + gameId + "/" + noteId + "/" + playerId + "/" + filename + "/" + type;
-            callService("notes.addContentToNoteFromFileName", controller.finalizeNoteUpload, getString, false);
-        }
-    }
-
-    this.finalizeNoteUpload = function finalizeNoteUpload(response) {
-
-        //There are several server calls which must be done in sequence to push a note to server then to HTML. You could do this in one set of nested callbacks, but it'd be fugly.
-        //first, get all the media and content uploaded. 
-        //second, set the publicToMap and publicToNotebook flags to true
-        //third, set the note as 'compelete'
-        //fourth, retrieve the note object back from the server
-        //fifth, finally push the new note to HTML
-
-        model.contentsWaitingToUpload -= 1; //one item has uploaded, so we aren't waiting for it anymore. 
-
-        //first, get all the media and content uploaded. 
-        if (model.contentsWaitingToUpload == 0) {
-
-            //second, is set the publicToMap and publicToNotebook flags to true
-            updateNoteString = "/" + model.currentNote.noteId + "/" + encodeURIComponent(model.currentNote.text.substring(0, 10)) + "/1/1"; //updateNote(noteId, title(displays in Editor Only) ,publicToMap, publicToNotebook
-            callService("notes.updateNote", controller.setNoteComplete, updateNoteString, false);
-
-        }
-    }
-
-    this.setNoteComplete = function setNoteComplete(response) {
-        //third, set the note as 'compelete'
-        callService("notes.setNoteComplete", controller.getNewNoteFromServer, "/" + model.currentNote.noteId, false); //setNoteComplete (noteId)
-    }
-
-    this.getNewNoteFromServer = function getNewNoteFromServer(response) {
-        //fourth, retrieve the note object back from the server so you can push it to HTML
-        callService("notes.getNoteById", controller.pushNewNote, "/" + model.currentNote.noteId + "/" + model.playerId, false);
-
-    }
     this.pushNewNote = function pushNewNote(note) {
         //fifth, finally push the new note to HTML
 
@@ -335,7 +274,7 @@ function Controller() {
             '',
             JSON.stringify(json));
     };
-    this.oneStepGetNote = function getNewNoteFromServer(response) {
+    this.oneStepGetNote = function (response) {
         // retrieve the note object back from the server so you can push it to HTML
         callService("notes.getNoteById", controller.pushNewNote, "/" + JSON.parse(response).data.note_id + "/" + model.playerId, false);
     }
