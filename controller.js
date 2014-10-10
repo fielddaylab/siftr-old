@@ -233,46 +233,52 @@ function Controller() {
                 tags.push(tag);
             }
         };
-        var photoData = $('#le-canvas').get(0).toDataURL('image/jpeg');
-        var dataPrefix = 'data:image/jpeg;base64,';
-        var photoBase64 = '';
-        if (photoData.indexOf(dataPrefix) === 0)
-        {
-            photoBase64 = photoData.substring(dataPrefix.length);
-        }
-        else
-        {
-            console.log("controller.oneStepNote: Couldn't encode photo to base64");
-        }
+        var photoReader = new FileReader();
+        photoReader.onload = function() {
+            var photoData = photoReader.result;
+            // TODO: handle non-jpeg
+            var dataPrefix = 'data:image/jpeg;base64,';
+            var photoBase64 = '';
+            if (photoData.indexOf(dataPrefix) === 0)
+            {
+                photoBase64 = photoData.substring(dataPrefix.length);
+            }
+            else
+            {
+                console.log("controller.oneStepNote: Couldn't encode photo to base64");
+            }
 
-        var json = {
-            "gameId": gameId,
-            "playerId": playerId,
-            "title": caption.substring(0, 10),
-            "description": caption,
-            // ^ This gets turned into a TEXT note_content, *not* the note table description column.
-            "publicToMap": 1,
-            "publicToBook": 1,
-            "location":
-                {
-                    "latitude": lat,
-                    "longitude": lon,
-                },
-            "media":
-                [
+            var json = {
+                "gameId": gameId,
+                "playerId": playerId,
+                "title": caption.substring(0, 10),
+                "description": caption,
+                // ^ This gets turned into a TEXT note_content, *not* the note table description column.
+                "publicToMap": 1,
+                "publicToBook": 1,
+                "location":
                     {
-                        "path": gameId,           // <- Often gameId. the folder within gamedata that you want the image saved
-                        "filename": "upload.jpg", // <- Unimportant (will get changed), but MUST have correct extension (ie '.jpg')
-                        "data": photoBase64,      // <- base64 encoded media data
-                    }
-                ],
-            "tags": tags
-        }
+                        "latitude": lat,
+                        "longitude": lon,
+                    },
+                "media":
+                    [
+                        {
+                            "path": gameId,           // <- Often gameId. the folder within gamedata that you want the image saved
+                            "filename": "upload.jpg", // <- Unimportant (will get changed), but MUST have correct extension (ie '.jpg')
+                            "data": photoBase64,      // <- base64 encoded media data
+                            "resizeTo": 640,          // <- Optional: resize image so max(height, width) == this number
+                        }
+                    ],
+                "tags": tags
+            }
 
-        callService("notebook.addNoteFromJSON",
-            controller.oneStepGetNote,
-            '',
-            JSON.stringify(json));
+            callService("notebook.addNoteFromJSON",
+                controller.oneStepGetNote,
+                '',
+                JSON.stringify(json));
+        };
+        photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
     };
     this.oneStepGetNote = function (response) {
         // retrieve the note object back from the server so you can push it to HTML

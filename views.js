@@ -403,7 +403,7 @@ function submitNote() {
 
     $('.error').removeClass('error');
 
-    if (!model.currentNote.imageFile) {
+    if ($('#in-camera')[0].files < 1) {
         errors.push("select an image");
         $('.camera_box').addClass('error');
         requirementsMet = false;
@@ -843,8 +843,9 @@ function NoteCreateView() {
 
 
         /* Events */
-        $(this.html).find('#in-camera').on('change', CropHelper.watch_image_change);
-        $(this.html).find('#le-image').on('load', CropHelper.initialize_jcrop);
+        $('.center-big').removeClass('center-big').addClass('left-small');
+        //$(this.html).find('#in-camera').on('change', CropHelper.watch_image_change);
+        //$(this.html).find('#le-image').on('load', CropHelper.initialize_jcrop);
     };
 
 
