@@ -843,8 +843,7 @@ function NoteCreateView() {
 
 
         /* Events */
-        $('.center-big').removeClass('center-big').addClass('left-small');
-        //$(this.html).find('#in-camera').on('change', CropHelper.watch_image_change);
+        $(this.html).find('#in-camera').on('change', CropHelper.watch_image_change);
         //$(this.html).find('#le-image').on('load', CropHelper.initialize_jcrop);
     };
 
