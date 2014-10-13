@@ -271,7 +271,7 @@ function Controller() {
                             "path": gameId,                   // <- Often gameId. the folder within gamedata that you want the image saved
                             "filename": "upload." + photoExt, // <- Unimportant (will get changed), but MUST have correct extension (ie '.jpg')
                             "data": photoBase64,              // <- base64 encoded media data
-                            "resizeTo": 640,                  // <- Optional: resize image so max(height, width) == this number
+                            "resizeTo": 640,                  // <- Optional: resize image so min(height, width) == this number
                         }
                     ],
                 "tags": tags
