@@ -236,16 +236,20 @@ function Controller() {
         var photoReader = new FileReader();
         photoReader.onload = function() {
             var photoData = photoReader.result;
-            // TODO: handle non-jpeg
-            var dataPrefix = 'data:image/jpeg;base64,';
+            mime_map = {
+                "jpg": "image/jpeg",
+                "png": "image/png",
+                "gif": "image/gif",
+            };
             var photoBase64 = '';
-            if (photoData.indexOf(dataPrefix) === 0)
-            {
-                photoBase64 = photoData.substring(dataPrefix.length);
-            }
-            else
-            {
-                console.log("controller.oneStepNote: Couldn't encode photo to base64");
+            var photoExt = '';
+            for (ext in mime_map) {
+                var dataPrefix = 'data:' + mime_map[ext] + ';base64,';
+                if (photoData.indexOf(dataPrefix) === 0) {
+                    photoBase64 = photoData.substring(dataPrefix.length);
+                    photoExt = ext;
+                    break;
+                }
             }
 
             var json = {
@@ -264,10 +268,10 @@ function Controller() {
                 "media":
                     [
                         {
-                            "path": gameId,           // <- Often gameId. the folder within gamedata that you want the image saved
-                            "filename": "upload.jpg", // <- Unimportant (will get changed), but MUST have correct extension (ie '.jpg')
-                            "data": photoBase64,      // <- base64 encoded media data
-                            "resizeTo": 640,          // <- Optional: resize image so max(height, width) == this number
+                            "path": gameId,                   // <- Often gameId. the folder within gamedata that you want the image saved
+                            "filename": "upload." + photoExt, // <- Unimportant (will get changed), but MUST have correct extension (ie '.jpg')
+                            "data": photoBase64,              // <- base64 encoded media data
+                            "resizeTo": 640,                  // <- Optional: resize image so max(height, width) == this number
                         }
                     ],
                 "tags": tags
