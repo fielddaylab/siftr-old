@@ -668,21 +668,9 @@ button.touch-friendly
 }
 
 
-#le-image
+#show-image-box
 {
-  box-sizing: border-box;
-  max-width: 100%;
-  max-height: 100%;
-  vertical-align: middle;
-}
-#le-canvas
-{
-  display: none;
   width: 40%;
-}
-
-#le-canvas.small-right
-{
   float: right;
 }
 
@@ -700,45 +688,6 @@ button.touch-friendly
   background: #cacaca;
   height: 0;
   padding-bottom: 35%;
-}
-
-
-/* Full frame cropper */
-#crop_box
-{
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: #cacaca;
-  z-index: 8000;
-}
-
-#crop_view
-{
-  padding-bottom: 50px;
-  box-sizing: border-box;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-#crop_buttons
-{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 50px;
-  width: 100%;
-  text-align: center;
-}
-
-#finishCrop
-{
-  margin-top: 5px;
-  width: 90%;
 }
 
 #searchTextField,
