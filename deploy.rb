@@ -57,6 +57,11 @@ def upload_rf(sftp, from, to)
   end
 end
 
+unless File.directory?("override/#{siftr}")
+  log "No override folder for #{siftr} found."
+  exit 1
+end
+
 Net::SFTP.start(url, username, password: password) do |sftp|
   log "==> Connected, beginning deploy of #{siftr} siftr."
   log '==> Removing existing directory...'
