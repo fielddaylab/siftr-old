@@ -142,7 +142,7 @@
     <!-- Grid Image Cell --------------------------------  -->
     <script id="gridIconTemplate" type="text/template">
       <div class="sifter-grid-note img">
-        <div class="sifter-grid-dummy"></div>
+        <div class="square-dummy"></div>
         <div class="sifter-grid-image" id="image{{note_id}}" style="background-image: url({{image_url}});"></div>
         <div class="scale-icon scale_{{category_class}}"></div>
       </div>
@@ -158,8 +158,8 @@
         <!-- left-side: image and description -->
         <div class="sifter-show-content">
           <div class="sifter-image">
-            <!-- TODO add icon to top right -->
-            <img src="{{image_url}}" />
+            <div class="square-dummy"></div>
+            <div class="sifter-image-div" style="background-image: url({{image_url}});"></div>
             <div class="scale-icon scale_{{category_class}}"></div> 
           </div>
 

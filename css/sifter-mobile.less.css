@@ -116,7 +116,7 @@ html,body
   -webkit-overflow-scrolling: touch;
 }
 
-.sifter-grid-dummy
+.square-dummy
 {
   margin-top: 100%;
 }
@@ -128,7 +128,7 @@ html,body
   bottom: 0;
   left: 0;
   right: 0;
-  
+
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -353,6 +353,7 @@ button.filter-button.last
   font-size: 200%;
   margin: 0.25em;
   text-shadow: 0 0 2px rgba(0,0,0, 0.5);
+  z-index: 1;
 }
 
 
@@ -395,9 +396,26 @@ button.filter-button.last
   max-height: 100%;
 }
 
-.sifter-show-content .sifter-image img
+.sifter-image
 {
   width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+.sifter-image-div
+{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
 .sifter-show-content .sifter-image
