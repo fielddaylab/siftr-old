@@ -116,6 +116,13 @@ html,body
   -webkit-overflow-scrolling: touch;
 }
 
+.sifter-grid-image
+{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
 .sifter-map
 {
   height: 100%;

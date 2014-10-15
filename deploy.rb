@@ -17,6 +17,10 @@ if ARGV.length != 1
 end
 siftr = ARGV[0]
 
+base_dir = '.'
+override_dir = "override/#{siftr}"
+remote_dir = "/httpdocs/#{siftr}"
+
 def rm_rf(sftp, dir)
   log "Removing directory #{dir}"
   sftp.dir.entries(dir).each do |ent|
@@ -57,7 +61,7 @@ def upload_rf(sftp, from, to)
   end
 end
 
-unless File.directory?("override/#{siftr}")
+unless File.directory?(override_dir)
   log "No override folder for #{siftr} found."
   exit 1
 end
@@ -65,12 +69,12 @@ end
 Net::SFTP.start(url, username, password: password) do |sftp|
   log "==> Connected, beginning deploy of #{siftr} siftr."
   log '==> Removing existing directory...'
-  rm_rf sftp, "/httpdocs/#{siftr}"
+  rm_rf sftp, remote_dir
   log '==> Making new empty directory...'
-  sftp.mkdir! "/httpdocs/#{siftr}"
+  sftp.mkdir! remote_dir
   log '==> Uploading base repo...'
-  sftp.upload! ".", "/httpdocs/#{siftr}"
+  sftp.upload! base_dir, remote_dir
   log "==> Uploading #{siftr}-specific overrides..."
-  upload_rf sftp, "override/#{siftr}", "/httpdocs/#{siftr}"
+  upload_rf sftp, override_dir, remote_dir
   log '==> Done!'
 end

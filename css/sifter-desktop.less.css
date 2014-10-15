@@ -375,7 +375,7 @@ html,body
 
 
 /* Image List */
-.sifter-imagelist .sifter-grid-note
+.sifter-grid-note
 {
   width: 23%;
   margin: 1%;
@@ -389,13 +389,17 @@ html,body
   border-radius: 4px;
 }
 
-.sifter-imagelist .sifter-grid-note img
+.sifter-grid-image
 {
   width: 100%;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
 
   cursor: pointer;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
 }
 
 .sifter-imagelist .scale-icon

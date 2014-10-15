@@ -31,7 +31,7 @@ function ListNote(callback, note, noteId) {
             console.log("Error: Note with no image in database: noteID# " + noteId); //since this shouldn't happen, log it if it does
         }
 
-        $(this.html).find('img').on('click', function() {
+        $(this.html).find('.sifter-grid-image').on('click', function() {
             self.callback(self);
         });
     }
