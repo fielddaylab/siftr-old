@@ -844,13 +844,18 @@ function NoteCreateView() {
 
         /* Events */
         $(this.html).find('#in-camera').on('change', function(){
-            var photoReader = new FileReader();
-            photoReader.onload = function(){
-                $('.center-big').removeClass('center-big').addClass('left-small');
-                var photoData = photoReader.result;
-                $('#show-image-div').html('<div class="square-dummy"></div><div id="show-image" style="background-image: url('+photoData+');"></div>');
-            };
-            photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
+            var file = $('#in-camera')[0].files[0];
+            EXIF.getData(file, function(){
+                var orientation = EXIF.getTag(file, 'Orientation') || 1;
+
+                var photoReader = new FileReader();
+                photoReader.onload = function(){
+                    $('.center-big').removeClass('center-big').addClass('left-small');
+                    var photoData = photoReader.result;
+                    $('#show-image-div').html('<div class="square-dummy"></div><div id="show-image" class="exif-'+orientation+'" style="background-image: url('+photoData+');"></div>');
+                };
+                photoReader.readAsDataURL(file);
+            });
         });
     };
 
