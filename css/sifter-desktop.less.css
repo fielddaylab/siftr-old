@@ -763,7 +763,7 @@ button.touch-friendly
 
 .camera_box .left-small
 {
-  position: relative;
+  position: absolute;
   padding: 0.2em;
   float: left;
   z-index: 1000;
@@ -799,7 +799,28 @@ button.touch-friendly
   height: 100%;
   width: 100%;
 }
-  
+
+#show-image-div
+{
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+
+#show-image
+{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
 
 .camera_box
 {

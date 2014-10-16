@@ -848,7 +848,7 @@ function NoteCreateView() {
             photoReader.onload = function(){
                 $('.center-big').removeClass('center-big').addClass('left-small');
                 var photoData = photoReader.result;
-                $('#show-image-box').html('<img src="' + photoData + '" style="max-width: 100%; max-height: 100%">');
+                $('#show-image-div').html('<div class="square-dummy"></div><div id="show-image" style="background-image: url('+photoData+');"></div>');
             };
             photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
         });
