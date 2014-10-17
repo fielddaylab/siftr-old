@@ -33,11 +33,9 @@ rescue Net::SFTP::StatusException
 end
 
 def upload_rf(sftp, from, to)
-  skip = %w{override .git}
-  return if skip.any? { |s| from.end_with?('/' + s) }
   log "Uploading #{from} to #{to}"
   Dir.entries(from).each do |ent|
-    next if %w{. ..}.include? ent
+    next if %w{. .. .DS_Store .gitignore .git override}.include? ent
     full_from = "#{from}/#{ent}"
     full_to = "#{to}/#{ent}"
     if File.file?(full_from)
