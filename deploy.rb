@@ -4,26 +4,12 @@
 url = ''
 username = ''
 password = ''
+$webroot = ''
 
 require 'net/sftp'
 
 def log(s)
   STDERR.puts s
-end
-
-base_dir = '.'
-case ARGV.length
-when 0
-  siftr = 'uw'
-  override_dir = "override/uw"
-  remote_dir = "/httpdocs"
-when 1
-  siftr = ARGV[0]
-  override_dir = "override/#{siftr}"
-  remote_dir = "/httpdocs/#{siftr}"
-else
-  log "Usage: #{$0} siftr-name"
-  exit 1
 end
 
 def mkdir_f(sftp, dir)
@@ -52,18 +38,36 @@ def upload_rf(sftp, from, to)
   end
 end
 
-unless File.directory?(override_dir)
-  log "No override folder for #{siftr} found."
-  exit 1
-end
-
-Net::SFTP.start(url, username, password: password) do |sftp|
-  log " => Connected, beginning deploy of #{siftr} siftr."
+def upload_siftr(sftp, siftr)
+  override_dir = "override/#{siftr}"
+  remote_dir = if siftr == 'uw' then $webroot else "#{$webroot}/#{siftr}" end
+  unless File.directory? override_dir
+    log " => Error: #{override_dir} does not exist."
+    exit 1
+  end
+  log " => Beginning deploy of #{siftr} siftr."
   log " => Ensuring remote dir #{remote_dir} exists..."
+  mkdir_f sftp, $webroot
   mkdir_f sftp, remote_dir
   log ' => Uploading base repo...'
-  upload_rf sftp, base_dir, remote_dir
+  upload_rf sftp, '.', remote_dir
   log " => Uploading #{siftr}-specific overrides..."
   upload_rf sftp, override_dir, remote_dir
   log ' => Done!'
+end
+
+all_siftrs = []
+Dir.entries('override').each do |ent|
+  next if %w{. ..}.include? ent
+  next unless File.directory? "override/#{ent}"
+  all_siftrs << ent
+end
+
+Net::SFTP.start(url, username, password: password) do |sftp|
+  log " => Connected via SFTP."
+  if ARGV == ['all']
+    all_siftrs.each { |siftr| upload_siftr sftp, siftr }
+  else
+    ARGV.each { |siftr| upload_siftr sftp, siftr }
+  end
 end
