@@ -352,6 +352,7 @@ html,body
   }
 
 /* catch the nexus 7 shrunken screen */
+/*
 @media only screen and (max-height: 740px)
 {
   .sifter-popdown-footer
@@ -359,6 +360,8 @@ html,body
     display: none;
   }
 }
+*/
+/* MT: commenting out because this hides about/logout on small desktop window */
 
 .sifter-filters-popdown
 {
