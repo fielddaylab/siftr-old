@@ -674,7 +674,7 @@ function recordAudio() {
 };
 
 function cancelNote() {
-    controller.deleteNote(model.currentNote.noteId);
+    //controller.deleteNote(model.currentNote.noteId);
     controller.hideCreateNoteView();
 }
 
