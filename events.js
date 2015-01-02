@@ -1,29 +1,33 @@
 $(document).ready(function() {
     /* Header Buttons ***************************************** */
 
-    $('.sifter-fetch-top-button').on('click', function() {
+    $('.sifter-fetch-top-button').on('click', function(e) {
+        e = e || window.event;
         $('.filter-button').removeClass('button-active');
-        $(event.target).addClass('button-active');
+        $(e.target).addClass('button-active');
 
         startSift('top');
     });
 
-    $('.sifter-fetch-recent-button').on('click', function() {
+    $('.sifter-fetch-recent-button').on('click', function(e) {
+        e = e || window.event;
         $('.filter-button').removeClass('button-active');
-        $(event.target).addClass('button-active');
+        $(e.target).addClass('button-active');
 
         startSift('recent');
     });
 
-    $('.sifter-fetch-popular-button').on('click', function() {
+    $('.sifter-fetch-popular-button').on('click', function(e) {
+        e = e || window.event;
         $('.filter-button').removeClass('button-active');
-        $(event.target).addClass('button-active');
+        $(e.target).addClass('button-active');
 
         startSift('popular');
     });
 
-    $('.sifter-fetch-mine-button').on('click', function() {
-        var target = event.target;
+    $('.sifter-fetch-mine-button').on('click', function(e) {
+        e = e || window.event;
+        var target = e.target;
 
         controller.loginRequired(function() {
             $('.filter-button').removeClass('button-active');
