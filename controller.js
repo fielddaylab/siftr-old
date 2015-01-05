@@ -206,7 +206,6 @@ function Controller() {
 
         var gameId = model.gameId;
         var playerId = model.playerId;
-        //callService("notes.createNewNoteStartIncomplete", this.newNoteCreated, "/" + gameId + "/" + playerId, false);
     }
 
     this.pushNewNote = function pushNewNote(note) {

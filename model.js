@@ -51,13 +51,6 @@ function Model() {
 
         controller.showFilters();
 
-        //retrieve and store icon URLs
-        //TODO: load svg files from server, change counter back to 5 when you uncomment
-        // callService("media.getMediaObject", function(response){model.tags[0].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[0].media_id, false);
-        // callService("media.getMediaObject", function(response){model.tags[1].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[1].media_id, false);
-        // callService("media.getMediaObject", function(response){model.tags[2].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[2].media_id, false);
-        // callService("media.getMediaObject", function(response){model.tags[3].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[3].media_id, false);
-        // callService("media.getMediaObject", function(response){model.tags[4].iconURL = JSON.parse("[" + response + "]")[0].data.url; model.finishLoad(); }, "/"+model.gameId+ "/" + model.tags[4].media_id, false);
         model.finishLoad();
     }
 

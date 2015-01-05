@@ -24,9 +24,53 @@ function callService(serviceName, callback, GETparams, POSTparams)
             }
 			else
 			{
-				console.log("Request.staus = " + request.status);
+				console.log("request.status = " + request.status);
                 callback(false);
 			}
+        }
+    };
+    if(POSTparams)
+    {
+        request.open('POST', url, true);
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        request.send(POSTparams);
+        console.log("POSTparams: " + POSTparams);
+        console.log("url: " + url);
+    }
+    else
+    {
+        request.open('GET', url, true);
+        request.send();
+    }
+}
+
+// USAGE: callService2('games.getGame', function(x){console.log(x);}, '', '{"game_id": 123}')
+function callService2(serviceName, callback, GETparams, POSTparams)
+{
+    var displayArguments = Array.prototype.slice.call(arguments, 0);
+    if (displayArguments[0] === 'users.logIn') // TODO: fix for v2
+    {
+        displayArguments[3] = '[REDACTED]';
+    }
+    console.log("calling for service", displayArguments);
+    var url;
+    if(GETparams) url = SERVER_URL+'/json.php/v2.'+serviceName+GETparams;
+    else          url = SERVER_URL+'/json.php/v2.'+serviceName;
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function()
+    {
+        if(request.readyState == 4)
+        {
+            if(request.status == 200)
+            {
+                callback( JSON.parse(request.responseText) );
+            }
+            else
+            {
+                console.log("request.status = " + request.status);
+                callback(false);
+            }
         }
     };
     if(POSTparams)
