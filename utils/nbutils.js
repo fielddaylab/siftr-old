@@ -78,7 +78,9 @@ function callService2(serviceName, callback, GETparams, POSTparams)
         request.open('POST', url, true);
         request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         request.send(POSTparams);
-        console.log("POSTparams: " + POSTparams);
+        if (displayArguments[0] !== 'users.logIn') {
+            console.log("POSTparams: " + POSTparams);
+        }
         console.log("url: " + url);
     }
     else

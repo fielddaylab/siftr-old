@@ -60,13 +60,13 @@ function NoteView(note) {
         data.category_class = getTagIconName(this.note);
         data.audio_url = getAudioToUse(this.note);
         data.details = getTextToUse(this.note);
-        data.comments = this.getCommentsJson(this.note.comments);
+        data.comments = this.getCommentsJson(this.note.comments.data);
         data.logged_in = controller.logged_in();
         data.emailShare = this.note.email_shares;
         data.likeShare = this.note.likes;
 
-        data.author = model.playerId === this.note.owner_id ? "You" : this.note.username;
-        data.isAuthor = model.playerId === this.note.owner_id ? true : false; //TODO: need real authentication for this
+        data.author = model.playerId === this.note.user_id ? "You" : this.note.user_name;
+        data.isAuthor = model.playerId === this.note.user_id ? true : false; //TODO: need real authentication for this
 
         //TODO: find a better place for these, controller? 
         //TODO: note.tweets and note.pins don't exist on server, replace with style-stripped official counters 
@@ -245,8 +245,8 @@ function NoteView(note) {
     this.getCommentsJson = function(comments) {
         return $(comments).map(function() {
             return {
-                author: this.username,
-                text: this.title
+                author: this.user.user_name,
+                text: this.description
             };
         }).toArray();
     }
@@ -947,6 +947,7 @@ function AboutView() {
     if ($.cookie("sifter") > 0) {
         self.playerId = $.cookie("sifter");
         self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
+        self.readWriteKey = $.cookie("readWriteKey");
 
         // $(this.html).find('.sifter-show-logout-button').show();
     } else {

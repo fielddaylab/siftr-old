@@ -312,7 +312,7 @@ function Controller() {
     }
 
     this.login = function(username, password) {
-        callService("players.getLoginPlayerObject", this.loginReturned, "/" + username + "/" + password, false);
+        callService2("users.logIn", this.loginReturned, '', JSON.stringify({permission: 'read_write', user_name: username, password: password}));
     }
 
     this.facebookLogin = function(email, displayName, uid) {
@@ -320,17 +320,12 @@ function Controller() {
         callService("players.getFacebookLoginPlayerObject", this.facebookLoginReturned, "/" + email + "/" + displayName + "/" + uid, false);
     }
 
-    this.loginReturned = function(returnString) {
-        //be sure to sych changes with this to facebookLoginReturned
-        var startJson = returnString.indexOf("{");
-        var jsonString = returnString.substr(startJson);
-        var obj = JSON.parse(jsonString);
-
+    this.loginReturned = function(obj) {
         // first check to see if you have a valid login
         if (obj.data) {
 
             // updated the display name and player ID to match getLoginPlayerObject data
-            var playerId = obj.data.player_id;
+            var playerId = obj.data.user_id;
             var displayName = obj.data.display_name; //in new user account creation this will be same as username
             if (!obj.display_name) {
                 displayName = obj.data.user_name;
@@ -338,12 +333,14 @@ function Controller() {
 
             model.playerId = playerId;
             model.displayName = displayName;
+            model.readWriteKey = obj.data.read_write_key;
 
             if (model.playerId > 0) {
                 self.hideLoginView();
 
                 $.cookie("sifter", playerId); //give a cookies so they stay logged in until they close the browser
                 $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
+                $.cookie("readWriteKey", model.readWriteKey);
                 $('.sifter-show-logout-button').show();
 
                 /* Trigger original item that required login and clear it out */
@@ -381,6 +378,7 @@ function Controller() {
 
                 $.cookie("sifter", playerId); //give a cookies so they stay logged in until they close the browser
                 $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
+                $.cookie("readWriteKey", model.readWriteKey);
                 $('.sifter-show-logout-button').show();
             } else {
                 alert("Incorrect login. Please try again.");
@@ -393,6 +391,7 @@ function Controller() {
     this.logout = function() {
         $.removeCookie('displayName');
         $.removeCookie('sifter'); //without the cookie, the user will have to log in again
+        $.removeCookie('readWriteKey');
         $('.sifter-show-logout-button').hide();
         model.playerId = 0;
 
@@ -429,6 +428,7 @@ function Controller() {
 
             $.cookie("sifter", model.playerId); //give a cookies so they stay logged in until they close the browser
             $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
+            $.cookie("readWriteKey", model.readWriteKey);
             $('.sifter-show-logout-button').show();
 
             self.hideLoginView();
