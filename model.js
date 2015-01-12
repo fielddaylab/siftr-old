@@ -54,14 +54,8 @@ function Model() {
     }
 
     this.addNoteFromData = function(note) {
-        //Fix up note tags
-        if (note.tags[0] === undefined) {
-            console.log('Warning, note passed to model.addNoteFromData has no tag:');
-            console.log(note);
-            return;
-        }
-        note.tagString = note.tags[0].tag; //all notes are required to have one, and only one, tag
-        note.geoloc = new google.maps.LatLng(note.lat, note.lon);
+        note.tagString = note.tag; //all notes are required to have one, and only one, tag
+        note.geoloc = new google.maps.LatLng(note.latitude, note.longitude);
         this.gameNotes[this.gameNotes.length] = note;
     }
 

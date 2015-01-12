@@ -506,9 +506,6 @@ function MapMarker(callback, note) {
     this.callback = callback;
     this.note = note;
 
-    if (this.note.contents[0] == null)
-        return;
-
     var imageMarker = new RichMarker({
         position: this.note.geoloc,
         map: model.views.gmap,
@@ -535,10 +532,7 @@ function constructSVGMarker(note) {
 }
 
 function getImageToUse(note) {
-    for (i = 0; i < note.contents.length; i++)
-        if (note.contents[i].type == "PHOTO" || note.contents[i].type == "MEDIA")
-            return note.contents[i].media.data.url;
-    return "";
+    return note.media.data.url;
 }
 
 
@@ -551,22 +545,16 @@ function getTagIconName(note) {
         lookup[attr] = "tag_" + (i + 1);
     }
 
-    var icon_name = lookup[note.tags[0].tag] || "search"; // unknown icon
+    var icon_name = lookup[note.tag] || "search"; // unknown icon
     return icon_name;
 }
 
 function getAudioToUse(note) {
-    for (i = 0; i < note.contents.length; i++)
-        if (note.contents[i].type == "AUDIO") return note.contents[i].media.data.url;
     return "";
 };
 
 function getTextToUse(note) {
-    for (i = 0; i < note.contents.length; i++)
-        if (note.contents[i].type == "TEXT") {
-            return note.contents[i].text;
-        }
-    return "";
+    return note.description;
 };
 
 

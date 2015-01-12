@@ -56,6 +56,9 @@ function startSift(siftType, howMany) {
 
     //check to see if any search terms have been set, if so, build an array by word
     var searchTerms = $('.sifter-filter-search-input').filter(":visible").val().split(" ");
+    if (searchTerms[0] === "") {
+        searchTerms = [];
+    }
 
     //see which tags have been set and put their id #s in the selectedTags array
     var selectedTags = [];
