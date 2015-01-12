@@ -3,7 +3,6 @@ function Model() {
     this.gameId = YOI_GAME_ID;
 
     this.displayName = ""; // for displaying newly added content
-    this.gameJSONText = '';
     this.gameNotes = []; //this is using new API
     this.currentNote = {};
     this.currentNote.noteId = 0;
@@ -24,7 +23,7 @@ function Model() {
         if (callback) //this is set when it's called from index
         {
             this.loadFinishCallback = callback;
-            callService("notes.getAllTagsInGame", model.loadTagsFromServer, "/" + this.gameId, false);
+            callService2("tags.getTagsForGame", model.loadTagsFromServer, "", JSON.stringify({game_id: this.gameId}));
         } else //it's being called from the laodTagsFromServer's returning
         {
             this.serverCallsToLoad--; //one more is loaded
@@ -47,7 +46,7 @@ function Model() {
 
     this.loadTagsFromServer = function(response) {
         //format tag array
-        model.tags = JSON.parse("[" + response + "]")[0].data;
+        model.tags = response.data;
 
         controller.showFilters();
 

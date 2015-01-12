@@ -18,9 +18,7 @@ function startLoadGame() {
 }
 
 
-function finishLoadGame(responseText) {
-    model.gameJSONText = responseText;
-    responseData = JSON.parse(responseText);
+function finishLoadGame(responseData) {
     if (responseData.returnCode == 1) //Error
     {
         document.getElementById('messageContent').innerHTML = responseData.data;
@@ -94,87 +92,27 @@ function startSift(siftType, howMany) {
         }
     }
 
+    var siftObj = {
+        game_id: model.gameId,
+        search_terms: searchTerms,
+        note_count: howMany,
+        tag_ids: selectedTags,
+        order_by: 'recent',
+    };
     switch (siftType) {
-        case "top":
-            siftString = JSON.stringify({
-                gameId: model.gameId,
-                searchTerms: searchTerms,
-                noteCount: howMany,
-                searchType: searchTypeCode,
-                playerId: 0,
-                tagIds: selectedTags,
-                lastLocation: 0,
-                date: 0
-            });
-            break;
-        case "recent":
-            //don't use the date paramenter, bc then it'll only find the notes created since that date. We want it to just sort the notes by date & give "howMany" most recent
-            siftString = JSON.stringify({
-                gameId: model.gameId,
-                searchTerms: searchTerms,
-                noteCount: howMany,
-                searchType: searchTypeCode,
-                playerId: 0,
-                tagIds: selectedTags,
-                lastLocation: 0,
-                date: ""
-            });
-            break;
         case "popular":
-            siftString = JSON.stringify({
-                gameId: model.gameId,
-                searchTerms: searchTerms,
-                noteCount: howMany,
-                searchType: searchTypeCode,
-                playerId: 0,
-                tagIds: selectedTags,
-                lastLocation: 0,
-                date: 0
-            });
+            siftObj.order_by = 'popular';
             break;
         case "mine":
-            siftString = JSON.stringify({
-                gameId: model.gameId,
-                searchTerms: searchTerms,
-                noteCount: howMany,
-                searchType: searchTypeCode,
-                playerId: model.playerId,
-                tagIds: selectedTags,
-                lastLocation: 0,
-                date: 0
-            });
+            siftObj.user_id = model.playerId;
             break;
+        case "top":
+        case "recent":
         case "tags":
-
-            siftString = JSON.stringify({
-                gameId: model.gameId,
-                searchTerms: searchTerms,
-                noteCount: howMany,
-                searchType: searchTypeCode,
-                playerId: 0,
-                tagIds: selectedTags,
-                lastLocation: 0,
-                date: 0
-            });
-
-            break;
         case "search":
-            siftString = JSON.stringify({
-                gameId: model.gameId,
-                searchTerms: searchTerms,
-                noteCount: howMany,
-                searchType: searchTypeCode,
-                playerId: 0,
-                tagIds: selectedTags,
-                lastLocation: 0,
-                date: 0
-            });
-
             break;
-
         default:
-            siftString = "kSearchTop";
             console.log("Error in sift type: " + siftType);
     }
-    callService("notes.getNotesWithAttributes", finishLoadGame, '', siftString);
+    callService2("notes.searchNotes", finishLoadGame, '', JSON.stringify(siftObj));
 }
