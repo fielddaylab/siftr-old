@@ -297,10 +297,6 @@ function Controller() {
         }));
     }
 
-    this.addTagToNote = function(noteId, tag) {
-        callService("notes.addTagToNote", function() {}, "/" + noteId + "/" + model.gameId + "/" + tag, false);
-    }
-
     this.deleteNote = function(noteId) {
         callService("notes.deleteNote", function() {}, "/" + noteId, false);
         model.deleteNote(noteId);

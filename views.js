@@ -424,77 +424,9 @@ function submitNote() {
     if (!requirementsMet) {
         alert("Please " + errors.join(", "));
     } else {
-
         controller.oneStepNote();
         controller.hideCreateNoteView();
-
-        /*
-
-        //count how many things we'll be uploading before pushing it to HTML
-        model.contentsWaitingToUpload = 1; //we have to have an image
-        if (model.currentNote.audioFile != null) model.contentsWaitingToUpload += 1; //add one for the audio
-
-
-        // add location to note
-        controller.updateNoteLocation(model.currentNote.noteId, model.currentNote.lat, model.currentNote.lon);
-
-        // add text to note
-        controller.addContentToNote(model.currentNote.noteId, '', "TEXT", model.currentNote.text);
-
-        // add image content
-
-        var form = new FormData();
-        form.append("file", model.currentNote.imageFile);
-        form.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
-
-        var imgxhr = new XMLHttpRequest();
-        imgxhr.open("POST", SERVER_URL + "/services/v1/uploadHandler.php");
-        imgxhr.onreadystatechange = function ClientSideUpdate() {
-            if (imgxhr.readyState == 4) {
-                model.currentNote.arisImageFileName = imgxhr.responseText;
-                // FIXME this timeout seems to fix the old ipads
-                setTimeout(function() {
-                    controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisImageFileName, "PHOTO", '')
-                }, 100);
-            }
-        };
-        imgxhr.send(form);
-
-
-        // add tags
-        var tags = ""; //this is the default tag and its radio button is checked, but in case that fails we'll set it here 
-        for (var i = 1; i < model.tags.length + 1; i++) {
-            if (document.getElementById("create_tag_" + i).checked) {
-                tags = document.getElementById("create_tag_" + i).value;
-                controller.addTagToNote(model.currentNote.noteId, tags);
-            }
-        };
-
-        // add audio content (optional)
-        if (model.currentNote.audioFile != null) {
-            var form = new FormData();
-            form.append("file", model.currentNote.audioFile);
-            form.append("path", model.gameId); // number 123456 is immediately converted to string "123456"
-
-            var audxhr = new XMLHttpRequest();
-            audxhr.open("POST", SERVER_URL + "/services/v1/uploadHandler.php");
-            audxhr.onreadystatechange = function ClientSideUpdate() {
-                if (audxhr.readyState == 4) {
-                    model.currentNote.arisAudioFileName = audxhr.responseText;
-                    controller.addContentToNote(model.currentNote.noteId, model.currentNote.arisAudioFileName, "AUDIO", '');
-
-                }
-            };
-            audxhr.send(form);
-        }
-
-
-        //hide create note view
-        controller.hideCreateNoteView();
-
-        */
-
-    } //end else (required content is all present)
+    }
 }
 
 
