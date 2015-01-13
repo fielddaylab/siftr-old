@@ -416,15 +416,20 @@ function Controller() {
 
     this.createAccount = function(email, password, username) {
         model.displayName = username; /* Because nothing is contained in the callback and we're logging them in */
-        callService("players.createPlayer", this.createPlayerReturned, "/" + username + "/" + password + "/" + username + "/" + username + "/" + email, false); //added username
+        callService2("users.createUser", this.createPlayerReturned, "", JSON.stringify({
+            user_name: username,
+            password: password,
+            email: email,
+        }));
     }
 
-    this.createPlayerReturned = function(returnString) {
-        var obj = JSON.parse(returnString);
-
+    this.createPlayerReturned = function(obj) {
+        console.log(obj);
         if (obj.returnCode > 0) alert(obj.returnCodeDescription);
         else {
-            model.playerId = obj.data;
+            model.playerId = obj.data.user_id;
+            model.displayName = obj.data.display_name;
+            model.readWriteKey = obj.data.read_write_key;
 
             $.cookie("sifter", model.playerId); //give a cookies so they stay logged in until they close the browser
             $.cookie("displayName", model.displayName); // Since there is no re-check from the server on page load
