@@ -298,7 +298,10 @@ function Controller() {
     }
 
     this.deleteNote = function(noteId) {
-        callService("notes.deleteNote", function() {}, "/" + noteId, false);
+        callService2("notes.deleteNote", function() {}, "", JSON.stringify({
+            auth: getAuthObject(),
+            note_id: noteId,
+        }));
         model.deleteNote(noteId);
         controller.populateAllFromModel(); //re-display the map and left hand images
     }
