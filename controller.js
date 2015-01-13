@@ -211,8 +211,7 @@ function Controller() {
     this.pushNewNote = function pushNewNote(note) {
         //fifth, finally push the new note to HTML
 
-        var fullNote = JSON.parse(note).data; //the note will have come in like text
-        if (fullNote.contents.length == 0) console.log("Empty uploaded note"); //if the contents haven't loaded, it won't display
+        var fullNote = note.data[0];
         model.addNoteFromData(fullNote); //add it in to the cached model
         controller.populateAllFromModel(); //re-display the map and left hand images
         controller.noteSelected({note: fullNote}); //show the new note
@@ -228,7 +227,7 @@ function Controller() {
         var tags = [];
         for (var i = 1; i < model.tags.length + 1; i++) {
             if (document.getElementById("create_tag_" + i).checked) {
-                tags.push(model.tags[i].tag_id);
+                tags.push(model.tags[i - 1].tag_id);
             }
         };
         var photoReader = new FileReader();
@@ -252,7 +251,8 @@ function Controller() {
 
             callService2("notes.createNote", function(noteResult) {
                 if (noteResult.returnCode === 0) {
-                    console.log("createNote success!", noteResult);
+                    console.log("createNote success!", noteResult.data);
+                    controller.oneStepGetNote(noteResult.data.note_id);
                 } else {
                     console.log("Couldn't create note", noteResult);
                 }
@@ -274,9 +274,13 @@ function Controller() {
         };
         photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
     };
-    this.oneStepGetNote = function (response) {
+    this.oneStepGetNote = function (note_id) {
         // retrieve the note object back from the server so you can push it to HTML
-        callService("notes.getNoteById", controller.pushNewNote, "/" + JSON.parse(response).data.note_id + "/" + model.playerId, false);
+        callService2("notes.searchNotes", controller.pushNewNote, {
+            game_id: model.gameId,
+            note_id: note_id,
+            note_count: 1,
+        });
     }
 
     this.addCommentToNote = function(noteId, comment, callback) {

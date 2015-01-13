@@ -258,6 +258,7 @@ function NoteView(note) {
     }
 
     this.submitComment = function(note, comment) {
+        if (comment === '') return;
         if (model.playerId > 0) {
             // now add it to the server copy and re-display the updated note
             controller.addCommentToNote(note.note_id, comment, function(status) {
