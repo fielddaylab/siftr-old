@@ -289,25 +289,29 @@ function Controller() {
     }
 
     this.addCommentToNote = function(noteId, comment, callback) {
-        callService2("note_comments.createNoteComment", callback, "", JSON.stringify({
+        callService2("note_comments.createNoteComment", callback, {
             game_id: model.gameId,
             auth: getAuthObject(),
             note_id: noteId,
             description: comment,
-        }));
+        });
     }
 
     this.deleteNote = function(noteId) {
-        callService2("notes.deleteNote", function() {}, "", JSON.stringify({
+        callService2("notes.deleteNote", function() {}, {
             auth: getAuthObject(),
             note_id: noteId,
-        }));
+        });
         model.deleteNote(noteId);
         controller.populateAllFromModel(); //re-display the map and left hand images
     }
 
     this.login = function(username, password) {
-        callService2("users.logIn", this.loginReturned, '', JSON.stringify({permission: 'read_write', user_name: username, password: password}));
+        callService2("users.logIn", this.loginReturned, {
+            permission: 'read_write',
+            user_name: username,
+            password: password,
+        });
     }
 
     this.facebookLogin = function(email, displayName, uid) {
@@ -411,11 +415,11 @@ function Controller() {
 
     this.createAccount = function(email, password, username) {
         model.displayName = username; /* Because nothing is contained in the callback and we're logging them in */
-        callService2("users.createUser", this.createPlayerReturned, "", JSON.stringify({
+        callService2("users.createUser", this.createPlayerReturned, {
             user_name: username,
             password: password,
             email: email,
-        }));
+        });
     }
 
     this.createPlayerReturned = function(obj) {
@@ -441,9 +445,9 @@ function Controller() {
     }
 
     this.resetAndEmailPassword = function(email) {
-        callService2("users.requestForgotPasswordEmail", controller.resetPasswordMessage, "", JSON.stringify({
+        callService2("users.requestForgotPasswordEmail", controller.resetPasswordMessage, {
             email: email,
-        }));
+        });
     }
 
     this.resetPasswordMessage = function(responseMessage) {
@@ -459,19 +463,19 @@ function Controller() {
     }
 
     this.like = function(playerId, noteId) {
-        callService2("notes.likeNote", function() {}, "", JSON.stringify({
+        callService2("notes.likeNote", function() {}, {
             auth: getAuthObject(),
             game_id: model.gameId,
             note_id: noteId,
-        }));
+        });
     }
 
     this.unlike = function(playerId, noteId) {
-        callService2("notes.unlikeNote", function() {}, "", JSON.stringify({
+        callService2("notes.unlikeNote", function() {}, {
             auth: getAuthObject(),
             game_id: model.gameId,
             note_id: noteId,
-        }));
+        });
     }
 
     this.sendEmail = function(playerId, noteId) {

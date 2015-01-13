@@ -118,5 +118,5 @@ function startSift(siftType, howMany) {
         default:
             console.log("Error in sift type: " + siftType);
     }
-    callService2("notes.searchNotes", finishLoadGame, '', JSON.stringify(siftObj));
+    callService2("notes.searchNotes", finishLoadGame, siftObj);
 }

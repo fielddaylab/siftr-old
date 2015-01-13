@@ -31,7 +31,7 @@ function Model() {
         if (callback) //this is set when it's called from index
         {
             this.loadFinishCallback = callback;
-            callService2("tags.getTagsForGame", model.loadTagsFromServer, "", JSON.stringify({game_id: this.gameId}));
+            callService2("tags.getTagsForGame", model.loadTagsFromServer, {game_id: this.gameId});
         } else //it's being called from the laodTagsFromServer's returning
         {
             this.serverCallsToLoad--; //one more is loaded
