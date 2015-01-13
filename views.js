@@ -259,26 +259,23 @@ function NoteView(note) {
 
     this.submitComment = function(note, comment) {
         if (model.playerId > 0) {
-
-            // in this section add the note to the cached HTML so we don't have to re-load the whole page   
-            var day = new Date();
-            var today = day.getFullYear() + "-" + day.getMonth() + "-" + day.getDate() + " " + day.getHours() + ":" + day.getMinutes() + ":" + day.getSeconds();
-
             // now add it to the server copy and re-display the updated note
             controller.addCommentToNote(note.note_id, comment, function(status) {
-                if (status === false) {
+                if (status.returnCode > 0) {
                     // User is probably not really logged in
                     alert('Error while posting comment! Try logging out and back in, then retry your comment.');
                 }
                 else {
                     // All good
-                    note.comments.push({
-                        "username": model.displayName,
-                        "title": comment,
-                        "created": today
+                    note.comments.data.push({
+                        "description": comment,
+                        "user": {
+                            "user_id": model.playerId,
+                            "user_name": model.displayName,
+                            "display_name": model.displayName,
+                        },
                     });
 
-                    controller.setCommentComplete(status);
                     controller.noteSelected(thism);
                 }
             });

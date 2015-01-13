@@ -289,16 +289,12 @@ function Controller() {
     }
 
     this.addCommentToNote = function(noteId, comment, callback) {
-        callService("notes.addCommentToNote", callback, "/" + model.gameId + "/" + model.playerId + "/" + noteId + "/" + encodeURIComponent(comment), false);
-    }
-
-    this.setCommentComplete = function(status) { //unless the comment is set to complete it won't return from any queries
-        var startJson = status.indexOf("{");
-        var jsonString = status.substr(startJson);
-        var obj = JSON.parse(jsonString); //obj.data will be the note ID needed for the call
-
-        callService("notes.setNoteComplete", function() {}, "/" + obj.data, false);
-
+        callService2("note_comments.createNoteComment", callback, "", JSON.stringify({
+            game_id: model.gameId,
+            auth: getAuthObject(),
+            note_id: noteId,
+            description: comment,
+        }));
     }
 
     this.addTagToNote = function(noteId, tag) {
