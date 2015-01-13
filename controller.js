@@ -228,8 +228,7 @@ function Controller() {
         var tags = [];
         for (var i = 1; i < model.tags.length + 1; i++) {
             if (document.getElementById("create_tag_" + i).checked) {
-                var tag = document.getElementById("create_tag_" + i).value;
-                tags.push(tag);
+                tags.push(model.tags[i].tag_id);
             }
         };
         var photoReader = new FileReader();
@@ -251,35 +250,26 @@ function Controller() {
                 }
             }
 
-            var json = {
-                "gameId": gameId,
-                "playerId": playerId,
-                "title": caption.substring(0, 10),
-                "description": caption,
-                // ^ This gets turned into a TEXT note_content, *not* the note table description column.
-                "publicToMap": 1,
-                "publicToBook": 1,
-                "location":
-                    {
-                        "latitude": lat,
-                        "longitude": lon,
-                    },
-                "media":
-                    [
-                        {
-                            "path": gameId,                   // <- Often gameId. the folder within gamedata that you want the image saved
-                            "filename": "upload." + photoExt, // <- Unimportant (will get changed), but MUST have correct extension (ie '.jpg')
-                            "data": photoBase64,              // <- base64 encoded media data
-                            "resizeTo": 640,                  // <- Optional: resize image so min(height, width) == this number
-                        }
-                    ],
-                "tags": tags
-            }
-
-            callService("notebook.addNoteFromJSON",
-                controller.oneStepGetNote,
-                '',
-                JSON.stringify(json));
+            callService2("notes.createNote", function(noteResult) {
+                if (noteResult.returnCode === 0) {
+                    console.log("createNote success!", noteResult);
+                } else {
+                    console.log("Couldn't create note", noteResult);
+                }
+            }, {
+                auth: getAuthObject(),
+                game_id: gameId,
+                media: {
+                    file_name: "upload." + photoExt,
+                    data: photoBase64,
+                },
+                description: caption,
+                trigger: {
+                    latitude: lat,
+                    longitude: lon,
+                },
+                tag_id: tags[0],
+            });
         };
         photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
     };

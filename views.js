@@ -499,15 +499,6 @@ function handleImageFileSelect(files) {
             return;
         }
 
-        //if they submitted a jpEg, let them know we only accept jpg
-        if (file.type.match('image/jpeg')) {
-            if (file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase() == "jpeg") {
-                window.alert(".jpeg not accepted, please choose an image file of type .jpg, .gif or .png");
-                return;
-            }
-        }
-
-
         var img = document.getElementById("imageThumbnail");
         img.classList.add("obj");
         img.file = file;
