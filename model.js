@@ -1,3 +1,11 @@
+function getAuthObject() {
+    return {
+        user_id: model.playerId,
+        permission: 'read_write',
+        key: model.readWriteKey,
+    };
+}
+
 function Model() {
     self = this;
     this.gameId = YOI_GAME_ID;

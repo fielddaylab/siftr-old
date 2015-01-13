@@ -63,7 +63,7 @@ function NoteView(note) {
         data.comments = this.getCommentsJson(this.note.comments.data);
         data.logged_in = controller.logged_in();
         data.emailShare = this.note.email_shares;
-        data.likeShare = this.note.likes;
+        data.likeShare = this.note.note_likes;
 
         data.author = model.playerId === this.note.user_id ? "You" : this.note.user_name;
         data.isAuthor = model.playerId === this.note.user_id ? true : false; //TODO: need real authentication for this
@@ -213,9 +213,9 @@ function NoteView(note) {
             //they can't submit to social media if they are not logged in, show static numbers
 
             // document.getElementById('shareFacebook').innerHTML = this.note.facebook_shares + " Facebook";
-            // document.getElementById('shareLikes').innerHTML = this.note.likes + " " + model.views.likeIcon;    
+            // document.getElementById('shareLikes').innerHTML = this.note.note_likes + " " + model.views.likeIcon;    
 
-            var likeButtonHTML = this.note.likes + " " + model.views.likeIcon;
+            var likeButtonHTML = this.note.note_likes + " " + model.views.likeIcon;
 
             shareHTML += "<li>" + likeButtonHTML + "</li>   ";
             var facebookButtonHTML = this.note.facebook_shares;
@@ -335,9 +335,9 @@ function NoteView(note) {
 
     this.likeNote = function() {
         //increment the number of likes which display
-        this.note.likes = parseInt(this.note.likes) + 1;
+        this.note.note_likes = parseInt(this.note.note_likes) + 1;
         var likeB = document.getElementById('shareLike');
-        likeB.innerHTML = this.note.likes;
+        likeB.innerHTML = this.note.note_likes;
 
         //update button
         $("#shareLike").removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
@@ -357,9 +357,9 @@ function NoteView(note) {
 
     this.unlikeNote = function() {
         //decrement the number of likes which display
-        this.note.likes = parseInt(this.note.likes) - 1;
+        this.note.note_likes = parseInt(this.note.note_likes) - 1;
         var likeB = document.getElementById('shareLike');
-        likeB.innerHTML = this.note.likes;
+        likeB.innerHTML = this.note.note_likes;
 
         //update button
         $(this.html).find("#shareLike").removeClass("glyphicon-heart").addClass("glyphicon-heart-empty");

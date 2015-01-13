@@ -466,13 +466,19 @@ function Controller() {
     }
 
     this.like = function(playerId, noteId) {
-        callService("notes.likeNote", function() {}, "/" + playerId + "/" + noteId, false); //add internal like
-
+        callService2("notes.likeNote", function() {}, "", JSON.stringify({
+            auth: getAuthObject(),
+            game_id: model.gameId,
+            note_id: noteId,
+        }));
     }
 
     this.unlike = function(playerId, noteId) {
-        callService("notes.unlikeNote", function() {}, "/" + playerId + "/" + noteId, false); //remove internal like
-
+        callService2("notes.unlikeNote", function() {}, "", JSON.stringify({
+            auth: getAuthObject(),
+            game_id: model.gameId,
+            note_id: noteId,
+        }));
     }
 
     this.sendEmail = function(playerId, noteId) {

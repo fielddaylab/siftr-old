@@ -101,13 +101,14 @@ function startSift(siftType, howMany) {
         note_count: howMany,
         tag_ids: selectedTags,
         order_by: 'recent',
+        user_id: model.playerId,
     };
     switch (siftType) {
         case "popular":
             siftObj.order_by = 'popular';
             break;
         case "mine":
-            siftObj.user_id = model.playerId;
+            siftObj.filter_by = 'mine';
             break;
         case "top":
         case "recent":
