@@ -491,56 +491,20 @@ function Controller() {
         var subjectText = "Interesting note on ";
 
         //customize based on the tag
-        var tagText = "";
-        var formattedTag = note.tagString.toLowerCase().trim();
-        switch (formattedTag) {
-            case ("innovation"):
-                tagText = "Innovation ";
-                break;
-            case ("must do"):
-                tagText = "a Must Do ";
-                break;
-            case ("stories of the past"):
-                tagText = "Stories of the Past ";
-                break;
-            case ("100 years from now"):
-                tagText = "100 Years From Now ";
-                break;
-            case ("madison culture"):
-                tagText = "Madison Culture ";
-                break;
-
-            default:
-                console.log("unexpected tag string on email send " + formattedTag + " " + note.tagString);
-                tagText = note.tagString;
-        }
+        var tagText = note.tagString;
 
         bodyText += tagText;
         subjectText += tagText;
 
         //customize on if they made it or found it      
-        if (playerId == note.owner_id) bodyText += " I made ";
+        if (playerId == note.user_id) bodyText += " I made ";
         else bodyText += " I found ";
 
         bodyText += "on the UW-Madison Campus: " + "\n";
         subjectText += "from UW-Madison Campus";
 
-        //pull out the note text and photo url
-        for (var i = 0; i < note.contents.length; i++) {
-            //initialize audi variable becuase it could be blank and we don't want that to gum up the works
-            var bodyAudio = "";
-            switch (note.contents[i].type) {
-                case "TEXT":
-                    bodyText += "\"" + note.contents[i].text + "\" \n \n";
-                    break;
-                case "PHOTO":
-                    var bodyImage = note.contents[i].media.data.url;
-                    break;
-                case "AUDIO":
-                    bodyAudio = note.contents[i].media.data.url;
-                    break;
-            }
-        }
+        //pull out the note text
+        bodyText += "\"" + getTextToUse(note) + "\" \n \n";
 
         var thisSiftr = '';
         var result = document.URL.match(/siftr.org\/(\w+)/);
@@ -549,25 +513,15 @@ function Controller() {
         }
 
         bodyText += "See the whole note at: siftr.org/" + thisSiftr + " or download the Siftr app \n";
-        // bodyText += bodyImage;
         if (thisSiftr !== '') {
             bodyText += "siftr.org/" + thisSiftr + "/#" + note.note_id;
         }
-
-
-        //add one to email sent count
-        callService("notes.sharedNoteToEmail", function() {}, "/" + playerId + "/" + note.note_id, false); //add one to email count
 
         //add all the accumulated strings together  
         emailText = "mailto:?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
 
         //send the email
         window.open(emailText);
-
-        //increment the user side HTML
-        note.email_shares = parseInt(note.email_shares) + 1;
-        document.getElementById("emailButton").innerHTML = note.email_shares + " Emails";
-
     }
 
     this.showAbout = function() {
