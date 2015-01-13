@@ -441,27 +441,20 @@ function Controller() {
     }
 
     this.resetAndEmailPassword = function(email) {
-        callService("players.resetAndEmailNewPassword", controller.resetPasswordMessage, "/" + email, false);
+        callService2("users.requestForgotPasswordEmail", controller.resetPasswordMessage, "", JSON.stringify({
+            email: email,
+        }));
     }
 
-    this.resetPasswordMessage = function(returnString) {
-        console.log(returnString);
-
-        responseMessage = JSON.parse(returnString);
-
+    this.resetPasswordMessage = function(responseMessage) {
         switch (responseMessage.returnCode) {
             case 0:
-                alert("Password reset has been successfuly emailed.");
+                alert("A password reset email has been sent if there is a user with that email.");
                 controller.hideForgotView();
                 break;
-            case 4:
-                alert("No player associated with that email");
-                break; //should'nt we limit the number of attempts?
-            case 5:
-                alert("Error: mail could not be sent.");
-                break; //why does this happen?
             default:
-                console.log("Unexpected resupt from resetPasswordMessage: " + returnString);
+                alert("Couldn't send password reset email.");
+                console.log("Unexpected result from resetPasswordMessage: " + responseMessage);
         }
     }
 
