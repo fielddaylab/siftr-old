@@ -67,6 +67,10 @@ function NoteView(note) {
 
         data.author = model.playerId === this.note.owner_id ? "You" : this.note.username;
         data.isAuthor = model.playerId === this.note.owner_id ? true : false; //TODO: need real authentication for this
+        data.createdDate = new Date(this.note.created.replace(' ', 'T') + 'Z').toLocaleString();
+        // this.note.created is "yyyy-mm-dd hh:mm:ss" UTC
+        // the Date constructor takes "yyyy-mm-ddThh:mm:ssZ" to ensure UTC interpretation
+        // then toLocaleString() uses user timezone
 
         //TODO: find a better place for these, controller? 
         //TODO: note.tweets and note.pins don't exist on server, replace with style-stripped official counters 
