@@ -462,7 +462,7 @@ function constructSVGMarker(note) {
     $(container).addClass("sifter-map-icon"); // scale-icon scale-mustdo");
     var image = document.createElement('img');
 
-    image.src = "assets/images/icon_" + getTagIconName(note) + ".svg";
+    image.src = getTagIconUrl(note);
     $(container).append(image);
     return container;
 }
@@ -471,9 +471,21 @@ function getImageToUse(note) {
     return note.media.data.url;
 }
 
+function getTagIconUrl(note) {
+    var lookup = {};
+
+    for (var i = 0; i < model.tags.length; i++) {
+        var tag = model.tags[i];
+        if (tag.media) {
+            lookup[tag.tag] = tag.media.data.url;
+        }
+    }
+
+    return lookup[note.tag] || "assets/images/icon_search.svg"; // unknown icon
+}
+
 
 function getTagIconName(note) {
-
     var lookup = {};
 
     for (var i = 0; i < model.tags.length; i++) {

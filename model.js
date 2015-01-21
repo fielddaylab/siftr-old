@@ -57,6 +57,18 @@ function Model() {
         //format tag array
         model.tags = response.data;
 
+        var tagStyle = document.createElement("style");
+        tagStyle.appendChild(document.createTextNode(""));
+        document.head.appendChild(tagStyle);
+        for (var i = 0; i < model.tags.length; i++) {
+            var tag = model.tags[i];
+            if (tag.media) {
+                tagStyle.sheet.insertRule(
+                    ".scale_tag_"+(i+1)+" { background-image: url("+tag.media.data.url+"); background-position: 0px 0px; background-size: 100% 100%; }", 0
+                );
+            }
+        }
+
         controller.showFilters();
 
         model.finishLoad();
