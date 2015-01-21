@@ -31,6 +31,15 @@ function Model() {
         if (callback) //this is set when it's called from index
         {
             this.loadFinishCallback = callback;
+            callService2("games.getGame", function(gameData){
+                callService2("media.getMedia", function(mediaData){
+                    $('.scale_logo').attr('src', mediaData.data.url);
+                }, {
+                    media_id: gameData.data.icon_media_id,
+                });
+            }, {
+                game_id: this.gameId,
+            });
             callService2("tags.getTagsForGame", model.loadTagsFromServer, {game_id: this.gameId});
         } else //it's being called from the laodTagsFromServer's returning
         {
@@ -62,11 +71,10 @@ function Model() {
         document.head.appendChild(tagStyle);
         for (var i = 0; i < model.tags.length; i++) {
             var tag = model.tags[i];
-            if (tag.media) {
-                tagStyle.sheet.insertRule(
-                    ".scale_tag_"+(i+1)+" { background-image: url("+tag.media.data.url+"); background-position: 0px 0px; background-size: 100% 100%; }", 0
-                );
-            }
+            var url = tag.media ? tag.media.data.url : 'assets/images/icon_search.svg';
+            tagStyle.sheet.insertRule(
+                ".scale_tag_"+(i+1)+" { background-image: url("+url+"); background-position: 0px 0px; background-size: 100% 100%; }", 0
+            );
         }
 
         controller.showFilters();
