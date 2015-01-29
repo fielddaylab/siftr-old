@@ -1,3 +1,0 @@
-Each folder in here corresponds to a customized Siftr site.
-To use, copy all the files in "override/somesiftr/" into the root,
-overwriting any same-named files.

@@ -8,7 +8,9 @@ function getAuthObject() {
 
 function Model() {
     self = this;
-    this.gameId = YOI_GAME_ID;
+    this.gameId = parseInt( window.location.search.replace('?', '') );
+    if (isNaN(this.gameId)) this.gameId = 266;
+    // Set 266 to some default Siftr if no ID given in URL
 
     this.displayName = ""; // for displaying newly added content
     this.gameNotes = []; //this is using new API
