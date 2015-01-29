@@ -48,11 +48,18 @@ function Model() {
                 if (gameData.data.map_zoom_level !== '0') {
                     MAP_ZOOM_LEVEL = parseFloat(gameData.data.map_zoom_level);
                 }
-                callService2("media.getMedia", function(mediaData){
-                    $('.scale_logo').attr('src', mediaData.data.url);
-                }, {
-                    media_id: gameData.data.icon_media_id,
-                });
+                if (parseInt(gameData.data.icon_media_id) !== 0)
+                {
+                    callService2("media.getMedia", function(mediaData){
+                        $('.scale_logo').attr('src', mediaData.data.url);
+                    }, {
+                        media_id: gameData.data.icon_media_id,
+                    });
+                }
+                else
+                {
+                    $('.scale_logo').attr('src', 'assets/images/icon_logo.png');
+                }
             }, {
                 game_id: this.gameId,
             });
