@@ -37,8 +37,9 @@ function Model() {
                 ABOUT_SIFTR = gameData.data.description;
                 $('#p-about-siftr').html(gameData.data.description);
                 if (gameData.data.map_latitude !== '0' || gameData.data.map_longitude !== '0') {
-                    MAP_CENTER_LATITUDE  = parseFloat(gameData.data.map_latitude );
-                    MAP_CENTER_LONGITUDE = parseFloat(gameData.data.map_longitude);
+                    MAP_CENTER_LATITUDE  = parseFloat(gameData.data.map_latitude  );
+                    MAP_CENTER_LONGITUDE = parseFloat(gameData.data.map_longitude );
+                    MAP_ZOOM_LEVEL       = parseFloat(gameData.data.map_zoom_level);
                     // center map
                     var map_center = new google.maps.LatLng(MAP_CENTER_LATITUDE, MAP_CENTER_LONGITUDE);
                     model.views.gmap.setCenter(map_center);
