@@ -467,6 +467,7 @@ html,body
   font-size: 200%;
   margin: 0.25em;
   background: #fff;
+  cursor: pointer;
 }
 
 .close-button:hover
@@ -944,4 +945,9 @@ button.touch-friendly
 {
   padding: 0.75em;
   padding-top: 0;
+}
+
+.internalLink
+{
+  cursor: pointer;
 }

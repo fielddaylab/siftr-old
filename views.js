@@ -730,7 +730,7 @@ function clickEmailPassword() {
 function LoginView() {
     var template = $('#loginTemplate').html();
     var data = {};
-    data.fb_enabled = (typeof FB != 'undefined'); //if they have a script blocker with makes FB undefined, don't show the facebook login
+    data.fb_enabled = false; // (typeof FB != 'undefined'); //if they have a script blocker with makes FB undefined, don't show the facebook login
 
     var view = Mustache.render(template, data);
 

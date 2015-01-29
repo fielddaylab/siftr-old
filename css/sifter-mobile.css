@@ -235,6 +235,7 @@ button.filter-button.last {
   margin: 0.25em;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   z-index: 1;
+  cursor: pointer;
 }
 .sifter-modal-overlay {
   position: fixed;
@@ -566,4 +567,7 @@ button.touch-friendly {
 .account-info {
   text-align: center;
   width: 100%;
+}
+.internalLink {
+  cursor: pointer;
 }
