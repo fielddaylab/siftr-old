@@ -501,16 +501,7 @@ function Controller() {
         //pull out the note text
         bodyText += "\"" + getTextToUse(note) + "\" \n \n";
 
-        var thisSiftr = '';
-        var result = document.URL.match(/siftr.org\/(\w+)/);
-        if (result !== null) {
-            thisSiftr = result[1];
-        }
-
-        bodyText += "See the whole note at: siftr.org/" + thisSiftr + " or download the Siftr app \n";
-        if (thisSiftr !== '') {
-            bodyText += "siftr.org/" + thisSiftr + "/#" + note.note_id;
-        }
+        bodyText += "See the whole note at: " + controller.noteURL(noteId);
 
         //add all the accumulated strings together  
         emailText = "mailto:?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
@@ -563,6 +554,10 @@ function Controller() {
         }
     };
 
+    this.noteURL = function(noteId) {
+        return 'http://siftr.org/v2/?' + model.gameId + '#' + noteId;
+    }
+
     this.sendTweet = function(playerId, noteId) {
         note = model.currentNote;
         if (!note.note_id == noteId) //we are making an assumption that the current note is the same as the one desired to tweet
@@ -584,11 +579,8 @@ function Controller() {
 
         bodyText += "on the UW-Madison Campus:";
 
-        noteURL = encodeURIComponent(currentURL + "#" + model.currentNote.note_id);
-        shareURL = "https://twitter.com/share?&url=" + noteURL;
-
-        //add all the accumulated strings together  
-        tweetURL = shareURL + "&text=" + bodyText;
+        noteURL = controller.noteURL(noteId);
+        tweetURL = "https://twitter.com/share?&url=" + encodeURIComponent(noteURL) + "&text=" + encodeURIComponent(bodyText);
 
         //open window to send tweet
         window.open(tweetURL);
