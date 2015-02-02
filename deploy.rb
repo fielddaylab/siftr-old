@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
 # Enter login details here
-url = ''
-username = ''
-password = ''
-remote_dir = ''
+require '../../fdllogins' # I store mine outside of the repo; edit as necessary
+url        = $fdl_logins[:siftr][:url]
+username   = $fdl_logins[:siftr][:username]
+password   = $fdl_logins[:siftr][:password]
+remote_dir = $fdl_logins[:siftr][:remote_dir]
 
 require 'net/sftp'
 
@@ -39,7 +40,7 @@ def upload_rf(sftp, from, to)
 end
 
 Net::SFTP.start(url, username, password: password) do |sftp|
-  log " => Connected via SFTP."
+  log " => Connected #{username}@#{url} via SFTP."
   log " => Uploading repo to #{remote_dir}..."
   upload_rf sftp, '.', remote_dir
   log ' => Done!'
