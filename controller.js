@@ -262,7 +262,7 @@ function Controller() {
                 media: {
                     file_name: "upload." + photoExt,
                     data: photoBase64,
-                    resize: 640,
+                    // resize: 640,
                 },
                 description: caption,
                 trigger: {

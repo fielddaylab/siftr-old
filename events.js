@@ -42,7 +42,8 @@ $(document).ready(function() {
     });
 
     $('.sifter-show-upload-button').on('click', function() {
-        if (CropHelper.canvas_jpeg_support()) {
+        var canvas_jpeg_support = document.createElement('canvas').toDataURL('image/jpeg').substring(11, 15) === "jpeg";
+        if (canvas_jpeg_support) {
             controller.loginRequired(function() {
                 controller.createNote();
             });
