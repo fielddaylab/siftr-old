@@ -100,9 +100,19 @@ function Model() {
             );
         }
 
-        controller.showFilters();
+        model.loadTagCounts(model.tags);
+    }
 
-        model.finishLoad();
+    this.loadTagCounts = function(tags) {
+        if (tags.length === 0) {
+            controller.showFilters();
+            model.finishLoad();
+            return;
+        }
+        callService2("tags.countObjectsWithTag", function(response) {
+            tags[0].count = parseInt(response.data.count);
+            model.loadTagCounts(tags.slice(1));
+        }, {object_type: 'NOTE', tag_id: tags[0].tag_id});
     }
 
     this.addNoteFromData = function(note) {

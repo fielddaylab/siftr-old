@@ -448,7 +448,11 @@
           <div class="sifter-category">
             <label>
               <input type="checkbox" id="tag{{category_number}}" class="sifter-filter-checkbox-input" value="{{category}}" checked="checked"/>
-              <span><span class="scale-icon scale_tag_{{category_number}}"></span>  {{category}}</span>
+              <span>
+                <span class="scale-icon scale_tag_{{category_number}}"></span>
+                {{category}}
+                ({{note_count}})
+              </span>
             </label>
           </div>
           {{/categories}}

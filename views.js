@@ -930,7 +930,8 @@ function getTagListForRender() {
     for (var i = 0; i < model.tags.length; i++) {
         category_list.push({
             "category": model.tags[i].tag,
-            "category_number": i + 1
+            "category_number": i + 1,
+            "note_count": model.tags[i].count,
         });
     }
 
