@@ -15,21 +15,23 @@ body {
 }
 /* Layout dimensions *************************************** */
 .sifter-desktop-header {
-  height: 15%;
+  height: 85px;
 }
 /* With pop down shown */
 .sifter-filters-popdown {
-  height: 25%;
+  height: 225px;
 }
 .sifter-content.shrunk {
-  height: 60%;
+  height: calc(100% - 85px - 225px);
+  /* 85px for the top red bar, 225px for the tag and search part */
 }
 /* With pop down hidden */
 .sifter-filters-popdown.slide-up {
   height: 0%;
 }
 .sifter-content {
-  height: 85%;
+  height: calc(100% - 85px);
+  /* 85px for the top red bar */
 }
 .sifter-imagelist {
   overflow-x: hidden;
@@ -79,7 +81,7 @@ body {
   top: 50%;
   height: 100px;
   vertical-align: middle;
-  margin-top: -50px;
+  margin-top: -55px;
   text-shadow: 0 0 5px rgba(155, 155, 155, 0.1);
 }
 .sifter-logo-box .siftr-logo {
@@ -144,14 +146,6 @@ body {
 .modal-button.button-active:hover {
   color: #ccc;
 }
-/* catch the nexus 7 shrunken screen */
-/* FIXME really should switch to a fixed-height top bar like the mobile version
-   so it can gracefully shrink easier than vertically centered divs -Kevin */
-@media only screen and (max-height: 500px) {
-  .sifter-logo-box {
-    margin-top: -55px;
-  }
-}
 /* Desktop Nav ********************************************* */
 .sifter-filters-popdown {
   box-shadow: 0 0 10px #888888;
@@ -164,11 +158,11 @@ body {
 }
 /* Filter Buttons */
 .sifter-filters {
-  width: 365px;
+  width: 300px;
   font-size: 110%;
 }
 .sifter-filters button {
-  width: 150px;
+  width: 115px;
   margin-top: 1em;
   margin-left: 1em;
   color: #b70101;
