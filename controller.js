@@ -201,8 +201,8 @@ function Controller() {
     this.createNewNote = function() {
         // first, reset currentNote to clear out any old data, and give it just lat & lon to start
         model.currentNote = {};
-        model.currentNote.lat = model.defaultLat;
-        model.currentNote.lon = model.defaultLon;
+        model.currentNote.lat = MAP_CENTER_LATITUDE;
+        model.currentNote.lon = MAP_CENTER_LONGITUDE;
 
         var gameId = model.gameId;
         var playerId = model.playerId;

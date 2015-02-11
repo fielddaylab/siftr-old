@@ -420,6 +420,7 @@ function submitNote() {
         requirementsMet = false;
     }
 
+    /*
     //map pin starts at default location in lake where no notes are expected. 
     //Google maps map move the pin slightly during map creation, so can't do an exact == comparison
     if (Math.abs(model.currentNote.lat - model.views.defaultLat) < .0001 && Math.abs(model.currentNote.lon - model.views.defaultLon) < .0001) {
@@ -427,6 +428,7 @@ function submitNote() {
         // TODO add error to location
         requirementsMet = false;
     }
+    */
 
     if (!requirementsMet) {
         alert("Please " + errors.join(", "));
@@ -791,7 +793,7 @@ function NoteCreateView() {
     this.initialize_map = function() {
         /* Map and Marker */
         var mapOptions = {
-            zoom: 12,
+            zoom: MAP_ZOOM_LEVEL,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             panControl: false,
             zoomControl: false,
@@ -802,7 +804,7 @@ function NoteCreateView() {
         };
         var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 
-        var pos = new google.maps.LatLng(model.views.defaultLat, model.views.defaultLon);
+        var pos = new google.maps.LatLng(MAP_CENTER_LATITUDE, MAP_CENTER_LONGITUDE);
         map.setCenter(pos);
 
         marker = new google.maps.Marker({

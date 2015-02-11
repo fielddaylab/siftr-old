@@ -9,8 +9,7 @@ function getAuthObject() {
 function Model() {
     self = this;
     this.gameId = parseInt( window.location.search.replace('?', '') );
-    if (isNaN(this.gameId)) this.gameId = 266;
-    // Set 266 to some default Siftr if no ID given in URL
+    if (isNaN(this.gameId)) this.gameId = DEFAULT_SIFTR_ID;
 
     this.displayName = ""; // for displaying newly added content
     this.gameNotes = []; //this is using new API
@@ -352,11 +351,6 @@ function Model() {
             if (windowOpts != null) clearTimeout(windowOpts);
             windowOpts = window.setTimeout(model.setGMapOptions(), 1000);
         });
-
-
-        //default map pin location is in lake, where no notes are expected. User must move this pin to submit a note.
-        this.defaultLat = 43.081829;
-        this.defaultLon = -89.402313;
 
         // marker clusterer
         var mcOptions = {
