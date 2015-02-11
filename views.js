@@ -67,7 +67,7 @@ function NoteView(note) {
 
         data.author = model.playerId === this.note.user_id ? "You" : this.note.user_name;
         data.isAuthor = model.playerId === this.note.user_id ? true : false; //TODO: need real authentication for this
-        data.createdDate = new Date(this.note.created.replace(' ', 'T') + '-0600').toLocaleString();
+        data.createdDate = new Date(this.note.created.replace(' ', 'T') + '-06:00').toLocaleString();
         // TODO: figure out how timestamp timezones differ between aris v1 and v2
         // (in v1 this.note.created was UTC)
         // this.note.created is "yyyy-mm-dd hh:mm:ss" CST
