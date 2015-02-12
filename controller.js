@@ -615,25 +615,8 @@ function Controller() {
 
 
         //TODO: keeping text, audi, and image for now because might be able to embed them in pin
-        var pinText = "";
-        var pinImage = "";
-
-        //pull out the note text and photo url
-        for (var i = 0; i < note.contents.length; i++) {
-            //initialize audi variable becuase it could be blank and we don't want that to gum up the works
-            var bodyAudio = "";
-            switch (note.contents[i].type) {
-                case "TEXT":
-                    pinText += "\"" + note.contents[i].text + "\" \n \n";
-                    break;
-                case "PHOTO":
-                    pinImage = note.contents[i].media.data.url;
-                    break;
-                case "AUDIO":
-                    pinAudio = note.contents[i].media.data.url;
-                    break;
-            }
-        }
+        var pinText = "\"" + note.description + "\" \n \n";
+        var pinImage = note.media.data.url;
 
         console.log(pinImage);
 
@@ -645,7 +628,7 @@ function Controller() {
 
 
         //add one to pin count and increment the user side HTML
-        note.pins ? note.pins = parseInt(note.pins, 10) + 1 : note.pins = 1;
+        // note.pins ? note.pins = parseInt(note.pins, 10) + 1 : note.pins = 1;
         console.log(pinLink);
         window.open(pinLink);
 

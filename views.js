@@ -76,8 +76,8 @@ function NoteView(note) {
 
         //TODO: find a better place for these, controller? 
         //TODO: note.tweets and note.pins don't exist on server, replace with style-stripped official counters 
-        data.tweetShare = this.note.tweets ? this.note.tweets : 0;
-        data.pinShare = this.note.pins ? this.note.pins : 0;
+        data.tweetShare = ''; // this.note.tweets ? this.note.tweets : 0;
+        data.pinShare = ''; // this.note.pins ? this.note.pins : 0;
 
         /* Render View */
         var render = compiledShowTemplate(data);
@@ -121,14 +121,14 @@ function NoteView(note) {
             //get tweet count from twitter
             $.getJSON("http://cdn.api.twitter.com/1/urls/count.json?callback=?&url=" + encodeURIComponent(document.location.href + "#/" + note.note_id), function(data) {
                 console.log("tweet count is: " + data.count);
-                document.getElementById('shareTweet').innerHTML = data.count ? data.count : 0;
+                // document.getElementById('shareTweet').innerHTML = data.count ? data.count : 0;
             });
         });
 
         $(this.html).find('#sharePin').on('click', function() {
             controller.getPinLink(model.playerId, model.currentNote.note_id);
             //TODO: increment html for pin
-            document.getElementById('sharePin').innerHTML = note.pins;
+            // document.getElementById('sharePin').innerHTML = note.pins;
 
         });
 
