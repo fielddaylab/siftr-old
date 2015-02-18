@@ -301,6 +301,14 @@ function Controller() {
         controller.populateAllFromModel(); //re-display the map and left hand images
     }
 
+    this.deleteComment = function(noteID, commentID) {
+        callService2("note_comments.deleteNoteComment", function() {}, {
+            auth: getAuthObject(),
+            note_comment_id: commentID,
+        });
+        model.deleteComment(noteID, commentID);
+    }
+
     this.login = function(username, password) {
         callService2("users.logIn", this.loginReturned, {
             permission: 'read_write',

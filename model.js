@@ -139,6 +139,24 @@ function Model() {
         }
     };
 
+    this.deleteComment = function(noteID, commentID) {
+        noteID = parseInt(noteID, 10);
+        commentID = parseInt(commentID, 10);
+        for (var i = 0; i < this.gameNotes.length; i++) {
+            var note = this.gameNotes[i];
+            if (parseInt(note.note_id, 10) === noteID) {
+                var comments = note.comments.data;
+                for (var j = 0; j < comments.length; j++) {
+                    var comment = comments[j];
+                    if (parseInt(comment.note_comment_id) === commentID) {
+                        comments.splice(j, 1); // remove comments[j]
+                        return;
+                    }
+                }
+            }
+        }
+    };
+
     this.getSiftTypeCode = function(siftType) {
         switch (siftType) {
             case "top":

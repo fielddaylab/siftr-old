@@ -192,7 +192,12 @@
             </div>
             {{#comments}}
               <div class="sifter-comment">
-                <h3 class="sifter-comment-author">{{author}}</h3>
+                <h3 class="sifter-comment-author">
+                  {{author}}
+                  {{#canDelete}}
+                    <span class="delete-comment internalLink" data-comment-id="{{commentID}}">(delete)</span>
+                  {{/canDelete}}
+                </h3>
                 <p class="sifter-comment-text">{{text}}</p>
               </div>
             {{/comments}}

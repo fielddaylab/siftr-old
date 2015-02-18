@@ -71,7 +71,7 @@ function NoteView(note) {
         // TODO: figure out how timestamp timezones differ between aris v1 and v2
         // (in v1 this.note.created was UTC)
         // this.note.created is "yyyy-mm-dd hh:mm:ss" CST
-        // the Date constructor takes "yyyy-mm-ddThh:mm:ss-0600" to ensure CST interpretation
+        // the Date constructor takes "yyyy-mm-ddThh:mm:ss-06:00" to ensure CST interpretation
         // then toLocaleString() uses user timezone
 
         //TODO: find a better place for these, controller? 
@@ -105,6 +105,14 @@ function NoteView(note) {
             if (confirm("Are you sure you want to delete this note?")) {
                 controller.deleteNote(thism.note.note_id);
                 controller.hideNoteView();
+            }
+        });
+
+        $(this.html).find('.delete-comment').on(clickEvent, function(e) {
+            var commentID = parseInt( $(e.target).attr('data-comment-id') );
+            if (confirm('Are you sure you want to delete this comment?')) {
+                controller.deleteComment(thism.note.note_id, commentID);
+                controller.noteSelected({note: thism.note});
             }
         });
 
@@ -252,7 +260,9 @@ function NoteView(note) {
         return $(comments).map(function() {
             return {
                 author: this.user.user_name,
-                text: this.description
+                text: this.description,
+                canDelete: parseInt(model.playerId) === parseInt(this.user_id),
+                commentID: parseInt(this.note_comment_id),
             };
         }).toArray();
     }
@@ -274,15 +284,7 @@ function NoteView(note) {
                 }
                 else {
                     // All good
-                    note.comments.data.push({
-                        "description": comment,
-                        "user": {
-                            "user_id": model.playerId,
-                            "user_name": model.displayName,
-                            "display_name": model.displayName,
-                        },
-                    });
-
+                    note.comments.data.push( status.data );
                     controller.noteSelected(thism);
                 }
             });
