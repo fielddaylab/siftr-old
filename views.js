@@ -97,7 +97,7 @@ function NoteView(note) {
         });
 
         $(this.html).find('.post-comment').on(clickEvent, function() {
-            var text = $(thism.html).find('textarea').val();
+            var text = $(thism.html).find('.sifter-new-comment textarea').val();
             thism.submitComment(thism.note, text)
         });
 
