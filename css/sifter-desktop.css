@@ -656,3 +656,13 @@ button.touch-friendly {
 .internalLink {
   cursor: pointer;
 }
+#sifter-edit-description {
+  display: none;
+}
+#sifter-edit-description textarea {
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  background: #f7f7f7;
+}

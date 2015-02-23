@@ -180,7 +180,17 @@
             <div class="clear"></div>
           </div>
           <div class="sifter-show-details">
-            <p>{{details}}</p>
+            <div id="sifter-show-description">
+              <p>{{details}}</p>
+              {{#logged_in}}
+                <p id="sifter-open-description" class="internalLink">Edit Description</p>
+              {{/logged_in}}
+            </div>
+            <div id="sifter-edit-description">
+              <textarea>{{details}}</textarea>
+              <p id="sifter-save-description" class="internalLink">Save Description</p>
+              <p id="sifter-cancel-description" class="internalLink">Cancel</p>
+            </div>
             <p>Created by {{author}} at {{createdDate}}</p>
           </div>
         </div>

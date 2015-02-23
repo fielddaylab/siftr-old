@@ -140,6 +140,21 @@ function NoteView(note) {
 
         });
 
+        $(this.html).find('#sifter-open-description').on('click', function() {
+            $('#sifter-show-description').hide();
+            $('#sifter-edit-description').show();
+        });
+
+        $(this.html).find('#sifter-cancel-description').on('click', function() {
+            $('#sifter-edit-description').hide();
+            $('#sifter-show-description').show();
+        });
+
+        $(this.html).find('#sifter-save-description').on('click', function() {
+            var text = $('#sifter-edit-description textarea').val();
+            controller.editDescription(model.currentNote.note_id, text);
+        });
+
     }
 
     //Is this still in use? - Jazmyn

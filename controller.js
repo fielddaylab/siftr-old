@@ -640,6 +640,20 @@ function Controller() {
         console.log(pinLink);
         window.open(pinLink);
 
-    }
+    };
 
+    this.editDescription = function(noteId, description) {
+        callService2('notes.updateNote', function(data) {
+            if (data.returnCode === 0) {
+                model.currentNote.description = description;
+                controller.noteSelected({note: model.currentNote});
+            } else {
+                // TODO
+            }
+        }, {
+            auth: getAuthObject(),
+            note_id: noteId,
+            description: description,
+        });
+    };
 }
