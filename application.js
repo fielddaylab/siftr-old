@@ -17,8 +17,14 @@ function startLoadGame() {
     startSift('top');
 }
 
+var lastSiftTime = 0;
 
-function finishLoadGame(responseData) {
+function finishLoadGame(responseData, thisSiftTime) {
+    if (thisSiftTime !== lastSiftTime) {
+        console.log('Throwing out a Sift because it was overridden.');
+        return;
+    }
+
     if (responseData.returnCode == 1) //Error
     {
         document.getElementById('messageContent').innerHTML = responseData.data;
@@ -46,6 +52,9 @@ function startSift(siftType, howMany) {
     if (howMany === undefined) howMany = 50;
     model.howMany = howMany;
     model.lastSiftType = siftType;
+
+    var thisSiftTime;
+    thisSiftTime = lastSiftTime = Date.now();
 
     model.views.mainViewLeft.innerHTML = ''; //clear out old notes
     document.getElementById('messageContent').innerHTML = "Sifting...";
@@ -118,5 +127,7 @@ function startSift(siftType, howMany) {
         default:
             console.log("Error in sift type: " + siftType);
     }
-    callService2("notes.searchNotes", finishLoadGame, siftObj);
+    callService2("notes.searchNotes", function(obj) {
+        finishLoadGame(obj, thisSiftTime);
+    }, siftObj);
 }
