@@ -8,8 +8,14 @@ function getAuthObject() {
 
 function Model() {
     self = this;
-    this.gameId = parseInt( window.location.search.replace('?', '') );
-    if (isNaN(this.gameId)) this.gameId = DEFAULT_SIFTR_ID;
+    var whichSiftr = window.location.search.replace('?', '');
+    if (/^\d+$/.test(whichSiftr)) {
+        this.gameId = parseInt(whichSiftr);
+        this.gameURL = null;
+    } else {
+        this.gameId = null;
+        this.gameURL = whichSiftr;
+    }
 
     this.displayName = ""; // for displaying newly added content
     this.gameNotes = []; //this is using new API
@@ -32,7 +38,20 @@ function Model() {
         if (callback) //this is set when it's called from index
         {
             this.loadFinishCallback = callback;
-            callService2("games.getGame", function(gameData){
+            var getGameFn, getGameInput;
+            if (this.gameURL === null) {
+                getGameFn = 'games.getGame';
+                getGameInput = {game_id: this.gameId};
+            }
+            else {
+                getGameFn = 'games.searchSiftrs';
+                getGameInput = {count: 1, siftr_url: this.gameURL};
+            }
+            callService2(getGameFn, function(gameData){
+                if (self.gameURL !== null) gameData.data = gameData.data[0];
+                self.gameId = parseInt(gameData.data.game_id);
+                callService2("tags.getTagsForGame", model.loadTagsFromServer, {game_id: self.gameId});
+
                 ABOUT_SIFTR = gameData.data.description;
                 $('#p-about-siftr').html(gameData.data.description);
                 if (gameData.data.map_latitude !== '0' || gameData.data.map_longitude !== '0') {
@@ -59,10 +78,7 @@ function Model() {
                 {
                     $('.scale_logo').attr('src', 'assets/images/icon_logo.png');
                 }
-            }, {
-                game_id: this.gameId,
-            });
-            callService2("tags.getTagsForGame", model.loadTagsFromServer, {game_id: this.gameId});
+            }, getGameInput);
         } else //it's being called from the laodTagsFromServer's returning
         {
             this.serverCallsToLoad--; //one more is loaded
