@@ -1,6 +1,6 @@
 function getAuthObject() {
     return {
-        user_id: model.playerId,
+        user_id: parseInt(model.playerId),
         permission: 'read_write',
         key: model.readWriteKey,
     };
@@ -92,11 +92,11 @@ function Model() {
 
     $('.sifter-show-logout-button').hide();
     //check to see if they have a session cookie with their playerId and can skip login, if not set it to zero
-    if ($.cookie("sifter") > 0) {
-        self.playerId = $.cookie("sifter");
-        self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
-        self.readWriteKey = $.cookie("readWriteKey");
-
+    var cookie = $.cookie('aris-auth');
+    if (cookie) {
+        self.playerId = cookie.user_id;
+        self.displayName = cookie.username;
+        self.readWriteKey = cookie.key;
         $('.sifter-show-logout-button').show();
     }
 

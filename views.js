@@ -902,12 +902,11 @@ function AboutView() {
     this.html = $(view).get(0);
 
     //TODO: find a better way of getting around the fact that you have to wait until the element is rendered to attach an eventlistener
-    if ($.cookie("sifter") > 0) {
-        self.playerId = $.cookie("sifter");
-        self.displayName = $.cookie("displayName"); // Since there is no re-check from the server on page load
-        self.readWriteKey = $.cookie("readWriteKey");
-
-        // $(this.html).find('.sifter-show-logout-button').show();
+    var cookie = $.cookie('aris-auth');
+    if (cookie) {
+        self.playerId = cookie.user_id;
+        self.displayName = cookie.username;
+        self.readWriteKey = cookie.key;
     } else {
         $(this.html).find('.sifter-show-logout-button').hide();
     }
