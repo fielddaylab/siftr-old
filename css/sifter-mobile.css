@@ -586,6 +586,7 @@ button.touch-friendly {
   position: relative;
 }
 #shareEditMenu {
+  display: none;
   position: absolute;
   text-align: center;
   background-color: #222222;

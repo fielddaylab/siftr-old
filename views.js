@@ -119,11 +119,11 @@ function NoteView(note) {
         /* TODO social stuff, new comment logic */
 
         // when share email clicked, send an email
-        $(this.html).find('#shareEmail').on('click', function() {
+        $(this.html).find('#shareEmailBox').on('click', function() {
             controller.sendEmail(model.playerId, model.currentNote.note_id);
         });
 
-        $(this.html).find('#shareTweet').on('click', function() {
+        $(this.html).find('#shareTweetBox').on('click', function() {
             controller.sendTweet(model.playerId, model.currentNote.note_id);
 
             //get tweet count from twitter
@@ -133,7 +133,17 @@ function NoteView(note) {
             });
         });
 
-        $(this.html).find('#sharePin').on('click', function() {
+        $(this.html).find('#shareEditBox').on('click', function() {
+            var menu = $('#shareEditMenu');
+            if (menu.is(':hidden')) {
+                menu.show();
+            }
+            else {
+                menu.hide();
+            }
+        });
+
+        $(this.html).find('#sharePinBox').on('click', function() {
             controller.getPinLink(model.playerId, model.currentNote.note_id);
             //TODO: increment html for pin
             // document.getElementById('sharePin').innerHTML = note.pins;
@@ -329,7 +339,7 @@ function NoteView(note) {
             if (hasLiked == 0) { //the user has not yet liked it
                 //then allow them to like it  
 
-                $(this.html).find('#shareLike').on('click', function() {
+                $(this.html).find('#shareLikeBox').on('click', function() {
                     thism.likeNote();
                 });
 
@@ -339,13 +349,13 @@ function NoteView(note) {
                 $(this.html).find("#shareLike").removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
 
                 //set onclick to unliking
-                $(this.html).find('#shareLike').on('click', function() {
+                $(this.html).find('#shareLikeBox').on('click', function() {
                     thism.unlikeNote();
                 });
             }
         } else {
             //they have not yet logged in, so clicking the button should prompt them to
-            $(this.html).find('#shareLike').on('click', function() {
+            $(this.html).find('#shareLikeBox').on('click', function() {
                 controller.loginRequired(function() {
                     controller.noteSelected(thism);
                 });
