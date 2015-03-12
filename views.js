@@ -108,12 +108,19 @@ function NoteView(note) {
             }
         });
 
-        $(this.html).find('.delete-comment').on(clickEvent, function(e) {
-            var commentID = parseInt( $(e.target).attr('data-comment-id') );
+        $(this.html).find('.edit-comment-pencil').on(clickEvent, function(e) {
+            var menu = $(e.target).siblings('.edit-comment');
+            menu.is(':hidden') ? menu.show() : menu.hide();
+        });
+
+        $(this.html).find('.edit-comment-delete').on(clickEvent, function(e) {
+            var commentID = parseInt( $(e.target).parents('.edit-comment-box').attr('data-comment-id') );
             if (confirm('Are you sure you want to delete this comment?')) {
                 controller.deleteComment(thism.note.note_id, commentID);
                 controller.noteSelected({note: thism.note});
             }
+            var menu = $(e.target).parents('.edit-comment');
+            menu.is(':hidden') ? menu.show() : menu.hide();
         });
 
         /* TODO social stuff, new comment logic */

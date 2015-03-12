@@ -396,6 +396,33 @@ body {
   /*color: #cf2037;*/
   color: #cf2037;
 }
+.edit-comment-box {
+  position: relative;
+}
+.edit-comment-pencil {
+  color: #cacaca;
+}
+.edit-comment-pencil:hover {
+  color: #cf2037;
+}
+.edit-comment {
+  display: none;
+  position: absolute;
+  text-align: center;
+  background-color: #dedede;
+  left: -20px;
+  top: 25px;
+  color: black;
+  font-weight: normal;
+  font-size: 16px;
+}
+.edit-comment-option {
+  padding: 4px;
+}
+.edit-comment-option:hover {
+  background-color: #cf2037;
+  color: white;
+}
 .sifter-new-comment textarea {
   width: 100%;
   box-sizing: border-box;

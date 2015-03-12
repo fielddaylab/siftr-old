@@ -216,7 +216,18 @@
                 <h3 class="sifter-comment-author">
                   {{author}}
                   {{#canDelete}}
-                    <span class="delete-comment internalLink" data-comment-id="{{commentID}}">(delete)</span>
+                    <span class="edit-comment-box" data-comment-id="{{commentID}}">
+                      <span class="edit-comment-pencil internalLink glyphicon glyphicon-pencil">
+                      </span>
+                      <div class="edit-comment">
+                        <div class="edit-comment-option edit-comment-edit internalLink">
+                          Edit
+                        </div>
+                        <div class="edit-comment-option edit-comment-delete internalLink">
+                          Delete
+                        </div>
+                      </div>
+                    </span>
                   {{/canDelete}}
                 </h3>
                 <p class="sifter-comment-text">{{text}}</p>
