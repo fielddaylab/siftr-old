@@ -640,7 +640,7 @@ button.touch-friendly {
   color: #96989b;
   padding-right: 0.25em;
   font-family: sans-serif;
-  width: 21%;
+  width: 18%;
   text-align: center;
 }
 .shareable:hover {
@@ -665,4 +665,18 @@ button.touch-friendly {
   box-sizing: border-box;
   border: 0;
   background: #f7f7f7;
+}
+#shareEditBox {
+  position: relative;
+}
+#shareEditMenu {
+  position: absolute;
+  text-align: center;
+  background-color: #dedede;
+  left: 28px;
+  top: 25px;
+  color: black;
+}
+.shareEditOption {
+  padding: 4px;
 }

@@ -826,8 +826,9 @@ button.touch-friendly
 .shareable
 {
   display: inline-block;
-  width: 21%;
+  width: 18%;
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
+  cursor:pointer;
 }
 .shareable span
 {
@@ -863,4 +864,22 @@ button.touch-friendly
   box-sizing: border-box;
   border: 0;
   background: @textFieldBackground;
+}
+
+#shareEditBox {
+  position: relative;
+}
+
+#shareEditMenu {
+  // display: none;
+  position: absolute;
+  text-align: center;
+  background-color: @linkBarBackgroundColor;
+  left: 0px;
+  top: 25px;
+  width: 100%;
+}
+
+.shareEditOption {
+  padding: 4px;
 }
