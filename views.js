@@ -65,8 +65,8 @@ function NoteView(note) {
         data.emailShare = this.note.email_shares;
         data.likeShare = this.note.note_likes;
 
-        data.author = model.playerId === this.note.user_id ? "You" : this.note.user_name;
-        data.isAuthor = model.playerId === this.note.user_id ? true : false; //TODO: need real authentication for this
+        data.author = parseInt(model.playerId) === parseInt(this.note.user_id) ? "You" : this.note.user_name;
+        data.isAuthor = parseInt(model.playerId) === parseInt(this.note.user_id) ? true : false; //TODO: need real authentication for this
         data.createdDate = new Date(this.note.created.replace(' ', 'T') + '-06:00').toLocaleString();
         // TODO: figure out how timestamp timezones differ between aris v1 and v2
         // (in v1 this.note.created was UTC)
@@ -101,7 +101,7 @@ function NoteView(note) {
             thism.submitComment(thism.note, text)
         });
 
-        $(this.html).find('.delete-note').on(clickEvent, function() {
+        $(this.html).find('#shareDelete').on(clickEvent, function() {
             if (confirm("Are you sure you want to delete this note?")) {
                 controller.deleteNote(thism.note.note_id);
                 controller.hideNoteView();
@@ -150,7 +150,7 @@ function NoteView(note) {
 
         });
 
-        $(this.html).find('#sifter-open-description').on('click', function() {
+        $(this.html).find('#shareEditDescription').on('click', function() {
             $('#sifter-show-description').hide();
             $('#sifter-edit-description').show();
         });

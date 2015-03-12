@@ -681,3 +681,7 @@ button.touch-friendly {
 .shareEditOption {
   padding: 4px;
 }
+.shareEditOption:hover {
+  background-color: #cf2037;
+  color: white;
+}
