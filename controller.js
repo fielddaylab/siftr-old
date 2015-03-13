@@ -301,12 +301,25 @@ function Controller() {
         controller.populateAllFromModel(); //re-display the map and left hand images
     }
 
-    this.deleteComment = function(noteID, commentID) {
-        callService2("note_comments.deleteNoteComment", function() {}, {
+    this.deleteComment = function(noteID, commentID, callback) {
+        callService2("note_comments.deleteNoteComment", function() {
+            model.deleteComment(noteID, commentID);
+            callback();
+        }, {
             auth: getAuthObject(),
             note_comment_id: commentID,
         });
-        model.deleteComment(noteID, commentID);
+    }
+
+    this.editComment = function(noteID, commentID, text, callback) {
+        callService2("note_comments.updateNoteComment", function() {
+            model.editComment(noteID, commentID, text);
+            callback();
+        }, {
+            auth: getAuthObject(),
+            note_comment_id: commentID,
+            description: text,
+        })
     }
 
     this.login = function(username, password) {
