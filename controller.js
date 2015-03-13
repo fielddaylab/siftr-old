@@ -518,7 +518,7 @@ function Controller() {
         else bodyText += " I found ";
 
         bodyText += "on the UW-Madison Campus: " + "\n";
-        subjectText += "from UW-Madison Campus";
+        subjectText += " from UW-Madison Campus";
 
         //pull out the note text
         bodyText += "\"" + getTextToUse(note) + "\" \n \n";
@@ -577,7 +577,8 @@ function Controller() {
     };
 
     this.noteURL = function(noteId) {
-        return 'http://siftr.org/v2/?' + model.gameId + '#' + noteId;
+        // TODO: don't hardcode this URL
+        return 'http://siftr.org/v2/?' + (model.gameURL || model.gameId) + '#' + noteId;
     }
 
     this.sendTweet = function(playerId, noteId) {

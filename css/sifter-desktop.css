@@ -415,6 +415,7 @@ body {
   color: black;
   font-weight: normal;
   font-size: 16px;
+  z-index: 1;
 }
 .edit-comment-option {
   padding: 4px;
