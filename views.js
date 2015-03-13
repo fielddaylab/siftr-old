@@ -113,6 +113,20 @@ function NoteView(note) {
             menu.is(':hidden') ? menu.show() : menu.hide();
         });
 
+        $(this.html).find('.edit-comment-edit').on(clickEvent, function(e) {
+            var comment = $(e.target).parents('.sifter-comment');
+            comment.children('.sifter-comment-text').hide();
+            comment.children('.sifter-comment-text-edit').show();
+            var menu = $(e.target).parents('.edit-comment');
+            menu.is(':hidden') ? menu.show() : menu.hide();
+        });
+
+        $(this.html).find('.sifter-edit-comment-cancel').on(clickEvent, function(e) {
+            var comment = $(e.target).parents('.sifter-comment');
+            comment.children('.sifter-comment-text-edit').hide();
+            comment.children('.sifter-comment-text').show();
+        });
+
         $(this.html).find('.edit-comment-delete').on(clickEvent, function(e) {
             var commentID = parseInt( $(e.target).parents('.edit-comment-box').attr('data-comment-id') );
             if (confirm('Are you sure you want to delete this comment?')) {

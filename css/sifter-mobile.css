@@ -337,13 +337,17 @@ button.filter-button.last {
   background-color: #cf2037;
   color: white;
 }
-.sifter-new-comment textarea {
+.sifter-new-comment textarea,
+.sifter-comment-text-edit textarea {
   width: 100%;
   border: 0;
   /*background: #f7f7f7;*/
   background: #f5f5f5;
   box-sizing: border-box;
   margin-bottom: 0.75em;
+}
+.sifter-comment-text-edit {
+  display: none;
 }
 button.touch-friendly {
   width: 100%;
