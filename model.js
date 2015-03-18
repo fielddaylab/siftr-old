@@ -8,7 +8,10 @@ function getAuthObject() {
 
 function Model() {
     self = this;
-    var whichSiftr = window.location.search.replace('?', '');
+    var whichSiftr = window.location.search.replace(/\?/g, '');
+    if (whichSiftr === '') {
+        whichSiftr = window.location.pathname.replace(/\//g, '');
+    }
     if (/^\d+$/.test(whichSiftr)) {
         this.gameId = parseInt(whichSiftr);
         this.gameURL = null;

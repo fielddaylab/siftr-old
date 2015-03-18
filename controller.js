@@ -577,8 +577,8 @@ function Controller() {
     };
 
     this.noteURL = function(noteId) {
-        // TODO: don't hardcode this URL
-        return 'http://siftr.org/v2/?' + (model.gameURL || model.gameId) + '#' + noteId;
+        return window.location.href.replace(/\#.*/, '') + '#' + noteId;
+        // we remove a hash (if there is one) and everything after it
     }
 
     this.sendTweet = function(playerId, noteId) {
