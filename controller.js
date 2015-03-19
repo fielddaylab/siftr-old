@@ -481,20 +481,20 @@ function Controller() {
         }
     }
 
-    this.like = function(playerId, noteId) {
+    this.like = function(playerId, noteId, callback) {
         callAris("notes.likeNote", {
             auth: getAuthObject(),
             game_id: model.gameId,
             note_id: noteId,
-        }, function() {});
+        }, callback);
     }
 
-    this.unlike = function(playerId, noteId) {
+    this.unlike = function(playerId, noteId, callback) {
         callAris("notes.unlikeNote", {
             auth: getAuthObject(),
             game_id: model.gameId,
             note_id: noteId,
-        }, function() {});
+        }, callback);
     }
 
     this.sendEmail = function(playerId, noteId) {

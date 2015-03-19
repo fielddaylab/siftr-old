@@ -406,14 +406,14 @@ function NoteView(note) {
         $("#shareLike").removeClass("glyphicon-heart-empty").addClass("glyphicon-heart");
 
         //tell server that you liked it
-        controller.like(model.playerId, this.note.note_id);
+        controller.like(model.playerId, this.note.note_id, function() {
+            //set player liked toggle for this note
+            this.note.player_liked = 1;
 
-        //set player liked toggle for this note
-        this.note.player_liked = 1;
-
-        //clear out old event handler with .off and add new one with .on 
-        $(this.html).find('#shareLike').off('click').on('click', function() {
-            thism.unlikeNote();
+            //clear out old event handler with .off and add new one with .on 
+            $(this.html).find('#shareLike').off('click').on('click', function() {
+                thism.unlikeNote();
+            });
         });
 
     }
@@ -428,15 +428,14 @@ function NoteView(note) {
         $(this.html).find("#shareLike").removeClass("glyphicon-heart").addClass("glyphicon-heart-empty");
 
         //tell server that you unliked it
-        controller.unlike(model.playerId, this.note.note_id);
+        controller.unlike(model.playerId, this.note.note_id, function() {
+            //set player liked toggle for this note
+            this.note.player_liked = 0;
 
-        //set player liked toggle for this note
-        this.note.player_liked = 0;
-
-        //clear out old event handler with .off and add new one with .on 
-        $(this.html).find('#shareLike').off('click');
-        $(this.html).find('#shareLike').on('click', function() {
-            thism.likeNote();
+            //clear out old event handler with .off and add new one with .on 
+            $(this.html).find('#shareLike').off('click').on('click', function() {
+                thism.likeNote();
+            });
         });
 
     }
