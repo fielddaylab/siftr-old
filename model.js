@@ -50,10 +50,12 @@ function Model() {
                 getGameFn = 'games.searchSiftrs';
                 getGameInput = {count: 1, siftr_url: this.gameURL};
             }
-            callService2(getGameFn, function(gameData){
+            callAris(getGameFn, getGameInput, function(gameData){
                 if (self.gameURL !== null) gameData.data = gameData.data[0];
                 self.gameId = parseInt(gameData.data.game_id);
-                callService2("tags.getTagsForGame", model.loadTagsFromServer, {game_id: self.gameId});
+                callAris("tags.getTagsForGame", {
+                    game_id: self.gameId
+                }, model.loadTagsFromServer);
 
                 ABOUT_SIFTR = gameData.data.description;
                 $('#p-about-siftr').html(gameData.data.description);
@@ -71,17 +73,17 @@ function Model() {
                 }
                 if (parseInt(gameData.data.icon_media_id) !== 0)
                 {
-                    callService2("media.getMedia", function(mediaData){
-                        $('.scale_logo').attr('src', mediaData.data.url);
-                    }, {
+                    callAris("media.getMedia", {
                         media_id: gameData.data.icon_media_id,
+                    }, function(mediaData){
+                        $('.scale_logo').attr('src', mediaData.data.url);
                     });
                 }
                 else
                 {
                     $('.scale_logo').attr('src', 'assets/images/icon_logo.png');
                 }
-            }, getGameInput);
+            });
         } else //it's being called from the laodTagsFromServer's returning
         {
             this.serverCallsToLoad--; //one more is loaded
@@ -127,10 +129,13 @@ function Model() {
             model.finishLoad();
             return;
         }
-        callService2("tags.countObjectsWithTag", function(response) {
+        callAris("tags.countObjectsWithTag", {
+            object_type: 'NOTE',
+            tag_id: tags[0].tag_id
+        }, function(response) {
             tags[0].count = parseInt(response.data.count);
             model.loadTagCounts(tags.slice(1));
-        }, {object_type: 'NOTE', tag_id: tags[0].tag_id});
+        });
     }
 
     this.addNoteFromData = function(note) {

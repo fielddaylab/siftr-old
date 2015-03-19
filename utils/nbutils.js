@@ -1,10 +1,5 @@
-function callService(serviceName, callback, GETparams, POSTparams)
-{
-    console.log("ERROR: tried to call v1 callService with args", arguments);
-}
-
-// USAGE: callService2('games.getGame', function(x){console.log(x);}, {"game_id": 123})
-function callService2(serviceName, callback, postJson)
+// USAGE: callAris('games.getGame', {game_id: 123}, function(x){console.log(x);})
+function callAris(serviceName, postJson, callback)
 {
     var url = SERVER_URL+'/json.php/v2.'+serviceName;
 

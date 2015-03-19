@@ -249,14 +249,7 @@ function Controller() {
                 }
             }
 
-            callService2("notes.createNote", function(noteResult) {
-                if (noteResult.returnCode === 0) {
-                    console.log("createNote success!", noteResult.data);
-                    controller.oneStepGetNote(noteResult.data.note_id);
-                } else {
-                    console.log("Couldn't create note", noteResult);
-                }
-            }, {
+            callAris("notes.createNote", {
                 auth: getAuthObject(),
                 game_id: gameId,
                 media: {
@@ -270,69 +263,78 @@ function Controller() {
                     longitude: lon,
                 },
                 tag_id: tags[0],
+            }, function(noteResult) {
+                if (noteResult.returnCode === 0) {
+                    console.log("createNote success!", noteResult.data);
+                    controller.oneStepGetNote(noteResult.data.note_id);
+                } else {
+                    console.log("Couldn't create note", noteResult);
+                }
             });
         };
         photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
     };
     this.oneStepGetNote = function (note_id) {
         // retrieve the note object back from the server so you can push it to HTML
-        callService2("notes.searchNotes", controller.pushNewNote, {
+        callAris("notes.searchNotes", {
             game_id: model.gameId,
             note_id: note_id,
             note_count: 1,
-        });
+        }, controller.pushNewNote);
     }
 
     this.addCommentToNote = function(noteId, comment, callback) {
-        callService2("note_comments.createNoteComment", callback, {
+        callAris("note_comments.createNoteComment", {
             game_id: model.gameId,
             auth: getAuthObject(),
             note_id: noteId,
             description: comment,
-        });
+        }, callback);
     }
 
     this.deleteNote = function(noteId) {
-        callService2("notes.deleteNote", function() {}, {
+        callAris("notes.deleteNote", {
             auth: getAuthObject(),
             note_id: noteId,
+        }, function() {
+            model.deleteNote(noteId);
+            controller.populateAllFromModel(); //re-display the map and left hand images
         });
-        model.deleteNote(noteId);
-        controller.populateAllFromModel(); //re-display the map and left hand images
     }
 
     this.deleteComment = function(noteID, commentID, callback) {
-        callService2("note_comments.deleteNoteComment", function() {
-            model.deleteComment(noteID, commentID);
-            callback();
-        }, {
+        callAris("note_comments.deleteNoteComment", {
             auth: getAuthObject(),
             note_comment_id: commentID,
+        }, function() {
+            model.deleteComment(noteID, commentID);
+            callback();
         });
     }
 
     this.editComment = function(noteID, commentID, text, callback) {
-        callService2("note_comments.updateNoteComment", function() {
-            model.editComment(noteID, commentID, text);
-            callback();
-        }, {
+        callAris("note_comments.updateNoteComment", {
             auth: getAuthObject(),
             note_comment_id: commentID,
             description: text,
+        }, function() {
+            model.editComment(noteID, commentID, text);
+            callback();
         })
     }
 
     this.login = function(username, password) {
-        callService2("users.logIn", this.loginReturned, {
+        callAris("users.logIn", {
             permission: 'read_write',
             user_name: username,
             password: password,
-        });
+        }, this.loginReturned);
     }
 
+    // TODO: this needs to be updated when aris v2 gets facebook login support
     this.facebookLogin = function(email, displayName, uid) {
         //it is possible for email to be blank
-        callService("players.getFacebookLoginPlayerObject", this.facebookLoginReturned, "/" + email + "/" + displayName + "/" + uid, false);
+        //callService("players.getFacebookLoginPlayerObject", this.facebookLoginReturned, "/" + email + "/" + displayName + "/" + uid, false);
     }
 
     this.saveCookies = function() {
@@ -434,11 +436,11 @@ function Controller() {
 
     this.createAccount = function(email, password, username) {
         model.displayName = username; /* Because nothing is contained in the callback and we're logging them in */
-        callService2("users.createUser", this.createPlayerReturned, {
+        callAris("users.createUser", {
             user_name: username,
             password: password,
             email: email,
-        });
+        }, this.createPlayerReturned);
     }
 
     this.createPlayerReturned = function(obj) {
@@ -462,9 +464,9 @@ function Controller() {
     }
 
     this.resetAndEmailPassword = function(email) {
-        callService2("users.requestForgotPasswordEmail", controller.resetPasswordMessage, {
+        callAris("users.requestForgotPasswordEmail", {
             email: email,
-        });
+        }, controller.resetPasswordMessage);
     }
 
     this.resetPasswordMessage = function(responseMessage) {
@@ -480,19 +482,19 @@ function Controller() {
     }
 
     this.like = function(playerId, noteId) {
-        callService2("notes.likeNote", function() {}, {
+        callAris("notes.likeNote", {
             auth: getAuthObject(),
             game_id: model.gameId,
             note_id: noteId,
-        });
+        }, function() {});
     }
 
     this.unlike = function(playerId, noteId) {
-        callService2("notes.unlikeNote", function() {}, {
+        callAris("notes.unlikeNote", {
             auth: getAuthObject(),
             game_id: model.gameId,
             note_id: noteId,
-        });
+        }, function() {});
     }
 
     this.sendEmail = function(playerId, noteId) {
@@ -658,17 +660,17 @@ function Controller() {
     };
 
     this.editDescription = function(noteId, description) {
-        callService2('notes.updateNote', function(data) {
+        callAris('notes.updateNote', {
+            auth: getAuthObject(),
+            note_id: noteId,
+            description: description,
+        }, function(data) {
             if (data.returnCode === 0) {
                 model.currentNote.description = description;
                 controller.noteSelected({note: model.currentNote});
             } else {
                 // TODO
             }
-        }, {
-            auth: getAuthObject(),
-            note_id: noteId,
-            description: description,
         });
     };
 }
