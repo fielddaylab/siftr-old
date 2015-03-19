@@ -43,14 +43,7 @@ function finishLoadGame(responseData, thisSiftTime) {
 
 }
 
-function siftMore() {
-    model.howMany += 50;
-    startSift(model.lastSiftType, model.howMany);
-}
-
-function startSift(siftType, howMany) {
-    if (howMany === undefined) howMany = 50;
-    model.howMany = howMany;
+function startSift(siftType) {
     model.lastSiftType = siftType;
 
     var thisSiftTime;
@@ -107,7 +100,6 @@ function startSift(siftType, howMany) {
     var siftObj = {
         game_id: model.gameId,
         search_terms: searchTerms,
-        note_count: howMany,
         tag_ids: selectedTags,
         order_by: 'recent',
         user_id: model.playerId,

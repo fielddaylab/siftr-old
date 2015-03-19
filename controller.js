@@ -121,11 +121,6 @@ function Controller() {
             if (!!listNote.html) model.views.mainViewLeft.appendChild(listNote.html);
             //make sure it's not blank, if it is it'll crash    
         }
-        var loadMoreButton = document.createElement('button');
-        loadMoreButton.setAttribute('onclick', 'siftMore();');
-        loadMoreButton.setAttribute('style', 'margin: 10px;');
-        loadMoreButton.innerHTML = 'Load More';
-        model.views.mainViewLeft.appendChild(loadMoreButton);
         controller.getNoteFromURL();
     };
 
