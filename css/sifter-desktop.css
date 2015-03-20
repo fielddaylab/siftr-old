@@ -86,7 +86,11 @@ body {
 }
 .sifter-logo-box .siftr-logo {
   font-size: 150%;
-  vertical-align: middle;
+  vertical-align: top;
+}
+.sifter-logo-box a {
+  text-decoration: none;
+  margin-right: 15px;
 }
 .sifter-rightside-launchpad {
   float: right;
