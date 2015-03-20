@@ -446,7 +446,7 @@ button.touch-friendly {
   margin-top: 0;
   text-align: center;
 }
-.about_view li {
+.about_view ul li {
   list-style-type: circle;
 }
 .about_view ul {
