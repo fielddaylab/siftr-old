@@ -57,8 +57,9 @@ function Model() {
                     game_id: self.gameId
                 }, model.loadTagsFromServer);
 
-                ABOUT_SIFTR = gameData.data.description;
-                $('#p-about-siftr').html(gameData.data.description);
+                var markdown = new Showdown.converter();
+                ABOUT_SIFTR = markdown.makeHtml(gameData.data.description);
+                $('#p-about-siftr').html(ABOUT_SIFTR);
                 if (gameData.data.map_latitude !== '0' || gameData.data.map_longitude !== '0') {
                     MAP_CENTER_LATITUDE  = parseFloat(gameData.data.map_latitude  );
                     MAP_CENTER_LONGITUDE = parseFloat(gameData.data.map_longitude );
