@@ -70,29 +70,13 @@ function startSift(siftType) {
 
             //each tag has an ID number, which must be sent to the JSON for the query to work right
             var tagIdNum;
-            switch (tagItem.value.toLowerCase().trim()) {
-                case model.tags[0].tag.toLowerCase().trim():
-                    tagIdNum = model.tags[0].tag_id;
+            var tagValue = tagItem.value.toLowerCase().trim();
+            for (var j = 0; j <= model.tags.length; j++) {
+                if (tagValue === model.tags[j].tag.toLowerCase().trim()) {
+                    tagIdNum = model.tags[j].tag_id;
                     break;
-                case model.tags[1].tag.toLowerCase().trim():
-                    tagIdNum = model.tags[1].tag_id;
-                    break;
-                case model.tags[2].tag.toLowerCase().trim():
-                    tagIdNum = model.tags[2].tag_id;
-                    break;
-                case model.tags[3].tag.toLowerCase().trim():
-                    tagIdNum = model.tags[3].tag_id;
-                    break;
-                case model.tags[4].tag.toLowerCase().trim():
-                    tagIdNum = model.tags[4].tag_id;
-                    break;
+                }
             }
-            //tag ids are below,but pull from array for safety
-            //innovation dev 117 prod 1404
-            //must do dev 118 prod 1413
-            //madison Culture dev 119 prod 1410
-            //stories of the past dev 120 prod 1407
-            //100 years form now dev 121 prod 1414
             selectedTags[selectedTags.length] = tagIdNum;
         }
     }
