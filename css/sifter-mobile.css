@@ -125,9 +125,9 @@ body {
 /* Slide out buttons */
 .sifter-filters-slideout {
   position: fixed;
-  height: 190px;
+  height: 250px;
   margin-bottom: 50px;
-  bottom: -250px;
+  bottom: -310px;
   padding-bottom: 60px;
   background: rgba(255, 255, 255, 0.85);
   width: 100%;
