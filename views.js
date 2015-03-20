@@ -67,12 +67,13 @@ function NoteView(note) {
 
         data.author = parseInt(model.playerId) === parseInt(this.note.user_id) ? "You" : this.note.user_name;
         data.isAuthor = parseInt(model.playerId) === parseInt(this.note.user_id) ? true : false; //TODO: need real authentication for this
-        data.createdDate = new Date(this.note.created.replace(' ', 'T') + '-06:00').toLocaleString();
+        data.createdDate = new Date(this.note.created.replace(' ', 'T') + 'Z').toLocaleString();
         // TODO: figure out how timestamp timezones differ between aris v1 and v2
         // (in v1 this.note.created was UTC)
         // this.note.created is "yyyy-mm-dd hh:mm:ss" CST
         // the Date constructor takes "yyyy-mm-ddThh:mm:ss-06:00" to ensure CST interpretation
         // then toLocaleString() uses user timezone
+        // MT 3/20: huh. prod v2 is now UTC again, changing '-06:00' to 'Z'
 
         //TODO: find a better place for these, controller? 
         //TODO: note.tweets and note.pins don't exist on server, replace with style-stripped official counters 
