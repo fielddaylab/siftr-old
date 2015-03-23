@@ -87,6 +87,7 @@ body {
 .sifter-logo-box .siftr-logo {
   font-size: 150%;
   vertical-align: top;
+  display: inline-block;
 }
 .sifter-logo-box a {
   text-decoration: none;
