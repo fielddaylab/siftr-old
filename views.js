@@ -34,6 +34,25 @@ function ListNote(callback, note, noteId) {
         $(this.html).find('.sifter-grid-image').on('click', function() {
             self.callback(self);
         });
+
+        // Grow map marker when you mouse over the square
+        $(this.html).mouseenter(function(){
+            if (!note.marker.is_big) {
+                var img = $(note.marker.marker.content).children('img');
+                img.width(img.width() * 1.5);
+                note.marker.marker.content_changed();
+                note.marker.is_big = true;
+            }
+        });
+        // Shrink map marker when mouse leaves the square
+        $(this.html).mouseleave(function(){
+            if (note.marker.is_big) {
+                var img = $(note.marker.marker.content).children('img');
+                img.width(img.width() / 1.5);
+                note.marker.marker.content_changed();
+                note.marker.is_big = false;
+            }
+        });
     }
     this.constructHTML();
 }
@@ -388,6 +407,7 @@ function MapMarker(callback, note) {
     var self = this; // <- I hate javascript.
     this.callback = callback;
     this.note = note;
+    note.marker = this;
 
     var imageMarker = new RichMarker({
         position: this.note.geoloc,
