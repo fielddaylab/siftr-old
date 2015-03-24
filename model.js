@@ -29,7 +29,6 @@ function Model() {
     this.contentWaitingToUpload = 0; // when user uploads multiple contents, you'll have to wait till all are uploaded before you can push it to HTML
     this.mapMarkers = [];
     this.tags = '';
-    this.serverCallsToLoad = 0; //right now, we have 5 consecutive server calls for icon URLS, all must complete before we can continue
     this.loadFinishCallback = '';
     this.siftTypeCode = 0; //we keep track of this so we can sift from tag or search changes without forgetting what main sift we were using. Start with top
 
@@ -85,13 +84,10 @@ function Model() {
                     $('.scale_logo').attr('src', 'assets/images/icon_logo.png');
                 }
             });
-        } else //it's being called from the laodTagsFromServer's returning
+        }
+        else //it's being called from the loadTagsFromServer's returning
         {
-            this.serverCallsToLoad--; //one more is loaded
-            //not untill all the server calls return can we proceed
-            if (this.serverCallsToLoad <= 0) {
-                this.loadFinishCallback();
-            }
+            this.loadFinishCallback();
         }
     }
 
