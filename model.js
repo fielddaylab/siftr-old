@@ -96,10 +96,20 @@ function Model() {
     //check to see if they have a session cookie with their playerId and can skip login, if not set it to zero
     var cookie = $.cookie('aris-auth');
     if (cookie) {
-        self.playerId = cookie.user_id;
-        self.displayName = cookie.username;
-        self.readWriteKey = cookie.key;
-        $('.sifter-show-logout-button').show();
+        // Make sure the auth object is actually valid
+        callAris('users.logIn', {
+            auth: cookie,
+        }, function(res) {
+            if (res.returnCode === 0 && res.data.user.user_id !== null) {
+                self.playerId = cookie.user_id;
+                self.displayName = cookie.username;
+                self.readWriteKey = cookie.key;
+                $('.sifter-show-logout-button').show();
+            }
+            else {
+                controller.logout();
+            }
+        });
     }
 
     this.loadTagsFromServer = function(response) {
