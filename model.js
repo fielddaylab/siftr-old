@@ -100,7 +100,7 @@ function Model() {
         callAris('users.logIn', {
             auth: cookie,
         }, function(res) {
-            if (res.returnCode === 0 && res.data.user.user_id !== null) {
+            if (res.returnCode === 0 && res.data.user_id !== null) {
                 self.playerId = cookie.user_id;
                 self.displayName = cookie.username;
                 self.readWriteKey = cookie.key;
