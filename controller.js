@@ -209,65 +209,95 @@ function Controller() {
         var fullNote = note.data[0];
         model.addNoteFromData(fullNote); //add it in to the cached model
         controller.populateAllFromModel(); //re-display the map and left hand images
+        document.getElementById('message').style.display = 'none';
         controller.noteSelected({note: fullNote}); //show the new note
     }
 
     // New, simpler note upload function
-    this.oneStepNote = function () {
-        var gameId = model.gameId;
-        var playerId = model.playerId;
-        var lat = model.currentNote.lat;
-        var lon = model.currentNote.lon;
-        var caption = model.currentNote.text;
-        var tags = [];
-        for (var i = 1; i < model.tags.length + 1; i++) {
-            if (document.getElementById("create_tag_" + i).checked) {
-                tags.push(model.tags[i - 1].tag_id);
-            }
-        };
-        var photoReader = new FileReader();
-        photoReader.onload = function() {
-            var photoData = photoReader.result;
-            mime_map = {
-                "jpg": "image/jpeg",
-                "png": "image/png",
-                "gif": "image/gif",
-            };
-            var photoBase64 = '';
-            var photoExt = '';
-            for (ext in mime_map) {
-                var dataPrefix = 'data:' + mime_map[ext] + ';base64,';
-                if (photoData.indexOf(dataPrefix) === 0) {
-                    photoBase64 = photoData.substring(dataPrefix.length);
-                    photoExt = ext;
-                    break;
-                }
-            }
+    this.oneStepNote = function (theJSON) {
+        document.getElementById('messageContent').innerHTML = "Uploading...";
+        document.getElementById('message').style.display = 'block';
 
-            callAris("notes.createNote", {
-                auth: getAuthObject(),
-                game_id: gameId,
-                media: {
-                    file_name: "upload." + photoExt,
-                    data: photoBase64,
-                    resize: 640,
-                },
-                description: caption,
-                trigger: {
-                    latitude: lat,
-                    longitude: lon,
-                },
-                tag_id: tags[0],
-            }, function(noteResult) {
+        function withTheJSON() {
+            callAris('notes.createNote', theJSON, function(noteResult) {
                 if (noteResult.returnCode === 0) {
-                    console.log("createNote success!", noteResult.data);
                     controller.oneStepGetNote(noteResult.data.note_id);
                 } else {
-                    console.log("Couldn't create note", noteResult);
+                    var msg = $('#messageContent');
+                    msg.text('Upload failed.');
+                    var retry = $('<div class="internalLink">Retry</div>');
+                    retry.css('margin', '5px');
+                    retry.css('font-weight', 'bold');
+                    retry.click(function(){
+                        document.getElementById('message').style.display = 'none';
+                        self.oneStepNote(theJSON);
+                    });
+                    var cancel = $('<div class="internalLink">Cancel</div>');
+                    cancel.css('margin', '5px');
+                    cancel.css('font-weight', 'bold');
+                    cancel.click(function(){
+                        document.getElementById('message').style.display = 'none';
+                    });
+                    msg.append(retry);
+                    msg.append(cancel);
                 }
             });
-        };
-        photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
+        }
+
+        if (theJSON != null) {
+            // this is a retry attempt
+            withTheJSON();
+        }
+        else {
+            var gameId = model.gameId;
+            var playerId = model.playerId;
+            var lat = model.currentNote.lat;
+            var lon = model.currentNote.lon;
+            var caption = model.currentNote.text;
+            var tags = [];
+            for (var i = 1; i < model.tags.length + 1; i++) {
+                if (document.getElementById("create_tag_" + i).checked) {
+                    tags.push(model.tags[i - 1].tag_id);
+                }
+            };
+            var photoReader = new FileReader();
+            photoReader.onload = function() {
+                var photoData = photoReader.result;
+                mime_map = {
+                    "jpg": "image/jpeg",
+                    "png": "image/png",
+                    "gif": "image/gif",
+                };
+                var photoBase64 = '';
+                var photoExt = '';
+                for (ext in mime_map) {
+                    var dataPrefix = 'data:' + mime_map[ext] + ';base64,';
+                    if (photoData.indexOf(dataPrefix) === 0) {
+                        photoBase64 = photoData.substring(dataPrefix.length);
+                        photoExt = ext;
+                        break;
+                    }
+                }
+
+                theJSON = {
+                    auth: getAuthObject(),
+                    game_id: gameId,
+                    media: {
+                        file_name: "upload." + photoExt,
+                        data: photoBase64,
+                        resize: 640,
+                    },
+                    description: caption,
+                    trigger: {
+                        latitude: lat,
+                        longitude: lon,
+                    },
+                    tag_id: tags[0],
+                };
+                withTheJSON();
+            }
+            photoReader.readAsDataURL( $('#in-camera')[0].files[0] );
+        }
     };
     this.oneStepGetNote = function (note_id) {
         // retrieve the note object back from the server so you can push it to HTML
