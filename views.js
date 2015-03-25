@@ -39,6 +39,7 @@ function ListNote(callback, note, noteId) {
         $(this.html).mouseenter(function(){
             if (!note.marker.is_big) {
                 var img = $(note.marker.marker.content).children('img');
+                if (img.width() > 30) return; // hack to prevent too-big icons when mouse is on square during load
                 img.width(img.width() * 1.5);
                 note.marker.marker.content_changed();
                 note.marker.is_big = true;
