@@ -85,7 +85,7 @@ function NoteView(note) {
         data.emailShare = this.note.email_shares;
         data.likeShare = this.note.note_likes;
 
-        data.author = parseInt(model.playerId) === parseInt(this.note.user_id) ? "You" : this.note.user_name;
+        data.author = parseInt(model.playerId) === parseInt(this.note.user_id) ? "You" : (this.note.display_name || this.note.user_name);
         data.isAuthor = parseInt(model.playerId) === parseInt(this.note.user_id) ? true : false; //TODO: need real authentication for this
         data.createdDate = new Date(this.note.created.replace(' ', 'T') + 'Z').toLocaleString();
         // TODO: figure out how timestamp timezones differ between aris v1 and v2
@@ -223,7 +223,7 @@ function NoteView(note) {
     this.getCommentsJson = function(comments) {
         return $(comments).map(function() {
             return {
-                author: this.user.user_name,
+                author: this.user.display_name || this.user.user_name,
                 text: this.description,
                 canDelete: parseInt(model.playerId) === parseInt(this.user_id),
                 commentID: parseInt(this.note_comment_id),
