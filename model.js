@@ -63,14 +63,15 @@ function Model() {
                     MAP_CENTER_LATITUDE  = parseFloat(gameData.data.map_latitude  );
                     MAP_CENTER_LONGITUDE = parseFloat(gameData.data.map_longitude );
                     MAP_ZOOM_LEVEL       = parseFloat(gameData.data.map_zoom_level);
-                    // center map
-                    var map_center = new google.maps.LatLng(MAP_CENTER_LATITUDE, MAP_CENTER_LONGITUDE);
-                    model.views.gmap.setCenter(map_center);
-                    model.views.gmap.setZoom(MAP_ZOOM_LEVEL);
+                } else {
+                    MAP_CENTER_LATITUDE  = 43.071644;
+                    MAP_CENTER_LONGITUDE = -89.400658;
+                    MAP_ZOOM_LEVEL       = 14;
                 }
-                if (gameData.data.map_zoom_level !== '0') {
-                    MAP_ZOOM_LEVEL = parseFloat(gameData.data.map_zoom_level);
-                }
+                // center map
+                var map_center = new google.maps.LatLng(MAP_CENTER_LATITUDE, MAP_CENTER_LONGITUDE);
+                model.views.gmap.setCenter(map_center);
+                model.views.gmap.setZoom(MAP_ZOOM_LEVEL);
                 if (parseInt(gameData.data.icon_media_id) !== 0)
                 {
                     callAris("media.getMedia", {
