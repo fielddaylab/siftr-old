@@ -3,6 +3,9 @@ function Controller() {
 
     this.noteSelected = function(sender) {
         var note = sender.note;
+        if (window.location.hash !== '#' + note.note_id) {
+            history.pushState('', '', '#' + note.note_id);
+        }
         model.views.noteView = new NoteView(note);
         model.views.noteViewContainer.innerHTML = '';
         model.views.noteViewContainer.appendChild(model.views.noteView.html);
@@ -76,11 +79,6 @@ function Controller() {
         model.views.markerclusterer.clearMarkers();
         var tmpmarker;
         for (var i = 0; i < model.gameNotes.length; i++) {
-            //   if(!this.hasAtLeastOneSelectedTag(model.gameNotes[i])) continue;
-
-            //   var search_value = $('.sifter-filter-search-input').filter(":visible").val();
-            //   if(!this.matchesFilter(model.gameNotes[i], search_value)) continue;
-
             tmpmarker = new MapMarker(this.noteSelected, model.gameNotes[i]);
             model.mapMarkers[model.mapMarkers.length] = tmpmarker;
         }
@@ -95,23 +93,6 @@ function Controller() {
             }, 100);
         }
     };
-
-    this.hasAtLeastOneSelectedTag = function(note) {
-        try {
-            for (var i = 1; i <= 5; i++) {
-                if (document.getElementById("tag" + i).checked) {
-                    for (var j = 0; j < note.tags.length; j++) {
-                        if (note.tags[j].tag.toLowerCase() == document.getElementById("tag" + i).value.toLowerCase())
-                            return true;
-                    }
-                }
-            }
-            return false;
-        } catch (err) {
-            console.log(err);
-        }; // was getting errors here for a while
-
-    }
 
     this.populateListNotesFromModel = function() {
         model.views.mainViewLeft.innerHTML = '';
@@ -582,7 +563,7 @@ function Controller() {
     }
 
     this.getNoteFromURL = function() {
-        var match = window.location.href.match(/#(.*)$/);
+        var match = window.location.hash.match(/^#(\d+)$/);
         var noteFromHash;
         if (match) {
             for (var i = 0; i < model.gameNotes.length; i++) {
@@ -596,11 +577,12 @@ function Controller() {
                     note: noteFromHash
                 };
                 controller.noteSelected(sender);
+                return;
             } else {
                 //else they gave an invalid note_id
-                window.history.pushState('', '', window.location.href.split("#")[0]);
             }
         }
+        controller.hideNoteView();
     };
 
     this.noteURL = function(noteId) {

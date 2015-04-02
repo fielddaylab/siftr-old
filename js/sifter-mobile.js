@@ -37,9 +37,7 @@ $(document).ready(function() {
 
     /* Dialog and Overlay close */
     $(document).on('click', '.close-button, .sifter-modal-overlay', function() {
-        if (window.location.href.indexOf("#") > -1) {
-            window.history.pushState('', '', window.location.href.split("#")[0]);
-        }
+        history.pushState("", document.title, window.location.pathname);
         $('.closable, .sifter-modal-overlay').hide();
     });
 

@@ -144,4 +144,8 @@ $(document).ready(function() {
         model.views.gmap.setZoom(MAP_ZOOM_LEVEL);
     });
 
+    window.addEventListener("hashchange", function(){
+        controller.getNoteFromURL();
+    }, false);
+
 });
