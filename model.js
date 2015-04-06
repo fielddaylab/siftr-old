@@ -51,6 +51,11 @@ function Model() {
             }
             callAris(getGameFn, getGameInput, function(gameData){
                 if (self.gameURL !== null) gameData.data = gameData.data[0];
+                if (gameData.data == null) {
+                    // Siftr doesn't exist; put up a message
+                    $('#messageContent').text("Siftr not found.");
+                    return;
+                }
                 self.gameId = parseInt(gameData.data.game_id);
                 callAris("tags.getTagsForGame", {
                     game_id: self.gameId
