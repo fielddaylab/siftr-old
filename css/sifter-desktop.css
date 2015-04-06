@@ -17,17 +17,14 @@ body {
 .sifter-desktop-header {
   height: 85px;
 }
-/* With pop down shown */
 .sifter-filters-popdown {
-  height: 225px;
-}
-.sifter-content.shrunk {
-  height: calc(100% - 85px - 225px);
-  /* 85px for the top red bar, 225px for the tag and search part */
+  max-height: calc(100% - 85px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 /* With pop down hidden */
 .sifter-filters-popdown.slide-up {
-  height: 0%;
+  display: none;
 }
 .sifter-content {
   height: calc(100% - 85px);
@@ -155,7 +152,7 @@ body {
 .sifter-filters-popdown {
   box-shadow: 0 0 10px #888888;
   background-color: #f7f5e8;
-  position: relative;
+  position: absolute;
 }
 .sifter-filters,
 .sifter-categories {
@@ -163,29 +160,21 @@ body {
 }
 /* Filter Buttons */
 .sifter-filters {
-  width: 300px;
   font-size: 110%;
+  width: 100%;
 }
 .sifter-filters button {
-  width: 115px;
-  margin-top: 1em;
-  margin-left: 1em;
+  width: 100%;
   color: #b70101;
   padding: 0.25em;
 }
 /* Category Links */
 .sifter-categories {
-  width: 525px;
   font-size: 0.7em;
-  margin: 1em;
-  margin-left: 0;
 }
 .sifter-categories .sifter-category {
-  display: inline-block;
-  padding: 0.25em 0;
-  margin-bottom: 1em;
-  width: 170px;
-  overflow: hidden;
+  display: block;
+  padding: 0.5em;
   list-style: none;
   color: #b70101;
 }
@@ -228,7 +217,6 @@ body {
   background-color: #e7d9c1;
   border-top: 1px solid #f8ead2;
   color: #b70101;
-  position: absolute;
   bottom: 0;
   width: 100%;
   padding: 5px;
@@ -246,7 +234,8 @@ body {
 */
 /* MT: commenting out because this hides about/logout on small desktop window */
 .sifter-filters-popdown {
-  overflow: hidden;
+  right: 0;
+  width: 275px;
 }
 /* Content Area */
 .sifter-content {
@@ -747,15 +736,6 @@ button.touch-friendly {
 /* Desktop Size Bump */
 .sifter-filters-popdown {
   font-size: 120%;
-}
-.sifter-filters {
-  width: 300px;
-}
-.sifter-categories {
-  width: 590px;
-}
-.sifter-categories .sifter-category {
-  width: 190px;
 }
 .sifter-category .scale-icon {
   font-size: 2.75em;

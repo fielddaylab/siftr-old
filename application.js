@@ -57,7 +57,8 @@ function startSift(siftType) {
     var searchTypeCode = model.getSiftTypeCode(siftType);
 
     //check to see if any search terms have been set, if so, build an array by word
-    var searchTerms = $('.sifter-filter-search-input').filter(":visible").val().split(" ");
+    var searchText = $('.sifter-filter-search-input').filter(":visible").val();
+    var searchTerms = (searchText ? searchText.split(" ") : [""]);
     if (searchTerms[0] === "") {
         searchTerms = [];
     }

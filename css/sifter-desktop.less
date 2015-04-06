@@ -68,30 +68,24 @@ html,body
   height: 85px;
 }
 
+.sifter-filters-popdown
+{
+  max-height: ~"calc(100% - 85px)";
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
-  /* With pop down shown */
-  .sifter-filters-popdown
-  {
-    height: 225px
-  }
+/* With pop down hidden */
+.sifter-filters-popdown.slide-up
+{
+  display: none;
+}
 
-  .sifter-content.shrunk
-  {
-    height: ~"calc(100% - 85px - 225px)";
-    /* 85px for the top red bar, 225px for the tag and search part */
-  }
-
-  /* With pop down hidden */
-  .sifter-filters-popdown.slide-up
-  {
-    height: 0%;
-  }
-
-  .sifter-content
-  {
-    height: ~"calc(100% - 85px)";
-    /* 85px for the top red bar */
-  }
+.sifter-content
+{
+  height: ~"calc(100% - 85px)";
+  /* 85px for the top red bar */
+}
 
 .sifter-imagelist
 {
@@ -249,7 +243,7 @@ html,body
 {
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
   background-color: @popDownBackgroundColor; 
-  position: relative;
+  position: absolute;
 }
 
 .sifter-filters,
@@ -261,14 +255,12 @@ html,body
   /* Filter Buttons */
   .sifter-filters
   {
-    width: 300px;
     font-size: 110%;
+    width: 100%;
   }
   .sifter-filters button
   {
-    width: 115px;
-    margin-top: 1em;
-    margin-left: 1em;
+    width: 100%;
     color: @buttonColor;
     padding: 0.25em;
   }
@@ -277,18 +269,12 @@ html,body
   /* Category Links */
   .sifter-categories
   {
-    width: 525px;
     font-size: 0.7em;
-    margin: 1em;
-    margin-left: 0;
   }
   .sifter-categories .sifter-category 
   {
-    display: inline-block;
-    padding: 0.25em 0;
-    margin-bottom: 1em;
-    width: 170px;
-    overflow: hidden;
+    display: block;
+    padding: 0.5em;
     list-style: none;
     color: @categoryFontColor;
   }
@@ -342,7 +328,6 @@ html,body
     background-color: @footerColor;
     border-top: 1px solid @footerBorderColor;
     color: @footerFontColor;
-    position: absolute;
     bottom: 0;
     width: 100%;
     padding: 5px;
@@ -363,7 +348,8 @@ html,body
 
 .sifter-filters-popdown
 {
-  overflow: hidden;
+  right: 0;
+  width: 275px;
 }
 
 
@@ -1064,17 +1050,14 @@ button.touch-friendly
 
 .sifter-filters
 {
-  width: 300px;
 }
 
 .sifter-categories
 {
-  width: 590px;
 }
 
 .sifter-categories .sifter-category
 {
-  width: 190px;
 }
 
 .sifter-category .scale-icon
