@@ -203,13 +203,14 @@ html,body
 .sifter-filters-slideout
 {
   position: fixed;
-  height: 250px;
+  max-height: 250px;
   margin-bottom: 50px;
   bottom: -310px;
   padding-bottom: 60px;
   background: rgba(255, 255, 255, 0.85);
   width: 100%;
   transition-duration: 0.5s;
+  overflow-y: auto;
 }
 
 .sifter-filters-expanded
@@ -256,6 +257,10 @@ button.filter-button.last
   border-bottom-right-radius: 5px;
 }
 
+.sifter-categories
+{
+  margin-bottom: 30px;
+}
 
 .sifter-categories div,
 .category_box div
