@@ -172,7 +172,7 @@ html,body
 {
   position: absolute;
   left: 50%;
-  top: -30px;
+  top: -20px;
   height: 100px;
   width: 100px;
   margin-left: -50px;
@@ -186,6 +186,8 @@ html,body
 {
   display: inline-block;
   font-size: 2em;
+  top: -10px;
+  position: relative;
 }
 
 .sifter-search-field
@@ -203,14 +205,19 @@ html,body
 .sifter-filters-slideout
 {
   position: fixed;
-  max-height: 250px;
-  margin-bottom: 50px;
   bottom: -310px;
-  padding-bottom: 60px;
   background: rgba(255, 255, 255, 0.85);
   width: 100%;
   transition-duration: 0.5s;
+}
+
+#filters_view_container
+{
+  margin-bottom: 80px;
   overflow-y: auto;
+  max-height: 210px;
+  // max-height: ~"calc(@screenHeight - 50px - 48px - 80px)";
+  // TODO: make the above work
 }
 
 .sifter-filters-expanded
@@ -257,15 +264,10 @@ button.filter-button.last
   border-bottom-right-radius: 5px;
 }
 
-.sifter-categories
-{
-  margin-bottom: 30px;
-}
-
 .sifter-categories div,
 .category_box div
 {
-  font-size: 1.25em;
+  font-size: 1.1em;
   margin-left: 1em;
   margin-bottom: 0.2em;
 }

@@ -101,7 +101,7 @@ body {
 .button-center {
   position: absolute;
   left: 50%;
-  top: -30px;
+  top: -20px;
   height: 100px;
   width: 100px;
   margin-left: -50px;
@@ -114,6 +114,8 @@ body {
 .button-center span {
   display: inline-block;
   font-size: 2em;
+  top: -10px;
+  position: relative;
 }
 .sifter-search-field {
   border: 1px solid #dedede;
@@ -125,14 +127,15 @@ body {
 /* Slide out buttons */
 .sifter-filters-slideout {
   position: fixed;
-  max-height: 250px;
-  margin-bottom: 50px;
   bottom: -310px;
-  padding-bottom: 60px;
   background: rgba(255, 255, 255, 0.85);
   width: 100%;
   transition-duration: 0.5s;
+}
+#filters_view_container {
+  margin-bottom: 80px;
   overflow-y: auto;
+  max-height: 210px;
 }
 .sifter-filters-expanded {
   bottom: 0px;
@@ -166,12 +169,9 @@ button.filter-button.last {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.sifter-categories {
-  margin-bottom: 30px;
-}
 .sifter-categories div,
 .category_box div {
-  font-size: 1.25em;
+  font-size: 1.1em;
   margin-left: 1em;
   margin-bottom: 0.2em;
 }
