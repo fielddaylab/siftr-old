@@ -583,7 +583,20 @@ function Controller() {
             }
         }
         controller.hideNoteView();
+        controller.showAboutIfNew();
     };
+
+    this.showAboutIfNew = function() {
+        // Show the about page on first launch of a Siftr.
+        // Either they came straight to siftr.org/whatever/,
+        // or they went to a note hash link and they're now closing it.
+        var seenCookie = $.cookie('seen-siftr');
+        if (!seenCookie) {
+            $.cookie('seen-siftr', {seen: true});
+            // the path for this cookie will automatically be siftr.org/some-specific-siftr/
+            this.showAbout();
+        }
+    }
 
     this.noteURL = function(noteId) {
         return window.location.href.replace(/\#.*/, '') + '#' + noteId;

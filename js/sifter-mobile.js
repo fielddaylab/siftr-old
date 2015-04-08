@@ -37,6 +37,7 @@ $(document).ready(function() {
     $(document).on('click', '.close-button, .sifter-modal-overlay', function() {
         history.pushState("", document.title, window.location.pathname);
         $('.closable, .sifter-modal-overlay').hide();
+        controller.showAboutIfNew();
     });
 
 });
