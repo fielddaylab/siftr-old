@@ -12,6 +12,7 @@ html,
 body {
   height: 100%;
   margin: 0;
+  font-family: 'ABeeZee', sans-serif;
 }
 /* Layout dimensions *************************************** */
 .sifter-desktop-header {
@@ -67,28 +68,41 @@ body {
   /* Prevent padding from wrapping the nav */
   box-shadow: 0 0 10px #888888;
   background-color: #b70101;
+  height: 80px;
 }
 .sifter-logo-box {
   float: left;
-  margin: 20px;
-  color: #b70101;
-  /*changes color of icons if icons are webfont*/
+  color: white;
   position: relative;
-  font-size: 20px;
-  top: 50%;
-  height: 100px;
-  vertical-align: middle;
-  margin-top: -55px;
+  top: 0;
+  height: 100%;
   text-shadow: 0 0 5px rgba(155, 155, 155, 0.1);
 }
-.sifter-logo-box .siftr-logo {
-  font-size: 150%;
-  vertical-align: top;
-  display: inline-block;
+.sifter-logo-box h1 {
+  top: 0;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
-.sifter-logo-box a {
-  text-decoration: none;
-  margin-right: 15px;
+.scale_logo {
+  height: 66px;
+  margin: 7px;
+  padding: 0;
+  border: 0;
+  float: left;
+}
+.siftr-name {
+  font-size: 30px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  padding-left: 15px;
+  padding-top: 2px;
+  display: inline-block;
+  float: left;
 }
 .sifter-rightside-launchpad {
   float: right;
@@ -104,6 +118,7 @@ body {
   padding: 0;
   text-align: center;
   margin-left: 20px;
+  font-family: sans-serif;
 }
 .sifter-rightside-launchpad button span {
   vertical-align: middle;
@@ -489,9 +504,6 @@ button.touch-friendly {
 /* SVG icons */
 .scale_search {
   background: url("../assets/images/icon_search.svg");
-}
-.scale_logo {
-  height: 1.5em;
 }
 .scale-icon {
   height: 1em;

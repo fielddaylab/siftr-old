@@ -89,6 +89,8 @@ function Model() {
                 {
                     $('.scale_logo').attr('src', 'assets/images/icon_logo.png');
                 }
+                window.SIFTR_NAME = gameData.data.name;
+                $('.siftr-name').text(SIFTR_NAME);
             });
         }
         else //it's being called from the loadTagsFromServer's returning

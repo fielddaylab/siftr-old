@@ -59,6 +59,7 @@ html,body
 {
   height: 100%;
   margin: 0;
+  font-family: 'ABeeZee', sans-serif;
 }
 
 /* Layout dimensions *************************************** */
@@ -128,33 +129,49 @@ html,body
   overflow: hidden; /* Prevent padding from wrapping the nav */
   box-shadow: 0 0 10px rgba(136, 136, 136, 1.0); 
   background-color: @headerColor;
+  height: 80px;
 }
 
 .sifter-logo-box
 {
   float: left;
-  margin: 20px;
-  color: @logoColor; /*changes color of icons if icons are webfont*/
+  color: white;
   position: relative;
-  font-size: 20px;
-  top: 50%;
-  height: 100px;
-  vertical-align: middle;
-  margin-top: -55px;
+  top: 0;
+  height: 100%;
   text-shadow: 0 0 5px rgba(155, 155, 155, 0.1);
 }
 
-.sifter-logo-box .siftr-logo
+.sifter-logo-box h1
 {
-  font-size: 150%;
-  vertical-align: top;
-  display: inline-block;
+  top: 0;
+  height: 80px;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.sifter-logo-box a
+.scale_logo
 {
-  text-decoration: none;
-  margin-right: 15px;
+  height: 66px;
+  margin: 7px;
+  padding: 0;
+  border: 0;
+  float: left;
+}
+
+.siftr-name
+{
+  font-size: 30px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  padding-left: 15px;
+  padding-top: 2px;
+  display: inline-block;
+  float: left;
 }
 
 .sifter-rightside-launchpad
@@ -174,6 +191,7 @@ html,body
   padding: 0;
   text-align: center;
   margin-left: 20px;
+  font-family: sans-serif; // Overrides ABeeZee to fix vertical centering
 }
 
 .sifter-rightside-launchpad button span
@@ -710,7 +728,6 @@ button.touch-friendly
 
 /* SVG icons */
 .scale_search         { background: url("../assets/images/icon_search.svg");}
-.scale_logo           { height: 1.5em; }
 
 .scale-icon
 {
@@ -959,7 +976,7 @@ button.touch-friendly
   text-shadow: 0 -1px 0 rgba(100, 100, 100, 0.25);
   color: #96989b;
   padding-right: 0.25em;
-  font-family:sans-serif;
+  font-family: sans-serif;
   width: 18%;
   text-align: center;
 }
