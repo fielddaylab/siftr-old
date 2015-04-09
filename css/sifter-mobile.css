@@ -447,7 +447,19 @@ button.touch-friendly {
   color: #b70101;
   font-weight: normal;
 }
-.about_view h1 {
+.to-siftr-home {
+  color: #b70101;
+}
+.aboutLogo {
+  height: 80px;
+  vertical-align: middle;
+}
+.aboutName {
+  vertical-align: middle;
+}
+.about_view h1,
+.about_view h2,
+.about_view h3 {
   margin-top: 0;
   text-align: center;
 }

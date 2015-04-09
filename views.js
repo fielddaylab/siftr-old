@@ -841,6 +841,8 @@ function NoteCreateView() {
 
 function AboutView() {
     var data = {};
+    data.siftrName = SIFTR_NAME;
+    data.siftrLogo = $('.scale_logo').attr('src');
     data.aboutSiftr = ABOUT_SIFTR;
     data.username = model.displayName;
     data.loggedIn = controller.logged_in();
