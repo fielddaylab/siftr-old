@@ -173,20 +173,22 @@
                 <span class="glyphicon glyphicon-pushpin" id="sharePin" data-pin-do="buttonPin">{{pinShare}}</span>
               </div>
 
-              {{#isAuthor}}
+              {{#canDelete}}
               <div class="shareable" title="Edit" id="shareEditBox">
                 <span class="glyphicon glyphicon-pencil" id="shareEdit"></span>
                 <div id="shareEditMenu">
                   <div class="edit-menu-arrow"></div>
+                  {{#canEdit}}
                   <div class="shareEditOption" id="shareEditDescription">
                     Edit
                   </div>
+                  {{/canEdit}}
                   <div class="shareEditOption" id="shareDelete">
                     Delete
                   </div>
                 </div>
               </div>
-              {{/isAuthor}}
+              {{/canDelete}}
             <div class="clear"></div>
           </div>
           <div class="sifter-show-details">
@@ -217,9 +219,11 @@
                       </span>
                       <div class="edit-comment">
                         <div class="edit-menu-arrow"></div>
+                        {{#canEdit}}
                         <div class="edit-comment-option edit-comment-edit internalLink">
                           Edit
                         </div>
+                        {{/canEdit}}
                         <div class="edit-comment-option edit-comment-delete internalLink">
                           Delete
                         </div>

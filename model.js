@@ -91,6 +91,8 @@ function Model() {
                 }
                 window.SIFTR_NAME = gameData.data.name;
                 $('.siftr-name').text(SIFTR_NAME);
+
+                self.checkGameOwners();
             });
         }
         else //it's being called from the loadTagsFromServer's returning
@@ -118,6 +120,21 @@ function Model() {
                 controller.logout();
             }
         });
+    }
+
+    this.checkGameOwners = function(callback) {
+        callAris('users.getUsersForGame', {
+            game_id: self.gameId,
+            auth: $.cookie('aris-auth') || getAuthObject(),
+            // the auth shouldn't be necessary after https://github.com/ARISGames/server/pull/10
+        }, function(usersData) {
+            self.owner_ids = [];
+            if (usersData.data == null) return;
+            for (var i = 0; i < usersData.data.length; i++) {
+                self.owner_ids.push(parseInt(usersData.data[i].user_id));
+            }
+            if (callback) callback();
+        })
     }
 
     this.loadTagsFromServer = function(response) {

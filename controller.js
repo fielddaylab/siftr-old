@@ -373,9 +373,12 @@ function Controller() {
                 self.saveCookies();
                 $('.sifter-show-logout-button').show();
 
-                /* Trigger original item that required login and clear it out */
-                controller.loginCallback();
-                controller.loginCallback = function() {};
+                // this won't be necessary after https://github.com/ARISGames/server/pull/10
+                model.checkGameOwners(function(){
+                    /* Trigger original item that required login and clear it out */
+                    controller.loginCallback();
+                    controller.loginCallback = function() {};
+                });
             } else {
                 alert("Incorrect login. Please try again.");
             }

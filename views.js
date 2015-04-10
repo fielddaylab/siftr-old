@@ -80,20 +80,22 @@ function NoteView(note) {
         data.category_class = getTagIconName(this.note);
         data.audio_url = getAudioToUse(this.note);
         data.details = getTextToUse(this.note);
-        data.comments = this.getCommentsJson(this.note.comments.data);
+        data.comments = this.getCommentsJson(this.note.comments.data, this.note.user_id);
         data.logged_in = controller.logged_in();
         data.emailShare = this.note.email_shares;
         data.likeShare = this.note.note_likes;
 
         data.author = parseInt(model.playerId) === parseInt(this.note.user_id) ? "You" : (this.note.display_name || this.note.user_name);
-        data.isAuthor = parseInt(model.playerId) === parseInt(this.note.user_id) ? true : false; //TODO: need real authentication for this
+        data.canEdit = parseInt(model.playerId) === parseInt(this.note.user_id);
+            // You can edit a note caption only if you own the note
+        data.canDelete =
+            (parseInt(model.playerId) === parseInt(this.note.user_id)) ||
+            (model.owner_ids.indexOf(parseInt(model.playerId)) != -1);
+            // You can delete a note if you own the note/siftr
         data.createdDate = new Date(this.note.created.replace(' ', 'T') + 'Z').toLocaleString();
-        // TODO: figure out how timestamp timezones differ between aris v1 and v2
-        // (in v1 this.note.created was UTC)
-        // this.note.created is "yyyy-mm-dd hh:mm:ss" CST
-        // the Date constructor takes "yyyy-mm-ddThh:mm:ss-06:00" to ensure CST interpretation
-        // then toLocaleString() uses user timezone
-        // MT 3/20: huh. prod v2 is now UTC again, changing '-06:00' to 'Z'
+        // this.note.created is "yyyy-mm-dd hh:mm:ss" UTC
+        // the Date constructor takes "yyyy-mm-ddThh:mm:ssZ"
+        // then toLocaleString() uses user timezone to display
 
         //TODO: find a better place for these, controller? 
         //TODO: note.tweets and note.pins don't exist on server, replace with style-stripped official counters 
@@ -220,12 +222,18 @@ function NoteView(note) {
 
     }
 
-    this.getCommentsJson = function(comments) {
+    this.getCommentsJson = function(comments, note_user_id) {
         return $(comments).map(function() {
             return {
                 author: this.user.display_name || this.user.user_name,
                 text: this.description,
-                canDelete: parseInt(model.playerId) === parseInt(this.user_id),
+                canEdit: parseInt(model.playerId) === parseInt(this.user_id),
+                    // You can edit a comment only if you own the comment
+                canDelete:
+                    (parseInt(model.playerId) === parseInt(this.user_id)) ||
+                    (parseInt(model.playerId) === parseInt(note_user_id)) ||
+                    (model.owner_ids.indexOf(parseInt(model.playerId)) != -1),
+                    // You can delete a comment if you own the comment/note/siftr
                 commentID: parseInt(this.note_comment_id),
             };
         }).toArray();
