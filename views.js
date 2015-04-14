@@ -438,7 +438,15 @@ function constructSVGMarker(note) {
     $(container).addClass("sifter-map-icon"); // scale-icon scale-mustdo");
     var image = document.createElement('img');
 
-    image.src = getTagIconUrl(note);
+    if (model.use_thumbs) {
+        var thumbnail = note.media.data.thumb_url;
+        image.src = thumbnail.replace('_resized_128', '_128');
+        // the above replace works around a bug fixed by
+        // https://github.com/ARISGames/server/commit/0d2e08bb29dd4412ed2e95e4b7b54632a49270b0
+    }
+    else {
+        image.src = getTagIconUrl(note);
+    }
     $(container).append(image);
     return container;
 }
