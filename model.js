@@ -361,7 +361,12 @@ function Model() {
             mapTypeControl: true,
             scaleControl: true,
             streetViewControl: false,
-            overviewMapControl: false
+            overviewMapControl: false,
+            styles: [{
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [{visibility: "off"}]
+            }],
         };
         this.gmap = new google.maps.Map(this.map, myOptions);
 

@@ -778,11 +778,16 @@ function NoteCreateView() {
             zoom: MAP_ZOOM_LEVEL,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             panControl: false,
-            zoomControl: false,
+            zoomControl: true,
             mapTypeControl: false,
             scaleControl: false,
             streetViewControl: false,
-            overviewMapControl: false
+            overviewMapControl: false,
+            styles: [{
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [{visibility: "off"}]
+            }],
         };
         var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 
