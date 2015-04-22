@@ -506,6 +506,18 @@ function Controller() {
         }, callback);
     }
 
+    // TODO: this doesn't work, the share link strips out the hash symbol,
+    // so it links to the Siftr but not the photo.
+    this.shareFacebook = function(playerId, noteId) {
+        var url = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(controller.noteURL(noteId));
+        window.open(url);
+    }
+
+    this.shareGoogle = function(playerId, noteId) {
+        var url = 'https://plus.google.com/share?url=' + encodeURIComponent(controller.noteURL(noteId));
+        window.open(url);
+    }
+
     this.sendEmail = function(playerId, noteId) {
         //alert("email" + playerId + noteId);
         note = model.currentNote;
@@ -632,9 +644,6 @@ function Controller() {
 
         //open window to send tweet
         window.open(tweetURL);
-
-        //add one to tweet count and increment the user side HTML
-        note.tweets ? note.tweets = parseInt(note.tweets, 10) + 1 : note.tweets = 1;
     };
 
 
@@ -661,12 +670,9 @@ function Controller() {
         pinDescr += "on the UW-Madison Campus: " + currentURL + "#" + model.currentNote.note_id;
         var pinLink = "";
 
-
         //TODO: keeping text, audi, and image for now because might be able to embed them in pin
         var pinText = "\"" + note.description + "\" \n \n";
         var pinImage = note.media.data.url;
-
-        console.log(pinImage);
 
         //assemble link for pinterest button
         pinLink += "http://www.pinterest.com/pin/create/button/";
@@ -674,10 +680,6 @@ function Controller() {
         pinLink += '&media=' + encodeURIComponent(pinImage);
         pinLink += '&description=' + encodeURIComponent(pinDescr);
 
-
-        //add one to pin count and increment the user side HTML
-        // note.pins ? note.pins = parseInt(note.pins, 10) + 1 : note.pins = 1;
-        console.log(pinLink);
         window.open(pinLink);
 
     };

@@ -937,21 +937,23 @@ button.touch-friendly
   background: @textFieldBackground;
 }
 
-#shareEditBox {
+#shareMenuBox, #shareEditBox {
   position: relative;
 }
 
-#shareEditMenu {
+#shareMenu, #shareEditMenu {
   display: none;
   position: absolute;
   text-align: center;
   background-color: @linkBarBackgroundColor;
   left: 0px;
   top: 25px;
-  width: 100%;
+  min-width: 100%;
+  z-index: 1;
 }
 
-#shareEditMenu .edit-menu-arrow {
+#shareEditMenu .edit-menu-arrow,
+#shareMenu .edit-menu-arrow {
   display: none;
 }
 

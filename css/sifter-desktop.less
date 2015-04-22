@@ -1034,11 +1034,11 @@ button.touch-friendly
   background: @textFieldBackground;
 }
 
-#shareEditBox {
+#shareMenuBox, #shareEditBox {
   position: relative;
 }
 
-#shareEditMenu {
+#shareMenu, #shareEditMenu {
   display: none;
   position: absolute;
   text-align: left;
@@ -1050,6 +1050,7 @@ button.touch-friendly
   color: black;
   padding-top: 6px;
   padding-bottom: 6px;
+  z-index: 1;
 }
 
 .edit-menu-arrow {
@@ -1063,7 +1064,16 @@ button.touch-friendly
   left: 18px;
 }
 
+.share-table {
+  display: table;
+}
+
+.share-row {
+  display: table-row;
+}
+
 .shareEditOption {
+  display: table-cell;
   padding: 4px;
   padding-left: 8px;
   padding-right: 8px;

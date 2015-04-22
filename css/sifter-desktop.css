@@ -722,9 +722,11 @@ button.touch-friendly {
   border: 0;
   background: #f7f7f7;
 }
+#shareMenuBox,
 #shareEditBox {
   position: relative;
 }
+#shareMenu,
 #shareEditMenu {
   display: none;
   position: absolute;
@@ -737,6 +739,7 @@ button.touch-friendly {
   color: black;
   padding-top: 6px;
   padding-bottom: 6px;
+  z-index: 1;
 }
 .edit-menu-arrow {
   position: absolute;
@@ -748,7 +751,14 @@ button.touch-friendly {
   top: -8px;
   left: 18px;
 }
+.share-table {
+  display: table;
+}
+.share-row {
+  display: table-row;
+}
 .shareEditOption {
+  display: table-cell;
   padding: 4px;
   padding-left: 8px;
   padding-right: 8px;

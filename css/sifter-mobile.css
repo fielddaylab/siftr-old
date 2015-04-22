@@ -634,9 +634,11 @@ button.touch-friendly {
   border: 0;
   background: #f5f5f5;
 }
+#shareMenuBox,
 #shareEditBox {
   position: relative;
 }
+#shareMenu,
 #shareEditMenu {
   display: none;
   position: absolute;
@@ -644,9 +646,11 @@ button.touch-friendly {
   background-color: #222222;
   left: 0px;
   top: 25px;
-  width: 100%;
+  min-width: 100%;
+  z-index: 1;
 }
-#shareEditMenu .edit-menu-arrow {
+#shareEditMenu .edit-menu-arrow,
+#shareMenu .edit-menu-arrow {
   display: none;
 }
 .edit-menu-arrow {

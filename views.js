@@ -173,19 +173,34 @@ function NoteView(note) {
 
         /* TODO social stuff, new comment logic */
 
-        // when share email clicked, send an email
-        $(this.html).find('#shareEmailBox').on('click', function() {
+        $(this.html).find('#share-button-email').on('click', function() {
             controller.sendEmail(model.playerId, model.currentNote.note_id);
         });
 
-        $(this.html).find('#shareTweetBox').on('click', function() {
-            controller.sendTweet(model.playerId, model.currentNote.note_id);
+        $(this.html).find('#share-button-facebook').on('click', function() {
+            controller.shareFacebook(model.playerId, model.currentNote.note_id);
+        });
 
-            //get tweet count from twitter
-            $.getJSON("http://cdn.api.twitter.com/1/urls/count.json?callback=?&url=" + encodeURIComponent(document.location.href + "#/" + note.note_id), function(data) {
-                console.log("tweet count is: " + data.count);
-                // document.getElementById('shareTweet').innerHTML = data.count ? data.count : 0;
-            });
+        $(this.html).find('#share-button-google').on('click', function() {
+            controller.shareGoogle(model.playerId, model.currentNote.note_id);
+        });
+
+        $(this.html).find('#share-button-twitter').on('click', function() {
+            controller.sendTweet(model.playerId, model.currentNote.note_id);
+        });
+
+        $(this.html).find('#share-button-pinterest').on('click', function() {
+            controller.getPinLink(model.playerId, model.currentNote.note_id);
+        });
+
+        $(this.html).find('#shareMenuBox').on('click', function() {
+            var menu = $('#shareMenu');
+            if (menu.is(':hidden')) {
+                menu.show();
+            }
+            else {
+                menu.hide();
+            }
         });
 
         $(this.html).find('#shareEditBox').on('click', function() {
@@ -196,13 +211,6 @@ function NoteView(note) {
             else {
                 menu.hide();
             }
-        });
-
-        $(this.html).find('#sharePinBox').on('click', function() {
-            controller.getPinLink(model.playerId, model.currentNote.note_id);
-            //TODO: increment html for pin
-            // document.getElementById('sharePin').innerHTML = note.pins;
-
         });
 
         $(this.html).find('#shareEditDescription').on('click', function() {
