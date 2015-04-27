@@ -349,7 +349,7 @@ function Controller() {
             permission: 'read_write',
             key: model.readWriteKey,
             username: model.displayName,
-        }, {path: '/'});
+        }, {path: '/', expires: 365});
     }
 
     this.loginReturned = function(obj) {
