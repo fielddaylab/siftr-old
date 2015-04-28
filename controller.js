@@ -614,8 +614,11 @@ function Controller() {
     }
 
     this.noteURL = function(noteId) {
-        return window.location.href.replace(/\#.*/, '') + '#' + noteId;
         // we remove a hash (if there is one) and everything after it
+        var base_url = window.location.href.replace(/\#.*/, '');
+        // facebook share link doesn't like siftr.org/foo#123, must be siftr.org/foo/#123
+        if (!base_url.match(/\/$/)) base_url += '/';
+        return base_url + '#' + noteId;
     }
 
     this.sendTweet = function(playerId, noteId) {
