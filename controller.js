@@ -284,6 +284,7 @@ function Controller() {
         // retrieve the note object back from the server so you can push it to HTML
         callAris("notes.searchNotes", {
             game_id: model.gameId,
+            auth: getAuthObject(),
             note_id: note_id,
             note_count: 1,
         }, controller.pushNewNote);
@@ -337,12 +338,6 @@ function Controller() {
         }, this.loginReturned);
     }
 
-    // TODO: this needs to be updated when aris v2 gets facebook login support
-    this.facebookLogin = function(email, displayName, uid) {
-        //it is possible for email to be blank
-        //callService("players.getFacebookLoginPlayerObject", this.facebookLoginReturned, "/" + email + "/" + displayName + "/" + uid, false);
-    }
-
     this.saveCookies = function() {
         $.cookie("aris-auth", { // this is shared with the Siftr homepage and editor
             user_id: parseInt(model.playerId),
@@ -375,42 +370,12 @@ function Controller() {
 
                 // this won't be necessary after https://github.com/ARISGames/server/pull/10
                 model.checkGameOwners(function(){
-                    /* Trigger original item that required login and clear it out */
-                    controller.loginCallback();
-                    controller.loginCallback = function() {};
+                    startSift(model.lastSiftType, function() {
+                        /* Trigger original item that required login and clear it out */
+                        controller.loginCallback();
+                        controller.loginCallback = function() {};
+                    });
                 });
-            } else {
-                alert("Incorrect login. Please try again.");
-            }
-        } else {
-            alert(obj.returnCodeDescription + ". Please try again");
-        }
-    }
-
-    this.facebookLoginReturned = function(returnString) {
-        //be sure to sych changes with this to main loginReturned
-        var startJson = returnString.indexOf("{");
-        var jsonString = returnString.substr(startJson);
-        var obj = JSON.parse(jsonString);
-
-        // first check to see if you have a valid login
-        if (obj.data) {
-
-            // updated the display name and player ID to match getLoginPlayerObject data
-            var playerId = obj.data.player_id;
-            var displayName = obj.data.display_name; //in new user account creation this will be same as username
-            if (!obj.display_name) {
-                displayName = obj.data.user_name;
-            }; //just in case set it to username if display name is blank
-
-            model.playerId = playerId;
-            model.displayName = displayName;
-
-            if (model.playerId > 0) {
-                self.hideLoginView();
-
-                self.saveCookies();
-                $('.sifter-show-logout-button').show();
             } else {
                 alert("Incorrect login. Please try again.");
             }

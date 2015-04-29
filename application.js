@@ -19,7 +19,7 @@ function startLoadGame() {
 
 var lastSiftTime = 0;
 
-function finishLoadGame(responseData, thisSiftTime) {
+function finishLoadGame(responseData, thisSiftTime, callback) {
     if (thisSiftTime !== lastSiftTime) {
         console.log('Throwing out a Sift because it was overridden.');
         return;
@@ -41,9 +41,10 @@ function finishLoadGame(responseData, thisSiftTime) {
 
     google.maps.event.trigger(model.views.gmap, 'resize'); // To fix google maps incorrect sizing bug
 
+    if (callback) callback();
 }
 
-function startSift(siftType) {
+function startSift(siftType, callback) {
     model.lastSiftType = siftType;
 
     var thisSiftTime;
@@ -88,6 +89,7 @@ function startSift(siftType) {
         tag_ids: selectedTags,
         order_by: 'recent',
         user_id: model.playerId,
+        auth: getAuthObject(),
     };
     switch (siftType) {
         case "popular":
@@ -105,6 +107,6 @@ function startSift(siftType) {
             console.log("Error in sift type: " + siftType);
     }
     callAris("notes.searchNotes", siftObj, function(obj) {
-        finishLoadGame(obj, thisSiftTime);
+        finishLoadGame(obj, thisSiftTime, callback);
     });
 }
