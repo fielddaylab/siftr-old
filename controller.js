@@ -309,6 +309,30 @@ function Controller() {
         });
     }
 
+    this.flagNote = function(noteId) {
+        callAris("notes.flagNote", {
+            auth: getAuthObject(),
+            note_id: noteId,
+        }, function() {
+            // Now that the note is flagged, you can't view it unless you are a siftr owner.
+            // Or unless it's your note, but the interface won't let you flag your own notes.
+            var isOwner = (model.owner_ids.indexOf(parseInt(model.playerId)) != -1);
+            if (!isOwner) {
+                model.deleteNote(noteId);
+                controller.populateAllFromModel(); //re-display the map and left hand images
+            }
+        });
+    }
+
+    this.approveNote = function(noteId) {
+        callAris("notes.approveNote", {
+            auth: getAuthObject(),
+            note_id: noteId,
+        }, function() {
+            // don't need to do anything afterwards
+        });
+    }
+
     this.deleteComment = function(noteID, commentID, callback) {
         callAris("note_comments.deleteNoteComment", {
             auth: getAuthObject(),

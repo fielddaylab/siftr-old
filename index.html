@@ -187,22 +187,34 @@
               	<!--The like icon will be determined in views by if they have or have not liked it before -->
           		</div>
 
-              {{#canDelete}}
+              {{#canPencil}}
               <div class="shareable" title="Edit" id="shareEditBox">
                 <span class="glyphicon glyphicon-pencil" id="shareEdit"></span>
                 <div id="shareEditMenu">
                   <div class="edit-menu-arrow"></div>
                   {{#canEdit}}
-                  <div class="shareEditOption" id="shareEditDescription">
-                    Edit
-                  </div>
+                    <div class="shareEditOption" id="shareEditDescription">
+                      Edit
+                    </div>
                   {{/canEdit}}
-                  <div class="shareEditOption" id="shareDelete">
-                    Delete
-                  </div>
+                  {{#canFlag}}
+                    <div class="shareEditOption" id="shareFlag">
+                      Flag
+                    </div>
+                  {{/canFlag}}
+                  {{#canApprove}}
+                    <div class="shareEditOption" id="shareApprove">
+                      Approve
+                    </div>
+                  {{/canApprove}}
+                  {{#canDelete}}
+                    <div class="shareEditOption" id="shareDelete">
+                      Delete
+                    </div>
+                  {{/canDelete}}
                 </div>
               </div>
-              {{/canDelete}}
+              {{/canPencil}}
             <div class="clear"></div>
           </div>
           <div class="sifter-show-details">

@@ -92,6 +92,13 @@ function NoteView(note) {
             (parseInt(model.playerId) === parseInt(this.note.user_id)) ||
             (model.owner_ids.indexOf(parseInt(model.playerId)) != -1);
             // You can delete a note if you own the note/siftr
+        data.canFlag =
+            (parseInt(model.playerId) !== parseInt(this.note.user_id)) &&
+            (this.note.published === 'AUTO');
+        data.canApprove =
+            (model.owner_ids.indexOf(parseInt(model.playerId)) != -1) &&
+            (this.note.published === 'PENDING');
+        data.canPencil = data.canEdit || data.canDelete || data.canFlag || data.canApprove;
         data.createdDate = new Date(this.note.created.replace(' ', 'T') + 'Z').toLocaleString();
         // this.note.created is "yyyy-mm-dd hh:mm:ss" UTC
         // the Date constructor takes "yyyy-mm-ddThh:mm:ssZ"
@@ -129,6 +136,20 @@ function NoteView(note) {
                 controller.deleteNote(thism.note.note_id);
                 controller.hideNoteView();
             }
+        });
+
+        $(this.html).find('#shareFlag').on(clickEvent, function() {
+            if (confirm("Are you sure you want to flag this note for inappropriate content?")) {
+                controller.flagNote(thism.note.note_id);
+                controller.hideNoteView();
+            }
+        });
+
+        $(this.html).find('#shareApprove').on(clickEvent, function() {
+            // No confirmation needed; just approve, then redisplay the note view
+            controller.approveNote(thism.note.note_id);
+            thism.note.published = 'APPROVED';
+            controller.noteSelected({note: thism.note});
         });
 
         $(this.html).find('.edit-comment-pencil').on(clickEvent, function(e) {
