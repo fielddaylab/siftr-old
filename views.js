@@ -351,10 +351,10 @@ function NoteView(note) {
         //tell server that you liked it
         controller.like(model.playerId, this.note.note_id, function() {
             //set player liked toggle for this note
-            this.note.player_liked = 1;
+            thism.note.player_liked = 1;
 
             //clear out old event handler with .off and add new one with .on 
-            $(this.html).find('#shareLike').off('click').on('click', function() {
+            $(thism.html).find('#shareLikeBox').off('click').on('click', function() {
                 thism.unlikeNote();
             });
         });
@@ -368,15 +368,15 @@ function NoteView(note) {
         likeB.innerHTML = this.note.note_likes;
 
         //update button
-        $(this.html).find("#shareLike").removeClass("glyphicon-heart").addClass("glyphicon-heart-empty");
+        $("#shareLike").removeClass("glyphicon-heart").addClass("glyphicon-heart-empty");
 
         //tell server that you unliked it
         controller.unlike(model.playerId, this.note.note_id, function() {
             //set player liked toggle for this note
-            this.note.player_liked = 0;
+            thism.note.player_liked = 0;
 
             //clear out old event handler with .off and add new one with .on 
-            $(this.html).find('#shareLike').off('click').on('click', function() {
+            $(thism.html).find('#shareLikeBox').off('click').on('click', function() {
                 thism.likeNote();
             });
         });
