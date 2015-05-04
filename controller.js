@@ -27,6 +27,80 @@ function Controller() {
         document.getElementById("create_tag_1").checked = true; //this is the default tag, it should be checked (but can't do it in HTML for reasons)
     };
 
+    this.submitEditNote = function() {
+        var tags = [];
+        for (var i = 1; i < model.tags.length + 1; i++) {
+            if (document.getElementById("create_tag_" + i).checked) {
+                tags.push(model.tags[i - 1].tag_id);
+            }
+        };
+        var updateObj = {
+            auth: getAuthObject(),
+            game_id: model.gameId,
+            note_id: model.currentNote.note_id,
+            description: $('.description_box textarea').val(),
+            trigger: {
+                latitude: model.currentNote.lat,
+                longitude: model.currentNote.lon,
+            },
+            tag_id: tags[0],
+        };
+        callAris('notes.updateNote', updateObj, function(result) {
+            if (result.returnCode === 0) {
+                model.deleteNote(model.currentNote.note_id);
+                var newNote = result.data;
+                newNote.media = model.currentNote.media;
+                newNote.comments = model.currentNote.comments;
+                newNote.latitude = model.currentNote.lat;
+                newNote.longitude = model.currentNote.lon;
+                model.addNoteFromData(newNote); //add it in to the cached model
+
+                cancelNote();
+                controller.populateAllFromModel(); //re-display the map and left hand images
+                document.getElementById('message').style.display = 'none';
+                controller.noteSelected({note: newNote}); //show the new note
+            } else {
+                alert('There was an error saving your changes. Try logging out and back in. (' + result.returnCodeDescription + ')');
+            }
+        });
+    }
+
+    this.editNote = function(sender) {
+        self.hideNoteView();
+        var note = sender.note;
+        model.views.noteCreateView = new NoteCreateView(note);
+        model.views.createNoteViewContainer.innerHTML = '';
+        model.views.createNoteViewContainer.appendChild(model.views.noteCreateView.html);
+        
+        var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
+        var clickEvent = iOS ? 'touchend' : 'click';
+        $('#submitNote').on(clickEvent, function(){ self.submitEditNote(); });
+        $('#cancelNote').on(clickEvent, cancelNote);
+        $('#cancelNoteOverlay').on(clickEvent, cancelNote);
+        $('#cancelNoteOverlay').show();
+
+        // Prefill the existing description
+        $('.description_box textarea').val(note.description);
+        // Preselect the existing tag
+        var checkedTag = false;
+        for (var i = 0; i < model.tags.length; i++) {
+            var tag = model.tags[i];
+            if (parseInt(note.tag_id) === parseInt(tag.tag_id)) {
+                document.getElementById("create_tag_" + (i + 1)).checked = true;
+                checkedTag = true;
+            }
+        }
+        if (!checkedTag) {
+            // just to be sure
+            document.getElementById("create_tag_1").checked = true;
+        }
+        // Display the image, but hide the camera button
+        $('.center-big').removeClass('center-big').addClass('left-small');
+        $('#show-image-div').html('<div class="square-dummy"></div><div id="show-image" class="exif-1" style="background-image: url('+note.media.data.url+');"></div>');
+        $('#browseImage').hide();
+        // The map position is set inside views.js NoteCreateView initialize_map
+    };
+
     // TODO refactor all these into a function that accepts a view container, and content and takes care of clearing/showing/hiding.
     // ex: model.views.popup(model.views.loginViewContainer, model.views.loginView);
     this.showLoginView = function() {

@@ -235,8 +235,7 @@ function NoteView(note) {
         });
 
         $(this.html).find('#shareEditDescription').on('click', function() {
-            $('#sifter-show-description').hide();
-            $('#sifter-edit-description').show();
+            controller.editNote({note: model.currentNote});
         });
 
         $(this.html).find('#sifter-cancel-description').on('click', function() {
@@ -764,7 +763,7 @@ function ForgotView() {
     this.html = $(view).get(0);
 }
 
-function NoteCreateView() {
+function NoteCreateView(existingNote) {
     var thism = this; // FIXME needs better name, like view
 
     /* Constructor */
@@ -778,7 +777,9 @@ function NoteCreateView() {
 
         this.html = $(view).get(0);
 
-        controller.createNewNote();
+        if (!existingNote) {
+            controller.createNewNote();
+        }
         //this.initialize_map ();
 
 
@@ -821,6 +822,9 @@ function NoteCreateView() {
         var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
 
         var pos = new google.maps.LatLng(MAP_CENTER_LATITUDE, MAP_CENTER_LONGITUDE);
+        if (existingNote) {
+            pos = new google.maps.LatLng(existingNote.latitude, existingNote.longitude);
+        }
         map.setCenter(pos);
 
         marker = new google.maps.Marker({
@@ -837,7 +841,7 @@ function NoteCreateView() {
 
 
         /* Locate User */
-        if (navigator.geolocation) //this may take time to complete, so it'll just move the default when it's ready
+        if (navigator.geolocation && !existingNote) //this may take time to complete, so it'll just move the default when it's ready
         {
             function positionFound(position) {
                 if (!position) {
