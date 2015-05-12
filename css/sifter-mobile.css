@@ -67,6 +67,16 @@ body {
 .square-dummy {
   margin-top: 100%;
 }
+.list-note-message {
+  position: absolute;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  max-height: calc(100% - 20px);
+  width: calc(100% - 20px);
+  padding: 10px;
+}
 .sifter-grid-image {
   position: absolute;
   top: 0;

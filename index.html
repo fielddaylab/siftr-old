@@ -135,7 +135,11 @@
     <script id="gridIconTemplate" type="text/template">
       <div class="sifter-grid-note img">
         <div class="square-dummy"></div>
-        <div class="sifter-grid-image" id="image{{note_id}}" style="background-image: url({{image_url}});"></div>
+        <div class="sifter-grid-image" id="image{{note_id}}" style="background-image: url({{image_url}});">
+          {{#note_message}}
+          <div class="list-note-message">{{note_message}}</div>
+          {{/note_message}}
+        </div>
         <div class="scale-icon scale_{{category_class}}"></div>
       </div>
     </script>

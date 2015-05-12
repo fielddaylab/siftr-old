@@ -21,6 +21,19 @@ function ListNote(callback, note, noteId) {
 
             data.category_class = getTagIconName(note);
 
+            if (note.published === 'PENDING') {
+                var isOwner = (model.owner_ids.indexOf(parseInt(model.playerId)) != -1);
+                if (isOwner) {
+                    data.note_message = 'This note needs your approval to be visible';
+                }
+                else {
+                    data.note_message = 'Only visible to you; requires approval of the Siftr owner';
+                }
+            }
+            else {
+                data.note_message = '';
+            }
+
             /* Render View */
             var template = $('#gridIconTemplate').html();
             var view = Mustache.render(template, data);

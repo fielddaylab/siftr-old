@@ -403,7 +403,8 @@ function Controller() {
             auth: getAuthObject(),
             note_id: noteId,
         }, function() {
-            // don't need to do anything afterwards
+            // redisplay notes to get rid of the "needs your approval" message
+            controller.populateAllFromModel();
         });
     }
 
