@@ -144,21 +144,21 @@ function NoteView(note) {
             thism.submitComment(thism.note, text)
         });
 
-        $(this.html).find('#shareDelete').on(clickEvent, function() {
+        $(this.html).find('.shareDelete').on(clickEvent, function() {
             if (confirm("Are you sure you want to delete this note?")) {
                 controller.deleteNote(thism.note.note_id);
                 controller.hideNoteView();
             }
         });
 
-        $(this.html).find('#shareFlag').on(clickEvent, function() {
+        $(this.html).find('.shareFlag').on(clickEvent, function() {
             if (confirm("Are you sure you want to flag this note for inappropriate content?")) {
                 controller.flagNote(thism.note.note_id);
                 controller.hideNoteView();
             }
         });
 
-        $(this.html).find('#shareApprove').on(clickEvent, function() {
+        $(this.html).find('.shareApprove').on(clickEvent, function() {
             // No confirmation needed; just approve, then redisplay the note view
             controller.approveNote(thism.note.note_id);
             thism.note.published = 'APPROVED';
@@ -247,7 +247,7 @@ function NoteView(note) {
             }
         });
 
-        $(this.html).find('#shareEditDescription').on('click', function() {
+        $(this.html).find('.shareEditDescription').on('click', function() {
             controller.editNote({note: model.currentNote});
         });
 

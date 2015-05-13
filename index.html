@@ -197,22 +197,22 @@
                 <div id="shareEditMenu">
                   <div class="edit-menu-arrow"></div>
                   {{#canEdit}}
-                    <div class="shareEditOption" id="shareEditDescription">
+                    <div class="shareEditOption shareEditDescription">
                       Edit
                     </div>
                   {{/canEdit}}
                   {{#canFlag}}
-                    <div class="shareEditOption" id="shareFlag">
+                    <div class="shareEditOption shareFlag">
                       Flag
                     </div>
                   {{/canFlag}}
                   {{#canApprove}}
-                    <div class="shareEditOption" id="shareApprove">
+                    <div class="shareEditOption shareApprove">
                       Approve
                     </div>
                   {{/canApprove}}
                   {{#canDelete}}
-                    <div class="shareEditOption" id="shareDelete">
+                    <div class="shareEditOption shareDelete">
                       Delete
                     </div>
                   {{/canDelete}}
@@ -287,6 +287,16 @@
               <button class="modal-button touch-friendly login-to-comment">Login to Comment</button>
             </div>
           {{/logged_in}}
+          {{#canApprove}}
+            <div class="sifter-new-comment">
+              <button class="modal-button button-active touch-friendly shareApprove">Approve</button>
+            </div>
+            {{#canDelete}}
+              <div class="sifter-new-comment">
+                <button class="modal-button button-active touch-friendly shareDelete">Reject</button>
+              </div>
+            {{/canDelete}}
+          {{/canApprove}}
         </div>
         <div class="clear"></div>
       </div>
