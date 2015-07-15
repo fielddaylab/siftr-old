@@ -802,6 +802,28 @@ function NoteCreateView(existingNote) {
             EXIF.getData(file, function(){
                 var orientation = EXIF.getTag(file, 'Orientation') || 1;
 
+                var latitude = EXIF.getTag(file, 'GPSLatitude');
+                var longitude = EXIF.getTag(file, 'GPSLongitude');
+                if (latitude && longitude) {
+                    function readRat(rat) {
+                        return rat.numerator / rat.denominator;
+                    }
+                    function readGPS(degminsec) {
+                        return readRat(degminsec[0]) +
+                            readRat(degminsec[1]) / 60 +
+                            readRat(degminsec[2]) / 3600;
+                    }
+                    var lat = readGPS(latitude);
+                    if (EXIF.getTag(file, 'GPSLatitudeRef') == 'S') lat *= -1;
+                    var lng = readGPS(longitude);
+                    if (EXIF.getTag(file, 'GPSLongitudeRef') == 'W') lng *= -1;
+
+                    marker.setPosition({lat: lat, lng: lng});
+                    markerMoved(marker, thism.map);
+
+                    thism.exifPosition = true;
+                }
+
                 var photoReader = new FileReader();
                 photoReader.onload = function(){
                     $('.center-big').removeClass('center-big').addClass('left-small');
@@ -833,6 +855,7 @@ function NoteCreateView(existingNote) {
             }],
         };
         var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
+        thism.map = map;
 
         var pos = new google.maps.LatLng(MAP_CENTER_LATITUDE, MAP_CENTER_LONGITUDE);
         if (existingNote) {
@@ -858,6 +881,10 @@ function NoteCreateView(existingNote) {
         {
             function positionFound(position) {
                 if (!position) {
+                    return;
+                }
+                if (thism.exifPosition) {
+                    // don't repoint if we already got a gps location from the photo
                     return;
                 }
                 pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
